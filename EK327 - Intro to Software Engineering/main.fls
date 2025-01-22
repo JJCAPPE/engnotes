@@ -646,6 +646,7 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/vf/public/newpx/zplmia.vf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/newpx/pxmiaX.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/newtx/txmiaSTbb.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/newpx/px-lms.enc
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT main.aux
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/NewPXMI.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
@@ -654,5 +655,6 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/pxsys.pfb
