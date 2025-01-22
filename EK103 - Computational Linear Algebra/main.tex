@@ -1,0 +1,175 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{smartdiagram}
+\usesmartdiagramlibrary{additions}
+\usepackage{xcolor}
+\usepackage{forest}
+\usepgfplotslibrary{colormaps}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{polar}
+\pgfplotsset{compat=newest}
+\tikzset{>=latex}
+\usepackage{siunitx}
+
+\title{\Huge{Computational Linear Algebra}\\EK103}
+\author{\huge{Giacomo Cappelletto}}
+\date{<DATE>}
+
+\begin{document}
+
+
+\maketitle
+\newpage
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+\chapter{Basics}
+
+\section{Vectors, Norms and Products}
+
+\nt{
+	Let us consider two vectors in \(\mathbb{R}^3\):
+	\[
+		u =
+		\begin{pmatrix}
+			1 \\
+			1 \\
+			1
+		\end{pmatrix}
+		\quad \text{and} \quad
+		v =
+		\begin{pmatrix}
+			1  \\
+			-1 \\
+			1
+		\end{pmatrix}.
+	\]
+	We wish to compute their magnitudes (norms and norm-squared), the angle between them, and the plane that they span. These methods are directly applicable to computational tools such as MATLAB.
+}
+
+\dfn{Norm of a Vector}{
+	For a vector \(x = (x_1, x_2, \dots, x_n)\in \mathbb{R}^n\), its norm is
+	\[
+		\|x\| \;=\; \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+	\]
+	In many programming languages (including MATLAB), this is computed via \texttt{norm(x)}, while the square of the norm is \(\|x\|^2 = x \cdot x = x_1^2 + \cdots + x_n^2\).
+}
+
+\ex{Norms and Norm-Squared of \(\,u\) and \(\,v\)}{
+	\[
+		\|u\| \;=\;\sqrt{1^2 + 1^2 + 1^2} \;=\;\sqrt{3},
+		\quad
+		\|v\| \;=\;\sqrt{1^2 + (-1)^2 + 1^2} \;=\;\sqrt{3}.
+	\]
+	Thus, both vectors have the same magnitude \(\sqrt{3}\). Their squared norms are
+	\[
+		\|u\|^2 \;=\;3,
+		\quad
+		\|v\|^2 \;=\;3.
+	\]
+	In MATLAB notation, one could write:
+	\begin{itemize}
+		\item \texttt{norm(u)} or \texttt{norm(u,2)} for the norm of \(u\).
+		\item \texttt{dot(u,u)} or \texttt{norm(u)\^{}2} for \(\|u\|^2\).
+	\end{itemize}
+}
+
+
+\dfn{Angle Between Two Vectors}{
+	The angle \(\theta\) between two nonzero vectors \(u\) and \(v\) in \(\mathbb{R}^n\) is given by
+	\[
+		\theta \;=\; \arccos \Bigl(\frac{u \cdot v}{\|u\|\|v\|}\Bigr).
+	\]
+}
+
+\ex{Angle Between \(\,u\) and \(\,v\)}{
+	First, compute the dot product:
+	\[
+		u \cdot v
+		\;=\;
+		(1)(1) + (1)(-1) + (1)(1)
+		\;=\;
+		1 - 1 + 1
+		\;=\;
+		1.
+	\]
+	Hence,
+	\[
+		\theta
+		\;=\;
+		\arccos \Bigl(\frac{u \cdot v}{\|u\|\|v\|}\Bigr)
+		\;=\;
+		\arccos\Bigl(\frac{1}{\sqrt{3}\,\sqrt{3}}\Bigr)
+		\;=\;
+		\arccos\Bigl(\tfrac{1}{3}\Bigr).
+	\]
+	In MATLAB, one could write:
+	\[
+		\texttt{theta = acos(dot(u,v)/(norm(u)*norm(v)));}
+	\]
+}
+
+\dfn{Plane Spanned by Two Vectors}{
+	The plane containing vectors \(u\) and \(v\) and passing through the origin is given by
+	\[
+		\{\;\alpha\,u + \beta\,v \;\mid\; \alpha, \beta \in \mathbb{R}\}.
+	\]
+	An equivalent description is all points \(x\in \mathbb{R}^3\) such that \(x \cdot (u \times v) = 0\).
+}
+
+\ex{Plane Containing \(\,u\) and \(\,v\)}{
+	\begin{itemize}
+		\item
+		      \emph{Span form:}
+		      \[
+			      \text{Plane} = \bigl\{\,\alpha \begin{pmatrix}1\\1\\1\end{pmatrix}
+			      \;+\;\beta \begin{pmatrix}1\\-1\\1\end{pmatrix}
+			      \;\mid\; \alpha,\beta \in \mathbb{R}\bigr\}.
+		      \]
+		\item
+		      \emph{Normal form:}
+		      The cross product
+		      \[
+			      u \times v
+			      =
+			      \begin{vmatrix}
+				      \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+				      1          & 1          & 1          \\
+				      1          & -1         & 1
+			      \end{vmatrix}
+			      =
+			      (2,\,0,\,-2).
+		      \]
+		      Hence, the plane also can be described by the set of points \(x = (x_1,x_2,x_3)\) for which
+		      \[
+			      (2,\,0,\,-2)\cdot (x_1,x_2,x_3) = 0
+			      \quad\Longrightarrow\quad
+			      2\,x_1 - 2\,x_3 = 0
+			      \quad\Longrightarrow\quad
+			      x_1 = x_3.
+		      \]
+	\end{itemize}
+	In many computational environments, one simply keeps the span form or uses a symbolic package to compute the cross product and normal equation.
+}
+
+\nt{
+	In summary, for vectors \(u\) and \(v\):
+	\begin{itemize}
+		\item \(\|u\|\) and \(\|v\|\) each equal \(\sqrt{3}\).
+		\item \(\|u\|^2 = \|v\|^2 = 3\).
+		\item The angle between them is \(\arccos\bigl(\tfrac{1}{3}\bigr)\).
+		\item The plane is spanned by \(\{u,v\}\), or equivalently described by the normal vector \(u \times v\).
+	\end{itemize}
+	All these computations can be done in a straightforward manner in a software package such as MATLAB, using \texttt{dot}, \texttt{norm}, \texttt{acos}, and \texttt{cross}.
+}
+
+\end{document}
