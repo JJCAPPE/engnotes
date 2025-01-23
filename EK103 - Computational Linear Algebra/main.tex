@@ -63,6 +63,11 @@
 		\|x\| \;=\; \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
 	\]
 	In many programming languages (including MATLAB), this is computed via \texttt{norm(x)}, while the square of the norm is \(\|x\|^2 = x \cdot x = x_1^2 + \cdots + x_n^2\).
+
+	Norm squared is the result of the dot product of a vector with itself. For example, the norm squared of \(x\) is \\
+	\[
+		\|x\|^2 \;=\; x \cdot x = x_1^2 + \cdots + x_n^2 = \begin{bmatrix} x_1 \\ \vdots \\ x_n \end{bmatrix} \cdot \begin{bmatrix} x_1 & \cdots & x_n \end{bmatrix} .
+	\]
 }
 
 \ex{Norms and Norm-Squared of \(\,u\) and \(\,v\)}{
@@ -162,15 +167,265 @@
 	In many computational environments, one simply keeps the span form or uses a symbolic package to compute the cross product and normal equation.
 }
 
-\nt{
-	In summary, for vectors \(u\) and \(v\):
-	\begin{itemize}
-		\item \(\|u\|\) and \(\|v\|\) each equal \(\sqrt{3}\).
-		\item \(\|u\|^2 = \|v\|^2 = 3\).
-		\item The angle between them is \(\arccos\bigl(\tfrac{1}{3}\bigr)\).
-		\item The plane is spanned by \(\{u,v\}\), or equivalently described by the normal vector \(u \times v\).
-	\end{itemize}
-	All these computations can be done in a straightforward manner in a software package such as MATLAB, using \texttt{dot}, \texttt{norm}, \texttt{acos}, and \texttt{cross}.
+\dfn{Cross Product}{
+	Construct a system of linear equations where the dot product of the vector is orthogonal to both the vectors in the matrix.
+	\[
+		\begin{bmatrix}
+			u_1 & u_2 & u_3 \\
+			v_1 & v_2 & v_3
+		\end{bmatrix}
+		\cdot
+		\begin{bmatrix}
+			x_1 \\
+			x_2 \\
+			x_3
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			0
+		\end{bmatrix}
+	\]
+
 }
 
+\ex{Finding the Plane Spanned by Two Vectors}{
+	\[
+		\begin{bmatrix}
+			1 & 1  & 1 \\
+			1 & -1 & 1
+		\end{bmatrix}
+		\cdot
+		\begin{bmatrix}
+			x_1 \\
+			x_2 \\
+			x_3
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 \\
+			0
+		\end{bmatrix}
+	\]
+	\[
+		\begin{bmatrix}
+			x_1 \\
+			x_2 \\
+			x_3
+		\end{bmatrix}
+		= t
+		\begin{bmatrix}
+			1 \\
+			0 \\
+			-1
+		\end{bmatrix}
+	\]
+
+	Then, we must formulate an equation for any vector perpendicular to the normal of the plane, i.e. the cross product of the two original vectors.
+	\[
+		\begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			y_3
+		\end{bmatrix}
+		\cdot
+		\begin{bmatrix}
+			1 \\
+			0 \\
+			-1
+		\end{bmatrix}
+		=
+		0
+	\]
+	Hence,
+	\[
+		y_1 - y_3 = 0
+	\]
+}
+
+\dfn{Dot product}{
+
+	We can take a vector $\vec{v}$ in $\mathbb{R}^n$ and a vector $\vec{w}$ in $\mathbb{R}^n$. Then, the dot product of $\vec{v}$ and $\vec{w}$ is defined as
+	\[
+		\vec{v} \cdot \vec{w} = \vec{v}^T \vec{w} = \vec{w}^T \vec{v}
+	\]
+	Therefore
+	\[
+		\norm{\vec{v}}^2 = \vec{v}^T \vec{v}
+	\]
+
+}
+
+\dfn{Scalar Multiplication}{
+	Scalar multiplication is the operation of multiplying a vector by a scalar. The result is a new vector with the same direction as the original vector, but with a magnitude that is the product of the original magnitude and the scalar.
+	\[
+		t \cdot \vec{v} = t \cdot \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{bmatrix} = \begin{bmatrix} t\,a_1 \\ t\,a_2 \\ \vdots \\ t\,a_n \end{bmatrix}
+	\]
+	Where
+	\[
+		\norm{t \cdot \vec{v}} = \norm{\vec{v}} \cdot t
+	\]
+}
+
+\dfn{Vector Addition}{
+	Vector addition is the operation of adding two vectors together. The result is a new vector that is the sum of the two original vectors.
+	\[
+		\vec{v} + \vec{w} = \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{bmatrix} + \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix} = \begin{bmatrix} a_1 + b_1 \\ a_2 + b_2 \\ \vdots \\ a_n + b_n \end{bmatrix}
+	\]
+}
+
+\dfn{Matrix to Vector Multiplication}{
+	Matrix to vector multiplication is the operation of multiplying a matrix by a vector. The result is a new vector that is the result of the matrix-vector multiplication.
+	Matrices are represented as $n \times m$, where $n$ is the number of rows and $m$ is the number of columns. The number of columns of the matrix must be equal to the number of rows of the vector.
+	\[
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{n1} & a_{n2} & \cdots & a_{nn}
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1    \\
+			x_2    \\
+			\vdots \\
+			x_n
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n \\
+			a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n \\
+			\vdots                                     \\
+			a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n
+		\end{bmatrix}
+	\]
+}
+
+\dfn{Matrix to Matrix Multiplication}{
+	Matrix to matrix multiplication is the non-commutative operation of multiplying two matrices together. The result is a new matrix that is the product of the two original matrices.
+	
+	For two matrices \(A\) and \(B\) to be multiplied, the number of columns of \(A\) must be equal to the number of rows of \(B\). If \(A\) is an \(m \times n\) matrix and \(B\) is an \(n \times p\) matrix, then their product \(C = AB\) is an \(m \times p\) matrix.
+
+	The element \(c_{ij}\) of the resulting matrix \(C\) is computed as:
+	\[
+		c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj}
+	\]
+	where \(a_{ik}\) is the element from the \(i\)-th row and \(k\)-th column of matrix \(A\), and \(b_{kj}\) is the element from the \(k\)-th row and \(j\)-th column of matrix \(B\).
+
+	\[
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \cdots & a_{mn}
+		\end{bmatrix}
+		\begin{bmatrix}
+			b_{11} & b_{12} & \cdots & b_{1p} \\
+			b_{21} & b_{22} & \cdots & b_{2p} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			b_{n1} & b_{n2} & \cdots & b_{np}
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			c_{11} & c_{12} & \cdots & c_{1p} \\
+			c_{21} & c_{22} & \cdots & c_{2p} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			c_{m1} & c_{m2} & \cdots & c_{mp}
+		\end{bmatrix}
+	\]
+}
+
+\ex{Matrix to Matrix Multiplication}{
+	Consider the matrices
+	\[
+		A =
+		\begin{bmatrix}
+			1 & 2 \\
+			3 & 4 \\
+			5 & 6
+		\end{bmatrix}
+		\quad \text{and} \quad
+		B =
+		\begin{bmatrix}
+			7 & 8 & 9 \\
+			10 & 11 & 12
+		\end{bmatrix}.
+	\]
+	Their product \(C = AB\) is computed as follows:
+	\[
+		C =
+		\begin{bmatrix}
+			1 \cdot 7 + 2 \cdot 10 & 1 \cdot 8 + 2 \cdot 11 & 1 \cdot 9 + 2 \cdot 12 \\
+			3 \cdot 7 + 4 \cdot 10 & 3 \cdot 8 + 4 \cdot 11 & 3 \cdot 9 + 4 \cdot 12 \\
+			5 \cdot 7 + 6 \cdot 10 & 5 \cdot 8 + 6 \cdot 11 & 5 \cdot 9 + 6 \cdot 12
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			27 & 30 & 33 \\
+			61 & 68 & 75 \\
+			95 & 106 & 117
+		\end{bmatrix}.
+	\]
+}
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		% Matrix A
+		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]}] (A) {
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \cdots & a_{mn} \\
+		};
+
+		% Matrix B
+		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]},right=of A] (B) {
+			b_{11} & b_{12} & \cdots & b_{1p} \\
+			b_{21} & b_{22} & \cdots & b_{2p} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			b_{n1} & b_{n2} & \cdots & b_{np} \\
+		};
+
+		% Matrix C
+		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]},right=of B] (C) {
+			c_{11} & c_{12} & \cdots & c_{1p} \\
+			c_{21} & c_{22} & \cdots & c_{2p} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			c_{m1} & c_{m2} & \cdots & c_{mp} \\
+		};
+
+		% Labels
+		\node[left=0.5cm of A] {$A$};
+		\node[right=0.5cm of B] {$B$};
+		\node[right=0.5cm of C] {$C = AB$};
+
+		% Arrows for multiplication
+		\foreach \i in {1,...,4} {
+			\draw[->] (A-\i-1.east) -- (B-1-1.north);
+			\draw[->] (A-\i-2.east) -- (B-2-1.north);
+			\draw[->] (A-\i-3.east) -- (B-3-1.north);
+			\draw[->] (A-\i-4.east) -- (B-4-1.north);
+		}
+
+		\foreach \j in {1,...,4} {
+			\draw[->] (B-1-\j.south) -- (C-1-\j.west);
+			\draw[->] (B-2-\j.south) -- (C-2-\j.west);
+			\draw[->] (B-3-\j.south) -- (C-3-\j.west);
+			\draw[->] (B-4-\j.south) -- (C-4-\j.west);
+		}
+	\end{tikzpicture}
+	\caption{Matrix-Matrix Multiplication Diagram}
+	\label{fig:matrix_multiplication}
+\end{figure}
+
+
+
+\subsection{Interpretation of vectors in $\mathbb{R}^{2,3}$}
+
+\dfn{Position Vector}{
+	A position vector is a vector that describes the position of an object in space with reference to an origin.
+}
+\dfn{Translational Vector}{
+	A translational vector is a vector that describes the displacement of an object in space with reference to an origin.
+}
 \end{document}
