@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/giacomo/Documents/Engineering/Notes/EK327 - Intro to Software Engineering/helloworld'
+relocations:     []
+...
