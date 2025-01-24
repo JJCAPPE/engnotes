@@ -29,13 +29,13 @@
 
 \maketitle
 \newpage
-\pdfbookmark[section]{\contentsname}{toc}
+\pdfbookmark[section]{\texorpdfstring{\contentsname}{Contents}}{toc}
 \tableofcontents
 \pagebreak
 
-\chapter{Basics}
+\chapter{\texorpdfstring{Basics}{Basics}}
 
-\section{Vectors, Norms and Products}
+\section{\texorpdfstring{Vectors, Norms and Products}{Vectors, Norms and Products}}
 
 \nt{
 	Let us consider two vectors in \(\mathbb{R}^3\):
@@ -418,7 +418,80 @@
 	\label{fig:matrix_multiplication}
 \end{figure}
 
+\dfn{Matrix Multiplication of a Matrix with Itself}{
+	When a matrix \(A\) is multiplied by its transpose \(A^T\), the resulting matrix is a symmetric matrix. The element \(c_{ij}\) of the resulting matrix \(C = AA^T\) is computed as:
+	\[
+		c_{ij} = \sum_{k=1}^{n} a_{ik} a_{jk}
+	\]
+	where \(a_{ik}\) is the element from the \(i\)-th row and \(k\)-th column of matrix \(A\), and \(a_{jk}\) is the element from the \(j\)-th row and \(k\)-th column of matrix \(A\).
 
+	\[
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \cdots & a_{mn}
+		\end{bmatrix}
+		\begin{bmatrix}
+			a_{11} & a_{21} & \cdots & a_{m1} \\
+			a_{12} & a_{22} & \cdots & a_{m2} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{1n} & a_{2n} & \cdots & a_{mn}
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			c_{11} & c_{12} & \cdots & c_{1m} \\
+			c_{21} & c_{22} & \cdots & c_{2m} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			c_{m1} & c_{m2} & \cdots & c_{mm}
+		\end{bmatrix}
+	\]
+
+	The zeros in this matrix represent orthogonality between the corresponding rows of the original matrix \(A\). Specifically, if \(c_{ij} = 0\), it means that the \(i\)-th row and the \(j\)-th row of matrix \(A\) are orthogonal to each other.
+	
+}
+
+\ex{Orthogonality in Matrix Multiplication}{
+	Consider the matrix
+	\[
+		A =
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}.
+	\]
+	Its transpose is
+	\[
+		A^T =
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}.
+	\]
+	The product \(C = AA^T\) is computed as follows:
+	\[
+		C =
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}.
+	\]
+	Notice that the resulting matrix is the identity matrix, which is symmetric and has zeros in all off-diagonal elements, indicating that the rows (and columns) of the original matrix \(A\) are orthogonal to each other.
+}
 
 \subsection{Interpretation of vectors in $\mathbb{R}^{2,3}$}
 
@@ -428,4 +501,6 @@
 \dfn{Translational Vector}{
 	A translational vector is a vector that describes the displacement of an object in space with reference to an origin.
 }
+
+
 \end{document}
