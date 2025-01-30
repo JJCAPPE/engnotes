@@ -1,8 +1,46 @@
-\contentsline {chapter}{\numberline {1}Computer Architecture}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {1}Digital Logic}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Adding Two Single-Bit Binaries Using XOR and AND Gates}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Adding Two Single-Byte Binary Numbers Using XOR and AND}{2}{section.1.2}%
 \contentsline {section}{\numberline {1.3}One's Complement for a Single Byte}{3}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Carrying When Adding Negatives in One's Complement}{4}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Two's Complement for a Single Byte}{5}{section.1.5}%
 \contentsline {section}{\numberline {1.6}Carrying When Adding Negatives in Two's Complement}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Microarchitecture}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Computer Architecture Overview}{8}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Address Bus}{8}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Data Bus}{9}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Processor Components}{9}{subsection.2.1.3}%
+\contentsline {subsubsection}{Registers}{10}{section*.2}%
+\contentsline {subsubsection}{Program Counter (PC)}{10}{section*.3}%
+\contentsline {subsubsection}{EFLAGS Register}{10}{section*.4}%
+\contentsline {chapter}{\numberline {3}Instruction Set}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Assembly Pseudocode Conventions}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Instruction Encoding for 16-bit Memory Cells}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Assemble}{14}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Binary to Hexadecimal Conversion}{16}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Machine Code Decoding}{16}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Hexadecimal Machine Code}{16}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Instruction Breakdown}{16}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Program Behavior}{17}{subsection.3.5.3}%
+\contentsline {paragraph}{Summary:}{17}{section*.6}%
+\contentsline {section}{\numberline {3.6}Fetch-Decode-Execute-Store Cycle}{18}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Fetch}{18}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Decode}{18}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Execute}{18}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Store}{18}{subsection.3.6.4}%
+\contentsline {section}{\numberline {3.7}Five-Stage Pipeline for Operations}{18}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}1. Fetch (IF)}{19}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}2. Decode (ID)}{19}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}3. Execute (EX)}{19}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}4. Memory Access (MEM)}{19}{subsection.3.7.4}%
+\contentsline {subsection}{\numberline {3.7.5}5. Write Back (WB)}{19}{subsection.3.7.5}%
+\contentsline {subsection}{\numberline {3.7.6}Example of parallel processing in 5 stage pipeline}{19}{subsection.3.7.6}%
+\contentsline {section}{\numberline {3.8}Stalling and Forwarding in a 5-Stage Pipeline}{19}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Stalling}{20}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Forwarding}{21}{subsection.3.8.2}%
+\contentsline {section}{\numberline {3.9}Handling Simultaneous Memory Reads in IF and WB Stages}{21}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Stalling}{21}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Harvard Architecture}{22}{subsection.3.9.2}%
+\contentsline {section}{\numberline {3.10}Memory Pointers}{22}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Memory Indirection in C++}{23}{section.3.11}%
 \contentsfinish 

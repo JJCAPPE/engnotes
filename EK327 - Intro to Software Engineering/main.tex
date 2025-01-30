@@ -11,6 +11,10 @@
 \usepackage{smartdiagram}
 \usesmartdiagramlibrary{additions}
 \usepackage{xcolor}
+\usepackage{tabularx}   % <--- for stretchy columns
+\usepackage{lmodern}    % better fonts
+\usepackage{array}  % for more flexible tabular
+\usepackage{booktabs} % for nice rules
 \usepackage{forest}
 \usetikzlibrary{circuits.logic.US} % Load the correct library for US-style logic gates
 \usepgfplotslibrary{colormaps}
@@ -33,7 +37,7 @@
 \tableofcontents
 \pagebreak
 
-\chapter{Computer Architecture}
+\chapter{Digital Logic}
 
 \section{Adding Two Single-Bit Binaries Using XOR and AND Gates}
 
@@ -103,57 +107,57 @@ Binary addition can be performed on two single-byte numbers using bitwise operat
 
 \textbf{Algorithm:}
 1. Compute the sum without carry using XOR:
-   \[
-   \text{sum} = a \oplus b
-   \]
+\[
+	\text{sum} = a \oplus b
+\]
 2. Compute the carry using AND and shift it left by one bit:
-   \[
-   \text{carry} = (a \land b) \ll 1
-   \]
+\[
+	\text{carry} = (a \land b) \ll 1
+\]
 3. Repeat the process by adding the carry to the sum until there is no carry left.
 
 \textbf{Diagram:}
 Below is a diagram that illustrates the process for a single bit addition.
 
 \begin{center}
-\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
-    % Nodes
-    \node (A) {Input Bit \\ $a$};
-    \node (B) [right of=A, xshift=3cm] {Input Bit \\ $b$};
-    \node (XOR) [below of=A, yshift=-1.5cm, xshift=1.5cm, draw, circle] {XOR};
-    \node (SUM) [below of=XOR] {Sum \\ $a \oplus b$};
-    \node (AND) [right of=XOR, xshift=3cm, draw, circle] {AND};
-    \node (CARRY) [below of=AND] {Carry \\ $(a \land b) \ll 1$};
+	\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
+		% Nodes
+		\node (A) {Input Bit \\ $a$};
+		\node (B) [right of=A, xshift=3cm] {Input Bit \\ $b$};
+		\node (XOR) [below of=A, yshift=-1.5cm, xshift=1.5cm, draw, circle] {XOR};
+		\node (SUM) [below of=XOR] {Sum \\ $a \oplus b$};
+		\node (AND) [right of=XOR, xshift=3cm, draw, circle] {AND};
+		\node (CARRY) [below of=AND] {Carry \\ $(a \land b) \ll 1$};
 
-    % Arrows
-    \draw[->] (A) -- (XOR) node[midway, left] {};
-    \draw[->] (B) -- (XOR) node[midway, right] {};
-    \draw[->] (XOR) -- (SUM);
-    \draw[->] (A) -- (AND) node[midway, left] {};
-    \draw[->] (B) -- (AND) node[midway, right] {};
-    \draw[->] (AND) -- (CARRY);
-\end{tikzpicture}
+		% Arrows
+		\draw[->] (A) -- (XOR) node[midway, left] {};
+		\draw[->] (B) -- (XOR) node[midway, right] {};
+		\draw[->] (XOR) -- (SUM);
+		\draw[->] (A) -- (AND) node[midway, left] {};
+		\draw[->] (B) -- (AND) node[midway, right] {};
+		\draw[->] (AND) -- (CARRY);
+	\end{tikzpicture}
 \end{center}
 
 \textbf{Example:}
 Consider two single-byte binary numbers:
 \[
-a = 01101101, \quad b = 10101001
+	a = 01101101, \quad b = 10101001
 \]
 
 1. Compute the XOR for the sum:
-   \[
-   \text{sum} = a \oplus b = 11000100
-   \]
+\[
+	\text{sum} = a \oplus b = 11000100
+\]
 
 2. Compute the AND for the carry and shift left:
-   \[
-   \text{carry} = (a \land b) \ll 1 = 00001010
-   \]
+\[
+	\text{carry} = (a \land b) \ll 1 = 00001010
+\]
 
 3. Add the sum and carry:
-   - New sum: \( \text{sum} = 11000100 \oplus 00001010 = 11001110 \)
-   - New carry: \( \text{carry} = (11000100 \land 00001010) \ll 1 = 00000000 \)
+- New sum: \( \text{sum} = 11000100 \oplus 00001010 = 11001110 \)
+- New carry: \( \text{carry} = (11000100 \land 00001010) \ll 1 = 00000000 \)
 
 4. Final result: \( 11001110 \).
 
@@ -164,46 +168,46 @@ The \textbf{one's complement} of a binary number is obtained by flipping all the
 \textbf{Steps to Compute One's Complement:}
 1. Write down the binary number.
 2. Flip all bits:
-   - Change each \texttt{0} to \texttt{1}.
-   - Change each \texttt{1} to \texttt{0}.
+- Change each \texttt{0} to \texttt{1}.
+- Change each \texttt{1} to \texttt{0}.
 
 \textbf{Example:}
 Consider the binary number \(a = 01101101\).
 
 1. Original binary number:
-   \[
-   a = 01101101
-   \]
+\[
+	a = 01101101
+\]
 
 2. One's complement (flip all bits):
-   \[
-   \text{one's complement of } a = 10010010
-   \]
+\[
+	\text{one's complement of } a = 10010010
+\]
 
 \textbf{Diagram:}
 The following diagram illustrates the transformation:
 
 \begin{center}
-\begin{tikzpicture}[
-    node distance=2cm,
-    every node/.style={draw, rectangle, rounded corners, align=center}
-]
-    % Nodes
-    \node (Original) {Original Byte \\ \texttt{01101101}};
-    \node (Flip) [below of=Original, yshift=-1cm, draw, circle] {Flip Bits};
-    \node (Complement) [below of=Flip, yshift=-1cm] {One's Complement \\ \texttt{10010010}};
+	\begin{tikzpicture}[
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
+		% Nodes
+		\node (Original) {Original Byte \\ \texttt{01101101}};
+		\node (Flip) [below of=Original, yshift=-1cm, draw, circle] {Flip Bits};
+		\node (Complement) [below of=Flip, yshift=-1cm] {One's Complement \\ \texttt{10010010}};
 
-    % Arrows
-    \draw[->] (Original) -- (Flip);
-    \draw[->] (Flip) -- (Complement);
-\end{tikzpicture}
+		% Arrows
+		\draw[->] (Original) -- (Flip);
+		\draw[->] (Flip) -- (Complement);
+	\end{tikzpicture}
 \end{center}
 
 \textbf{Properties of One's Complement:}
 - A binary number and its one's complement always sum to all \texttt{1}s (i.e., \(11111111\) for a single byte).
 - One's complement is useful in representing signed integers:
-   - Positive numbers are represented as-is.
-   - Negative numbers are represented by the one's complement of their positive counterparts.
+- Positive numbers are represented as-is.
+- Negative numbers are represented by the one's complement of their positive counterparts.
 
 \textbf{Example with Signed Integers:}
 For a single byte:
@@ -213,7 +217,7 @@ For a single byte:
 \textbf{Verification:}
 Adding \(+5\) and \(-5\) in one's complement arithmetic:
 \[
-00000101 + 11111010 = 11111111 \quad (\text{all bits are 1, representing zero in one's complement arithmetic}).
+	00000101 + 11111010 = 11111111 \quad (\text{all bits are 1, representing zero in one's complement arithmetic}).
 \]
 
 \section{Carrying When Adding Negatives in One's Complement}
@@ -223,53 +227,53 @@ In one's complement representation, negative numbers are represented by flipping
 \textbf{Example:} Adding \(-3\) and \(-4\).
 
 1. Represent \(-3\) and \(-4\) in one's complement for a single byte:
-   \[
-   +3 = 00000011, \quad -3 = \text{one's complement of } +3 = 11111100
-   \]
-   \[
-   +4 = 00000100, \quad -4 = \text{one's complement of } +4 = 11111011
-   \]
+\[
+	+3 = 00000011, \quad -3 = \text{one's complement of } +3 = 11111100
+\]
+\[
+	+4 = 00000100, \quad -4 = \text{one's complement of } +4 = 11111011
+\]
 
 2. Add the two numbers:
-   \[
-   \begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c@{}c@{}c}
-       & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\ 
-     + & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 \\ \hline
-       & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\ 
-   \end{array}
-   \]
+\[
+	\begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c@{}c@{}c}
+		  & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\
+		+ & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 \\ \hline
+		  & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+	\end{array}
+\]
 
 3. Handle the carry:
-   - The result of the addition is \(11110111\), with a carry bit of \(1\).
-   - Add the carry back to the least significant bit:
-     \[
-     11110111 + 1 = 11111000
-     \]
+- The result of the addition is \(11110111\), with a carry bit of \(1\).
+- Add the carry back to the least significant bit:
+\[
+	11110111 + 1 = 11111000
+\]
 
 4. Final result:
-   \[
-   11111000 = \text{one's complement of } +7 = -7
-   \]
+\[
+	11111000 = \text{one's complement of } +7 = -7
+\]
 
 \textbf{Explanation:}
 - When the sum generates a carry, it must be added back to the result to comply with one's complement rules.
 - The result of \(-3 + -4 = -7\), as expected.
 
 \begin{center}
-\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
-    % Nodes
-    \node (A) {Binary for $-3$ \\ $11111100$};
-    \node (B) [below of=A, yshift=-1cm] {Binary for $-4$ \\ $11111011$};
-    \node (Add) [below of=B, yshift=-1cm, draw, circle] {Add};
-    \node (Sum) [below of=Add, yshift=-1cm] {Sum with Carry \\ $11110111 + 1$};
-    \node (Result) [below of=Sum, yshift=-1cm] {Final Result \\ $11111000 = -7$};
+	\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
+		% Nodes
+		\node (A) {Binary for $-3$ \\ $11111100$};
+		\node (B) [below of=A, yshift=-1cm] {Binary for $-4$ \\ $11111011$};
+		\node (Add) [below of=B, yshift=-1cm, draw, circle] {Add};
+		\node (Sum) [below of=Add, yshift=-1cm] {Sum with Carry \\ $11110111 + 1$};
+		\node (Result) [below of=Sum, yshift=-1cm] {Final Result \\ $11111000 = -7$};
 
-    % Arrows
-    \draw[->] (A) -- (Add);
-    \draw[->] (B) -- (Add);
-    \draw[->] (Add) -- (Sum);
-    \draw[->] (Sum) -- (Result);
-\end{tikzpicture}
+		% Arrows
+		\draw[->] (A) -- (Add);
+		\draw[->] (B) -- (Add);
+		\draw[->] (Add) -- (Sum);
+		\draw[->] (Sum) -- (Result);
+	\end{tikzpicture}
 \end{center}
 
 \textbf{Note:} This approach works for signed integers in one's complement and highlights the importance of handling the carry bit to ensure accurate results.
@@ -287,39 +291,39 @@ The \textbf{two's complement} of a binary number is obtained by flipping all the
 Consider the binary number \(a = 01101101\).
 
 1. Original binary number:
-   \[
-   a = 01101101
-   \]
+\[
+	a = 01101101
+\]
 
 2. Flip all bits (one's complement):
-   \[
-   10010010
-   \]
+\[
+	10010010
+\]
 
 3. Add \(1\) to the result:
-   \[
-   \text{two's complement of } a = 10010010 + 1 = 10010011
-   \]
+\[
+	\text{two's complement of } a = 10010010 + 1 = 10010011
+\]
 
 \textbf{Diagram:}
 The following diagram illustrates the transformation:
 
 \begin{center}
-\begin{tikzpicture}[
-    node distance=2cm,
-    every node/.style={draw, rectangle, rounded corners, align=center}
-]
-    % Nodes
-    \node (Original) {Original Byte \\ \texttt{01101101}};
-    \node (Flip) [below of=Original, yshift=-1cm, draw, circle] {Flip Bits};
-    \node (Add) [below of=Flip, yshift=-1cm, draw, circle] {Add $1$};
-    \node (Complement) [below of=Add, yshift=-1cm] {Two's Complement \\ \texttt{10010011}};
+	\begin{tikzpicture}[
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
+		% Nodes
+		\node (Original) {Original Byte \\ \texttt{01101101}};
+		\node (Flip) [below of=Original, yshift=-1cm, draw, circle] {Flip Bits};
+		\node (Add) [below of=Flip, yshift=-1cm, draw, circle] {Add $1$};
+		\node (Complement) [below of=Add, yshift=-1cm] {Two's Complement \\ \texttt{10010011}};
 
-    % Arrows
-    \draw[->] (Original) -- (Flip);
-    \draw[->] (Flip) -- (Add);
-    \draw[->] (Add) -- (Complement);
-\end{tikzpicture}
+		% Arrows
+		\draw[->] (Original) -- (Flip);
+		\draw[->] (Flip) -- (Add);
+		\draw[->] (Add) -- (Complement);
+	\end{tikzpicture}
 \end{center}
 
 \textbf{Properties of Two's Complement:}
@@ -334,48 +338,1229 @@ In two's complement representation, negative numbers are represented by flipping
 \textbf{Example:} Adding \(-3\) and \(-4\).
 
 1. Represent \(-3\) and \(-4\) in two's complement for a single byte:
-   \[
-   +3 = 00000011, \quad -3 = \text{two's complement of } +3 = 11111101
-   \]
-   \[
-   +4 = 00000100, \quad -4 = \text{two's complement of } +4 = 11111100
-   \]
+\[
+	+3 = 00000011, \quad -3 = \text{two's complement of } +3 = 11111101
+\]
+\[
+	+4 = 00000100, \quad -4 = \text{two's complement of } +4 = 11111100
+\]
 
 2. Add the two numbers:
-   \[
-   \begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c@{}c@{}c}
-       & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\ 
-     + & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\ \hline
-       & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 \\ 
-   \end{array}
-   \]
+\[
+	\begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c@{}c@{}c}
+		  & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
+		+ & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 \\ \hline
+		  & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 \\
+	\end{array}
+\]
 
 3. Handle the carry:
-   - The result of the addition is \(11111011\).
-   - In two's complement, the carry is ignored, so the final result is:
-     \[
-     11111011 = -7
-     \]
+- The result of the addition is \(11111011\).
+- In two's complement, the carry is ignored, so the final result is:
+\[
+	11111011 = -7
+\]
 
 \textbf{Explanation:}
 - In two's complement, the carry bit is discarded, unlike in one's complement.
 - The result of \(-3 + -4 = -7\), as expected.
 
 \begin{center}
-\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
-    % Nodes
-    \node (A) {Binary for $-3$ \\ $11111101$};
-    \node (B) [below of=A, yshift=-1cm] {Binary for $-4$ \\ $11111100$};
-    \node (Add) [below of=B, yshift=-1cm, draw, circle] {Add};
-    \node (Result) [below of=Add, yshift=-1cm] {Final Result \\ $11111011 = -7$};
+	\begin{tikzpicture}[node distance=2cm, every node/.style={draw, rectangle, rounded corners, align=center}]
+		% Nodes
+		\node (A) {Binary for $-3$ \\ $11111101$};
+		\node (B) [below of=A, yshift=-1cm] {Binary for $-4$ \\ $11111100$};
+		\node (Add) [below of=B, yshift=-1cm, draw, circle] {Add};
+		\node (Result) [below of=Add, yshift=-1cm] {Final Result \\ $11111011 = -7$};
 
-    % Arrows
-    \draw[->] (A) -- (Add);
-    \draw[->] (B) -- (Add);
-    \draw[->] (Add) -- (Result);
-\end{tikzpicture}
+		% Arrows
+		\draw[->] (A) -- (Add);
+		\draw[->] (B) -- (Add);
+		\draw[->] (Add) -- (Result);
+	\end{tikzpicture}
 \end{center}
 
 \textbf{Note:} Two's complement simplifies arithmetic operations by eliminating the need to add back the carry. It is the most commonly used method for representing signed integers in modern computing systems.
+
+\chapter{Microarchitecture}
+
+\section{Computer Architecture Overview}
+\begin{tikzpicture}[
+		>=Latex,            % arrow tip
+		node distance=2.5cm,
+		font=\small,
+		align=center
+	]
+
+	%--- Processor, Memory, and I/O subsystem blocks
+	\node[draw, minimum width=2.5cm, minimum height=3cm] (processor) {Processor};
+	\node[draw, minimum width=2.5cm, minimum height=3cm, right=6cm of processor] (memory) {Memory};
+	\node[draw, minimum width=2.5cm, minimum height=3cm, below=4cm of memory] (iosubsystem) {I/O Subsystem};
+
+	%--- Buses between Processor and Memory
+	% Address Bus
+	\draw[->] (processor.east)++(0,0.8) --
+	node[above]{\textbf{Address Bus}}
+	($(memory.west)+(0,0.8)$);
+
+	% Data Bus
+	\draw[<->] (processor.east) --
+	node[above]{\textbf{Data Bus}}
+	(memory.west);
+
+	% Control Bus
+	\draw[->] (processor.east)++(0,-0.8) --
+	node[above]{\textbf{Control Bus}}
+	($(memory.west)+(0,-0.8)$);
+
+	%--- Buses between Memory and I/O Subsystem
+	% Address Bus
+	\draw[->] ($(memory.south)+(0.6,0)$) --
+	node[right, xshift=0.1cm]{\textbf{Address Bus}}
+	($(iosubsystem.north)+(0.6,0)$);
+
+	% Data Bus
+	\draw[<->] (memory.south) --
+	node[right]{\textbf{Data Bus}}
+	(iosubsystem.north);
+
+	% Control Bus
+	\draw[->] ($(memory.south)+(-0.6,0)$) --
+	node[right, xshift=-0.1cm]{\textbf{Control Bus}}
+	($(iosubsystem.north)+(-0.6,0)$);
+
+	%--- I/O Devices (circles off to the right, for example)
+	\node[draw, circle, right=2cm of iosubsystem] (iodev1) {I/O\\device};
+	\node[draw, circle, above=1.2cm of iodev1] (iodev2) {I/O\\device};
+	\node[draw, circle, below=1.2cm of iodev1] (iodev3) {I/O\\device};
+
+	\draw[->] (iosubsystem.east) -- (iodev1.west);
+	\draw[->] (iosubsystem.east |- iodev2.west) -- (iodev2.west);
+	\draw[->] (iosubsystem.east |- iodev3.west) -- (iodev3.west);
+
+\end{tikzpicture}
+\subsection{Address Bus}
+
+The address bus is a critical component in a computer's architecture, responsible for specifying the memory addresses that the processor will read from or write to. The width of the address bus determines the maximum amount of memory that can be addressed by the system.
+
+\textbf{Address Bus Width and Memory Capacity:}
+
+- \textbf{8-bit Address Bus:}
+- Can address \(2^8 = 256\) memory locations.
+- Each memory location typically holds 1 byte of data.
+- Total addressable memory: 256 bytes.
+
+- \textbf{16-bit Address Bus:}
+- Can address \(2^{16} = 65,536\) memory locations.
+- Each memory location typically holds 1 byte of data.
+- Total addressable memory: 65,536 bytes (or 64 KB).
+
+- \textbf{32-bit Address Bus:}
+- Can address \(2^{32} = 4,294,967,296\) memory locations.
+- Each memory location typically holds 1 byte of data.
+- Total addressable memory: 4,294,967,296 bytes (or 4 GB).
+
+- \textbf{64-bit Address Bus:}
+- Can address \(2^{64} = 18,446,744,073,709,551,616\) memory locations.
+- Each memory location typically holds 1 byte of data.
+- Total addressable memory: 18,446,744,073,709,551,616 bytes (or 16 exabytes).
+
+\textbf{Example: 16-bit Address Bus}
+
+For a 16-bit address bus, the number of unique addresses is calculated as follows:
+\[
+	2^{16} = 65,536 \text{ addresses}
+\]
+Each address corresponds to a unique memory cell, allowing the processor to access up to 65,536 different memory locations. If each memory location holds 1 byte, the total addressable memory is 65,536 bytes (or 64 KB).
+
+\textbf{Diagram:}
+
+\begin{center}
+	\begin{tikzpicture}[
+			>=Latex,            % arrow tip
+			node distance=2.5cm,
+			font=\small,
+			align=center
+		]
+
+		%--- Processor and Memory blocks
+		\node[draw, minimum width=2.5cm, minimum height=3cm] (processor) {Processor};
+		\node[draw, minimum width=2.5cm, minimum height=3cm, right=6cm of processor] (memory) {Memory};
+
+		%--- Address Bus
+		\draw[->] (processor.east)++(0,0.8) --
+		node[above]{\textbf{Address Bus (16-bit)}}
+		($(memory.west)+(0,0.8)$);
+
+		%--- Data Bus
+		\draw[<->] (processor.east) --
+		node[above]{\textbf{Data Bus}}
+		(memory.west);
+
+		%--- Control Bus
+		\draw[->] (processor.east)++(0,-0.8) --
+		node[above]{\textbf{Control Bus}}
+		($(memory.west)+(0,-0.8)$);
+
+	\end{tikzpicture}
+\end{center}
+
+The address bus plays a crucial role in determining the system's memory capacity and overall performance. A wider address bus allows for more memory to be accessed, which is essential for modern applications and operating systems.
+
+\subsection{Data Bus}
+
+The data bus is a bidirectional pathway that transfers data between the processor, memory, and I/O devices. It plays a crucial role in the fetch-execute cycle, enabling the processor to read instructions and data from memory and write results back to memory.
+
+\textbf{Multidirectionality in the Fetch-Execute Cycle:}
+1. \textbf{Fetch:} The processor uses the data bus to read an instruction from memory.
+2. \textbf{Decode:} The instruction is decoded internally by the processor.
+3. \textbf{Execute:} The processor may read or write data to/from memory or I/O devices using the data bus.
+
+\textbf{Bandwidth and Cell Size:}
+- The width of the data bus determines the amount of data transferred in one cycle.
+- A wider data bus can transfer more data per cycle, increasing overall system performance.
+- For example, a 32-bit data bus can transfer 4 bytes per cycle, while a 64-bit data bus can transfer 8 bytes per cycle.
+
+\textbf{Example: 32-bit Data Bus}
+
+For a 32-bit data bus, the amount of data transferred per cycle is calculated as follows:
+\[
+	\text{Data per cycle} = 32 \text{ bits} = 4 \text{ bytes}
+\]
+
+\textbf{Diagram:}
+
+\begin{center}
+	\begin{tikzpicture}[
+			>=Latex,            % arrow tip
+			node distance=2.5cm,
+			font=\small,
+			align=center
+		]
+
+		%--- Processor and Memory blocks
+		\node[draw, minimum width=2.5cm, minimum height=3cm] (processor) {Processor};
+		\node[draw, minimum width=2.5cm, minimum height=3cm, right=6cm of processor] (memory) {Memory};
+
+		%--- Data Bus
+		\draw[<->] (processor.east) --
+		node[above]{\textbf{Data Bus (32-bit)}}
+		(memory.west);
+
+	\end{tikzpicture}
+\end{center}
+
+The data bus's bidirectional nature and bandwidth are critical for efficient data transfer, directly impacting the system's speed and performance.
+
+\subsection{Processor Components}
+
+The processor, also known as the Central Processing Unit (CPU), is the brain of the computer. It performs calculations, executes instructions, and manages data flow within the system. Key components of the processor include registers, the program counter (PC), and the EFLAGS register.
+
+\subsubsection{Registers}
+
+Registers are small, fast storage locations within the CPU used to hold data temporarily during execution. They are crucial for the processor's operation, allowing quick access to frequently used values. In this architecture, we have general-purpose registers and special-purpose registers.
+
+\textbf{General-Purpose Registers:}
+- The CPU has six general-purpose registers, named \(r0\) to \(r5\).
+- Each register can store 16 bits of data.
+- These registers are used for various operations, such as arithmetic, logic, and data manipulation.
+
+\textbf{Example:}
+\[
+	\begin{array}{|c|c|}
+		\hline
+		\text{Register} & \text{Value (Binary)} \\
+		\hline
+		r0              & 0000000000000001      \\
+		r1              & 0000000000000010      \\
+		r2              & 0000000000000011      \\
+		r3              & 0000000000000100      \\
+		r4              & 0000000000000101      \\
+		r5              & 0000000000000110      \\
+		\hline
+	\end{array}
+\]
+
+\subsubsection{Program Counter (PC)}
+
+The Program Counter (PC) is a special-purpose register that holds the address of the next instruction to be executed. It plays a critical role in the fetch-execute cycle, ensuring the CPU processes instructions in the correct sequence.
+
+\textbf{Functionality:}
+- The PC is automatically incremented after each instruction fetch, pointing to the next instruction in memory.
+- If a jump or branch instruction is executed, the PC is updated to the target address, altering the flow of execution.
+
+\textbf{Example:}
+\[
+	\text{PC} = 0000000000001000 \quad (\text{Next instruction address})
+\]
+
+\subsubsection{EFLAGS Register}
+
+The EFLAGS register is a special-purpose, read-only register that holds the results of recent operations. It contains several flags that provide information about the state of the CPU and the outcome of arithmetic and logical operations.
+
+\textbf{Key Flags:}
+- \textbf{Zero Flag (ZF):} Indicates whether the result of an operation is zero.
+- Set to 1 if the result is zero.
+- Set to 0 if the result is non-zero.
+
+\textbf{Example:}
+\[
+	\text{EFLAGS} = \begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\text{15} & \text{14} & \text{13} & \text{12} & \text{11} & \text{10} & \text{9} & \text{8} & \text{7} & \text{6} & \text{5} & \text{4} & \text{3} & \text{2} & \text{1} & \text{0}  \\
+		\hline
+		0         & 0         & 0         & 0         & 0         & 0         & 0        & 0        & 0        & 0        & 0        & 0        & 0        & 0        & 0        & \text{ZF} \\
+		\hline
+	\end{array}
+\]
+
+\textbf{Usage:}
+- The Zero Flag is commonly used in conditional branching. For example, a jump instruction may depend on whether the Zero Flag is set, allowing the CPU to make decisions based on the results of previous operations.
+
+\textbf{Diagram:}
+\begin{center}
+	\begin{tikzpicture}[
+			>=Latex,            % arrow tip
+			node distance=2.5cm,
+			font=\small,
+			align=center
+		]
+
+		%--- Processor block
+		\node[draw, minimum width=2.5cm, minimum height=3cm] (processor) {Processor};
+
+		%--- Registers
+		\node[draw, below=1cm of processor, minimum width=2.5cm] (registers) {Registers\\(r0-r5)};
+		\draw[->] (processor.south) -- (registers.north);
+
+		%--- Program Counter
+		\node[draw, left=2cm of processor, minimum width=2.5cm] (pc) {Program Counter\\(PC)};
+		\draw[->] (processor.west) -- (pc.east);
+
+		%--- EFLAGS
+		\node[draw, right=2cm of processor, minimum width=2.5cm] (eflags) {EFLAGS\\(Zero Flag)};
+		\draw[->] (processor.east) -- (eflags.west);
+
+	\end{tikzpicture}
+\end{center}
+
+These components work together to enable the processor to execute instructions efficiently, manage data flow, and make decisions based on the results of operations.
+
+\chapter{Instruction Set}
+\begin{itemize}
+	\item We will go over all of the instructions that we will cover
+	      in this class by example, including their assembly code.
+	\item We will then learn how to represent each instruction in binary,
+	      so that the hardware can understand it.
+	\item We will work with them in binary only to start.
+	\item Later, when we get to the Assembly level, we will be able to
+	      represent the instructions in more readable form.
+\end{itemize}
+
+\section{Assembly Pseudocode Conventions}
+
+\begin{itemize}
+	\item \(R_n\): register \(n\) (where \(n\) is 0 through 5)
+	\item \(*R_n\): data in register \(n\)
+	\item \([R_n]\): memory cell at the address stored in register \(n\)
+	\item \(R_n \leftarrow x\): contents of register \(n\) are now \(x\)
+\end{itemize}
+\ex{Addition}{
+	assembly:
+	$$add R_n, R_m$$
+	pseudocode:
+	$$R_n \leftarrow * R_n + * R_m$$
+}
+
+\ex{Subtraction}{
+	assembly:
+	$$sub R_n, R_m$$
+	pseudocode:
+	$$R_n \leftarrow * R_n - * R_m$$
+}
+
+\ex{XOR}{
+	assembly:
+	$$xor R_n, R_m$$
+	pseudocode:
+	$$R_n \leftarrow * R_n ^ * R_m$$
+}
+
+\ex{Compare}{
+	assembly:
+	$$cmp R_n, R_m$$
+	pseudocode:
+	$$EFLAGS \leftarrow compare(* R_n - * R_m)$$
+}
+
+\ex{increment}{
+	assembly:
+	$$increment R_n$$
+	pseudocode:
+	$$R_n \leftarrow * R_n +1$$
+}
+
+\ex{Move: copy data from register $R_n$ into the absolute address in memory stored in $R_m$}{
+	assembly:
+	$$mov [R_n], R_m$$
+	pseudocode:
+	$$Mem[*R_n] \leftarrow * R_m$$
+	Intuition for busses:
+	The address bus carries the memory address from the processor to the memory. The data bus transfers the actual data between the processor and memory. The control bus carries control signals from the processor to coordinate the operations of the memory and I/O devices.
+}
+
+\ex{Move: copy data from the absolute address in memory stored in $R_m$ into register $R_n$}{
+	assembly:
+	$$mov R_n, [R_m]$$
+	pseudocode:
+	$$R_n \leftarrow Mem[*R_m]$$
+	Intuition for busses:
+	The address bus carries the memory address from the processor to the memory. The data bus transfers the actual data between the processor and memory. The control bus carries control signals from the processor to coordinate the operations of the memory and I/O devices.
+}
+
+\ex{Jump if equals}{
+	assembly:
+	$$jeq [R_n]$$
+	pseudocode:
+	$$if (ZF == 1) \text{ then } PC \leftarrow * R_n$$
+	Intuition: read (jump to that address) $R_n$ if the zero flag is 1.
+}
+
+\ex{move num to $R_n$}{
+	assembly:
+	$$mov R_n, num$$
+	pseudocode:
+	$$R_n \leftarrow num$$
+}
+\qs{Starting Conditions and Execution Flow}{%
+	Given the following initial program state and instructions:
+
+	\begin{itemize}
+		\item \(\text{PC} = 0010\)
+		\item \(\text{Mem}[0010] = \texttt{mov R0, 1010}\)
+		\item \(\text{Mem}[0011] = \texttt{mov R1, 0001}\)
+		\item \(\text{Mem}[0100] = \texttt{mov R4, 0110}\)
+		\item \(\text{Mem}[0101] = \texttt{mov R5, 1011}\)
+		\item \(\text{Mem}[0110] = \texttt{inc R1}\)
+		\item \(\text{Mem}[0111] = \texttt{cmp R0, R1}\)
+		\item \(\text{Mem}[1000] = \texttt{je R5}\)
+		\item \(\text{Mem}[1001] = \texttt{cmp R0, R0}\)
+		\item \(\text{Mem}[1010] = \texttt{je R4}\)
+		\item \(\text{Mem}[1011] = \texttt{halt}\)
+	\end{itemize}
+
+	Explain, step by step, how this program executes until \(\texttt{halt}\).%
+}
+
+\sol
+Here is the execution walkthrough:
+
+\begin{enumerate}
+	\item \textbf{PC = 0010:}
+	      \(\texttt{mov R0, 1010}\).
+	      This loads \(\texttt{1010}\) (binary) into \(R_0\).
+	      Then \(\text{PC}\leftarrow 0011\).
+
+	\item \textbf{PC = 0011:}
+	      \(\texttt{mov R1, 0001}\).
+	      Loads \(\texttt{0001}\) into \(R_1\).
+	      Then \(\text{PC}\leftarrow 0100\).
+
+	\item \textbf{PC = 0100:}
+	      \(\texttt{mov R4, 0110}\).
+	      Loads \(\texttt{0110}\) into \(R_4\).
+	      Then \(\text{PC}\leftarrow 0101\).
+
+	\item \textbf{PC = 0101:}
+	      \(\texttt{mov R5, 1011}\).
+	      Loads \(\texttt{1011}\) into \(R_5\).
+	      Then \(\text{PC}\leftarrow 0110\).
+
+	\item \textbf{PC = 0110:}
+	      \(\texttt{inc R1}\).
+	      Increments \(R_1\) from \(\texttt{0001}\) to \(\texttt{0010}\).
+	      Then \(\text{PC}\leftarrow 0111\).
+
+	\item \textbf{PC = 0111:}
+	      \(\texttt{cmp R0, R1}\).
+	      Compares \(R_0\) (\(\texttt{1010}\)) with \(R_1\) (\(\texttt{0010}\)).
+	      Since they differ, the zero/equal flag is cleared.
+	      Then \(\text{PC}\leftarrow 1000\).
+
+	\item \textbf{PC = 1000:}
+	      \(\texttt{je R5}\) (jump if equal).
+	      The zero flag is 0, so no jump occurs.
+	      Then \(\text{PC}\leftarrow 1001\).
+
+	\item \textbf{PC = 1001:}
+	      \(\texttt{cmp R0, R0}\).
+	      Compares \(R_0\) with itself, which sets the zero flag to 1.
+	      Then \(\text{PC}\leftarrow 1010\).
+
+	\item \textbf{PC = 1010:}
+	      \(\texttt{je R4}\).
+	      Because the zero flag is 1, we jump to the address stored in \(R_4\),
+	      which is \(\texttt{0110}\).
+	      So \(\text{PC}\leftarrow 0110\), looping back.
+
+	\item The loop repeats from \(\texttt{inc R1}\) until eventually \(R_1\)
+	      equals \(R_0\) (\(\texttt{1010}\)).
+	      At that point, the compare (\(\texttt{cmp R0, R1}\)) sets the zero flag,
+	      and \(\texttt{je R5}\) at \(\text{PC}=1000\) finally jumps to \(R_5 = \texttt{1011}\),
+	      which contains the \(\texttt{halt}\) instruction.
+\end{enumerate}
+
+This mechanism effectively keeps incrementing \(R_1\) until it matches \(R_0\),
+then halts.
+
+\section{Instruction Encoding for 16-bit Memory Cells}
+
+Have been talking about 16-bit memory cells. Thus, our instructions and their parameters need to be able to be described and differentiated in 16-bits.
+
+\subsection*{Encoding Rules}
+\begin{itemize}
+	\item \textbf{Zero-argument instructions}
+	      \begin{itemize}
+		      \item \texttt{halt} (only one): \texttt{0000 0000 0000 0000}
+	      \end{itemize}
+
+	\item \textbf{Single-argument instructions}
+	      \begin{itemize}
+		      \item First two bits are always \texttt{11}.
+		      \item Use the first five bits to encode the instruction.
+		      \item Use the remaining eleven bits to represent the argument.
+	      \end{itemize}
+
+	\item \textbf{Two-argument instructions}
+	      \begin{itemize}
+		      \item Use the first four bits to encode the instruction.
+		      \item Use the next six bits for the first argument.
+		      \item Use the final six bits for the second argument.
+	      \end{itemize}
+\end{itemize}
+
+\section{Assemble}
+
+To assemble a program is to convert it from human-readable instructions to
+their binary representations
+
+\pagebreak
+\begin{table}[h]
+	\centering
+	% Reduce font size if needed
+	\small
+	% The total width is \textwidth, and we want 5 columns:
+	%  1) Instruction
+	%  2) Binary Code
+	%  3) Description
+	%  4) Arguments
+	%  5) Example
+	%
+	% 'X' columns will wrap automatically.  If you need certain columns
+	% narrower, you can use a fixed width, e.g. p{2.5cm} or similar.
+
+	\begin{tabularx}{\textwidth}{@{}l l X X X@{}}
+		\toprule
+		\textbf{Instruction} & \textbf{Binary Code}                                                                   & \textbf{Description} & \textbf{Arguments} & \textbf{Example} \\
+		\midrule
+		\texttt{halt}
+		                     & \texttt{0000 0000 0000 0000}
+		                     & halt execution
+		                     & none
+		                     & \texttt{0000 0000 0000 0000}
+		\\
+
+		\texttt{inc R\_n}
+		                     & \texttt{1100 0}
+		                     & register R\_n gets (contents of R\_n) + 1
+		                     & 11-bit argument representing \emph{n}
+		                     & \texttt{inc R3}                                                                                                                                       \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{1100 0000 0000 0011}
+		\\
+
+		\texttt{jmp num}
+		                     & \texttt{1100 1}
+		                     & jump to \emph{relative} address \emph{num} by adding \emph{num} to the program counter
+		                     & 11-bit argument representing \emph{num}
+		                     & \texttt{jmp 25}                                                                                                                                       \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{1100 1000 0001 1001}
+		\\
+
+		\texttt{jne num}
+		                     & \texttt{1101 0}
+		                     & jump to relative address \emph{num} if last \texttt{cmp} was unequal
+		                     & 11-bit argument representing \emph{num}
+		                     & \texttt{jne 13}                                                                                                                                       \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{1101 0000 0000 1101}
+		\\
+
+		\texttt{je [R\_n]}
+		                     & \texttt{1101 1}
+		                     & jump to \emph{absolute} address in R\_n if last \texttt{cmp} was equal
+		                     & 11-bit argument representing \emph{n}
+		                     & \texttt{je [R3]}                                                                                                                                      \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{1101 1000 0000 0011}
+		\\
+
+		\texttt{add R\_n, R\_m}
+		                     & \texttt{0001}
+		                     & R\_n gets (R\_n + R\_m)
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{add R3, R5}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0001 0000 1100 0101}
+		\\
+
+		\texttt{sub R\_n, R\_m}
+		                     & \texttt{0010}
+		                     & R\_n gets (R\_n - R\_m)
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{sub R3, R2}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0010 0010 0100 1000}
+		\\
+
+		\texttt{xor R\_n, R\_m}
+		                     & \texttt{0011}
+		                     & R\_n gets bitwise XOR of R\_n and R\_m
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{xor R2, R3}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0011 0000 1000 0011}
+		\\
+
+		\texttt{cmp R\_n, R\_m}
+		                     & \texttt{0100}
+		                     & compare R\_n and R\_m; set flags accordingly
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{cmp R5, R3}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0100 0001 1100 0011}
+		\\
+
+		\texttt{mov R\_n, num}
+		                     & \texttt{0101}
+		                     & R\_n gets the value \emph{num}
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{mov R5, 61}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0101 0001 1111 1101}
+		\\
+
+		\texttt{mov R\_n, R\_m}
+		                     & \texttt{0110}
+		                     & R\_n gets the contents of R\_m
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{mov R3, R1}                                                                                                                                   \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0110 0001 0100 0001}
+		\\
+
+		\texttt{mov [R\_n], R\_m}
+		                     & \texttt{0111}
+		                     & copy contents of R\_m to memory address stored in R\_n
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{mov [R3], R1}                                                                                                                                 \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{0111 0001 0100 0001}
+		\\
+
+		\texttt{mov R\_n, [R\_m]}
+		                     & \texttt{1000}
+		                     & copy from memory address in R\_m to R\_n
+		                     & Two 6-bit arguments (first = n, next = m)
+		                     & \texttt{mov R3, [R1]}                                                                                                                                 \\
+		                     &
+		                     &
+		                     &
+		                     & \texttt{1000 0001 0100 0001}
+		\\
+		\bottomrule
+	\end{tabularx}
+	\caption{Summary of instructions, binary codes, and examples.}
+	\label{tab:instructions}
+\end{table}
+
+\pagebreak
+
+
+\section{Binary to Hexadecimal Conversion}
+
+Converting binary numbers to hexadecimal is straightforward because each hexadecimal digit represents four binary digits (bits). Here are the steps:
+
+\begin{enumerate}
+	\item \textbf{Group the binary digits into sets of four}, starting from the right. Add leading zeros if necessary to make a complete set.
+	\item \textbf{Convert each group of four binary digits to its hexadecimal equivalent} using the following table:
+
+	      \begin{center}
+		      \begin{tabular}{|c|c|}
+			      \hline
+			      Binary & Hexadecimal \\
+			      \hline
+			      0000   & 0           \\
+			      0001   & 1           \\
+			      0010   & 2           \\
+			      0011   & 3           \\
+			      0100   & 4           \\
+			      0101   & 5           \\
+			      0110   & 6           \\
+			      0111   & 7           \\
+			      1000   & 8           \\
+			      1001   & 9           \\
+			      1010   & A           \\
+			      1011   & B           \\
+			      1100   & C           \\
+			      1101   & D           \\
+			      1110   & E           \\
+			      1111   & F           \\
+			      \hline
+		      \end{tabular}
+	      \end{center}
+\end{enumerate}
+
+\textbf{Example:} Convert the binary number \(11010110\) to hexadecimal.
+
+\begin{enumerate}
+	\item Group the binary digits: \(1101\) \(0110\).
+	\item Convert each group:
+	      \[
+		      1101 = D, \quad 0110 = 6
+	      \]
+	\item Combine the hexadecimal digits: \(D6\).
+\end{enumerate}
+
+Thus, \(11010110_2 = D6_{16}\).
+
+\section{Machine Code Decoding}
+
+\subsection{Hexadecimal Machine Code}
+\begin{verbatim}
+5000 504A 5094 7040 C000 4042 D7FC 0000
+\end{verbatim}
+
+\subsection{Instruction Breakdown}
+\begin{itemize}
+	\item \textbf{5000}
+	      \begin{itemize}
+		      \item Binary: 0101 0000 0000 0000
+		      \item Instruction: \texttt{MOV R0, 0}
+	      \end{itemize}
+
+	\item \textbf{504A}
+	      \begin{itemize}
+		      \item Binary: 0101 0000 0100 1010
+		      \item Instruction: \texttt{MOV R1, 10}
+	      \end{itemize}
+
+	\item \textbf{5094}
+	      \begin{itemize}
+		      \item Binary: 0101 0000 1001 0100
+		      \item Instruction: \texttt{MOV R2, 20}
+	      \end{itemize}
+
+	\item \textbf{7040}
+	      \begin{itemize}
+		      \item Binary: 0111 0000 0100 0000
+		      \item Instruction: \texttt{MOV [R1], R0}
+	      \end{itemize}
+
+	\item \textbf{C000}
+	      \begin{itemize}
+		      \item Binary: 1100 0000 0000 0000
+		      \item Instruction: \texttt{INC R0}
+	      \end{itemize}
+
+	\item \textbf{C001}
+	      \begin{itemize}
+		      \item Binary: 1100 0000 0000 0001
+		      \item Instruction: \texttt{INC R1}
+	      \end{itemize}
+
+	\item \textbf{4042}
+	      \begin{itemize}
+		      \item Binary: 0100 0000 0100 0010
+		      \item Instruction: \texttt{CMP R1, R2}
+	      \end{itemize}
+
+	\item \textbf{D7FC}
+	      \begin{itemize}
+		      \item Binary: 1101 0111 1111 1100
+		      \item Instruction: \texttt{JNE -4}
+	      \end{itemize}
+
+	\item \textbf{0000}
+	      \begin{itemize}
+		      \item Binary: 0000 0000 0000 0000
+		      \item Instruction: \texttt{HALT}
+	      \end{itemize}
+\end{itemize}
+
+\subsection{Program Behavior}
+\begin{enumerate}
+	\item \texttt{MOV R0, 0} sets register \texttt{R0} to 0.
+	\item \texttt{MOV R1, 10} sets register \texttt{R1} to 10.
+	\item \texttt{MOV R2, 20} sets register \texttt{R2} to 20.
+	\item \texttt{MOV [R1], R0} writes the contents of \texttt{R0} into memory at the address held by \texttt{R1}.
+	\item \texttt{INC R0} increments \texttt{R0}.
+	\item \texttt{INC R1} increments \texttt{R1}.
+	\item \texttt{CMP R1, R2} compares \texttt{R1} and \texttt{R2}.
+	\item \texttt{JNE -4} jumps back 4 instructions if \texttt{R1} is not equal to \texttt{R2}.
+	\item \texttt{HALT} ends execution.
+\end{enumerate}
+
+\paragraph{Summary:}
+This program uses a loop to:
+\begin{itemize}
+	\item Increment \texttt{R0} and \texttt{R1}
+	\item Store \texttt{R0}’s value at memory address \texttt{R1}
+	\item Stop once \texttt{R1} reaches \texttt{R2} (i.e., 20)
+\end{itemize}
+In effect, it writes an increasing sequence of values (0,\,1,\,2,\,$\ldots$) into consecutive memory locations starting at address 10, and halts once it has written the value 9 at address 19 (because at that point \texttt{R1} becomes 20, matching \texttt{R2}, so the loop ends).
+
+\section{Fetch-Decode-Execute-Store Cycle}
+
+The fetch-decode-execute-store cycle is the fundamental process by which a computer executes instructions. This cycle involves several key components: the Program Counter (PC), Instruction Register (IR), and various other registers and buses.
+
+\subsection{Fetch}
+
+1. The PC holds the address of the next instruction to be executed.
+2. The address is sent to memory via the address bus.
+3. The instruction at that address is fetched from memory and loaded into the IR.
+
+\subsection{Decode}
+
+1. The control unit reads the instruction in the IR.
+2. The instruction is decoded to determine the operation to be performed and the operands involved.
+
+\subsection{Execute}
+
+1. The control unit signals the appropriate components (ALU, registers, etc.) to perform the operation.
+2. The ALU or other execution units carry out the operation using the operands.
+
+\subsection{Store}
+
+1. The result of the operation is stored in the appropriate location (register or memory).
+2. The PC is updated to point to the next instruction, and the cycle repeats.
+
+\textbf{Diagram:}
+
+\begin{center}
+	\begin{tikzpicture}[
+			>=Latex,            % arrow tip
+			node distance=2.5cm,
+			font=\small,
+			align=center
+		]
+
+		%--- Processor block
+		\node[draw, minimum width=2.5cm, minimum height=3cm] (processor) {Processor};
+
+		%--- Program Counter
+		\node[draw, left=2cm of processor, minimum width=2.5cm] (pc) {Program Counter\\(PC)};
+		\draw[->] (processor.west) -- (pc.east);
+
+		%--- Instruction Register
+		\node[draw, right=2cm of processor, minimum width=2.5cm] (ir) {Instruction Register\\(IR)};
+		\draw[->] (processor.east) -- (ir.west);
+
+		%--- Memory
+		\node[draw, below=2cm of processor, minimum width=2.5cm] (memory) {Memory};
+		\draw[->] (processor.south) -- (memory.north);
+
+		%--- Control Unit
+		\node[draw, above=2cm of processor, minimum width=2.5cm] (control) {Control Unit};
+		\draw[->] (processor.north) -- (control.south);
+
+	\end{tikzpicture}
+\end{center}
+
+This cycle ensures that instructions are processed sequentially and efficiently, allowing the computer to perform complex tasks by breaking them down into simpler operations.
+
+\section{Five-Stage Pipeline for Operations}
+
+The five-stage pipeline is a common technique used in computer architecture to improve instruction throughput. Each instruction passes through five distinct stages: Fetch, Decode, Execute, Memory Access, and Write Back. Below are the details of each stage:
+
+\subsection{1. Fetch (IF)}
+
+\textbf{Instruction Fetch:}
+- The instruction is fetched from memory.
+- The Program Counter (PC) holds the address of the instruction to be fetched.
+- The fetched instruction is stored in the Instruction Register (IR).
+
+\textbf{Key Points:}
+- The PC is incremented to point to the next instruction.
+- This stage involves reading from memory, which can introduce delays if the memory access time is significant.
+
+\subsection{2. Decode (ID)}
+
+\textbf{Instruction Decode:}
+- The fetched instruction is decoded to determine the operation and the operands.
+- The control unit generates the necessary control signals based on the decoded instruction.
+- The source operands are read from the register file.
+
+\textbf{Key Points:}
+- This stage involves interpreting the binary instruction and preparing the necessary data for execution.
+- The control signals generated will guide the subsequent stages.
+
+\subsection{3. Execute (EX)}
+
+\textbf{Execution:}
+- The actual operation specified by the instruction is performed.
+- This could involve arithmetic or logical operations performed by the Arithmetic Logic Unit (ALU).
+- For branch instructions, the target address is calculated.
+
+\textbf{Key Points:}
+- The ALU performs the required computation.
+- The result of the computation is temporarily stored for the next stage.
+
+\subsection{4. Memory Access (MEM)}
+
+\textbf{Memory Access:}
+- If the instruction involves memory access (e.g., load or store), the memory address is accessed.
+- For load instructions, data is read from memory and stored in a temporary register.
+- For store instructions, data is written to the specified memory address.
+
+\textbf{Key Points:}
+- This stage is crucial for instructions that interact with memory.
+- Memory access can introduce delays due to varying memory access times.
+
+\subsection{5. Write Back (WB)}
+
+\textbf{Write Back:}
+- The result of the instruction is written back to the register file.
+- This updates the destination register with the computed value or the data read from memory.
+
+\textbf{Key Points:}
+- This stage ensures that the results of the instruction are stored for future use.
+- The pipeline is now ready to process the next instruction.
+
+\textbf{Diagram:}
+
+\begin{center}
+	\begin{tikzpicture}[
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
+
+		% Nodes for each stage
+		\node (IF) {Fetch (IF)};
+		\node (ID) [right of=IF, xshift=2cm] {Decode (ID)};
+		\node (EX) [right of=ID, xshift=2cm] {Execute (EX)};
+		\node (MEM) [right of=EX, xshift=2cm] {Memory Access (MEM)};
+		\node (WB) [right of=MEM, xshift=2cm] {Write Back (WB)};
+
+		% Arrows between stages
+		\draw[->] (IF) -- (ID);
+		\draw[->] (ID) -- (EX);
+		\draw[->] (EX) -- (MEM);
+		\draw[->] (MEM) -- (WB);
+
+	\end{tikzpicture}
+\end{center}
+
+The five-stage pipeline allows for overlapping execution of multiple instructions, significantly improving the instruction throughput and overall performance of the processor.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{5stage.png}
+	\caption{Five-Stage Pipeline for Operations}
+	\label{fig:5stage}
+\end{figure}
+
+\subsection{Example of parallel processing in 5 stage pipeline}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabularx}{\textwidth}{@{}l*{5}{>{\centering\arraybackslash}X}@{}}
+		\toprule
+		\textbf{Cycle} & \textbf{IF} & \textbf{ID} & \textbf{EX} & \textbf{MEM} & \textbf{WB} \\
+		\midrule
+		1              & MOV R1 [R2] &             &             &              &             \\
+		2              & ADD R3 R4   & MOV R1 [R2] &             &              &             \\
+		3              & MOV [R5] R6 & ADD R3 R4   & MOV R1 [R2] &              &             \\
+		4              &             & MOV [R5] R6 & ADD R3 R4   & MOV R1 [R2]  &             \\
+		5              &             &             & MOV [R5] R6 & ADD R3 R4    & MOV R1 [R2] \\
+		6              &             &             &             & MOV [R5] R6  & ADD R3 R4   \\
+		7              &             &             &             &              & MOV [R5] R6 \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Pipeline Execution Table}
+\end{table}
+
+\section{Stalling and Forwarding in a 5-Stage Pipeline}
+
+In a 5-stage pipeline, conflicts can arise when instructions that depend on the results of previous instructions are executed concurrently. Two common methods to overcome these conflicts are stalling and forwarding.
+
+\subsection{Stalling}
+
+Stalling, also known as pipeline interlock, involves pausing the pipeline until the data required by an instruction is available. This method ensures that instructions are executed in the correct order, but it can reduce the overall performance due to idle cycles.
+
+\textbf{Example:}
+Consider the following sequence of instructions:
+\begin{verbatim}
+1. MOV R1, [R2]
+2. ADD R3, R1
+\end{verbatim}
+
+In this case, the ADD instruction depends on the result of the MOV instruction. To resolve this conflict, the pipeline can be stalled until the MOV instruction completes.
+
+\textbf{Diagram:}
+\begin{center}
+	\begin{tikzpicture}[
+		node distance=2cm,
+		every node/.style={draw, rectangle, rounded corners, align=center}
+	]
+
+	% Nodes for each stage
+	\node (IF1) {IF};
+	\node (ID1) [right of=IF1, xshift=2cm] {ID};
+	\node (EX1) [right of=ID1, xshift=2cm] {EX};
+	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+
+	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+	\node (ID2) [right of=IF2, xshift=2cm] {ID};
+	\node (EX2) [right of=ID2, xshift=2cm] {EX};
+	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+
+	% Arrows between stages
+	\draw[->] (IF1) -- (ID1);
+	\draw[->] (ID1) -- (EX1);
+	\draw[->] (EX1) -- (MEM1);
+	\draw[->] (MEM1) -- (WB1);
+
+	\draw[->] (IF2) -- (ID2);
+	\draw[->] (ID2) -- (EX2);
+	\draw[->] (EX2) -- (MEM2);
+	\draw[->] (MEM2) -- (WB2);
+
+	% Stalling
+	\node[draw=none, yshift=20px] at (ID2) {Stall};
+
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Forwarding}
+
+Forwarding, also known as bypassing, involves passing the result of an instruction directly to a subsequent instruction that needs it, without waiting for it to be written back to the register file. This method reduces the number of idle cycles and improves performance.
+
+\textbf{Example:}
+Consider the following sequence of instructions:
+\begin{verbatim}
+1. MOV R1, [R2]
+2. ADD R3, R1
+\end{verbatim}
+
+In this case, the result of the MOV instruction can be forwarded directly to the ADD instruction, allowing it to proceed without stalling.
+
+\textbf{Diagram:}
+\begin{center}
+	\begin{tikzpicture}[
+		node distance=2cm,
+		every node/.style={draw, rectangle, rounded corners, align=center}
+	]
+
+	% Nodes for each stage
+	\node (IF1) {IF};
+	\node (ID1) [right of=IF1, xshift=2cm] {ID};
+	\node (EX1) [right of=ID1, xshift=2cm] {EX};
+	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+
+	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+	\node (ID2) [right of=IF2, xshift=2cm] {ID};
+	\node (EX2) [right of=ID2, xshift=2cm] {EX};
+	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+
+	% Arrows between stages
+	\draw[->] (IF1) -- (ID1);
+	\draw[->] (ID1) -- (EX1);
+	\draw[->] (EX1) -- (MEM1);
+	\draw[->] (MEM1) -- (WB1);
+
+	\draw[->] (IF2) -- (ID2);
+	\draw[->] (ID2) -- (EX2);
+	\draw[->] (EX2) -- (MEM2);
+	\draw[->] (MEM2) -- (WB2);
+
+	% Forwarding
+	\draw[->, dashed] (EX1) -- (EX2);
+
+	\end{tikzpicture}
+\end{center}
+
+By using stalling and forwarding, the pipeline can handle data hazards and ensure correct execution of instructions while maintaining high performance.
+
+\section{Handling Simultaneous Memory Reads in IF and WB Stages}
+
+In a pipelined processor, simultaneous memory reads in the Instruction Fetch (IF) and Write Back (WB) stages can lead to conflicts and performance degradation. Two common approaches to address this issue are stalling and using the Harvard architecture.
+
+\subsection{Stalling}
+
+Stalling involves pausing the pipeline to resolve memory access conflicts. When a memory read conflict is detected, the pipeline is stalled until the memory access is completed. This ensures that the correct data is read, but it can reduce overall performance due to idle cycles.
+
+\textbf{Example:}
+Consider the following sequence of instructions:
+\begin{verbatim}
+1. MOV R1, [R2]
+2. ADD R3, R1
+\end{verbatim}
+
+If both instructions require memory access at the same time, the pipeline can be stalled to resolve the conflict.
+
+\textbf{Diagram:}
+\begin{center}
+	\begin{tikzpicture}[
+		node distance=2cm,
+		every node/.style={draw, rectangle, rounded corners, align=center}
+	]
+
+	% Nodes for each stage
+	\node (IF1) {IF};
+	\node (ID1) [right of=IF1, xshift=2cm] {ID};
+	\node (EX1) [right of=ID1, xshift=2cm] {EX};
+	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+
+	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+	\node (ID2) [right of=IF2, xshift=2cm] {ID};
+	\node (EX2) [right of=ID2, xshift=2cm] {EX};
+	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+
+	% Arrows between stages
+	\draw[->] (IF1) -- (ID1);
+	\draw[->] (ID1) -- (EX1);
+	\draw[->] (EX1) -- (MEM1);
+	\draw[->] (MEM1) -- (WB1);
+
+	\draw[->] (IF2) -- (ID2);
+	\draw[->] (ID2) -- (EX2);
+	\draw[->] (EX2) -- (MEM2);
+	\draw[->] (MEM2) -- (WB2);
+
+	% Stalling
+	\node[draw=none, yshift=20px] at (ID2) {Stall};
+
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Harvard Architecture}
+
+The Harvard architecture addresses memory access conflicts by using separate memory spaces for instructions and data. This allows simultaneous access to both instruction and data memory, eliminating conflicts and improving performance.
+
+\textbf{Example:}
+In the Harvard architecture, the instruction memory and data memory are accessed independently, allowing the IF stage to fetch instructions while the WB stage writes data.
+
+\textbf{Diagram:}
+\begin{center}
+	\begin{tikzpicture}[
+		node distance=2cm,
+		every node/.style={draw, rectangle, rounded corners, align=center}
+	]
+
+	% Nodes for each stage
+	\node (IF) {IF};
+	\node (ID) [right of=IF, xshift=2cm] {ID};
+	\node (EX) [right of=ID, xshift=2cm] {EX};
+	\node (MEM) [right of=EX, xshift=2cm] {MEM};
+	\node (WB) [right of=MEM, xshift=2cm] {WB};
+
+	% Instruction Memory
+	\node (IMEM) [above of=IF, yshift=1cm] {Instruction Memory};
+	\draw[->] (IMEM) -- (IF);
+
+	% Data Memory
+	\node (DMEM) [below of=MEM, yshift=-1cm] {Data Memory};
+	\draw[->] (MEM) -- (DMEM);
+	\draw[->] (DMEM) -- (WB);
+
+	% Arrows between stages
+	\draw[->] (IF) -- (ID);
+	\draw[->] (ID) -- (EX);
+	\draw[->] (EX) -- (MEM);
+	\draw[->] (MEM) -- (WB);
+
+	\end{tikzpicture}
+\end{center}
+
+By using separate memory spaces for instructions and data, the Harvard architecture allows for more efficient memory access and reduces the need for stalling, leading to improved overall performance.
+
+\section{Memory Pointers}
+
+\begin{itemize}[left=0pt]
+    \item When we get into C (and C++ later), we will talk a \textbf{lot} about memory indirection (pointers).
+    \item But you have already been exposed to the concept with our minimal Instruction Set!
+    \item \textbf{What is memory indirection??}
+    \item Which one feels like memory indirection?
+    \begin{itemize}
+        \item \texttt{MOV R1 [0x27]}
+        \item \texttt{MOV R1 [R2]}
+    \end{itemize}
+    \item In the first case, we are reading an absolute memory address into \texttt{register-1}.
+    \item In the second case, we are reading the memory address specified by the value of \texttt{register-2} into \texttt{register-1}.
+    \item \textbf{The second case is memory indirection, and \texttt{register-2} is acting as a pointer!}
+\end{itemize}
+\section{Memory Indirection in C++}
+
+\begin{verbatim}
+int numbers[] = {10, 20, 30, 40, 50};
+int size = sizeof(numbers) / sizeof(numbers[0]);
+// Pointer to the first element of the array
+int *ptr = numbers;
+for (int i = 0; i < size; i++) {
+	printf("Element %d: %d\n", i, *(ptr + i));
+}
+\end{verbatim}
+
+\textbf{Explanation:}
+
+This code demonstrates memory indirection using pointers in C. Here's a breakdown of how it works:
+
+1. \texttt{int numbers[] = \{10, 20, 30, 40, 50\};}
+   - An array of integers is declared and initialized with values.
+
+2. \texttt{int size = sizeof(numbers) / sizeof(numbers[0]);}
+   - The size of the array is calculated by dividing the total size of the array by the size of one element.
+
+3. \texttt{int *ptr = numbers;}
+   - A pointer \texttt{ptr} is declared and initialized to point to the first element of the array.
+
+4. \texttt{for (int i = 0; i < size; i++) \{}
+   - A loop is used to iterate through the array elements.
+
+5. The value of each element is accessed using the pointer \texttt{ptr} with memory indirection (\texttt{*(ptr + i)}) and printed.
+
+\textbf{Memory Indirection:}
+- The expression \texttt{*(ptr + i)} uses memory indirection to access the value at the memory address pointed to by \texttt{ptr} plus \texttt{i}.
+- This allows accessing array elements using pointer arithmetic, demonstrating how pointers can be used to indirectly access memory locations.
 
 \end{document}

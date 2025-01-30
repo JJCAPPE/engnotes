@@ -302,7 +302,7 @@
 
 \dfn{Matrix to Matrix Multiplication}{
 	Matrix to matrix multiplication is the non-commutative operation of multiplying two matrices together. The result is a new matrix that is the product of the two original matrices.
-	
+
 	For two matrices \(A\) and \(B\) to be multiplied, the number of columns of \(A\) must be equal to the number of rows of \(B\). If \(A\) is an \(m \times n\) matrix and \(B\) is an \(n \times p\) matrix, then their product \(C = AB\) is an \(m \times p\) matrix.
 
 	The element \(c_{ij}\) of the resulting matrix \(C\) is computed as:
@@ -346,7 +346,7 @@
 		\quad \text{and} \quad
 		B =
 		\begin{bmatrix}
-			7 & 8 & 9 \\
+			7  & 8  & 9  \\
 			10 & 11 & 12
 		\end{bmatrix}.
 	\]
@@ -360,8 +360,8 @@
 		\end{bmatrix}
 		=
 		\begin{bmatrix}
-			27 & 30 & 33 \\
-			61 & 68 & 75 \\
+			27 & 30  & 33  \\
+			61 & 68  & 75  \\
 			95 & 106 & 117
 		\end{bmatrix}.
 	\]
@@ -372,27 +372,27 @@
 	\begin{tikzpicture}
 		% Matrix A
 		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]}] (A) {
-			a_{11} & a_{12} & \cdots & a_{1n} \\
-			a_{21} & a_{22} & \cdots & a_{2n} \\
-			\vdots & \vdots & \ddots & \vdots \\
-			a_{m1} & a_{m2} & \cdots & a_{mn} \\
-		};
+				a_{11} & a_{12} & \cdots & a_{1n} \\
+				a_{21} & a_{22} & \cdots & a_{2n} \\
+				\vdots & \vdots & \ddots & \vdots \\
+				a_{m1} & a_{m2} & \cdots & a_{mn} \\
+			};
 
 		% Matrix B
 		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]},right=of A] (B) {
-			b_{11} & b_{12} & \cdots & b_{1p} \\
-			b_{21} & b_{22} & \cdots & b_{2p} \\
-			\vdots & \vdots & \ddots & \vdots \\
-			b_{n1} & b_{n2} & \cdots & b_{np} \\
-		};
+				b_{11} & b_{12} & \cdots & b_{1p} \\
+				b_{21} & b_{22} & \cdots & b_{2p} \\
+				\vdots & \vdots & \ddots & \vdots \\
+				b_{n1} & b_{n2} & \cdots & b_{np} \\
+			};
 
 		% Matrix C
 		\matrix[matrix of math nodes,left delimiter={[},right delimiter={]},right=of B] (C) {
-			c_{11} & c_{12} & \cdots & c_{1p} \\
-			c_{21} & c_{22} & \cdots & c_{2p} \\
-			\vdots & \vdots & \ddots & \vdots \\
-			c_{m1} & c_{m2} & \cdots & c_{mp} \\
-		};
+				c_{11} & c_{12} & \cdots & c_{1p} \\
+				c_{21} & c_{22} & \cdots & c_{2p} \\
+				\vdots & \vdots & \ddots & \vdots \\
+				c_{m1} & c_{m2} & \cdots & c_{mp} \\
+			};
 
 		% Labels
 		\node[left=0.5cm of A] {$A$};
@@ -401,18 +401,18 @@
 
 		% Arrows for multiplication
 		\foreach \i in {1,...,4} {
-			\draw[->] (A-\i-1.east) -- (B-1-1.north);
-			\draw[->] (A-\i-2.east) -- (B-2-1.north);
-			\draw[->] (A-\i-3.east) -- (B-3-1.north);
-			\draw[->] (A-\i-4.east) -- (B-4-1.north);
-		}
+				\draw[->] (A-\i-1.east) -- (B-1-1.north);
+				\draw[->] (A-\i-2.east) -- (B-2-1.north);
+				\draw[->] (A-\i-3.east) -- (B-3-1.north);
+				\draw[->] (A-\i-4.east) -- (B-4-1.north);
+			}
 
 		\foreach \j in {1,...,4} {
-			\draw[->] (B-1-\j.south) -- (C-1-\j.west);
-			\draw[->] (B-2-\j.south) -- (C-2-\j.west);
-			\draw[->] (B-3-\j.south) -- (C-3-\j.west);
-			\draw[->] (B-4-\j.south) -- (C-4-\j.west);
-		}
+				\draw[->] (B-1-\j.south) -- (C-1-\j.west);
+				\draw[->] (B-2-\j.south) -- (C-2-\j.west);
+				\draw[->] (B-3-\j.south) -- (C-3-\j.west);
+				\draw[->] (B-4-\j.south) -- (C-4-\j.west);
+			}
 	\end{tikzpicture}
 	\caption{Matrix-Matrix Multiplication Diagram}
 	\label{fig:matrix_multiplication}
@@ -448,7 +448,7 @@
 	\]
 
 	The zeros in this matrix represent orthogonality between the corresponding rows of the original matrix \(A\). Specifically, if \(c_{ij} = 0\), it means that the \(i\)-th row and the \(j\)-th row of matrix \(A\) are orthogonal to each other.
-	
+
 }
 
 \ex{Orthogonality in Matrix Multiplication}{
@@ -500,6 +500,225 @@
 }
 \dfn{Translational Vector}{
 	A translational vector is a vector that describes the displacement of an object in space with reference to an origin.
+}
+
+\section{Rotation Matrices}
+
+\nt{
+We are considering vectors in $\mathbb{R}^2$, denoted by
+\[
+	\vec{v} \;=\;
+	\begin{bmatrix}
+		x_1 \\
+		x_2
+	\end{bmatrix}.
+\]
+We also have a $2\times 2$ matrix (linear operator or transformation) given by
+\[
+	A
+	\;=\;
+	\begin{bmatrix}
+		1 & 2 \\[6pt]
+		0 & 1
+	\end{bmatrix}.
+\]
+}
+
+\nt{
+	Applying $A$ to an input vector $\vec{v}_i$ produces the output vector $\vec{v}_o$:
+	\[
+		A \,\vec{v}_i \;=\;\vec{v}_o.
+	\]
+	Explicitly,
+	\[
+		\begin{bmatrix}
+			1 & 2 \\[3pt]
+			0 & 1
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1 \\
+			x_2
+		\end{bmatrix}
+		\;=\;
+		\begin{bmatrix}
+			y_1 \\[3pt]
+			y_2
+		\end{bmatrix}.
+	\]
+}
+
+\qs{Transforming a region}{
+	Suppose we restrict the input vectors $\vec{v}_i$ to the square region in the $(x_1,x_2)$-plane with coordinates
+	\[
+		0 \,\leq\, x_1 \,\leq\, 1,\quad 0 \,\leq\, x_2 \,\leq\, 1.
+	\]
+	\begin{itemize}
+		\item How does $A$ map this square region in the input space to a region in the $(y_1,y_2)$-plane?
+		\item Geometrically, what does that image region look like?
+	\end{itemize}
+}
+
+\sol
+We can answer this question \emph{mechanically} by observing what happens to the corners of the square, or by spanning the space with two basis vectors:
+\[
+	\vec{e}_1 \;=\;\begin{bmatrix}1\\0\end{bmatrix},\quad
+	\vec{e}_2 \;=\;\begin{bmatrix}0\\1\end{bmatrix}.
+\]
+Each point in the square can be written as
+\[
+	x_1\,\vec{e}_1\;+\;x_2\,\vec{e}_2\quad\text{with }0\le x_1,x_2\le1.
+\]
+
+Applying $A$ to these basis vectors, we get
+\[
+	A\,\vec{e}_1 \;=\;
+	\begin{bmatrix}
+		1 & 2 \\[3pt]
+		0 & 1
+	\end{bmatrix}
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix}
+	\;=\;
+	\begin{bmatrix}
+		1 \\
+		0
+	\end{bmatrix},
+	\quad
+	A\,\vec{e}_2 \;=\;
+	\begin{bmatrix}
+		1 & 2 \\[3pt]
+		0 & 1
+	\end{bmatrix}
+	\begin{bmatrix}
+		0 \\
+		1
+	\end{bmatrix}
+	\;=\;
+	\begin{bmatrix}
+		2 \\
+		1
+	\end{bmatrix}.
+\]
+
+Hence, the image of the unit square (spanned by $\vec{e}_1$ and $\vec{e}_2$) is the parallelogram spanned by
+\[
+	A\,\vec{e}_1 \;=\; \begin{bmatrix}1\\0\end{bmatrix}
+	\quad \text{and} \quad
+	A\,\vec{e}_2 \;=\; \begin{bmatrix}2\\1\end{bmatrix}.
+\]
+In other words, every point $(x_1,x_2)$ in the original square is mapped to
+\[
+	x_1 \begin{bmatrix}1\\0\end{bmatrix}
+	+ x_2 \begin{bmatrix}2\\1\end{bmatrix}
+	\;=\;
+	\begin{bmatrix}
+		x_1 + 2\,x_2 \\
+		x_2
+	\end{bmatrix},
+\]
+with $0 \le x_1,x_2 \le 1$. Geometrically, this results in a parallelogram in the $(y_1,y_2)$-plane whose vertices are $(0,0)$, $(1,0)$, $(1+2,1)$, and $(2,1)$.
+
+\nt{
+	Thus, restricting $\vec{v}_i$ to a square region in the input space restricts $\vec{v}_o$ to a parallelogram in the output space.
+}
+
+\vspace{1cm}
+% Example of how an algorithm might appear
+\begin{algorithm}[H]
+	\KwIn{Input vector $\vec{v}_i = [x_1 \; x_2]^T$ with $0\le x_1,x_2\le1$}
+	\KwOut{Output vector $\vec{v}_o = [y_1 \; y_2]^T$ in the parallelogram}
+	\SetAlgoLined
+	\SetNoFillComment
+	\tcc{Matrix $A$:}
+	$A \leftarrow \begin{bmatrix}1 & 2 \\ 0 & 1\end{bmatrix}$\;
+	\tcc{Apply $A$ to input:}
+	$y_1 \leftarrow x_1 + 2\,x_2$\;
+	$y_2 \leftarrow x_2$\;
+	\Return $\vec{v}_o$\;
+	\caption{Mapping a unit square under the linear transformation $A$}
+\end{algorithm}
+
+\subsection{Examples of 2D Matrix Transformations}
+
+\ex{
+\(A = \begin{pmatrix} 1 & 0 \\[6pt] 0 & 2 \end{pmatrix}\)
+}{
+\textbf{Transformation:} Vertical stretch scaling \(x_2\) by a factor of \(2\).
+
+\centering
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-1,0) -- (2,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,3) node[above] {$x_2$};
+  \draw[thick, blue, ->] (0,0) -- (1,0) node[below] {$\mathbf{e}_1$};
+  \draw[thick, red, ->] (0,0) -- (0,1) node[left] {$\mathbf{e}_2$};
+  \draw[thick, red, dashed, ->] (0,0) -- (0,2) node[left] {$A\mathbf{e}_2$};
+\end{tikzpicture}
+}
+
+\ex{
+\(A = \begin{pmatrix} -1 & 0 \\[6pt] 0 & 1 \end{pmatrix}\)
+}{
+\textbf{Transformation:} Reflection about the vertical axis.
+\centering
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-2,0) -- (2,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$x_2$};
+  \draw[thick, blue, ->] (0,0) -- (1,0) node[below] {$\mathbf{e}_1$};
+  \draw[thick, red, ->] (0,0) -- (0,1) node[left] {$\mathbf{e}_2$};
+  \draw[thick, blue, dashed, ->] (0,0) -- (-1,0) node[below] {$A\mathbf{e}_1$};
+\end{tikzpicture}
+}
+
+\ex{
+\(A = \begin{pmatrix} 0 & 1 \\[6pt] 1 & 0 \end{pmatrix}\)
+}{
+\textbf{Transformation:} Reflection about the line \(x_1 = x_2\).
+\centering
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-1,0) -- (2,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$x_2$};
+  \draw[thick, blue, ->] (0,0) -- (1,0) node[below] {$\mathbf{e}_1$};
+  \draw[thick, red, ->] (0,0) -- (0,1) node[left] {$\mathbf{e}_2$};
+  \draw[thick, blue, dashed, ->] (0,0) -- (0,1) node[left] {$A\mathbf{e}_1$};
+  \draw[thick, red, dashed, ->] (0,0) -- (1,0) node[below] {$A\mathbf{e}_2$};
+  \draw[dotted] (-1,-1) -- (2,2);
+\end{tikzpicture}
+}
+
+\ex{
+\(A = \begin{pmatrix}
+\cos\theta & -\sin\theta \\[6pt]
+\sin\theta & \cos\theta
+\end{pmatrix}\)
+}{
+\textbf{Transformation:} Counterclockwise rotation by \(\theta\) about the origin.
+\centering
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-1,0) -- (2,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$x_2$};
+  \def\theta{30}
+  \draw[thick, blue, ->] (0,0) -- (1,0) node[below] {$\mathbf{e}_1$};
+  \draw[thick, red, ->] (0,0) -- (0,1) node[left] {$\mathbf{e}_2$};
+  \draw[thick, blue, dashed, ->] (0,0) -- ({cos(\theta)}, {sin(\theta)}) node[right] {$A\mathbf{e}_1$};
+  \draw[thick, red, dashed, ->] (0,0) -- ({-sin(\theta)}, {cos(\theta)}) node[above] {$A\mathbf{e}_2$};
+  \draw (0.5,0) arc (0:\theta:0.5) node[midway, right] {$\theta$};
+\end{tikzpicture}
+}
+
+\ex{
+\(A = \begin{pmatrix} 0 & 0 \\[6pt] 0 & 1 \end{pmatrix}\)
+}{
+\textbf{Transformation:} Projection onto the vertical axis.
+\centering
+\begin{tikzpicture}[scale=0.5]
+  \draw[->] (-1,0) -- (2,0) node[right] {$x_1$};
+  \draw[->] (0,-1) -- (0,2) node[above] {$x_2$};
+  \draw[thick, ->] (0,0) -- (1,1) node[above right] {$\mathbf{v}$};
+  \draw[thick, dashed, ->] (0,0) -- (0,1) node[left] {$A\mathbf{v}$};
+  \draw[dotted] (1,1) -- (0,1);
+\end{tikzpicture}
 }
 
 
