@@ -1,0 +1,15 @@
+1.
+    a. JMP 7
+    b. Adds 7_10 to the program counter, therefore jumping to the relative address of PC+7
+2.
+    a. MOV [R_1] R_5
+    b. Moves the contents of register-5 into the memory address contained in register-1
+3.
+    a. MOV R_0 33 , INC R_1 , CMP R_2 R_3 , JE R_0
+    b. makes register-0 equals to 33_10 (21_16), increments register-1 (making it 1 for the first pass), compares register-2 and register 3, which are both 0 making EFLAGS 1, sets the program counter to the value of register-0, therfore going back to instruction 2 (this will loop forever increasing register-1 by 1 for every pass)
+4.
+    a. INC R_0 , MOV R_1 44 , MOV [R_1] R_0
+    b. increases register-0 making it 1, makes register-1 equals to 44_10, them makes the memory address held in register-1 (44_10 or 2c_16) equals to R_0, which is 1
+5.
+    a. MOV R_0 40 , MOV R_1 10 , MOV R_2 3 , INC R_3 , ADD R_4 R_2 , CMP R_1 R_3 , JE R_0, JMP -4 , HALT
+    b. makes register-0 equals to 40_10, register-1 to 10 and register-2 to 3. then increments register-3 making it 1, then adds register-4 and register-2, setting register-4 to the result. Since register-4 is 0, it is set to the value of register-2. Then register-1 and 3 are compared, making EFLAGS 0, therefore not executing the next instruction of adding 40 (register-0) to PC. Lastly PC is decreased by 4 therefore going back to incrementing register-3. This will loop until register- 3 is 10 (and therefoere equal to register-1) which will make EFGLAGS=1, and thefore on the next instruction PC will jump to 40_10 (register-0), halting. Basically increases register-3 until its 10_10
