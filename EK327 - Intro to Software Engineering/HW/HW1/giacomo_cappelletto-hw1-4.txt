@@ -1,0 +1,3 @@
+1. MOV R_0 25, ADD R_1 R_0 , ADD R_1 R_0 , ADD R_1 R_0 , ADD R_1 R_0 , MOV R_0 18 , CMP R_0 R_2 , MOV [R_1] R_2 , INC R_2 , INC R_1 , JNE -4 , HALT
+2. 50191040104010401040501240027042C002C001D7FC0000 
+3. I first make register-1 and 0 equal to 25, and sum 4 consecutive 25's in order to store 100 in register-1. I then set register-0 equal to 18, compare it with register-2 (which is now 0) which first sets EFLAGS to 0, then make the memory address in register-1 (which is now 100) equal to resiter-2 (counter), and then increment both. Then jump back 4 instructions only if the last comparison of register-0 and 2 was not true (therefore register-2 has not reached 18) and this will not execute and halt only when it is true.
