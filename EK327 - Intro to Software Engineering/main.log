@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.11)  29 JAN 2025 15:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.11)  3 FEB 2025 16:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1526,20 +1526,25 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 11
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 Missing character: There is no ; in font nullfont!
-)
-\tf@toc=\write6
-\openout6 = `main.toc'.
-
+Missing character: There is no ; in font nullfont!
 
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.39 
-      [1
+l.51 ...}{\numberline {5}C and C++}{27}{chapter.5}
+                                                  % [1
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+Missing character: There is no ; in font nullfont!
+)
+\tf@toc=\write6
+\openout6 = `main.toc'.
+
+
+
+[2]
 Chapter 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 44.
@@ -1552,7 +1557,7 @@ Missing character: There is no ¹ in font lmsy10!
 Missing character: There is no º in font lmsy10!
 
 
-[2
+[3
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
 Missing character: There is no ¹ in font lmsy10!
@@ -1566,7 +1571,7 @@ LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 1
 File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-[3{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]
+[4{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}]
 Missing character: There is no Ï in font lmsy10!
 Missing character: There is no Ï in font lmsy10!
 Missing character: There is no Ï in font lmsy10!
@@ -1580,38 +1585,38 @@ Missing character: There is no Ï in font lmsy10!
 Missing character: There is no Ï in font lmsy10!
 Missing character: There is no Ï in font lmsy10!
 Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
-
-
-[4]
 Missing character: There is no Ï in font lmsy10!
 
 
 [5]
 Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
-Missing character: There is no Ï in font lmsy10!
 
 
 [6]
+Missing character: There is no Ï in font lmsy10!
+Missing character: There is no Ï in font lmsy10!
+Missing character: There is no Ï in font lmsy10!
+Missing character: There is no Ï in font lmsy10!
+Missing character: There is no Ï in font lmsy10!
+Missing character: There is no Ï in font lmsy10!
+
 
 [7]
+
+[8]
 Chapter 2.
 
 
-[8
+[9
 
 ]
 
-[9]
+[10]
 Missing character: There is no ¹ in font lmsy10!
 Missing character: There is no º in font lmsy10!
 
 
-[10]
+[11]
 Chapter 3.
 Missing character: There is no » in font lmsy10!
 Missing character: There is no ¼ in font lmsy10!
@@ -1620,7 +1625,7 @@ Missing character: There is no ¹ in font lmsy10!
 Missing character: There is no º in font lmsy10!
 
 
-[11
+[12
 
 ]
 Missing character: There is no Ï in font lmsy10!
@@ -1658,16 +1663,16 @@ Missing character: There is no » in font lmsy10!
 Missing character: There is no ¼ in font lmsy10!
 
 
-[12]
+[13]
 Overfull \hbox (3.94426pt too wide) in paragraph at lines 806--811
 []\OT1/lmr/m/n/10 The loop re-peats from $[]$ un-til even-tu-ally $\OML/lmm/m/it/10 R[]$ \OT1/lmr/m/n/10 equals $\OML/lmm/m/it/10 R[]$ \OT1/lmr/m/n/10 ($[]$). At that point, the com-pare ($[]$)
  []
 
 
 
-[13]
-
 [14]
+
+[15]
 Missing character: There is no ¹ in font lmsy9!
 
 Underfull \hbox (badness 2285) in paragraph at lines 1005--1005
@@ -1716,20 +1721,20 @@ Underfull \hbox (badness 6842) in paragraph at lines 1005--1005
 
 
 
-[15]
+[16]
 Missing character: There is no ¹ in font lmsy10!
 
-
-[16]
 
 [17]
 
 [18]
+
+[19]
 Overfull \hbox (32.27812pt too wide) in paragraph at lines 1284--1285
  [] 
  []
 
-<5stage.png, id=311, 910.40125pt x 551.05875pt>
+<5stage.png, id=336, 910.40125pt x 551.05875pt>
 File: 5stage.png Graphic file (type png)
 <use 5stage.png>
 Package pdftex.def Info: 5stage.png  used on input line 1291.
@@ -1742,11 +1747,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 
-[19]
+[20]
 
-[20 <./5stage.png>]
+[21 <./5stage.png>]
 
-[21]
+[22]
 Overfull \hbox (23.36101pt too wide) in paragraph at lines 1512--1513
  [] 
  []
@@ -1755,7 +1760,7 @@ LaTeX Font Info:    Font shape `OT1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `OT1/lmtt/b/n' tried instead on input line 1530.
 
 
-[22]
+[23]
 LaTeX Font Info:    Trying to load font information for OMS+lmtt on input line 1548.
 LaTeX Font Info:    No file OMSlmtt.fd. on input line 1548.
 
@@ -1766,7 +1771,21 @@ LaTeX Font Warning: Font shape `OMS/lmtt/m/n' undefined
 
 
 
-[23] (./main.aux)
+[24]
+Chapter 4.
+
+
+[25
+
+]
+
+[26]
+Chapter 5.
+
+
+[27
+
+] (./main.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
@@ -1777,18 +1796,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 62092 strings out of 473362
- 1525051 string characters out of 11470983
- 14102589 words of memory out of 22000000
- 84125 multiletter control sequences out of 15000+600000
+ 62153 strings out of 473362
+ 1525874 string characters out of 11470983
+ 14102778 words of memory out of 22000000
+ 84168 multiletter control sequences out of 15000+600000
  644602 words of font info for 124 fonts, out of 12000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,11n,110p,1749b,1461s stack positions out of 10000i,1000n,20000p,12000000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb>
-Output written on main.pdf (24 pages, 1139924 bytes).
+Output written on main.pdf (28 pages, 1149911 bytes).
 PDF statistics:
- 581 PDF objects out of 1000 (max. 8388607)
- 441 compressed objects within 5 object streams
- 109 named destinations out of 1000 (max. 500000)
- 510 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 650 PDF objects out of 1000 (max. 8388607)
+ 499 compressed objects within 5 object streams
+ 127 named destinations out of 1000 (max. 500000)
+ 566 words of extra memory for PDF output out of 10000 (max. 10000000)
 

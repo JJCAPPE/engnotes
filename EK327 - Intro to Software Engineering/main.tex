@@ -1333,36 +1333,36 @@ In this case, the ADD instruction depends on the result of the MOV instruction. 
 \textbf{Diagram:}
 \begin{center}
 	\begin{tikzpicture}[
-		node distance=2cm,
-		every node/.style={draw, rectangle, rounded corners, align=center}
-	]
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
 
-	% Nodes for each stage
-	\node (IF1) {IF};
-	\node (ID1) [right of=IF1, xshift=2cm] {ID};
-	\node (EX1) [right of=ID1, xshift=2cm] {EX};
-	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
-	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+		% Nodes for each stage
+		\node (IF1) {IF};
+		\node (ID1) [right of=IF1, xshift=2cm] {ID};
+		\node (EX1) [right of=ID1, xshift=2cm] {EX};
+		\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+		\node (WB1) [right of=MEM1, xshift=2cm] {WB};
 
-	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
-	\node (ID2) [right of=IF2, xshift=2cm] {ID};
-	\node (EX2) [right of=ID2, xshift=2cm] {EX};
-	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
-	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+		\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+		\node (ID2) [right of=IF2, xshift=2cm] {ID};
+		\node (EX2) [right of=ID2, xshift=2cm] {EX};
+		\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+		\node (WB2) [right of=MEM2, xshift=2cm] {WB};
 
-	% Arrows between stages
-	\draw[->] (IF1) -- (ID1);
-	\draw[->] (ID1) -- (EX1);
-	\draw[->] (EX1) -- (MEM1);
-	\draw[->] (MEM1) -- (WB1);
+		% Arrows between stages
+		\draw[->] (IF1) -- (ID1);
+		\draw[->] (ID1) -- (EX1);
+		\draw[->] (EX1) -- (MEM1);
+		\draw[->] (MEM1) -- (WB1);
 
-	\draw[->] (IF2) -- (ID2);
-	\draw[->] (ID2) -- (EX2);
-	\draw[->] (EX2) -- (MEM2);
-	\draw[->] (MEM2) -- (WB2);
+		\draw[->] (IF2) -- (ID2);
+		\draw[->] (ID2) -- (EX2);
+		\draw[->] (EX2) -- (MEM2);
+		\draw[->] (MEM2) -- (WB2);
 
-	% Stalling
-	\node[draw=none, yshift=20px] at (ID2) {Stall};
+		% Stalling
+		\node[draw=none, yshift=20px] at (ID2) {Stall};
 
 	\end{tikzpicture}
 \end{center}
@@ -1383,36 +1383,36 @@ In this case, the result of the MOV instruction can be forwarded directly to the
 \textbf{Diagram:}
 \begin{center}
 	\begin{tikzpicture}[
-		node distance=2cm,
-		every node/.style={draw, rectangle, rounded corners, align=center}
-	]
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
 
-	% Nodes for each stage
-	\node (IF1) {IF};
-	\node (ID1) [right of=IF1, xshift=2cm] {ID};
-	\node (EX1) [right of=ID1, xshift=2cm] {EX};
-	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
-	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+		% Nodes for each stage
+		\node (IF1) {IF};
+		\node (ID1) [right of=IF1, xshift=2cm] {ID};
+		\node (EX1) [right of=ID1, xshift=2cm] {EX};
+		\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+		\node (WB1) [right of=MEM1, xshift=2cm] {WB};
 
-	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
-	\node (ID2) [right of=IF2, xshift=2cm] {ID};
-	\node (EX2) [right of=ID2, xshift=2cm] {EX};
-	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
-	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+		\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+		\node (ID2) [right of=IF2, xshift=2cm] {ID};
+		\node (EX2) [right of=ID2, xshift=2cm] {EX};
+		\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+		\node (WB2) [right of=MEM2, xshift=2cm] {WB};
 
-	% Arrows between stages
-	\draw[->] (IF1) -- (ID1);
-	\draw[->] (ID1) -- (EX1);
-	\draw[->] (EX1) -- (MEM1);
-	\draw[->] (MEM1) -- (WB1);
+		% Arrows between stages
+		\draw[->] (IF1) -- (ID1);
+		\draw[->] (ID1) -- (EX1);
+		\draw[->] (EX1) -- (MEM1);
+		\draw[->] (MEM1) -- (WB1);
 
-	\draw[->] (IF2) -- (ID2);
-	\draw[->] (ID2) -- (EX2);
-	\draw[->] (EX2) -- (MEM2);
-	\draw[->] (MEM2) -- (WB2);
+		\draw[->] (IF2) -- (ID2);
+		\draw[->] (ID2) -- (EX2);
+		\draw[->] (EX2) -- (MEM2);
+		\draw[->] (MEM2) -- (WB2);
 
-	% Forwarding
-	\draw[->, dashed] (EX1) -- (EX2);
+		% Forwarding
+		\draw[->, dashed] (EX1) -- (EX2);
 
 	\end{tikzpicture}
 \end{center}
@@ -1439,36 +1439,36 @@ If both instructions require memory access at the same time, the pipeline can be
 \textbf{Diagram:}
 \begin{center}
 	\begin{tikzpicture}[
-		node distance=2cm,
-		every node/.style={draw, rectangle, rounded corners, align=center}
-	]
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
 
-	% Nodes for each stage
-	\node (IF1) {IF};
-	\node (ID1) [right of=IF1, xshift=2cm] {ID};
-	\node (EX1) [right of=ID1, xshift=2cm] {EX};
-	\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
-	\node (WB1) [right of=MEM1, xshift=2cm] {WB};
+		% Nodes for each stage
+		\node (IF1) {IF};
+		\node (ID1) [right of=IF1, xshift=2cm] {ID};
+		\node (EX1) [right of=ID1, xshift=2cm] {EX};
+		\node (MEM1) [right of=EX1, xshift=2cm] {MEM};
+		\node (WB1) [right of=MEM1, xshift=2cm] {WB};
 
-	\node (IF2) [below of=IF1, yshift=-1cm] {IF};
-	\node (ID2) [right of=IF2, xshift=2cm] {ID};
-	\node (EX2) [right of=ID2, xshift=2cm] {EX};
-	\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
-	\node (WB2) [right of=MEM2, xshift=2cm] {WB};
+		\node (IF2) [below of=IF1, yshift=-1cm] {IF};
+		\node (ID2) [right of=IF2, xshift=2cm] {ID};
+		\node (EX2) [right of=ID2, xshift=2cm] {EX};
+		\node (MEM2) [right of=EX2, xshift=2cm] {MEM};
+		\node (WB2) [right of=MEM2, xshift=2cm] {WB};
 
-	% Arrows between stages
-	\draw[->] (IF1) -- (ID1);
-	\draw[->] (ID1) -- (EX1);
-	\draw[->] (EX1) -- (MEM1);
-	\draw[->] (MEM1) -- (WB1);
+		% Arrows between stages
+		\draw[->] (IF1) -- (ID1);
+		\draw[->] (ID1) -- (EX1);
+		\draw[->] (EX1) -- (MEM1);
+		\draw[->] (MEM1) -- (WB1);
 
-	\draw[->] (IF2) -- (ID2);
-	\draw[->] (ID2) -- (EX2);
-	\draw[->] (EX2) -- (MEM2);
-	\draw[->] (MEM2) -- (WB2);
+		\draw[->] (IF2) -- (ID2);
+		\draw[->] (ID2) -- (EX2);
+		\draw[->] (EX2) -- (MEM2);
+		\draw[->] (MEM2) -- (WB2);
 
-	% Stalling
-	\node[draw=none, yshift=20px] at (ID2) {Stall};
+		% Stalling
+		\node[draw=none, yshift=20px] at (ID2) {Stall};
 
 	\end{tikzpicture}
 \end{center}
@@ -1483,31 +1483,31 @@ In the Harvard architecture, the instruction memory and data memory are accessed
 \textbf{Diagram:}
 \begin{center}
 	\begin{tikzpicture}[
-		node distance=2cm,
-		every node/.style={draw, rectangle, rounded corners, align=center}
-	]
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
 
-	% Nodes for each stage
-	\node (IF) {IF};
-	\node (ID) [right of=IF, xshift=2cm] {ID};
-	\node (EX) [right of=ID, xshift=2cm] {EX};
-	\node (MEM) [right of=EX, xshift=2cm] {MEM};
-	\node (WB) [right of=MEM, xshift=2cm] {WB};
+		% Nodes for each stage
+		\node (IF) {IF};
+		\node (ID) [right of=IF, xshift=2cm] {ID};
+		\node (EX) [right of=ID, xshift=2cm] {EX};
+		\node (MEM) [right of=EX, xshift=2cm] {MEM};
+		\node (WB) [right of=MEM, xshift=2cm] {WB};
 
-	% Instruction Memory
-	\node (IMEM) [above of=IF, yshift=1cm] {Instruction Memory};
-	\draw[->] (IMEM) -- (IF);
+		% Instruction Memory
+		\node (IMEM) [above of=IF, yshift=1cm] {Instruction Memory};
+		\draw[->] (IMEM) -- (IF);
 
-	% Data Memory
-	\node (DMEM) [below of=MEM, yshift=-1cm] {Data Memory};
-	\draw[->] (MEM) -- (DMEM);
-	\draw[->] (DMEM) -- (WB);
+		% Data Memory
+		\node (DMEM) [below of=MEM, yshift=-1cm] {Data Memory};
+		\draw[->] (MEM) -- (DMEM);
+		\draw[->] (DMEM) -- (WB);
 
-	% Arrows between stages
-	\draw[->] (IF) -- (ID);
-	\draw[->] (ID) -- (EX);
-	\draw[->] (EX) -- (MEM);
-	\draw[->] (MEM) -- (WB);
+		% Arrows between stages
+		\draw[->] (IF) -- (ID);
+		\draw[->] (ID) -- (EX);
+		\draw[->] (EX) -- (MEM);
+		\draw[->] (MEM) -- (WB);
 
 	\end{tikzpicture}
 \end{center}
@@ -1517,17 +1517,17 @@ By using separate memory spaces for instructions and data, the Harvard architect
 \section{Memory Pointers}
 
 \begin{itemize}[left=0pt]
-    \item When we get into C (and C++ later), we will talk a \textbf{lot} about memory indirection (pointers).
-    \item But you have already been exposed to the concept with our minimal Instruction Set!
-    \item \textbf{What is memory indirection??}
-    \item Which one feels like memory indirection?
-    \begin{itemize}
-        \item \texttt{MOV R1 [0x27]}
-        \item \texttt{MOV R1 [R2]}
-    \end{itemize}
-    \item In the first case, we are reading an absolute memory address into \texttt{register-1}.
-    \item In the second case, we are reading the memory address specified by the value of \texttt{register-2} into \texttt{register-1}.
-    \item \textbf{The second case is memory indirection, and \texttt{register-2} is acting as a pointer!}
+	\item When we get into C (and C++ later), we will talk a \textbf{lot} about memory indirection (pointers).
+	\item But you have already been exposed to the concept with our minimal Instruction Set!
+	\item \textbf{What is memory indirection??}
+	\item Which one feels like memory indirection?
+	      \begin{itemize}
+		      \item \texttt{MOV R1 [0x27]}
+		      \item \texttt{MOV R1 [R2]}
+	      \end{itemize}
+	\item In the first case, we are reading an absolute memory address into \texttt{register-1}.
+	\item In the second case, we are reading the memory address specified by the value of \texttt{register-2} into \texttt{register-1}.
+	\item \textbf{The second case is memory indirection, and \texttt{register-2} is acting as a pointer!}
 \end{itemize}
 \section{Memory Indirection in C++}
 
@@ -1546,21 +1546,173 @@ for (int i = 0; i < size; i++) {
 This code demonstrates memory indirection using pointers in C. Here's a breakdown of how it works:
 
 1. \texttt{int numbers[] = \{10, 20, 30, 40, 50\};}
-   - An array of integers is declared and initialized with values.
+- An array of integers is declared and initialized with values.
 
 2. \texttt{int size = sizeof(numbers) / sizeof(numbers[0]);}
-   - The size of the array is calculated by dividing the total size of the array by the size of one element.
+- The size of the array is calculated by dividing the total size of the array by the size of one element.
 
 3. \texttt{int *ptr = numbers;}
-   - A pointer \texttt{ptr} is declared and initialized to point to the first element of the array.
+- A pointer \texttt{ptr} is declared and initialized to point to the first element of the array.
 
 4. \texttt{for (int i = 0; i < size; i++) \{}
-   - A loop is used to iterate through the array elements.
+- A loop is used to iterate through the array elements.
 
 5. The value of each element is accessed using the pointer \texttt{ptr} with memory indirection (\texttt{*(ptr + i)}) and printed.
 
 \textbf{Memory Indirection:}
 - The expression \texttt{*(ptr + i)} uses memory indirection to access the value at the memory address pointed to by \texttt{ptr} plus \texttt{i}.
 - This allows accessing array elements using pointer arithmetic, demonstrating how pointers can be used to indirectly access memory locations.
+
+\chapter{OS and Assembly}
+
+\section{Why is an OS needed}
+
+\section{Why is an OS needed}
+
+An operating system (OS) is essential for several reasons:
+
+1. \textbf{Resource Management:}
+- The OS manages hardware resources such as CPU, memory, and I/O devices, ensuring efficient and fair allocation among multiple programs.
+
+2. \textbf{Program Execution:}
+- The OS provides an environment for executing programs, handling tasks such as loading programs into memory, scheduling CPU time, and managing program execution.
+
+3. \textbf{Memory Management:}
+- The OS handles memory allocation and deallocation, ensuring that programs do not interfere with each other's memory space. This prevents issues such as memory corruption, where programs might write data into memory cells containing instructions, leading to unpredictable behavior and system crashes.
+
+4. \textbf{File System Management:}
+- The OS manages files and directories on storage devices, providing a structured way to store, retrieve, and organize data.
+
+5. \textbf{Security and Access Control:}
+- The OS enforces security policies, controlling access to system resources and protecting against unauthorized access and malicious activities.
+
+6. \textbf{Error Handling:}
+- The OS detects and handles errors, providing mechanisms for recovering from hardware and software failures.
+
+7. \textbf{User Interface:}
+- The OS provides a user interface, such as a command-line interface (CLI) or graphical user interface (GUI), allowing users to interact with the system and perform tasks.
+
+8. \textbf{Device Management:}
+- The OS manages device drivers, facilitating communication between the system and peripheral devices such as printers, keyboards, and network adapters.
+
+Overall, the OS acts as an intermediary between users, applications, and hardware, ensuring the smooth and efficient operation of the computer system.
+
+\section{Memory Virtualization}
+
+Memory virtualization is a technique used by operating systems to provide an abstraction of physical memory, allowing each process to have its own virtual address space. This improves security, isolation, and efficient use of memory. Here are the key concepts:
+
+\begin{enumerate}
+	\item \textbf{Virtual Address Space:}
+	      - Each process is given a virtual address space, which is a contiguous range of addresses that the process can use.
+	      - The virtual address space is mapped to physical memory by the OS.
+	      \begin{itemize}
+		      \item \textbf{Virtual Memory} allows the OS to use disk space as an extension of physical memory by assigning more memory to its programs than it has in RAM.
+	      \end{itemize}
+
+	\item \textbf{Page Tables:}
+	      - The OS uses page tables to keep track of the mapping between virtual addresses and physical addresses.
+	      - Each entry in the page table corresponds to a page (a fixed-size block of memory) and contains the physical address of the page.
+
+	\item \textbf{Paging:}
+	      - Memory is divided into fixed-size pages (e.g., 4 KB).
+	      - Virtual memory is also divided into pages of the same size.
+	      - When a process accesses a virtual address, the OS translates it to a physical address using the page table.
+
+	\item \textbf{Page Faults:}
+	      - If a process accesses a virtual address that is not currently mapped to physical memory, a page fault occurs.
+	      - The OS handles the page fault by loading the required page from disk into physical memory and updating the page table.
+
+	\item \textbf{Swapping:}
+	      - When physical memory is full, the OS may swap out pages that are not currently in use to disk, freeing up physical memory for other pages.
+	      - Swapped-out pages are stored in a swap space on disk and can be swapped back into physical memory when needed.
+
+	\item \textbf{Protection:}
+	      - Memory virtualization provides isolation between processes, preventing one process from accessing the memory of another process.
+	      - The OS enforces access control by setting permissions on pages (e.g., read, write, execute).
+
+	\item \textbf{Translation Lookaside Buffer (TLB):}
+	      - The TLB is a cache used to speed up the translation of virtual addresses to physical addresses.
+	      - It stores recent translations, reducing the need to access the page table for every memory access.
+
+\end{enumerate}
+
+\section{Context Switching}
+
+Context switching is the process of saving and restoring the state of a CPU so that multiple processes can share the CPU effectively. Even if the number of cores that are available are
+greater than the number of processes, context switching is still necessary to handle interrupts and system calls. Here are the key steps involved in context switching:
+
+1. \textbf{Save the Context:}
+- The OS saves the state of the currently running process, including the contents of registers, program counter, and other CPU state information.
+- This state is stored in a data structure called the process control block (PCB).
+
+2. \textbf{Update the Process State:}
+- The OS updates the state of the currently running process to indicate that it is no longer running (e.g., changing its state to "waiting" or "ready").
+
+3. \textbf{Select the Next Process:}
+- The OS selects the next process to run based on a scheduling algorithm (e.g., round-robin, priority-based).
+- The selected process's state is updated to indicate that it is now running.
+
+4. \textbf{Restore the Context:}
+- The OS restores the state of the selected process from its PCB, including the contents of registers and program counter.
+- The CPU is now ready to execute the selected process.
+
+\textbf{Diagram:}
+
+\begin{center}
+	\begin{tikzpicture}[
+			node distance=2cm,
+			every node/.style={draw, rectangle, rounded corners, align=center}
+		]
+
+		% Nodes for each step
+		\node (save) {Save Context};
+		\node (update) [right of=save, xshift=2cm] {Update Process State};
+		\node (select) [right of=update, xshift=2cm] {Select Next Process};
+		\node (restore) [right of=select, xshift=2cm] {Restore Context};
+
+		% Arrows between steps
+		\draw[->] (save) -- (update);
+		\draw[->] (update) -- (select);
+		\draw[->] (select) -- (restore);
+
+	\end{tikzpicture}
+\end{center}
+
+\chapter{C and C++}
+
+\section{C Compilation}
+
+\begin{itemize}
+	\item \textbf{Preprocessing:}
+	      \begin{itemize}
+		      \item The preprocessor processes directives (e.g., \texttt{\#include}, \texttt{\#define}) and expands macros.
+		      \item The output is a translation unit with all preprocessor directives processed.
+	      \end{itemize}
+	\item \textbf{Compilation:}
+	      \begin{itemize}
+		      \item The compiler translates the preprocessed source code into assembly code or object code.
+		      \item The output is an object file containing machine code instructions.
+	      \end{itemize}
+	\item \textbf{Assembly:}
+	\begin{itemize}
+		\item The assembler translates the object code into machine code.
+		\item The output is an executable file that can be run on the target platform.
+	\end{itemize}
+	\item \textbf{Linking:}
+	\begin{itemize}
+	      \item The linker combines object files and libraries to create an executable file.
+	      \item It resolves external references, assigns memory addresses, and generates the final executable.
+	\end{itemize}
+	\item \textbf{Execution:}
+	\begin{itemize}
+		\item 
+	      \item The operating system loads the executable into memory and starts its execution.
+	\end{itemize}
+\end{itemize}
+
+\textbf{Compiled languages:} Translated to machine code before execution.
+\textbf{Interpreted Languages:} Translated at runtime.
+
+
 
 \end{document}
