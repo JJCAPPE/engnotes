@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1738680575.01063 "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/hw2.tex" "hw2.pdf" "hw2" 1738680575.32334 0
-  "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/hw2.tex" 1738680574.47103 1688 9f27e940f5489bae057a4a6402447a1d ""
+["pdflatex"] 1738692496.90307 "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/hw2.tex" "hw2.pdf" "hw2" 1738692497.23408 0
+  "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/hw2.tex" 1738692496.73427 3007 d5013130b60aaa818ab018fe4dd71a9e ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -62,8 +62,8 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1731344822 5475505 9858817de6e728d163c121232b884c29 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1731345038 3342715 e23a281e5dc254497d6c461fa8d5a141 ""
   "/usr/local/texlive/2024/texmf.cnf" 1729722333.78626 780 2ce0de11e5a206fa6cabe3358d07583f ""
-  "hw2.aux" 1738680575.29116 725 42dd1ba1aee9bd1147090510b38a2039 "pdflatex"
-  "hw2.tex" 1738680574.47103 1688 9f27e940f5489bae057a4a6402447a1d ""
+  "hw2.aux" 1738692497.20207 429 3de19f99d6a090aa00a2936abf11effc "pdflatex"
+  "hw2.tex" 1738692496.73427 3007 d5013130b60aaa818ab018fe4dd71a9e ""
   (generated)
   "hw2.aux"
   "hw2.log"
