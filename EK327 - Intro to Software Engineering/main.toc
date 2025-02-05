@@ -50,4 +50,5 @@
 \contentsline {section}{\numberline {4.4}Context Switching}{26}{section.4.4}%
 \contentsline {chapter}{\numberline {5}C and C++}{27}{chapter.5}%
 \contentsline {section}{\numberline {5.1}C Compilation}{27}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Hello World in C}{27}{subsection.5.1.1}%
 \contentsfinish 
