@@ -926,5 +926,102 @@ This can be viewed as a \emph{system of \(m\) linear equations in \(n\) unknowns
 	\item The question of \emph{uniqueness} depends on whether those columns form a set of independent vectors and on the relationship between \(m\) and \(n\).
 \end{itemize}
 
+\nt{
+\textbf{How to Determine Consistency, Uniqueness, and the Number of Solutions for a Linear System}
+
+We consider a linear system
+\[
+\begin{cases}
+a_{11} x_1 \;+\; a_{12} x_2 \;+\; \cdots + a_{1n} x_n \;=\; b_1\\[6pt]
+a_{21} x_1 \;+\; a_{22} x_2 \;+\; \cdots + a_{2n} x_n \;=\; b_2\\
+\vdots & \\
+a_{m1} x_1 \;+\; a_{m2} x_2 \;+\; \cdots + a_{mn} x_n \;=\; b_m
+\end{cases}
+\]
+and write it in \emph{augmented matrix} form:
+\[
+\bigl[A \mid \mathbf{b}\bigr]
+\;=\;
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\
+a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
+\end{bmatrix}.
+\]
+
+\begin{itemize}
+	\item We perform \emph{elementary row operations} (EROs) on \(\bigl[A \mid \mathbf{b}\bigr]\) to attempt to solve the system. The EROs are:
+	\begin{enumerate}
+		\item \textbf{Scaling (multiplying a row by a nonzero constant).}
+		\item \textbf{Row replacement} (\(R_i \;=\; R_i \;+\; c\,R_j\) for \(i\neq j\)).
+		\item \textbf{Interchanging two rows} (\(R_i \leftrightarrow R_j\)).
+	\end{enumerate}
+	These operations do not change the solution set of the system.
+\end{itemize}
+
+\textbf{Row Echelon Form (REF)}  
+We say \(\bigl[A\mid\mathbf{b}\bigr]\) is in \emph{row echelon form} if:
+\begin{itemize}
+	\item All rows of all zeros (if any) are at the bottom of the matrix.
+	\item Each \emph{pivot} (leftmost nonzero entry in a nonzero row) is strictly to the right of the pivot in the row above.
+\end{itemize}
+A pivot column in \(A\) corresponds to a \emph{leading variable} (or \emph{basic variable}), and any other column (apart from the augmented column) is called a \emph{free column} (its corresponding variable is a \emph{free variable}).
+
+\textbf{Consistency \& Number of Solutions}
+\begin{itemize}
+	\item If, in the augmented matrix, there is a pivot in the last column (meaning a row of the form
+	\[
+	[\,0\quad 0\quad \cdots\quad 0 \mid c\,],\quad c \neq 0,
+	\]
+	) then the system is \emph{inconsistent} (no solutions). This corresponds to an equation \(0 = c\) where \(c\neq 0\), which is impossible.
+	\item If no such contradiction is found, then at least one solution exists (the system is \emph{consistent}). 
+	\item The number of pivot columns in \(A\) (i.e.\ the number of leading variables) tells us whether solutions are unique or infinite:
+	\begin{enumerate}
+		\item If the number of pivots equals the number of unknowns \(n\), then there is exactly one solution (assuming no inconsistency).
+		\item If the number of pivots is less than \(n\), then there are free variables, implying infinitely many solutions (again, assuming no inconsistency).
+	\end{enumerate}
+\end{itemize}
+
+\ex{Example: Augmented Matrix and REF}{
+\[
+\begin{bmatrix}
+1 & 2 & 3 & 5 \\
+2 & 4 & 6 & 9 \\
+3 & 6 & 9 & 15
+\end{bmatrix}
+\;\longrightarrow\;\text{(REF)}.
+\]
+One performs row operations to get an upper-triangular or echelon form.  If the last row becomes something like
+\[
+[\,0\;\;0\;\;0\mid c\,], \quad c\neq 0,
+\]
+then there is no solution.  Otherwise, we identify pivot columns, read off the relationships among variables, and find a general solution (unique or infinite).
+}
+
+\dfn{Free Columns and Basic Columns}{
+Once an augmented matrix is in REF, we label each pivot column (in \(A\)) as a \emph{basic column}, and any other column (except the last augmented column) as a \emph{free column}.  
+\begin{itemize}
+	\item If \(x_j\) corresponds to a free column, we may label \(x_j\) as a parameter (e.g.\ \(t_1, t_2, \dots\)).
+	\item The variables in pivot columns can then be written in terms of these parameters.
+\end{itemize}
+In this manner, we get a general solution describing the entire solution set to \(A\mathbf{x} = \mathbf{b}\).
+}
+
+\textbf{Algorithm to Convert \(\bigl[A\mid \mathbf{b}\bigr]\) to \(\mathrm{REF}(A)\)}
+\begin{enumerate}
+	\item \emph{Select a candidate row}: Choose the topmost row \emph{among those not yet having a pivot} in which a pivot might appear.  
+	\item \emph{Pivot search and possible row swap}: Among this candidate row and those below it, find a row having a leftmost nonzero entry in the desired pivot column. Interchange (swap) that row with the candidate row if needed, placing a nonzero entry where your pivot should be.
+	\item \emph{Declare the pivot and eliminate below}: Scale the pivot row (if desired) so that the pivot becomes \(1\). Then use row replacement to produce zeros below that pivot in the same column.
+	\item Move to the next row down and next column to the right, and repeat until you have a row echelon form.
+\end{enumerate}
+
+One can then further use row replacement operations to clear the entries \emph{above} each pivot, yielding the \emph{reduced} row echelon form (RREF). However, for most solution purposes, REF is already sufficient to read off whether solutions exist, how many, and so on.
+}
+
+
+
+
+
 
 \end{document}
