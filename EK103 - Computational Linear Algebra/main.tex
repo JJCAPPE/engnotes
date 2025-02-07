@@ -926,102 +926,241 @@ This can be viewed as a \emph{system of \(m\) linear equations in \(n\) unknowns
 	\item The question of \emph{uniqueness} depends on whether those columns form a set of independent vectors and on the relationship between \(m\) and \(n\).
 \end{itemize}
 
+
+\section{How to Determine Consistency, Uniqueness, and the Number of Solutions for a Linear System}
 \nt{
-\textbf{How to Determine Consistency, Uniqueness, and the Number of Solutions for a Linear System}
-
-We consider a linear system
-\[
-\begin{cases}
-a_{11} x_1 \;+\; a_{12} x_2 \;+\; \cdots + a_{1n} x_n \;=\; b_1\\[6pt]
-a_{21} x_1 \;+\; a_{22} x_2 \;+\; \cdots + a_{2n} x_n \;=\; b_2\\
-\vdots & \\
-a_{m1} x_1 \;+\; a_{m2} x_2 \;+\; \cdots + a_{mn} x_n \;=\; b_m
-\end{cases}
-\]
-and write it in \emph{augmented matrix} form:
-\[
-\bigl[A \mid \mathbf{b}\bigr]
-\;=\;
-\begin{bmatrix}
-a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\
-a_{21} & a_{22} & \cdots & a_{2n} & b_2 \\
-\vdots & \vdots & \ddots & \vdots & \vdots \\
-a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
-\end{bmatrix}.
-\]
-
-\begin{itemize}
-	\item We perform \emph{elementary row operations} (EROs) on \(\bigl[A \mid \mathbf{b}\bigr]\) to attempt to solve the system. The EROs are:
-	\begin{enumerate}
-		\item \textbf{Scaling (multiplying a row by a nonzero constant).}
-		\item \textbf{Row replacement} (\(R_i \;=\; R_i \;+\; c\,R_j\) for \(i\neq j\)).
-		\item \textbf{Interchanging two rows} (\(R_i \leftrightarrow R_j\)).
-	\end{enumerate}
-	These operations do not change the solution set of the system.
-\end{itemize}
-
-\textbf{Row Echelon Form (REF)}  
-We say \(\bigl[A\mid\mathbf{b}\bigr]\) is in \emph{row echelon form} if:
-\begin{itemize}
-	\item All rows of all zeros (if any) are at the bottom of the matrix.
-	\item Each \emph{pivot} (leftmost nonzero entry in a nonzero row) is strictly to the right of the pivot in the row above.
-\end{itemize}
-A pivot column in \(A\) corresponds to a \emph{leading variable} (or \emph{basic variable}), and any other column (apart from the augmented column) is called a \emph{free column} (its corresponding variable is a \emph{free variable}).
-
-\textbf{Consistency \& Number of Solutions}
-\begin{itemize}
-	\item If, in the augmented matrix, there is a pivot in the last column (meaning a row of the form
+	We consider a linear system
 	\[
-	[\,0\quad 0\quad \cdots\quad 0 \mid c\,],\quad c \neq 0,
+		\begin{cases}
+			a_{11} x_1 \;+\; a_{12} x_2 \;+\; \cdots + a_{1n} x_n \;=\; b_1 \\[6pt]
+			a_{21} x_1 \;+\; a_{22} x_2 \;+\; \cdots + a_{2n} x_n \;=\; b_2 \\
+			\vdots &                                                        \\
+			a_{m1} x_1 \;+\; a_{m2} x_2 \;+\; \cdots + a_{mn} x_n \;=\; b_m
+		\end{cases}
 	\]
-	) then the system is \emph{inconsistent} (no solutions). This corresponds to an equation \(0 = c\) where \(c\neq 0\), which is impossible.
-	\item If no such contradiction is found, then at least one solution exists (the system is \emph{consistent}). 
-	\item The number of pivot columns in \(A\) (i.e.\ the number of leading variables) tells us whether solutions are unique or infinite:
+	and write it in \emph{augmented matrix} form:
+	\[
+		\bigl[A \mid \mathbf{b}\bigr]
+		\;=\;
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} & b_1    \\
+			a_{21} & a_{22} & \cdots & a_{2n} & b_2    \\
+			\vdots & \vdots & \ddots & \vdots & \vdots \\
+			a_{m1} & a_{m2} & \cdots & a_{mn} & b_m
+		\end{bmatrix}.
+	\]
+
+	\begin{itemize}
+		\item We perform \emph{elementary row operations} (EROs) on \(\bigl[A \mid \mathbf{b}\bigr]\) to attempt to solve the system. The EROs are:
+		      \begin{enumerate}
+			      \item \textbf{Scaling (multiplying a row by a nonzero constant).}
+			      \item \textbf{Row replacement} (\(R_i \;=\; R_i \;+\; c\,R_j\) for \(i\neq j\)).
+			      \item \textbf{Interchanging two rows} (\(R_i \leftrightarrow R_j\)).
+		      \end{enumerate}
+		      These operations do not change the solution set of the system.
+	\end{itemize}
+
+	\textbf{Row Echelon Form (REF)}
+	We say \(\bigl[A\mid\mathbf{b}\bigr]\) is in \emph{row echelon form} if:
+	\begin{itemize}
+		\item All rows of all zeros (if any) are at the bottom of the matrix.
+		\item Each \emph{pivot} (leftmost nonzero entry in a nonzero row) is strictly to the right of the pivot in the row above.
+	\end{itemize}
+	A pivot column in \(A\) corresponds to a \emph{leading variable} (or \emph{basic variable}), and any other column (apart from the augmented column) is called a \emph{free column} (its corresponding variable is a \emph{free variable}).
+
+	\textbf{Consistency \& Number of Solutions}
+	\begin{itemize}
+		\item If, in the augmented matrix, there is a pivot in the last column (meaning a row of the form
+		      \[
+			      [\,0\quad 0\quad \cdots\quad 0 \mid c\,],\quad c \neq 0,
+		      \]
+		      ) then the system is \emph{inconsistent} (no solutions). This corresponds to an equation \(0 = c\) where \(c\neq 0\), which is impossible.
+		\item If no such contradiction is found, then at least one solution exists (the system is \emph{consistent}).
+		\item The number of pivot columns in \(A\) (i.e.\ the number of leading variables) tells us whether solutions are unique or infinite:
+		      \begin{enumerate}
+			      \item If the number of pivots equals the number of unknowns \(n\), then there is exactly one solution (assuming no inconsistency).
+			      \item If the number of pivots is less than \(n\), then there are free variables, implying infinitely many solutions (again, assuming no inconsistency).
+		      \end{enumerate}
+	\end{itemize}
+
+	\ex{Example: Augmented Matrix and REF}{
+		\[
+			\begin{bmatrix}
+				1 & 2 & 3 & 5  \\
+				2 & 4 & 6 & 9  \\
+				3 & 6 & 9 & 15
+			\end{bmatrix}
+			\;\longrightarrow\;\text{(REF)}.
+		\]
+		One performs row operations to get an upper-triangular or echelon form.  If the last row becomes something like
+		\[
+			[\,0\;\;0\;\;0\mid c\,], \quad c\neq 0,
+		\]
+		then there is no solution.  Otherwise, we identify pivot columns, read off the relationships among variables, and find a general solution (unique or infinite).
+	}
+
+	\dfn{Free Columns and Basic Columns}{
+		Once an augmented matrix is in REF, we label each pivot column (in \(A\)) as a \emph{basic column}, and any other column (except the last augmented column) as a \emph{free column}.
+		\begin{itemize}
+			\item If \(x_j\) corresponds to a free column, we may label \(x_j\) as a parameter (e.g.\ \(t_1, t_2, \dots\)).
+			\item The variables in pivot columns can then be written in terms of these parameters.
+		\end{itemize}
+		In this manner, we get a general solution describing the entire solution set to \(A\mathbf{x} = \mathbf{b}\).
+	}
+
+	\textbf{Algorithm to Convert \(\bigl[A\mid \mathbf{b}\bigr]\) to \(\mathrm{REF}(A)\)}
 	\begin{enumerate}
-		\item If the number of pivots equals the number of unknowns \(n\), then there is exactly one solution (assuming no inconsistency).
-		\item If the number of pivots is less than \(n\), then there are free variables, implying infinitely many solutions (again, assuming no inconsistency).
+		\item \emph{Select a candidate row}: Choose the topmost row \emph{among those not yet having a pivot} in which a pivot might appear.
+		\item \emph{Pivot search and possible row swap}: Among this candidate row and those below it, find a row having a leftmost nonzero entry in the desired pivot column. Interchange (swap) that row with the candidate row if needed, placing a nonzero entry where your pivot should be.
+		\item \emph{Declare the pivot and eliminate below}: Scale the pivot row (if desired) so that the pivot becomes \(1\). Then use row replacement to produce zeros below that pivot in the same column.
+		\item Move to the next row down and next column to the right, and repeat until you have a row echelon form.
 	\end{enumerate}
-\end{itemize}
 
-\ex{Example: Augmented Matrix and REF}{
-\[
-\begin{bmatrix}
-1 & 2 & 3 & 5 \\
-2 & 4 & 6 & 9 \\
-3 & 6 & 9 & 15
-\end{bmatrix}
-\;\longrightarrow\;\text{(REF)}.
-\]
-One performs row operations to get an upper-triangular or echelon form.  If the last row becomes something like
-\[
-[\,0\;\;0\;\;0\mid c\,], \quad c\neq 0,
-\]
-then there is no solution.  Otherwise, we identify pivot columns, read off the relationships among variables, and find a general solution (unique or infinite).
+	One can then further use row replacement operations to clear the entries \emph{above} each pivot, yielding the \emph{reduced} row echelon form (RREF). However, for most solution purposes, REF is already sufficient to read off whether solutions exist, how many, and so on.
+}
+\subsection{FRR}
+\begin{algorithm}[H]
+	\KwIn{Matrix \(A\) of size \(m \times n\) and vector \(\mathbf{b}\) of size \(m\)}
+	\KwOut{Upper triangular matrix \(A\) and modified vector \(\mathbf{b}\)}
+	\SetAlgoLined
+	\SetNoFillComment
+	\tcc{Forward elimination process}
+	\For{$k \leftarrow 1$ \KwTo $\min(m, n)$}{
+		\For{$i \leftarrow k+1$ \KwTo $m$}{
+			\If{$A_{kk} \neq 0$}{
+				$f \leftarrow A_{ik} / A_{kk}$\;
+				\For{$j \leftarrow k$ \KwTo $n$}{
+					$A_{ij} \leftarrow A_{ij} - f \cdot A_{kj}$\;
+				}
+				$b_i \leftarrow b_i - f \cdot b_k$\;
+			}
+		}
+	}
+	\Return $A, \mathbf{b}$\;
+	\caption{Forward Row Reduction (Forward Elimination)}
+\end{algorithm}
+
+\section{Back Row Reduction}
+
+\nt{
+	Back row reduction, also known as back substitution, is a method used to solve a system of linear equations that has been transformed into an upper triangular form through Gaussian elimination. This method involves solving the equations starting from the last row and moving upwards.
 }
 
-\dfn{Free Columns and Basic Columns}{
-Once an augmented matrix is in REF, we label each pivot column (in \(A\)) as a \emph{basic column}, and any other column (except the last augmented column) as a \emph{free column}.  
-\begin{itemize}
-	\item If \(x_j\) corresponds to a free column, we may label \(x_j\) as a parameter (e.g.\ \(t_1, t_2, \dots\)).
-	\item The variables in pivot columns can then be written in terms of these parameters.
-\end{itemize}
-In this manner, we get a general solution describing the entire solution set to \(A\mathbf{x} = \mathbf{b}\).
+\dfn{Back Row Reduction}{
+	Consider a system of linear equations represented in matrix form as \(A\mathbf{x} = \mathbf{b}\), where \(A\) is an upper triangular matrix:
+	\[
+		\begin{bmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			0      & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0      & 0      & \cdots & a_{nn}
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1    \\
+			x_2    \\
+			\vdots \\
+			x_n
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			b_1    \\
+			b_2    \\
+			\vdots \\
+			b_n
+		\end{bmatrix}.
+	\]
+	The solution is obtained by solving the last equation first and then substituting the obtained values into the preceding equations.
 }
 
-\textbf{Algorithm to Convert \(\bigl[A\mid \mathbf{b}\bigr]\) to \(\mathrm{REF}(A)\)}
-\begin{enumerate}
-	\item \emph{Select a candidate row}: Choose the topmost row \emph{among those not yet having a pivot} in which a pivot might appear.  
-	\item \emph{Pivot search and possible row swap}: Among this candidate row and those below it, find a row having a leftmost nonzero entry in the desired pivot column. Interchange (swap) that row with the candidate row if needed, placing a nonzero entry where your pivot should be.
-	\item \emph{Declare the pivot and eliminate below}: Scale the pivot row (if desired) so that the pivot becomes \(1\). Then use row replacement to produce zeros below that pivot in the same column.
-	\item Move to the next row down and next column to the right, and repeat until you have a row echelon form.
-\end{enumerate}
-
-One can then further use row replacement operations to clear the entries \emph{above} each pivot, yielding the \emph{reduced} row echelon form (RREF). However, for most solution purposes, REF is already sufficient to read off whether solutions exist, how many, and so on.
+\ex{Example of Back Row Reduction}{
+	Consider the following upper triangular system:
+	\[
+		\begin{cases}
+			2x_1 + 3x_2 + 4x_3 = 5, \\
+			0x_1 + 6x_2 + 7x_3 = 8, \\
+			0x_1 + 0x_2 + 9x_3 = 10.
+		\end{cases}
+	\]
+	We start with the last equation:
+	\[
+		9x_3 = 10 \quad \Rightarrow \quad x_3 = \frac{10}{9}.
+	\]
+	Next, we substitute \(x_3\) into the second equation:
+	\[
+		6x_2 + 7\left(\frac{10}{9}\right) = 8 \quad \Rightarrow \quad 6x_2 + \frac{70}{9} = 8 \quad \Rightarrow \quad 6x_2 = 8 - \frac{70}{9} \quad \Rightarrow \quad x_2 = \frac{2}{9}.
+	\]
+	Finally, we substitute \(x_2\) and \(x_3\) into the first equation:
+	\[
+		2x_1 + 3\left(\frac{2}{9}\right) + 4\left(\frac{10}{9}\right) = 5 \quad \Rightarrow \quad 2x_1 + \frac{6}{9} + \frac{40}{9} = 5 \quad \Rightarrow \quad 2x_1 = 5 - \frac{46}{9} \quad \Rightarrow \quad x_1 = \frac{1}{9}.
+	\]
+	Thus, the solution is:
+	\[
+		x_1 = \frac{1}{9}, \quad x_2 = \frac{2}{9}, \quad x_3 = \frac{10}{9}.
+	\]
 }
 
+\begin{algorithm}[H]
+	\KwIn{Upper triangular matrix \(A\) of size \(n \times n\) and vector \(\mathbf{b}\) of size \(n\)}
+	\KwOut{Solution vector \(\mathbf{x}\) of size \(n\)}
+	\SetAlgoLined
+	\SetNoFillComment
+	\tcc{Initialize solution vector}
+	\For{$i \leftarrow n$ \KwTo $1$}{
+		$x_i \leftarrow b_i$\;
+		\For{$j \leftarrow i+1$ \KwTo $n$}{
+			$x_i \leftarrow x_i - A_{ij} \cdot x_j$\;
+		}
+		$x_i \leftarrow x_i / A_{ii}$\;
+	}
+	\Return $\mathbf{x}$\;
+	\caption{Back Row Reduction (Back Substitution)}
+\end{algorithm}
 
+\ex{Full SLE solving}{
+	$$ \begin{bmatrix}
+			1 & 1  & 2 & 2  \\
+			1 & -1 & 0 & -2 \\
+			2 & 0  & m & 0
+		\end{bmatrix}
+	$$
+	$$
+		\begin{bmatrix}
+			1 & 1  & 2   & 2  \\
+			0 & -2 & -2  & -4 \\
+			0 & -2 & m-4 & -4
+		\end{bmatrix}
+	$$
+	$$
+		\begin{bmatrix}
+			1 & 1  & 2   & 2  \\
+			0 & -2 & -2  & -4 \\
+			0 & 0  & m-2 & 0
+		\end{bmatrix}
+	$$
+	given m=0
+	$$
+		\begin{bmatrix}
+			1 & 1  & 2  & 2  \\
+			0 & -2 & -2 & -4 \\
+			0 & 0  & 0  & 0
+		\end{bmatrix}
+	$$
+	$$
+		\begin{bmatrix}
+			1 & 1 & 2 & 2 \\
+			0 & 1 & 1 & 2 \\
+			0 & 0 & 0 & 0
+		\end{bmatrix}
+	$$
+	$$
+		\begin{bmatrix}
+			1 & 0 & 1 & 0 \\
+			0 & 1 & 1 & 2 \\
+			0 & 0 & 0 & 0
+		\end{bmatrix}
+	$$
 
-
+}
 
 
 \end{document}
