@@ -23,7 +23,10 @@ std::string diagonalStars(int n)
                     result += " ";
                 }  
             }
-            result += "\n";
+            if (i < n - 1)
+            {
+                result += "\n";
+            }
         }
         return result; 
     }
