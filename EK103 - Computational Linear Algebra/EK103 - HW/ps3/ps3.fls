@@ -263,6 +263,17 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5
 OUTPUT ps3.pdf
 INPUT /usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01-eps-converted-to.pdf
+INPUT ./Problem2_2Dplanes_unique_01-eps-converted-to.pdf
+INPUT ./Problem2_2Dplanes_unique_01.eps
+INPUT ./Problem2_2Dplanes_unique_01-eps-converted-to.pdf
+INPUT ./Problem2_2Dplanes_unique_01-eps-converted-to.pdf
+INPUT ./Problem2_2Dplanes_unique_01-eps-converted-to.pdf
 INPUT ps3.aux
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

@@ -156,7 +156,7 @@ end
 % \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 % -- Define solution vector
-x_solution = [ -2  4  0 ]';   %  <---  you need to change this !!
+x_solution = [ 1  0  1 ]';   %  <---  you need to change this !!
 
 
 % -- Plot it as a black dot using the "plot3" command:
