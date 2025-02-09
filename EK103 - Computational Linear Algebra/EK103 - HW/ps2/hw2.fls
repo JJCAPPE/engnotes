@@ -1,8 +1,8 @@
-PWD /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW
+PWD /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/ps2
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/hw2.tex
+INPUT /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/ps2/hw2.tex
 OUTPUT hw2.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
