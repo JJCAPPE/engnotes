@@ -1,5 +1,6 @@
 #include "hw2_structs.h"
 #include "hw2_problem5.h"
+#include <cmath>
 
 std::string describeOverlap(Rectangle rectangleOne, Rectangle rectangleTwo)
 {

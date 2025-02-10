@@ -37,7 +37,7 @@ std::string convertToBinaryFraction(double num)
     if (fracPart > 0)
     {
         int count = 0;
-        while (fracPart > 0 && count < 16)
+        while (fracPart > 0 && count < (32-intStr.length()))
         {
             fracPart *= 2;
             if (fracPart >= 1)
