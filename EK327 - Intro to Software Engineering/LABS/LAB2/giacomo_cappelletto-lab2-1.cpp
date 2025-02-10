@@ -1,5 +1,5 @@
 #include "lab2_problem1.h"
-//#include <iostream>
+#include <iostream>
 
 std::string diagonalStars(int n)
 {
