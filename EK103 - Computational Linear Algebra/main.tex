@@ -18,9 +18,10 @@
 \pgfplotsset{compat=newest}
 \tikzset{>=latex}
 \usepackage{siunitx}
+\usetikzlibrary{arrows.meta}
 
-\title{\Huge{Computational Linear Algebra}\\EK103}
-\author{\huge{Giacomo Cappelletto}}
+\title{\Huge Computational Linear Algebra\\EK103}
+\author{\Huge Giacomo Cappelletto}
 \date{21/1/2}
 
 
@@ -1161,6 +1162,215 @@ This can be viewed as a \emph{system of \(m\) linear equations in \(n\) unknowns
 	$$
 
 }
+
+\chapter{Linear Combinations}
+
+
+
+\section{Matrix--Vector Product as Linear Combination}
+
+\[
+	\begin{aligned}
+		A x
+		 & =
+		\begin{bmatrix}
+			1 & -2  \\[6pt]
+			3 & \;2
+		\end{bmatrix}
+		\begin{bmatrix}
+			x_1 \\[3pt]
+			x_2
+		\end{bmatrix}
+		= x_1
+		\begin{bmatrix} 1 \\[3pt] 3 \end{bmatrix}
+		+ x_2
+		\begin{bmatrix} -2 \\[3pt] 2 \end{bmatrix}
+		= b.
+	\end{aligned}
+\]
+
+\textit{Intuition:} ``Scaling each column of \(A\) by its corresponding entry in \(x\).''
+
+In other words, to compute \(A x\), you take \(x_1\) times the first column of \(A\) plus \(x_2\) times the second column of \(A\).
+
+
+\ex{ A Specific Choice of \(x\)}{
+	If
+	\[
+		A =
+		\begin{bmatrix}
+			1 & -2    \\[3pt]
+			3 & \;\,2
+		\end{bmatrix},
+	\]
+	then the first column is
+	\[
+		a_1 = \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+		\quad\text{and}\quad
+		a_2 = \begin{bmatrix} -2 \\ 2 \end{bmatrix}.
+	\]
+	A linear combination of these columns is
+	\[
+		x_1 \begin{bmatrix} 1 \\ 3 \end{bmatrix}
+		\;+\;
+		x_2 \begin{bmatrix} -2 \\ 2 \end{bmatrix}
+		\;=\;
+		b.
+	\]
+
+	As an example, if \(x_1 = -\tfrac{1}{3}\) and \(x_2 = 1\),
+	\[
+		-\tfrac{1}{3}
+		\begin{bmatrix} 1 \\ 3 \end{bmatrix}
+		\;+\;
+		\begin{bmatrix} -2 \\ 2 \end{bmatrix}
+		=
+		\begin{bmatrix}
+			-\tfrac{1}{3} - 2 \\[4pt]
+			-1 + 2
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-\tfrac{7}{3} \\[4pt]
+			1
+		\end{bmatrix}.
+	\]
+	In the notes, a similar combination yields \(\begin{bmatrix}-2 \\ -2\end{bmatrix}\). The key point is that any pair \((x_1,x_2)\) gives a vector in \(\mathbb{R}^2\).
+}
+
+\dfn{Span}{
+	\textbf{Span} of a set of vectors is the collection of all linear combinations of those vectors. Concretely, for
+	\[
+		a_1 = \begin{bmatrix} 1 \\ 3 \end{bmatrix},
+		\quad
+		a_2 = \begin{bmatrix} -2 \\ 2 \end{bmatrix},
+	\]
+	we write
+	\[
+		\mathrm{Span}\{\,a_1, a_2\}
+		=\Bigl\{\,
+		x_1 a_1 + x_2 a_2
+		\;\big|\;
+		x_1, x_2 \in \mathbb{R}
+		\Bigr\}.
+	\]
+	Any vector \(b\) not in this span means \(A x = b\) has no solution.
+}
+
+\section{Linear Combinations and the Span}
+Vectors ``outside'' the span of \(\{a_1,a_2\}\) are precisely those \(b\) for which the system \(A x = b\) is not consistent. Equivalently, they are not expressible as a linear combination of \(a_1\) and \(a_2\).
+
+
+\section{Geometric Plots in the Notes}
+
+\begin{enumerate}
+	\item \textit{First Plot (showing the columns \(a_1\) and \(a_2\)):}
+
+	      \begin{center}
+		      \begin{tikzpicture}[scale=0.8,>=stealth]
+			      % axes
+			      \draw[->] (-0.5,0) -- (3.5,0) node[right] {\(x\)};
+			      \draw[->] (0,-0.5) -- (0,3.5) node[above] {\(y\)};
+
+			      % a_1 vector
+			      \draw[->,thick,blue] (0,0) -- (1,3) node[midway,left] {\(\displaystyle a_1\)};
+
+			      % a_2 vector
+			      \draw[->,thick,red] (0,0) -- (-2,2) node[midway,above] {\(\displaystyle a_2\)};
+
+			      % a rough parallelogram to illustrate a typical combination
+			      \draw[dashed] (1,3) -- (1-2,3+2);
+			      \draw[dashed] (-2,2) -- (-2+1,2+3);
+		      \end{tikzpicture}
+	      \end{center}
+
+	      Any linear combination \(x_1 a_1 + x_2 a_2\) lands in the parallelogram structure (and its extensions) formed by these two vectors.
+
+	\item \textit{Second Plot (showing a vector not in the span)}:
+
+	      \begin{center}
+		      \begin{tikzpicture}[scale=0.8,>=stealth]
+			      % axes
+			      \draw[->] (-0.5,0) -- (3.5,0) node[right] {\(x\)};
+			      \draw[->] (0,-0.5) -- (0,3.5) node[above] {\(y\)};
+
+			      % example vectors v1, v2 (suppose they are the same as above or placeholders)
+			      \draw[->,thick,blue] (0,0) -- (1,3) node[midway,left] {\(\displaystyle v_1\)};
+			      \draw[->,thick,red] (0,0) -- (2,2) node[midway,above] {\(\displaystyle v_2\)};
+
+			      % a point b that is not in the span
+			      \filldraw[black] (1,1) circle (2pt) node[below right] {\(\displaystyle b\)};
+
+			      % dashed lines to illustrate that b is not on the plane spanned by v1 and v2
+			      % (just a conceptual marker)
+			      \draw[dotted] (1,1) -- (0,0);
+		      \end{tikzpicture}
+	      \end{center}
+
+	      If \(v_1\) and \(v_2\) do not cover \((1,1)\) by any linear combination, then \(\begin{bmatrix}1\\1\end{bmatrix}\) is not in their span, hence no solution exists for \(Ax=b\).
+
+	\item \textit{Plot illustrating parallel vectors}:
+
+	      \begin{center}
+		      \begin{tikzpicture}[scale=0.8,>=stealth]
+			      % axes
+			      \draw[->] (-0.5,0) -- (4,0) node[right] {\(x\)};
+			      \draw[->] (0,-0.5) -- (0,4) node[above] {\(y\)};
+
+			      % two parallel vectors
+			      \draw[->,thick,blue] (0,0) -- (2,2) node[midway,above left] {\(\displaystyle v_1\)};
+			      \draw[->,thick,blue!50!green] (0,0) -- (3,3) node[midway,above] {\(\displaystyle v_2\)};
+
+			      % a vector b not on that line
+			      \filldraw[red] (2,3) circle (2pt) node[right] {\(\displaystyle b\)};
+
+			      % line indication
+			      \draw[dashed] (0,0) -- (3.5,3.5);
+		      \end{tikzpicture}
+	      \end{center}
+
+	      Here, \(v_1\) and \(v_2\) are multiples of each other, so their span is just the single dashed line. The vector \(b\) off that line cannot be written as any combination of \(v_1\) and \(v_2\).
+\end{enumerate}
+
+\ex{$\vec{b}$ not in span of $\vec{v_1}, \vec{v_2}$}{
+	\tdplotsetmaincoords{70}{110}
+	\centering
+	\begin{tikzpicture}[tdplot_main_coords, scale=2]
+	  % Draw coordinate axes
+	  \draw[->, thick] (0,0,0) -- (2,0,0) node[anchor=north east] {$x$};
+	  \draw[->, thick] (0,0,0) -- (0,2,0) node[anchor=north west] {$y$};
+	  \draw[->, thick] (0,0,0) -- (0,0,2) node[anchor=south] {$z$};
+	  
+	  % Draw the plane spanned by v1 and v2.
+	  % Every vector in the span has x = y, so we fill the plane { (u,u,w) : u,w in R }.
+	  % Here we choose a rectangular patch with u from -1 to 1 and w from -1 to 2.
+	  \filldraw[fill=blue!20, draw=blue, opacity=0.5] 
+		(-1,-1,-1) -- (1,1,-1) -- (1,1,2) -- (-1,-1,2) -- cycle;
+	  
+	  % Draw vector v1 = (1,1,1)
+	  \draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (1,1,1) 
+		node[midway, anchor=south east] {$v_1$};
+	  
+	  % Draw vector v2 = (-1,-1,1)
+	  \draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (-1,-1,1) 
+		node[midway, anchor=north west] {$v_2$};
+	  
+	  % Draw vector b = (1,0,0)
+	  \draw[-{Stealth[scale=1.2]}, green!70!black, thick] (0,0,0) -- (1,0,0)
+		node[midway, anchor=south] {$b$};
+	  
+	  % Add an annotation that b is not in the span of v1 and v2.
+	  \node at (2.5, 2, 0.5) {$b\notin\operatorname{span}\{v_1,v_2\}$};
+	\end{tikzpicture}
+}
+
+\subsection{Key Conclusions}
+
+\begin{itemize}
+	\item \(\mathrm{Span}\{a_1, a_2\}\) is the set of all vectors \(b\) for which \(Ax = b\) has a solution.
+	\item If \(b\) is not in that span, there is no solution.
+	\item Geometrically, if \(a_1\) and \(a_2\) are not multiples of each other, their span is a 2D plane through the origin in \(\mathbb{R}^2\). If they are multiples, the span is just a single line, and most vectors in \(\mathbb{R}^2\) lie outside that line (no solution).
+\end{itemize}
 
 
 \end{document}

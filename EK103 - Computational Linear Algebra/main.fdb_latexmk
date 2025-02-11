@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1738945757.25228 "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/main.tex" "main.pdf" "main" 1738945759.43969 0
-  "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/main.tex" 1738945755.96704 35626 756fdedb51836ecd3d8b4cf819228a5a ""
+["pdflatex"] 1739288477.03995 "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/main.tex" "main.pdf" "main" 1739288480.5335 0
+  "/Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/main.tex" 1739288476.20838 42550 752b6be5d84cb9777357e7897e48c258 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/newpx/px-lms.enc" 1699652218 3877 2ca811886181a05a861d20a35de75e06 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -359,9 +359,9 @@
   "/usr/local/texlive/2024/texmf.cnf" 1729722333.78626 780 2ce0de11e5a206fa6cabe3358d07583f ""
   "letterfonts.tex" 1737420500.81121 8702 ef32ca12e97530ef5734ca4adcb1f6b1 ""
   "macros.tex" 1737664478.39408 3389 93000260d2aea292d29c76d4ace77a29 ""
-  "main.aux" 1738945759.33043 7408 e2a7a5298cf85425e95a6272fbe7ba74 "pdflatex"
-  "main.tex" 1738945755.96704 35626 756fdedb51836ecd3d8b4cf819228a5a ""
-  "main.toc" 1738945759.33218 1225 606dbd366391e0f0d6f5428e591edff4 "pdflatex"
+  "main.aux" 1739288480.36526 10389 b88e6cf5038feb56cb8671cbfe1b9a9c "pdflatex"
+  "main.tex" 1739288476.20838 42550 752b6be5d84cb9777357e7897e48c258 ""
+  "main.toc" 1739288480.36845 1674 e4d8da065deb22e771dbdae4da7bfe57 "pdflatex"
   "preamble.tex" 1737420500.79998 20053 cac64cd8837854e12008c40220fda887 ""
   (generated)
   "main.aux"
