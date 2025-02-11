@@ -1319,9 +1319,49 @@ Since the intersection between the planes is a line (they are not parallel or id
 
 \subsection*{B}
 
+\[
+	\begin{bmatrix}
+		1 & 0 & 10 & 4  \\
+		2 & 0 & 2  & -2 \\
+		2 & 0 & -2 & 2  \\
+	\end{bmatrix}
+	\xrightarrow{R_2 = R_2 - 2R_1, R_3 = R_3 - 2R_1}
+	\begin{bmatrix}
+		1 & 0 & 10  & 4   \\
+		0 & 0 & -18 & -10 \\
+		0 & 0 & -22 & -6
+	\end{bmatrix}
+	\xrightarrow{R_3 = R_3 - \frac{11}{9}R_2}
+	\begin{bmatrix}
+		1 & 0 & 10  & 4            \\
+		0 & 0 & -18 & -10          \\
+		0 & 0 & 0   & \frac{56}{9}
+	\end{bmatrix}
+\]
+
+\subsection*{C}
+
+By expanding the last row of the REF matrix, we are presented with $0 \cdot x_3 = \frac{56}{9}$, which is not a valid equation and therefore proves that the SLE is not consistent as for any value $k \in \mathbb{R}$ for $x_3$ would yield $0 = \frac{56}{9}$ which is false.
+
+\subsection*{D}
 
 
+\begin{verbatim}
+	A = [1,0,10,4; 2,0,2,-2;2,0,-2,2];
+	disp(rref(A))
+\end{verbatim}
 
+\color{lightgray} 
+\begin{verbatim}
+		1     0     0     0
+		0     0     1     0
+		0     0     0     1
+\end{verbatim} 
+\color{black}
+
+\subsection*{E}
+
+Once again, this RREF matrix is not consistent, as the last row, expanded, gives $0 \cdot x_3 = 1$, which deems the SLE as not consistent as for any value $k \in \mathbb{R}$ for $x_3$ would yield $0 = 1$ which is false.
 
 \end{document}
 
