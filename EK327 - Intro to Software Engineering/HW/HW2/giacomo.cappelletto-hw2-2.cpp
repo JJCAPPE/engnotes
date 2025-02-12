@@ -1,19 +1,13 @@
-//#include <stdio.h> 
 #include "hw2_problem2.h"
 #include "hw2_structs.h"
 
-void scale(Rectangle *rectangle, double xScale, double yScale)
+bool scale(Rectangle *rectangle, double xScale, double yScale)
 {
+    if (xScale <= 0 || yScale <= 0)
+    {
+        return false;
+    }
     rectangle->upperRight.x *= xScale;
     rectangle->upperRight.y *= yScale;
+    return true;
 }
-/* 
-int main(){
-    Point lowerLeft = createPoint(0, 0);
-    Point upperRight = createPoint(10, 10);
-    Rectangle rectangle = createRectangle(lowerLeft, upperRight);
-    scale(&rectangle, 2.323, 2.2452);
-    printf("%s", describeRectangle(rectangle).c_str());
-    return 0;
-}
- */

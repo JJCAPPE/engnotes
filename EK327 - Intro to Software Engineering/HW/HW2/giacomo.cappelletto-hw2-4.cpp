@@ -1,7 +1,5 @@
 #include "hw2_structs.h"
 #include "hw2_problem4.h"
-/* #include <cstdio>
-#include <iostream> */
 #include <string>
 
 std::string convertToBinaryFraction(double num)
@@ -59,16 +57,3 @@ std::string convertToBinaryFraction(double num)
     
     return intStr + fracStr;
 }
-
-/* int main()
-{
-    double num;
-    printf("Enter a number: ");
-    if (scanf("%lf", &num) != 1) {
-        printf("Invalid input!\n");
-        return 1;
-    }
-    std::string result = convertToBinaryFraction(num);
-    printf("%s\n", result.c_str());
-    return 0;
-} */

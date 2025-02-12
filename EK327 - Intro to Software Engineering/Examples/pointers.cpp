@@ -71,9 +71,10 @@ int pointers()
 }
 
 // enable passing values to functions without duplication of variable (pass by reference instead of passs by value)
+// by default c++ works with pass by value
 // enables linked list
 // dynamic memory allocation
-//pointers always take up then same amount of memory (per os) so might be less than the actual value stored
+// pointers always take up then same amount of memory (per os) so might be less than the actual value stored
 
 int counterChange()
 {
@@ -105,10 +106,34 @@ int bothChange()
     std::cout << "value at counterPointer:" << *counterPointer << std::endl; // 51
 }
 
-int main()
+// Example of pass by reference
+// would ideally use instead of making a copy of large data structures
+
+void increment(int *count)
 {
-    pointers();
-    counterChange();
-    variableChange();
+    *count += 1;
+}
+
+int incrementMain()
+{
+    int counter = 10;
+    increment(&counter);
+    std::cout << "counter: " << counter << std::endl;
     return 0;
+}
+
+// example of issue with pass by reference
+
+int *roundUp(float number)
+{
+    int roundedUp = (int)number + 1;
+    return &roundedUp; //returns a pointer to the call stack, once it return though, it will be deleted
+}
+
+//would be fine if roundup was void and modified input direclty 
+int mainRoundUp()
+{
+    float input = 5.3;
+    int *roundedResult = roundUp(input);
+    std::cout << "rounded up: " << *roundedResult << std::endl; //this will print random memory locations
 }
