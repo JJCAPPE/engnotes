@@ -520,6 +520,8 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/siunitx/siunitx.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/siunitx/siunitx.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/translations/translations.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/translations/translations.sty
+INPUT ./tikz-uml.sty
+INPUT tikz-uml.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmr.fd
@@ -693,6 +695,12 @@ INPUT ./5stage.png
 INPUT ./5stage.png
 INPUT ./5stage.png
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmtk10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmss.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmss.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmss.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmssbx10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmss10.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/lm/rm-lmri10.tfm
 INPUT main.aux
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
@@ -706,7 +714,10 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr12.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri9.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmss10.pfb
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtk10.pfb

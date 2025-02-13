@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.11)  5 FEB 2025 14:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.11)  12 FEB 2025 19:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1345,6 +1345,111 @@ Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages 
 \l__siunitx_unit_tmp_int=\count526
 \l__siunitx_unit_position_int=\count527
 \l__siunitx_unit_total_int=\count528
+) (./tikz-uml.sty
+Package: tikz-uml 2011/01/26
+\c@tikzumlPackageLayers=\count529
+\pgf@layerbox@package0=\box179
+\pgf@layerboxsaved@package0=\box180
+\pgf@layerbox@package1=\box181
+\pgf@layerboxsaved@package1=\box182
+\pgf@layerbox@package2=\box183
+\pgf@layerboxsaved@package2=\box184
+\pgf@layerbox@package3=\box185
+\pgf@layerboxsaved@package3=\box186
+\c@tikzumlFragmentLayers=\count530
+\pgf@layerbox@fragment0=\box187
+\pgf@layerboxsaved@fragment0=\box188
+\pgf@layerbox@fragment1=\box189
+\pgf@layerboxsaved@fragment1=\box190
+\pgf@layerbox@fragment2=\box191
+\pgf@layerboxsaved@fragment2=\box192
+\pgf@layerbox@fragment3=\box193
+\pgf@layerboxsaved@fragment3=\box194
+\c@tikzumlStateLayers=\count531
+\pgf@layerbox@state0=\box195
+\pgf@layerboxsaved@state0=\box196
+\pgf@layerbox@state1=\box197
+\pgf@layerboxsaved@state1=\box198
+\pgf@layerbox@state2=\box199
+\pgf@layerboxsaved@state2=\box256
+\pgf@layerbox@state3=\box257
+\pgf@layerboxsaved@state3=\box258
+\c@tikzumlComponentLayers=\count532
+\pgf@layerbox@component0=\box259
+\pgf@layerboxsaved@component0=\box260
+\pgf@layerbox@component1=\box261
+\pgf@layerboxsaved@component1=\box262
+\pgf@layerbox@component2=\box263
+\pgf@layerboxsaved@component2=\box264
+\pgf@layerbox@component3=\box265
+\pgf@layerboxsaved@component3=\box266
+\pgf@layerbox@lifelines=\box267
+\pgf@layerboxsaved@lifelines=\box268
+\pgf@layerbox@activity=\box269
+\pgf@layerboxsaved@activity=\box270
+\pgf@layerbox@connections=\box271
+\pgf@layerboxsaved@connections=\box272
+\c@tikzumlPackageClassNum=\count533
+\c@tikzumlPackageSubPackageNum=\count534
+\c@tikzumlRelationNum=\count535
+\c@tikzumlNoteNum=\count536
+\c@pos=\count537
+\c@posT=\count538
+\c@posStereo=\count539
+\c@tikzumlPackageLevel=\count540
+\tikzumlNestingSymbolSize=\dimen370
+\c@tikzumlSystemUseCaseNum=\count541
+\c@tikzumlSystemLevel=\count542
+\c@tikzumlUseCaseNum=\count543
+\c@tikzumlActorNum=\count544
+\c@tikzumlStateJoinNum=\count545
+\c@tikzumlStateDecisionNum=\count546
+\c@tikzumlStateInitialNum=\count547
+\c@tikzumlStateFinalNum=\count548
+\c@tikzumlStateEnterNum=\count549
+\c@tikzumlStateExitNum=\count550
+\c@tikzumlStateEndNum=\count551
+\c@tikzumlStateHistoryNum=\count552
+\c@tikzumlStateDeepHistoryNum=\count553
+\c@tikzumlStateLevel=\count554
+\c@tikzumlStateSubStateNum=\count555
+\c@tikzumlStateText=\count556
+\c@tikzumlObjectNum=\count557
+\c@tikzumlCallLevel=\count558
+\c@tikzumlCallNum=\count559
+\c@tikzumlFragmentLevel=\count560
+\c@tikzumlFragmentLevelNum=\count561
+\c@tikzumlFragmentNum=\count562
+\c@tikzumlFragmentPartNum=\count563
+\c@tikzumlCallStartFragmentNum=\count564
+\c@tikzumlCallEndFragmentNum=\count565
+\c@tikzumlSDNodeNum=\count566
+\tikzumlCall@xa=\skip86
+\tikzumlCall@xb=\skip87
+\c@tikzumlComponentLevel=\count567
+\c@tikzumlComponentSubComponentNum=\count568
+\c@tikzumlConnectorNum=\count569
+\tikzuml@AC@xa=\skip88
+\tikzuml@AC@ya=\skip89
+\tikzuml@AC@xb=\skip90
+\tikzuml@AC@yb=\skip91
+\tikzuml@AC@xi=\skip92
+\tikzuml@AC@yi=\skip93
+\tikzuml@AC@xic=\skip94
+\tikzuml@AC@yic=\skip95
+\tikzuml@AC@xio=\skip96
+\tikzuml@AC@yio=\skip97
+\tikzuml@AC@AB=\skip98
+\tikzuml@AC@lambda=\skip99
+\tikzuml@AC@xtrc=\skip100
+\tikzuml@AC@ytrc=\skip101
+\tikzuml@AC@xtlc=\skip102
+\tikzuml@AC@ytlc=\skip103
+\tikzuml@AC@xblc=\skip104
+\tikzuml@AC@yblc=\skip105
+\tikzuml@AC@xbrc=\skip106
+\tikzuml@AC@ybrc=\skip107
+\tikzuml@AC@middleArm=\skip108
 )
 Package translations Info: No language package found. I am going to use `english' as default language. on input line 31.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 31.
@@ -1430,16 +1535,16 @@ LaTeX Info: Command `\dddot' is already robust on input line 31.
 LaTeX Info: Command `\ddddot' is already robust on input line 31.
 (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count529
-\scratchdimen=\dimen370
-\scratchbox=\box179
-\nofMPsegments=\count530
-\nofMParguments=\count531
+\scratchcounter=\count570
+\scratchdimen=\dimen371
+\scratchbox=\box273
+\nofMPsegments=\count571
+\nofMParguments=\count572
 \everyMPshowfont=\toks77
-\MPscratchCnt=\count532
-\MPscratchDim=\dimen371
-\MPnumerator=\count533
-\makeMPintoPDFobject=\count534
+\MPscratchCnt=\count573
+\MPscratchDim=\dimen372
+\MPnumerator=\count574
+\makeMPintoPDFobject=\count575
 \everyMPtoPDFconversion=\toks78
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1448,7 +1553,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring ON on input line 31.
-\c@lstlisting=\count535
+\c@lstlisting=\count576
  (/usr/local/texlive/2024/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks79
@@ -1734,7 +1839,7 @@ Overfull \hbox (32.27812pt too wide) in paragraph at lines 1284--1285
  [] 
  []
 
-<5stage.png, id=339, 910.40125pt x 551.05875pt>
+<5stage.png, id=348, 910.40125pt x 551.05875pt>
 File: 5stage.png Graphic file (type png)
 <use 5stage.png>
 Package pdftex.def Info: 5stage.png  used on input line 1291.
@@ -1785,7 +1890,82 @@ Chapter 5.
 
 [27
 
-] (./main.aux)
+]
+LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 1768.
+ (/usr/local/texlive/2024/texmf-dist/tex/latex/lm/ot1lmss.fd
+File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Missing character: There is no π in font lmsy10!
+Missing character: There is no ∫ in font lmsy10!
+Missing character: There is no π in font lmsy10!
+Missing character: There is no œ in font lmsy10!
+Missing character: There is no ∫ in font lmsy10!
+
+
+[28]
+
+[29]
+Missing character: There is no œ in font lmsy10!
+
+
+[30]
+Missing character: There is no ù in font lmsy10!
+Missing character: There is no ù in font lmsy10!
+Missing character: There is no ù in font lmsy10!
+
+
+[31]
+
+[32]
+
+[33]
+
+[34]
+
+[35]
+
+[36]
+
+[37]
+Missing character: There is no π in font lmsy9!
+Missing character: There is no < in font nullfont!
+Missing character: There is no < in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no > in font nullfont!
+Missing character: There is no > in font nullfont!
+Missing character: There is no F in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no S in font nullfont!
+Missing character: There is no P in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no I in font nullfont!
+Missing character: There is no N in font nullfont!
+Missing character: There is no G in font nullfont!
+
+Underfull \hbox (badness 1642) in paragraph at lines 2370--2370
+[]\OT1/lmr/m/n/9 - \OT1/lmtt/m/n/9 classes: 
+ []
+
+
+Underfull \hbox (badness 1642) in paragraph at lines 2370--2370
+[]\OT1/lmr/m/n/9 - \OT1/lmtt/m/n/9 classes: 
+ []
+
+
+
+[38] (./main.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
@@ -1796,18 +1976,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 62155 strings out of 473362
- 1525896 string characters out of 11470983
- 14102790 words of memory out of 22000000
- 84169 multiletter control sequences out of 15000+600000
- 644602 words of font info for 124 fonts, out of 12000000 for 9000
+ 64133 strings out of 473362
+ 1569500 string characters out of 11470983
+ 14206866 words of memory out of 22000000
+ 86073 multiletter control sequences out of 15000+600000
+ 654255 words of font info for 127 fonts, out of 12000000 for 9000
  1141 hyphenation exceptions out of 8191
- 103i,11n,110p,1749b,1461s stack positions out of 10000i,1000n,20000p,12000000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb>
-Output written on main.pdf (28 pages, 1150364 bytes).
+ 103i,11n,110p,1749b,1768s stack positions out of 10000i,1000n,20000p,12000000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newpx/pxmiaX.pfb>
+Output written on main.pdf (39 pages, 1272559 bytes).
 PDF statistics:
- 657 PDF objects out of 1000 (max. 8388607)
- 504 compressed objects within 6 object streams
- 128 named destinations out of 1000 (max. 500000)
- 574 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 845 PDF objects out of 1000 (max. 8388607)
+ 650 compressed objects within 7 object streams
+ 193 named destinations out of 1000 (max. 500000)
+ 724 words of extra memory for PDF output out of 10000 (max. 10000000)
 

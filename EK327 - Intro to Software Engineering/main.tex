@@ -23,7 +23,7 @@
 \pgfplotsset{compat=newest}
 \tikzset{>=latex}
 \usepackage{siunitx}
-
+\usepackage{tikz-uml}
 \title{\Huge{Intro to Software Engineering}\\EK327}
 \author{\huge{Giacomo Cappelletto}}
 \date{21/1/25}
@@ -1694,27 +1694,683 @@ greater than the number of processes, context switching is still necessary to ha
 		      \item The output is an object file containing machine code instructions.
 	      \end{itemize}
 	\item \textbf{Assembly:}
-	\begin{itemize}
-		\item The assembler translates the object code into machine code.
-		\item The output is an executable file that can be run on the target platform.
-	\end{itemize}
+	      \begin{itemize}
+		      \item The assembler translates the object code into machine code.
+		      \item The output is an executable file that can be run on the target platform.
+	      \end{itemize}
 	\item \textbf{Linking:}
-	\begin{itemize}
-	      \item The linker combines object files and libraries to create an executable file.
-	      \item It resolves external references, assigns memory addresses, and generates the final executable.
-	\end{itemize}
+	      \begin{itemize}
+		      \item The linker combines object files and libraries to create an executable file.
+		      \item It resolves external references, assigns memory addresses, and generates the final executable.
+	      \end{itemize}
 	\item \textbf{Execution:}
-	\begin{itemize}
-		\item 
-	      \item The operating system loads the executable into memory and starts its execution.
-	\end{itemize}
+	      \begin{itemize}
+		      \item
+		      \item The operating system loads the executable into memory and starts its execution.
+	      \end{itemize}
 \end{itemize}
 
-\textbf{Compiled languages:} Translated to machine code before execution.
+\textbf{Compiled languages:} Translated to machine code before execution. \\
 \textbf{Interpreted Languages:} Translated at runtime.
 
-\subsection{Hello World in C}
+\subsection{Types and Casting}
+\begin{verbatim}
+	int c = a / b;
+	printf("c is %d \n", c);
+	\end{verbatim}
+
+\ex{Integer Division Truncation}{
+	Dividing two integers \texttt{a} (5) and \texttt{b} (2) results in truncation to an integer. The decimal part is discarded, leaving \texttt{c} with value 2.
+}
+
+\begin{verbatim}
+	float d = 8 / 3;
+	printf("d is %f \n", d);
+	\end{verbatim}
+
+\ex{Implicit Integer Division}{
+	The expression \texttt{8/3} performs integer division first (resulting in 2), then assigns to float \texttt{d}. This demonstrates that division occurs before type conversion.
+}
+
+\begin{verbatim}
+	float e = (float)a / b;
+	printf("e is %f \n", e);
+	\end{verbatim}
+
+\ex{Explicit Casting for Floating-Point Division}{
+	Casting \texttt{a} to \texttt{float} before division forces floating-point arithmetic. This produces a precise result (2.5) instead of truncation.
+}
+
+\dfn{Type Conversion in Division}{
+	When at least one operand of the division operator (\texttt{/}) is a floating-point type, the result will be a floating-point value. Explicit casting can enforce this behavior.
+}
+
+\begin{verbatim}
+	int g = a;
+	printf("g is %d \n", g);
+	\end{verbatim}
+
+\nt{
+	Assigning an integer to another integer preserves its value. This example appears redundant but demonstrates direct assignment between matching types.
+}
+
+\begin{verbatim}
+	float h = int(f) / 2;
+	printf("h is %f \n", h);
+	\end{verbatim}
+
+\ex{Double Truncation Example}{
+	First truncates \texttt{f} (3.14159) to integer 3 via explicit cast, then performs integer division \texttt{3/2 = 1}. Finally assigns to float \texttt{h} as 1.0, showing two truncation steps.
+}
+
+\thm{Truncation Hierarchy}{
+	Truncation occurs at each explicit cast or integer division operation. The order of operations determines whether decimal values are preserved or discarded.
+}
+
+\qs{Why does \texttt{h} equal 1.0?}{
+	Explain why \texttt{int(f)/2} produces 1.0 instead of 1.5 when stored in a float.
+}
+
+\sol
+The cast operation \texttt{int(f)} happens first, converting 3.14159 to integer 3. Then integer division \texttt{3/2} produces 1. Finally, this integer result is implicitly converted to float 1.0 during assignment to \texttt{h}.
+
+\section{Fractions}
+
+\dfn{Floating-Point Representation in C++}{
+	In C++, floating-point numbers are represented according to the IEEE 754 standard. A single-precision (float) number consists of:
+	\begin{itemize}
+		\item \textbf{Sign bit (1 bit)}: Determines if the number is positive or negative.
+		\item \textbf{Exponent (8 bits)}: Encodes the exponent in a biased format.
+		\item \textbf{Mantissa (23 bits)}: Also known as the significand; represents the precision bits of the number.
+	\end{itemize}
+	The value of a floating-point number is computed as:
+	\[
+		(-1)^{\text{sign}} \times 2^{\text{exponent} - \text{bias}} \times (1 + \text{mantissa})
+	\]
+	For double-precision (double) numbers, the sizes differ (1 sign bit, 11 exponent bits, and 52 mantissa bits).
+}
+
+\nt{
+	Floating-point arithmetic can introduce precision errors due to the finite number of bits used to represent real numbers. Operations that are mathematically exact might yield unexpected results in computer arithmetic.
+}
+
+\ex{Demonstration of Floating-Point Precision Loss}{
+	Consider the following code that demonstrates the loss of precision when performing floating-point arithmetic:
+}
+
+\begin{verbatim}
+void showFloatLossiness()
+{
+    double a = 0.1;
+    double b = 0.2;
+    double c = a + b;
+    double d = c - b;
+    printf("a: %.20f\n", a);
+    printf("b: %.20f\n", b);
+    printf("c: %.20f\n", c);
+    printf("d: %.20f\n", d);
+    printf("a == d: %s\n", a == d ? "true" : "false");
+}
+\end{verbatim}
+
+When running this code, you might get the following output:
+
+\begin{verbatim}
+a: 0.10000000000000000555
+b: 0.20000000000000001110
+c: 0.30000000000000004441
+d: 0.10000000000000000555
+a == d: true
+\end{verbatim}
+
+This output shows that even simple arithmetic operations can result in floating-point numbers that have small differences from their expected values due to representation errors.
 
 
+\nt{
+	The loss of precision occurs because certain decimal fractions cannot be represented exactly in binary floating-point format. Numbers like 0.1 and 0.2 have infinite repeating binary representations, so they are approximated in a finite number of bits.
+}
+
+\dfn{Converting Decimal Fractions to Binary}{
+	Converting a decimal fraction to binary involves multiplying the fractional part by 2 and recording the integer part at each step. This process repeats until the fractional part becomes zero or until a sufficient level of precision is achieved.
+}
+
+\ex{Example: Binary Representation of 12.5 as a Float}{
+	Let's consider the decimal number 12.5 and examine its binary floating-point representation:
+
+	\begin{enumerate}
+		\item \textbf{Sign}: Positive, so the sign bit is 0.
+		\item \textbf{Binary Form}: \(12.5_{10} = 1100.1_2\).
+		\item \textbf{Normalized Form}: Shift the binary point to after the first 1: \(1.1001_2 \times 2^3\).
+		\item \textbf{Exponent}: The exponent is \(3\). Adding the bias (127 for single-precision float): \(3 + 127 = 130\), which is \(10000010_2\) in binary.
+		\item \textbf{Mantissa}: The mantissa is the fractional part after the leading 1: \(1001\), padded with zeros to fill 23 bits.
+	\end{enumerate}
+
+	Thus, the complete IEEE 754 binary representation is:
+
+	\[
+		\text{Sign bit}: 0 \quad \text{Exponent}: 10000010 \quad \text{Mantissa}: 10010000000000000000000
+	\]
+}
+
+\nt{
+	Due to limited precision, only a finite number of decimal fractions can be represented exactly in binary floating-point format. This limitation often leads to small rounding errors in calculations.
+}
+
+\ex{Converting a Decimal Number to a Binary Fraction in C++}{
+	The following function converts a decimal number to its binary string representation, including the fractional part:
+}
+
+\begin{verbatim}
+std::string convertToBinaryFraction(double num)
+{
+    // Check input bounds.
+    if (num < 0)
+    {
+        return "Negative numbers not supported!";
+    }
+    if (num > 4294967295.0)
+    {
+        return "Input number too large!";
+    }
+    
+    unsigned int intPart = static_cast<unsigned int>(num);
+    double fracPart = num - intPart;
+    
+    // Convert integer part to binary.
+    std::string intStr;
+    if (intPart == 0)
+    {
+        intStr = "0";
+    }
+    else
+    {
+        while (intPart > 0)
+        {
+            intStr = std::to_string(intPart % 2) + intStr;
+            intPart /= 2;
+        }
+    }
+    
+    // Convert fractional part to binary.
+    std::string fracStr = ".";
+    if (fracPart > 0)
+    {
+        int count = 0;
+        while (fracPart > 0 && count < (32 - intStr.length()))
+        {
+            fracPart *= 2;
+            if (fracPart >= 1)
+            {
+                fracStr += "1";
+                fracPart -= 1;
+            }
+            else
+            {
+                fracStr += "0";
+            }
+            count++;
+        }
+    }
+    else
+    {
+        fracStr += "0";
+    }
+    
+    return intStr + fracStr;
+}
+\end{verbatim}
+
+This function handles:
+\begin{itemize}
+	\item \textbf{Input validation}: Checks for negative numbers and excessively large inputs.
+	\item \textbf{Integer part conversion}: Converts the integer part to binary by repeatedly dividing by 2.
+	\item \textbf{Fractional part conversion}: Converts the fractional part to binary by multiplying by 2 and extracting the integer part.
+	\item \textbf{Precision control}: Limits the number of iterations to prevent infinite loops with non-terminating binary fractions (e.g., \(1/3\)).
+\end{itemize}
+
+
+\nt{
+	When converting fractions like \(1/3\) to binary, the fractional part does not terminate, resulting in infinite binary expansions. The function limits the precision based on the length of the integer part to mitigate excessive computation while providing a reasonable approximation.
+}
+
+\thm{Limitations of Binary Fraction Conversion}{
+	Certain decimal fractions have infinite, non-repeating binary representations, similar to how \(1/3\) is infinite and non-repeating in decimal. Consequently, these numbers cannot be represented exactly in binary, leading to approximation errors in computations.
+}
+
+\section*{Types and Type Safety}
+
+\begin{verbatim}
+	unsigned int aa = 0x12345678;
+	printf("Size of x is %zu bytes \n", sizeof(aa));
+	\end{verbatim}
+
+\dfn{Type Safety}{
+	Degree to which a programming language prevents type errors. Contains two approaches:
+	\begin{itemize}
+		\item Weak typing: Flexible type interactions (may cause unexpected behaviors)
+		\item Strong typing: Strict type enforcement (C++ uses this approach)
+		      \begin{itemize}
+			      \item Prevents operations between incompatible types
+			      \item Enables better performance through optimized type handling
+		      \end{itemize}
+	\end{itemize}
+}
+
+\dfn{Type Checking}{
+	Process of verifying type constraints. Two main approaches:
+	\begin{itemize}
+		\item Static checking (compile-time):
+		      \begin{itemize}
+			      \item Used in C++
+			      \item Catches errors before execution
+			      \item Enables optimizations
+		      \end{itemize}
+		\item Dynamic checking (runtime):
+		      \begin{itemize}
+			      \item Type verification during execution
+			      \item Adds runtime overhead
+		      \end{itemize}
+	\end{itemize}
+}
+
+\begin{verbatim}
+	int x = 2;
+	double y = 3.5;
+	double result = x + y;
+	printf("Result is %f \n", result);
+	\end{verbatim}
+
+\ex{Implicit Type Conversion}{
+	Demonstrates C++'s lenient type safety through \textit{arithmetic conversions}:
+	\begin{itemize}
+		\item \texttt{int x} promoted to \texttt{double} before addition
+		\item Conversion hierarchy: \texttt{int}
+		      →
+		      → \texttt{double}
+		\item Result maintains highest precision type (\texttt{double})
+	\end{itemize}
+}
+
+\begin{verbatim}
+	int a = -1;
+	unsigned int b = 1;
+	if (a < b) {
+	printf("a is less than b \n");
+	} else {
+	printf("a is not less than b \n");
+	}
+	\end{verbatim}
+
+\ex{Unsigned Conversion Pitfall}{
+	Illustrates unexpected behavior with signed/unsigned comparisons:
+	\begin{itemize}
+		\item \texttt{int a} converted to \texttt{unsigned int} via \textit{integral promotions}
+		\item -1 becomes 4294967295 (assuming 4-byte int)
+		\item Comparison 4294967295 < 1 evaluates false
+	\end{itemize}
+}
+
+\thm{Conversion Hierarchy Rule}{
+	When operands have different types, the compiler will:
+	\begin{enumerate}
+		\item Promote smaller types to larger equivalents (\texttt{char}
+		      →
+		      → \texttt{int})
+		\item Convert signed to unsigned if unsigned operand present
+		\item Convert to floating-point if either operand is floating-point
+	\end{enumerate}
+}
+
+\begin{verbatim}
+	bool c = x < y;
+	printf(c ? "true" : "false");
+	\end{verbatim}
+
+\nt{
+	C++ allows comparisons between different arithmetic types:
+	\begin{itemize}
+		\item Compiler performs implicit conversions before comparison
+		\item Conversion follows same hierarchy as arithmetic operations
+		\item Result always \texttt{bool} type regardless of operand types
+	\end{itemize}
+}
+
+\qs{Why does -1 appear larger than 1?}{
+	Explain the counterintuitive result in the signed/unsigned comparison example.
+}
+
+\sol
+The comparison converts both operands to unsigned integers. The signed value -1 becomes $2^{32}-1$
+(maximum unsigned int value) in two's complement systems, making it numerically larger than 1. Always use explicit casts when comparing signed and unsigned values.
+
+\section{Pointers}
+
+\begin{verbatim}
+	int square(int n) {
+	int result = n * n;
+	return result;
+	}
+	// ... other function definitions ...
+	int exampleCallStack() {
+	int a = 3, b = 4, c = 5;
+	int result = sumOfSquares(a, b, c);
+	std::cout << result << std::endl;
+	return 0;
+	}
+\end{verbatim}
+
+\dfn{Memory Segments in C++}{
+	Program memory is divided into three main segments:
+	\begin{itemize}
+		\item \textbf{Call Stack:}
+		      \begin{itemize}
+			      \item Stores function call frames with arguments, local variables, and return addresses
+			      \item Automatically managed (LIFO structure)
+			      \item Fast allocation but limited size
+		      \end{itemize}
+		\item \textbf{Heap:}
+		      \begin{itemize}
+			      \item Manual memory management via \texttt{new}/\texttt{delete}
+			      \item Larger capacity but slower access
+			      \item Memory persists until explicitly freed
+		      \end{itemize}
+		\item \textbf{Data Segment:}
+		      \begin{itemize}
+			      \item Contains global and static variables
+			      \item Allocated for program's entire lifetime
+		      \end{itemize}
+	\end{itemize}
+}
+
+\ex{Call Stack Operation}{
+	Demonstrates stack frame creation during nested function calls:
+	\begin{itemize}
+		\item Each function call creates a new frame
+		\item Frames contain parameters and local variables
+		\item Return values propagate back through frames
+		\item Frames destroyed in reverse creation order
+	\end{itemize}
+}
+
+\nt{Recursive Functions}{
+	In recursion, each recursive call creates a new stack frame. Deep recursion without proper base cases can lead to:
+	\begin{itemize}
+		\item Stack overflow from excessive frame accumulation
+		\item Memory corruption and program crashes
+	\end{itemize}
+}
+
+\begin{verbatim}
+	int *counterPointer = &counter;
+	std::cout << "value at counterPointer:" << *counterPointer;
+\end{verbatim}
+
+\ex{Pointer Basics}{
+	Illustrates fundamental pointer operations:
+	\begin{itemize}
+		\item Address-of operator (\&) gets variable's memory location
+		\item Dereference operator (*) accesses value at address
+		\item Pointers enable indirect memory manipulation
+	\end{itemize}
+}
+
+\dfn{Pointer Characteristics}{
+	\begin{itemize}
+		\item Fixed size (typically 4/8 bytes depending on architecture)
+		\item Enable pass-by-reference semantics
+		\item Require explicit dereferencing for value access
+		\item Can be reassigned to point to different variables
+	\end{itemize}
+}
+
+\begin{verbatim}
+	*counterPointer = 15; // Direct memory modification
+	counterPointer = \&maxValue; // Pointer reassignment
+\end{verbatim}
+
+\ex{Pointer Manipulation}{
+	Demonstrates two key pointer capabilities:
+	\begin{itemize}
+		\item Value modification through dereferenced pointers
+		\item Address reassignment to different variables
+		\item Shows pointer/variable synchronization
+	\end{itemize}
+}
+
+\begin{verbatim}
+	void increment(int *count) { *count += 1; }
+	\end{verbatim}
+
+\ex{Pass-by-Reference}{
+	Implements modified parameter passing:
+	\begin{itemize}
+		\item Avoids copying large data structures
+		\item Requires explicit address-of operator (\&) at call site
+		\item Enables direct memory modification in callee
+	\end{itemize}
+}
+
+\nt{Pointer Safety}{
+	Always ensure:
+	\begin{itemize}
+		\item Pointers remain valid during dereferencing
+		\item No returns of pointers to stack-allocated variables
+		\item Proper null-checking before dereferencing
+	\end{itemize}
+}
+
+\begin{verbatim}
+	int *roundedResult = roundUp(input);
+	std::cout << *roundedResult; // Dangerous!
+	\end{verbatim}
+
+\ex{Dangling Pointer Example}{
+	Demonstrates common pointer error:
+	\begin{itemize}
+		\item Returns address of stack-allocated variable
+		\item Memory becomes invalid after function return
+		\item Accessing invalid memory causes undefined behavior
+	\end{itemize}
+}
+
+\thm{Pointer Lifetime Rule}{
+	A pointer must never outlive:
+	\begin{enumerate}
+		\item The memory region it points to
+		\item The scope where the referenced variable was declared
+		\item Any parent stack frames in call hierarchy
+	\end{enumerate}
+}
+
+\qs{Why does roundUp() produce garbage values?}{
+	Explain the memory safety issue in the roundUp() function example.
+}
+
+\sol
+The function returns a pointer to a local stack variable (\texttt{roundedUp}). When the function returns:
+\begin{itemize}
+	\item Its stack frame is destroyed
+	\item The pointer now references invalid memory
+	\item Subsequent dereferencing accesses corrupted data
+\end{itemize}
+Proper solution: Allocate heap memory or modify parameter directly.
+
+\section{Structs and Arrays}
+
+\begin{verbatim}
+enum Semester { FALL, SPRING };
+\end{verbatim}
+
+\dfn{Enumeration Type}{
+	Represents a fixed set of named constants:
+	\begin{itemize}
+		\item Improves code readability
+		\item Provides type safety for discrete values
+		\item Underlying type is integer (implicit conversion possible)
+	\end{itemize}
+}
+
+\begin{verbatim}
+struct BUClass {
+    string name;
+    int year;
+    Semester semester;
+};
+\end{verbatim}
+
+\ex{Class Structure Definition}{
+	Models academic course information:
+	\begin{itemize}
+		\item Contains name, year, and semester fields
+		\item Demonstrates composition of primitive types and enums
+		\item Memory efficient (fixed size structure)
+	\end{itemize}
+}
+
+\begin{verbatim}
+struct Student {
+    string firstName;
+    string lastName;
+    int graduationYear;
+    float gpa;
+    BUClass *classes[10];  // Array of pointers
+    int classesSize = 0;
+};
+\end{verbatim}
+
+\thm{Pointer Array Storage}{
+	When storing object associations:
+	\begin{itemize}
+		\item Pointer arrays prevent expensive copies
+		\item Fixed size (10 elements here) requires bounds checking
+		\item Requires explicit size tracking (classesSize counter)
+	\end{itemize}
+}
+
+\begin{verbatim}
+void registerForClass(Student *student, BUClass buClass) {
+    student->classes[student->classesSize] = &buClass;
+    student->classesSize++;
+}
+\end{verbatim}
+
+\ex{Pass-by-Reference Pitfall}{
+	Illustrates common pointer error:
+	\begin{itemize}
+		\item Stores address of stack-allocated parameter
+		\item \&buClass becomes invalid after function return
+		\item Should store pointers to heap-allocated objects instead
+	\end{itemize}
+}
+
+\begin{verbatim}
+int main5() {
+    int finalGrades[] = {91, 83, 78, 84, 73};
+    printArrayInfo(finalGrades);  // Prints 2 instead of 5
+}
+\end{verbatim}
+
+\nt{Array Parameter Handling}{
+	Arrays decay to pointers when passed to functions:
+	\begin{itemize}
+		\item \texttt{sizeof(array)} returns pointer size, not array size
+		\item Always pass array size explicitly
+		\item Alternative: Use \texttt{std::array} or \texttt{std::vector}
+	\end{itemize}
+}
+
+\begin{verbatim}
+void probabilisicallyRegisterForClass(Student *student, 
+                                     BUClass *buClass,
+                                     float probability) {
+    if (randomFloatInRange(0.0, 1.0) <= probability) {
+        student->classes[student->classesSize] = buClass;
+        student->classesSize++;
+    }
+}
+\end{verbatim}
+
+\ex{Probabilistic Registration}{
+	Demonstrates pointer-based association management:
+	\begin{itemize}
+		\item Uses Monte Carlo simulation for class registration
+		\item Maintains references to global BUClass objects
+		\item Shows pointer array manipulation with size tracking
+	\end{itemize}
+}
+
+\qs{Why does \texttt{printArrayInfo} give wrong size?}{
+	Explain the array size calculation discrepancy in the example.
+}
+
+\sol
+Arrays decay to pointers when passed to functions. The \texttt{sizeof} operator in \texttt{printArrayInfo} returns:
+\begin{itemize}
+	\item \texttt{sizeof(int*)} = 8 bytes (pointer size)
+	\item \texttt{sizeof(int)} = 4 bytes
+	\item 8/4 = 2 instead of actual array size 5
+\end{itemize}
+Always pass array size explicitly for functions processing arrays.
+
+\thm{Memory Management Rules}{
+	When working with pointer arrays:
+	\begin{enumerate}
+		\item Ensure pointed objects outlive the array
+		\item Prefer stack allocation for short-lived objects
+		\item Use heap allocation (\texttt{new}/\texttt{delete}) for dynamic lifetime
+		\item Never store pointers to temporary values
+	\end{enumerate}
+}
+
+\begin{verbatim}
+std::cout << "student registered for at least 4 classes: " 
+          << students[index].lastName << std::endl;
+\end{verbatim}
+
+\nt{String Concatenation Optimization}{
+	\begin{itemize}
+		\item \texttt{std::to\_string} creates temporary strings
+		\item Multiple concatenations can be expensive
+		\item Consider using \texttt{std::ostringstream} for complex formatting
+	\end{itemize}
+}
+
+\begin{tikzpicture}
+    \umlemptyclass[x=0,y=0]{Semester}{<<enumeration>>}{
+        FALL \\ SPRING
+    }
+    
+    \umlclass[x=3,y=0]{BUClass}{
+        - name: string \\
+        - year: int \\
+        - semester: Semester
+    }{}
+    
+    \umlclass[x=0,y=-5]{Student}{
+        - firstName: string \\
+        - lastName: string \\
+        - graduationYear: int \\
+        - gpa: float \\
+        - classesSize: int = 0
+    }{
+        + registerForClass() \\
+        + probabilisicallyRegisterForClass()
+    }
+    
+    % Fixed association with proper anchor
+    \umluniassoc[geometry=|-|, mult1=1, mult2=0..10]{Student}{BUClass}
+    
+    % Fixed note placement using actual node names
+    \umlnote[x=5,y=-6.5,width=3.2cm,anchor=south]{Student}{
+        \textbf{Association with BUClass}: \\
+        - \texttt{classes: BUClass*[10]} \\
+        - Pointer array storage \\
+        - Fixed capacity (10 elements) \\
+        - \texttt{classesSize} tracks count
+    }
+    
+    % Fixed dependency line
+    \umldep[geometry=--]{Student}{Semester}
+\end{tikzpicture}
 
 \end{document}
