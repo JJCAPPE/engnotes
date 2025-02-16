@@ -1336,31 +1336,31 @@ Vectors ``outside'' the span of \(\{a_1,a_2\}\) are precisely those \(b\) for wh
 	\tdplotsetmaincoords{70}{110}
 	\centering
 	\begin{tikzpicture}[tdplot_main_coords, scale=2]
-	  % Draw coordinate axes
-	  \draw[->, thick] (0,0,0) -- (2,0,0) node[anchor=north east] {$x$};
-	  \draw[->, thick] (0,0,0) -- (0,2,0) node[anchor=north west] {$y$};
-	  \draw[->, thick] (0,0,0) -- (0,0,2) node[anchor=south] {$z$};
-	  
-	  % Draw the plane spanned by v1 and v2.
-	  % Every vector in the span has x = y, so we fill the plane { (u,u,w) : u,w in R }.
-	  % Here we choose a rectangular patch with u from -1 to 1 and w from -1 to 2.
-	  \filldraw[fill=blue!20, draw=blue, opacity=0.5] 
+		% Draw coordinate axes
+		\draw[->, thick] (0,0,0) -- (2,0,0) node[anchor=north east] {$x$};
+		\draw[->, thick] (0,0,0) -- (0,2,0) node[anchor=north west] {$y$};
+		\draw[->, thick] (0,0,0) -- (0,0,2) node[anchor=south] {$z$};
+
+		% Draw the plane spanned by v1 and v2.
+		% Every vector in the span has x = y, so we fill the plane { (u,u,w) : u,w in R }.
+		% Here we choose a rectangular patch with u from -1 to 1 and w from -1 to 2.
+		\filldraw[fill=blue!20, draw=blue, opacity=0.5]
 		(-1,-1,-1) -- (1,1,-1) -- (1,1,2) -- (-1,-1,2) -- cycle;
-	  
-	  % Draw vector v1 = (1,1,1)
-	  \draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (1,1,1) 
+
+		% Draw vector v1 = (1,1,1)
+		\draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (1,1,1)
 		node[midway, anchor=south east] {$v_1$};
-	  
-	  % Draw vector v2 = (-1,-1,1)
-	  \draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (-1,-1,1) 
+
+		% Draw vector v2 = (-1,-1,1)
+		\draw[-{Stealth[scale=1.2]}, red, thick] (0,0,0) -- (-1,-1,1)
 		node[midway, anchor=north west] {$v_2$};
-	  
-	  % Draw vector b = (1,0,0)
-	  \draw[-{Stealth[scale=1.2]}, green!70!black, thick] (0,0,0) -- (1,0,0)
+
+		% Draw vector b = (1,0,0)
+		\draw[-{Stealth[scale=1.2]}, green!70!black, thick] (0,0,0) -- (1,0,0)
 		node[midway, anchor=south] {$b$};
-	  
-	  % Add an annotation that b is not in the span of v1 and v2.
-	  \node at (2.5, 2, 0.5) {$b\notin\operatorname{span}\{v_1,v_2\}$};
+
+		% Add an annotation that b is not in the span of v1 and v2.
+		\node at (2.5, 2, 0.5) {$b\notin\operatorname{span}\{v_1,v_2\}$};
 	\end{tikzpicture}
 }
 
@@ -1370,7 +1370,35 @@ Vectors ``outside'' the span of \(\{a_1,a_2\}\) are precisely those \(b\) for wh
 	\item \(\mathrm{Span}\{a_1, a_2\}\) is the set of all vectors \(b\) for which \(Ax = b\) has a solution.
 	\item If \(b\) is not in that span, there is no solution.
 	\item Geometrically, if \(a_1\) and \(a_2\) are not multiples of each other, their span is a 2D plane through the origin in \(\mathbb{R}^2\). If they are multiples, the span is just a single line, and most vectors in \(\mathbb{R}^2\) lie outside that line (no solution).
+	\item $span{a_1}$ is a line or point. $span{a_1, a_2}$ is a plane, line or point. and so on
 \end{itemize}
 
+\subsection{Dropping a vector to retain the same span}
+
+\qs{Drop vector $a_3$ to retain the same span as $a_1$, $a_2$ and $a_3$.}{
+	\[
+		a_1 =
+		\begin{bmatrix}
+			2 \\ 1
+		\end{bmatrix}
+	\]
+
+	\[
+		a_2 =
+		\begin{bmatrix}
+			1 \\ 1
+		\end{bmatrix}
+	\]
+
+	\[
+		a_3 =
+		\begin{bmatrix}
+			3 \\ 3
+		\end{bmatrix}
+	\]
+}
+
+\sol
+yes, $span{a_1,a_2,a_3}=span{a_1,a_2}$ because $a_3$ is a linear combination of $a_1$ and $a_2$ ($a_1+a_2a_3$)
 
 \end{document}

@@ -17,4 +17,5 @@
 \contentsline {section}{\numberline {2.2}Linear Combinations and the Span}{17}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Geometric Plots in the Notes}{17}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Key Conclusions}{18}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Dropping a vector to retain the same span}{18}{subsection.2.3.2}%
 \contentsfinish 

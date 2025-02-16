@@ -1,10 +1,10 @@
 INFO:  latexindent.pl version 3.24, 2024-04-28, a script to indent .tex files
        latexindent.pl lives here: /opt/homebrew/Cellar/latexindent/3.24/libexec/bin/
-       Thu Feb 13 16:44:40 2025
-       Filename: /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/main.tex
+       Sun Feb 16 14:46:06 2025
+       Filename: /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/ps4/main.tex
 INFO:  Processing switches:
 INFO:  Directory for backup files and log file indent.log:
-       /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra
+       /Users/giacomo/Documents/Engineering/Notes/EK103 - Computational Linear Algebra/EK103 - HW/ps4
 INFO:  Perl modules are being loaded from the following directories:
        /opt/homebrew/opt/perl/lib/perl5/5.38/FindBin.pm
        /opt/homebrew/Cellar/latexindent/3.24/libexec/lib/perl5/YAML/Tiny.pm

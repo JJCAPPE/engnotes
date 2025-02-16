@@ -1,0 +1,275 @@
+\documentclass{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{smartdiagram}
+\usesmartdiagramlibrary{additions}
+\usepackage{xcolor}
+\usepackage{forest}
+\usepgfplotslibrary{colormaps}
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{polar}
+\pgfplotsset{compat=newest}
+\tikzset{>=latex}
+\usepackage{siunitx}
+
+\title{\Huge{ps4}\\ps4}
+\author{\huge{Giacomo Cappelletto}}
+\date{\today}
+
+\begin{document}
+
+\section*{Q1}
+
+\subsection*{A}
+
+\[
+	\begin{bmatrix}
+		0 & 0 & 1  & 1  & 2  & 4  \\
+		1 & 1 & 2  & 3  & 4  & 11 \\
+		1 & 1 & -3 & -2 & -6 & -9
+	\end{bmatrix}
+	\xrightarrow{R_1 \Leftrightarrow R_3}
+	\begin{bmatrix}
+		1 & 1 & -3 & -2 & -6 & -9 \\
+		1 & 1 & 2  & 3  & 4  & 11 \\
+		0 & 0 & 1  & 1  & 2  & 4  \\
+	\end{bmatrix}
+	\xrightarrow{R_2 = R_2 - R_1}
+	\begin{bmatrix}
+		1 & 1 & -3 & -2 & -6 & -9 \\
+		0 & 0 & 5  & 5  & 10 & 20 \\
+		0 & 0 & 1  & 1  & 2  & 4  \\
+	\end{bmatrix}
+\]
+\[
+	\xrightarrow{R_3 = R_3 - \frac{1}{5}R_2}
+	\begin{bmatrix}
+		1 & 1 & -3 & -2 & -6 & -9 \\
+		0 & 0 & 5  & 5  & 10 & 20 \\
+		0 & 0 & 0  & 0  & 0  & 0  \\
+	\end{bmatrix}
+	= REF(A')
+\]
+
+\subsection*{B}
+
+\[
+	\begin{bmatrix}
+		\tikz[baseline=(char.base)] \node[draw,circle,inner sep=2pt] (char) {1}; & 1 & -3                                                                       & -2 & -6 & -9 \\
+		0                                                                        & 0 & \tikz[baseline=(char.base)] \node[draw,circle,inner sep=2pt] (char) {5}; & 5  & 10 & 20 \\
+		0                                                                        & 0 & 0                                                                        & 0  & 0  & 0  \\
+	\end{bmatrix}
+\]
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Column} & \textbf{Type} \\ \hline
+		1               & Pivot         \\ \hline
+		2               & Free Variable \\ \hline
+		3               & Pivot         \\ \hline
+		4               & Free Variable \\ \hline
+		5               & Free Variable \\ \hline
+	\end{tabular}
+	\label{tab:small_table}
+\end{table}
+
+\subsection*{C}
+
+\[
+	\xrightarrow{R_2 = \frac{1}{5}R_2}
+	\begin{bmatrix}
+		1 & 1 & -3 & -2 & -6 & -9 \\
+		0 & 0 & 1  & 1  & 2  & 4  \\
+		0 & 0 & 0  & 0  & 0  & 0  \\
+	\end{bmatrix}
+	\xrightarrow{R_1 = R_1 + 3R_2}
+	\begin{bmatrix}
+		1 & 1 & 0 & 1 & 0 & 3 \\
+		0 & 0 & 1 & 1 & 2 & 4 \\
+		0 & 0 & 0 & 0 & 0 & 0 \\
+	\end{bmatrix}
+	= RREF(A')
+\]
+
+\subsection*{D}
+
+Assigning free variables to free columns:
+
+\[
+	\begin{aligned}
+		x_2 = t_2 \\
+		x_4 = t_4 \\
+		x_5 = t_5
+	\end{aligned}
+\]
+
+Then from $RREF(A')$
+
+\[
+	\begin{aligned}
+		x_1 & = 3 - t_2 - t_4 \\
+		x_3 & = 4 - t_3 -2t_5
+	\end{aligned}
+\]
+
+So the complete solution is
+
+\[
+	\vec{x_c} =
+	\begin{bmatrix}
+		x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		3 \\0\\4\\0\\0
+	\end{bmatrix}
+	+ t_2
+	\begin{bmatrix}
+		-1 \\1\\0\\0\\0
+	\end{bmatrix}
+	+t_4
+	\begin{bmatrix}
+		-1 \\0\\-1\\1\\0
+	\end{bmatrix}
+	+t_5
+	\begin{bmatrix}
+		0 \\0\\-2\\0\\1
+	\end{bmatrix}
+\]
+
+\subsection*{E}
+
+Since there are 3 linearly independent vectors in $\mathbb{R}^5$ corresponding to 3 free variables in the homogeneous part of the solution, the set of all possible solutions $\vec{x_c}$ spans a 3 dimensional solid or subspace in \(\mathbb{R}^5\).
+
+\subsection*{F}
+
+Any given $3 \times 5 $ matrix $B$ where $B \vec{x} = \vec{b}$ is consistent will yield an infinite set of solutions, since the number of pivots cannot exceed the number of rows, which is 3 in this case, which implies that the solution will have a minimum of 2 free variables, and therefore a non-unique solution set.
+
+\section*{Q2}
+
+\subsection*{A}
+
+One solution to $A\vec{x} =0$ is always $\vec{x} = \vec{0}$, which is the trivial solution. So yes, regardless of the value of $p$, it will have at least one solution, the trivial one.
+
+\subsection*{B}
+
+\[
+	\begin{bmatrix}
+		3  & 0  & 1 & 5  \\
+		-5 & 1  & 1 & -2 \\
+		8  & -1 & 0 & 7  \\
+		-1 & 2  & p & 11
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = R_2  + \frac{5}{3}R_1 \\
+			R_3 = R_3 - \frac{8}{3}R_1  \\
+			R_4 = R_4 + \frac{1}{3}R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		3 & 0 & 1             & 5            \\
+		0 & 1 & \frac{8}{3}   & \frac{19}{3} \\
+		0 & 0 & 0             & 0            \\
+		0 & 2 & p+\frac{1}{3} & \frac{38}{8} \\
+	\end{bmatrix}
+	\xrightarrow{R_4 = R_4 - 2R_2}
+	\begin{bmatrix}
+		3 & 0 & 1           & 5            \\
+		0 & 1 & \frac{8}{3} & \frac{19}{3} \\
+		0 & 0 & 0           & 0            \\
+		0 & 0 & p-5         & 0            \\
+	\end{bmatrix}
+	\xrightarrow{R_3 \Leftrightarrow R_4}
+	\begin{bmatrix}
+		3 & 0 & 1           & 5            \\
+		0 & 1 & \frac{8}{3} & \frac{19}{3} \\
+		0 & 0 & p-5         & 0            \\
+		0 & 0 & 0           & 0            \\
+	\end{bmatrix}
+\]
+
+\subsection*{C}
+
+If \(A \vec{x} = b\) is consistent and \(\vec{x_c}\) is a line in $\mathbb{R}^3$, then the SLE must have one free variable. Therefore
+\[
+	\begin{aligned}
+		p-5 = 0 \\
+		p = 5
+	\end{aligned}
+\]
+
+Then the new \(REF(A')\) is
+
+\[
+	\begin{bmatrix}
+		3 & 0 & 1           & 5            \\
+		0 & 1 & \frac{8}{3} & \frac{19}{3} \\
+		0 & 0 & 0           & 0            \\
+		0 & 0 & 0           & 0            \\
+	\end{bmatrix}
+\]
+
+\subsection*{D}
+
+\[
+	\xrightarrow{R_1 = \frac{1}{3}R_1}
+	\begin{bmatrix}
+		1 & 0 & \frac{1}{3} & \frac{5}{3}  \\
+		0 & 1 & \frac{8}{3} & \frac{19}{3} \\
+		0 & 0 & 0           & 0            \\
+		0 & 0 & 0           & 0            \\
+	\end{bmatrix}
+\]
+
+\subsection*{E}
+
+Since there is a free variable column for \(x_3\) we assign it to the scalar \(t_3\). Then the solutions are
+
+\[
+	\begin{aligned}
+		x_1 =\frac{5}{3} - \frac{1}{3} t_3    \\
+		x_2 =  \frac{19}{3} - \frac{8}{3} t_3 \\
+		x_3 = t_3
+	\end{aligned}
+\]
+And therefore the complete solution, a line in $\mathbb{R}^3$, is
+\[
+	x_c =
+	\begin{bmatrix}
+		x_1 \\x_2\\x_3
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\frac{5}{3}  \\
+		\frac{19}{3} \\
+		0
+	\end{bmatrix}
+	+ t_3
+	\begin{bmatrix}
+		- \frac{1}{3} \\
+		- \frac{8}{3} \\
+		1
+	\end{bmatrix}
+\]
+
+\subsection*{F}
+
+No,\(B \vec{x} = b\) is not guaranteed to have an infinite number of solutions as there can be one pivot per column in the \(B\) matrix, and therefore only a particular solution 
+
+
+
+
+
+
+
+\end{document}
