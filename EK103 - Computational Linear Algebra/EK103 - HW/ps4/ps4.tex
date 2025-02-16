@@ -264,12 +264,108 @@ And therefore the complete solution, a line in $\mathbb{R}^3$, is
 
 \subsection*{F}
 
-No, \(B \vec{x} = b\) is not guaranteed to have an infinite number of solutions as there can be one pivot per column in the \(B\) matrix, and therefore only a particular solution 
+No, \(B \vec{x} = b\) is not guaranteed to have an infinite number of solutions as there can be one pivot per column in the \(B\) matrix, and therefore only a particular solution
 
+\section*{Q3}
 
+\subsection*{A}
 
+\[
+	A=
+	\begin{bmatrix}
+		a \\b\\c\\
+	\end{bmatrix}
+	\begin{bmatrix}
+		a & b & c \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		a^2 & ab  & ac  \\
+		ab  & b^2 & bc  \\
+		ac  & bc  & c^2 \\
+	\end{bmatrix}
+\]
 
+\subsection*{B}
 
+\[
+	\xrightarrow{
+		R_1 = \frac{1}{a}R_1 (a \neq 0)
+	}
+	\begin{bmatrix}
+		a  & b   & c   \\
+		ab & b^2 & bc  \\
+		ac & bc  & c^2 \\
+	\end{bmatrix}
+	\xrightarrow{R_2 = R_2 - \frac{b}{a}R_1, R_3 = R_3 - \frac{c}{a}R_1}
+	\begin{bmatrix}
+		a & b & c \\
+		0 & 0 & 0 \\
+		0 & 0 & 0 \\
+	\end{bmatrix}
+\]
 
+\subsection*{C}
+
+\[
+	\xrightarrow{
+		R_2 = \frac{1}{b}R_2 (b \neq 0)
+	}
+	\begin{bmatrix}
+		a^2 & ab & ac  \\
+		a   & b  & c   \\
+		ac  & bc & c^2 \\
+	\end{bmatrix}
+	\xrightarrow{R_1 = R_1 - \frac{a}{b}R_2, R_3 = R_3 - \frac{c}{b}R_2}
+	\begin{bmatrix}
+		0 & 0 & 0 \\
+		a & b & c \\
+		0 & 0 & 0 \\
+	\end{bmatrix}
+\]
+
+\subsection*{D}
+\[
+	\xrightarrow{
+		R_3 = \frac{1}{c}R_2 (c \neq 0)
+	}
+	\begin{bmatrix}
+		a^2 & ab  & ac \\
+		ab  & b^2 & bc \\
+		c   & b   & c  \\
+	\end{bmatrix}
+	\xrightarrow{R_1 = R_1 - \frac{a}{c}R_3, R_2 = R_2 - \frac{b}{c}R_3}
+	\begin{bmatrix}
+		0 & 0 & 0 \\
+		0 & 0 & 0 \\
+		a & b & c \\
+	\end{bmatrix}
+\]
+
+\subsection*{E}
+
+In any of these cases we will have \(Rank(A)=1\), so the span will be a line through the origin
+
+\subsection*{F}
+
+If $\vec{v} = 0$ then the span of $A$ will just be the point $(0,0,0)$, as there is no possible way to multiply the zero vector to get it to point to any other point.
+
+\section*{Q4}
+
+\subsection*{A}
+
+The span of $A$ is a subspace of \(\mathbb{R}^2\), whereas that of \(B\) is in \(\mathbb{R}^3\). So the span of the two cannot be the same.
+
+\subsection*{B}
+
+Since \(A\) spans all of \(\mathbb{R}^2\) and \(A\) is contained in \(B\), their spans are the same.
+
+\subsection*{C}
+
+The first 3 columns of both matrices are not linearly independent, in fact they are the same vectors. Therefore, the span of \(A\) is just the line passing through origin with homogeneous part equal to one of those entries. Conversely, \(B\) has a fourth entry which may be linearly independent of the first three and therefore result in a different span than that of \(A\).
+
+\subsection*{D}
+
+Since \(b_2\) is a linear combination of the entries in \(A\), and the remaining entries are also present in \(A\), then the two must have the same span.
 
 \end{document}
