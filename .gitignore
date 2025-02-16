@@ -1,2 +1,9 @@
 .DS_Store
 .vscode
+# LaTeX log files
+*.log
+*.fls
+*.fdb_latexmk
+*.aux
+*.toc
+*.synctex.gz
