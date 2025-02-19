@@ -13,10 +13,10 @@ std::string convertToBinaryFraction(double num)
     {
         return "Input number too large!";
     }
-    
+
     unsigned int intPart = static_cast<unsigned int>(num);
     double fracPart = num - intPart;
-    
+
     std::string intStr;
     if (intPart == 0)
     {
@@ -30,30 +30,33 @@ std::string convertToBinaryFraction(double num)
             intPart /= 2;
         }
     }
-    
     std::string fracStr = ".";
-    if (fracPart > 0)
+    if (fracPart == 0)
     {
-        int count = 0;
-        while (fracPart > 0 && count < (32-intStr.length()))
-        {
-            fracPart *= 2;
-            if (fracPart >= 1)
-            {
-                fracStr += "1";
-                fracPart -= 1;
-            }
-            else
-            {
-                fracStr += "0";
-            }
-            count++;
-        }
+        return intStr;
     }
     else
     {
-        fracStr += "0";
+        
+        if (fracPart > 0)
+        {
+            int count = 0;
+            while (fracPart > 0 && count < (32 - intStr.length()) && count <= 17)
+            {
+                fracPart *= 2;
+                if (fracPart >= 1)
+                {
+                    fracStr += "1";
+                    fracPart -= 1;
+                }
+                else
+                {
+                    fracStr += "0";
+                }
+                count++;
+            }
+        }
     }
-    
+
     return intStr + fracStr;
 }
