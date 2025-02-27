@@ -2336,41 +2336,147 @@ std::cout << "student registered for at least 4 classes: "
 }
 
 \begin{tikzpicture}
-    \umlemptyclass[x=0,y=0]{Semester}{<<enumeration>>}{
-        FALL \\ SPRING
-    }
-    
-    \umlclass[x=3,y=0]{BUClass}{
-        - name: string \\
-        - year: int \\
-        - semester: Semester
-    }{}
-    
-    \umlclass[x=0,y=-5]{Student}{
-        - firstName: string \\
-        - lastName: string \\
-        - graduationYear: int \\
-        - gpa: float \\
-        - classesSize: int = 0
-    }{
-        + registerForClass() \\
-        + probabilisicallyRegisterForClass()
-    }
-    
-    % Fixed association with proper anchor
-    \umluniassoc[geometry=|-|, mult1=1, mult2=0..10]{Student}{BUClass}
-    
-    % Fixed note placement using actual node names
-    \umlnote[x=5,y=-6.5,width=3.2cm,anchor=south]{Student}{
-        \textbf{Association with BUClass}: \\
-        - \texttt{classes: BUClass*[10]} \\
-        - Pointer array storage \\
-        - Fixed capacity (10 elements) \\
-        - \texttt{classesSize} tracks count
-    }
-    
-    % Fixed dependency line
-    \umldep[geometry=--]{Student}{Semester}
+	\umlemptyclass[x=0,y=0]{Semester}{<<enumeration>>}{
+		FALL \\ SPRING
+	}
+
+	\umlclass[x=3,y=0]{BUClass}{
+		- name: string \\
+		- year: int \\
+		- semester: Semester
+	}{}
+
+	\umlclass[x=0,y=-5]{Student}{
+		- firstName: string \\
+		- lastName: string \\
+		- graduationYear: int \\
+		- gpa: float \\
+		- classesSize: int = 0
+	}{
+		+ registerForClass() \\
+		+ probabilisicallyRegisterForClass()
+	}
+
+	% Fixed association with proper anchor
+	\umluniassoc[geometry=|-|, mult1=1, mult2=0..10]{Student}{BUClass}
+
+	% Fixed note placement using actual node names
+	\umlnote[x=5,y=-6.5,width=3.2cm,anchor=south]{Student}{
+		\textbf{Association with BUClass}: \\
+		- \texttt{classes: BUClass*[10]} \\
+		- Pointer array storage \\
+		- Fixed capacity (10 elements) \\
+		- \texttt{classesSize} tracks count
+	}
+
+	% Fixed dependency line
+	\umldep[geometry=--]{Student}{Semester}
 \end{tikzpicture}
+
+\section{Testing}
+
+\subsection{Why is it needed?}
+\begin{itemize}
+	\item Identify bugs/defects before users do
+	\item Maintain system malleability
+	\item Gain confidence that system maintains functionality after changes are made:
+	      \begin{itemize}
+		      \item small – incremental fixes/features
+		      \item large – a refactoring
+	      \end{itemize}
+	\item Enables continuous integration/deployment
+	      \begin{itemize}
+		      \item Continuous Testing
+		            \begin{itemize}
+			            \item Rich automated test suite - run it after every change
+		            \end{itemize}
+		      \item Continuous Integration
+		            \begin{itemize}
+			            \item Merge your code into a single source of truth frequently
+		            \end{itemize}
+		      \item Continuous Deployment
+		            \begin{itemize}
+			            \item Deploy your changes to production frequently
+		            \end{itemize}
+	      \end{itemize}
+	\item Gives us confidence to ship code frequently
+\end{itemize}
+
+
+
+\subsection*{How was it done}
+
+\textbf{Waterfall-Model:} Development was done by a team, and then that code would move on to test engineers while the dev engineers move on to next task. Issue: if issues are found, the testers have to go back to the devs, interrupts their development and they have lost context.\\
+\textbf{Agile-Model:} Development is done by a team, but the team is made up of developers who develop, test and deploy. \\
+
+\subsection{Types of test}
+
+\begin{itemize}
+	\item Unit testing
+	      \begin{itemize}
+		      \item Fast
+		      \item Cheap
+		      \item Deterministic
+		      \item Focused
+		      \item White box
+	      \end{itemize}
+	\item Service testing
+	      \begin{itemize}
+		      \item Slower
+		      \item Less Deterministic
+		      \item More expensive
+		      \item Broader
+		      \item Black box
+	      \end{itemize}
+	\item UI testing
+	      \begin{itemize}
+		      \item End to End
+		      \item Much more noise -> less deterministic
+		      \item More expensive
+		      \item Broadest
+		      \item Black box
+	      \end{itemize}
+\end{itemize}
+
+\subsection{Testing in C++}
+
+\begin{verbatim}
+//#include <gtest/gtest.h>
+//#include "hw2_problem2.h"
+
+TEST(ScaleTest, ZeroScale)
+{
+    // Create a rectangle with bottom-left corner at (1, 3) and top-right corner at (5, 9).
+    // This represents a rectangle with width = 4 (5 - 1) and height = 6 (9 - 3).
+    Rectangle rectangle = createRectangle(createPoint(1, 3), createPoint(5, 9));
+
+    // Attempt to scale the rectangle with a horizontal scaling factor of 1.0 (no scaling in x-direction)
+    // and a vertical scaling factor of 0.0 (scaling in y-direction by zero).
+    // The `scale` function is expected to return `false` when the scaling factor is zero,
+    // indicating that no scaling operation was performed.
+    EXPECT_EQ(false, scale(&rectangle, 1.0, 0.0));
+
+    // Define the expected state of the rectangle after the scaling operation.
+    // Since the scaling factor is zero, the rectangle should remain unchanged.
+    Rectangle expectedScaled = createRectangle(createPoint(1, 3), createPoint(5, 9));
+
+    // Verify that the rectangle's dimensions and position remain unchanged after the scaling operation.
+    // This assertion ensures that the `scale` function correctly handles the edge case of a zero scaling factor.
+    EXPECT_EQ(expectedScaled, rectangle);
+}
+\end{verbatim}
+
+\subsection{Development Order in Test Driven Development}
+
+\begin{enumerate}
+	\item Write header files (.h) to define functions
+	\item Write all of the test cases we want to cover against
+	      those header files - we’ll be able to compile those test
+	      cases but not execute them yet - as there are no
+	      implementations yet
+	\item Write the implementations (.cpp) and progressively
+	      execute the test cases against the implementations to
+	      measure progress towards completion
+\end{enumerate}
 
 \end{document}
