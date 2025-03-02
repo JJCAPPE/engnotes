@@ -19,6 +19,7 @@
 \tikzset{>=latex}
 \usepackage{siunitx}
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{angles, quotes}
 
 \title{\Huge Computational Linear Algebra\\EK103}
 \author{\Huge Giacomo Cappelletto}
@@ -1810,5 +1811,90 @@ Therefore
 
 }
 
+\ex{Review}{
+	\[
+		A(5, 5), \quad B\left(\frac{5}{2}, \frac{5}{2}\right), \quad C\left(\frac{15}{2}, \frac{5}{2}\right), \quad D(5, 0)
+	\]
+
+	
+		
+		\begin{center}
+			\begin{tikzpicture}[scale=0.5]
+				% Coordinate axes
+				\draw [<->] (-1,0) -- (8,0);
+				\draw [<->] (0,-1) -- (0,8);
+	
+				% Points
+				\coordinate (A) at (5,5);
+				\coordinate (B) at (2.5,2.5);
+				\coordinate (C) at (7.5,2.5);
+				\coordinate (D) at (5,0);
+	
+				% Draw lines
+				\draw (A) -- (B) -- (D) -- (C) -- cycle;
+	
+				% Draw points
+				\filldraw (A) circle (2pt) node[above] {$A$};
+				\filldraw (B) circle (2pt) node[below] {$B$};
+				\filldraw (C) circle (2pt) node[below] {$C$};
+				\filldraw (D) circle (2pt) node[below] {$D$};
+	
+				% Draw angle BAC
+				\pic [draw, thick, blue, angle radius=1cm, angle eccentricity=1.2, "$\theta$"] {angle = B--A--C};
+			\end{tikzpicture}
+		\end{center}
+	\[
+		A'(0,0), \quad
+		B'\left(-\frac{5}{2}, -\frac{5}{2}\right), \quad
+		C'\left(\frac{5}{2}, -\frac{5}{2}\right), \quad
+		D'(0, -5)
+	\]
+
+	\begin{center}
+		\begin{tikzpicture}[scale=0.5]
+			% Coordinate axes
+			\draw [<->] (-4,0) -- (4,0); % Adjusted to fit all points
+			\draw [<->] (0,-6) -- (0,1);
+		
+			% Points
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (-2.5,-2.5);
+			\coordinate (C) at (2.5,-2.5);
+			\coordinate (D) at (0,-5);
+		
+			% Draw lines
+			\draw (A) -- (B) -- (D) -- (C) -- cycle;
+		
+			% Draw points
+			\filldraw (A) circle (2pt) node[above] {$A'$};
+			\filldraw (B) circle (2pt) node[below left] {$B'$};
+			\filldraw (C) circle (2pt) node[below right] {$C'$};
+			\filldraw (D) circle (2pt) node[below] {$D'$};
+		
+			% Draw angle B'A'C'
+			\pic [draw, thick, blue, angle radius=1cm, angle eccentricity=1.2, "$\theta$"] {angle = B--A--C};
+		\end{tikzpicture}
+		\end{center}
+
+	\[
+		\vec{AB} = \vec{v_2} =
+		\begin{bmatrix}
+			-\frac{5}{2} \\
+			-\frac{5}{2}
+		\end{bmatrix}
+		,
+		\vec{AC} = \vec{v_1} =
+		\begin{bmatrix}
+			\frac{5}{2} \\
+			-\frac{5}{2}
+		\end{bmatrix}
+	\]
+	\[
+		\vec{v_1}^T \vec{v_2} = -\frac{25}{4}+\frac{25}{4} = 0 =\left\lvert \vec{v_1} \right\rvert \left\lvert \vec{v_2}\right\rvert \cos(\theta)
+	\]
+	\[
+		\therefore \theta = 90^\circ
+	\]	
+}
 
 \end{document}
