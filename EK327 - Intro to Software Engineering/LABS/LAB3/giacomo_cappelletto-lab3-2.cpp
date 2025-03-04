@@ -16,3 +16,4 @@ char *reverseString(const char *str)
     reverse[lenght] = '\0'; //null terminate
     return reverse;
 }
+

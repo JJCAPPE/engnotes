@@ -53,10 +53,3 @@ CoinArrays possibleChangeAmounts(int totalCents) {
     qsort(result.arrays, result.size, sizeof(struct CoinArray), compareCoinArrays);
     return result;
 }
-
-int main() {
-    int total = 31;
-    CoinArrays allCombinations = possibleChangeAmounts(total);
-    printCoinArrays(allCombinations);
-    return 0;
-}

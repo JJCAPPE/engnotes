@@ -1816,33 +1816,33 @@ Therefore
 		A(5, 5), \quad B\left(\frac{5}{2}, \frac{5}{2}\right), \quad C\left(\frac{15}{2}, \frac{5}{2}\right), \quad D(5, 0)
 	\]
 
-	
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.5]
-				% Coordinate axes
-				\draw [<->] (-1,0) -- (8,0);
-				\draw [<->] (0,-1) -- (0,8);
-	
-				% Points
-				\coordinate (A) at (5,5);
-				\coordinate (B) at (2.5,2.5);
-				\coordinate (C) at (7.5,2.5);
-				\coordinate (D) at (5,0);
-	
-				% Draw lines
-				\draw (A) -- (B) -- (D) -- (C) -- cycle;
-	
-				% Draw points
-				\filldraw (A) circle (2pt) node[above] {$A$};
-				\filldraw (B) circle (2pt) node[below] {$B$};
-				\filldraw (C) circle (2pt) node[below] {$C$};
-				\filldraw (D) circle (2pt) node[below] {$D$};
-	
-				% Draw angle BAC
-				\pic [draw, thick, blue, angle radius=1cm, angle eccentricity=1.2, "$\theta$"] {angle = B--A--C};
-			\end{tikzpicture}
-		\end{center}
+
+
+	\begin{center}
+		\begin{tikzpicture}[scale=0.5]
+			% Coordinate axes
+			\draw [<->] (-1,0) -- (8,0);
+			\draw [<->] (0,-1) -- (0,8);
+
+			% Points
+			\coordinate (A) at (5,5);
+			\coordinate (B) at (2.5,2.5);
+			\coordinate (C) at (7.5,2.5);
+			\coordinate (D) at (5,0);
+
+			% Draw lines
+			\draw (A) -- (B) -- (D) -- (C) -- cycle;
+
+			% Draw points
+			\filldraw (A) circle (2pt) node[above] {$A$};
+			\filldraw (B) circle (2pt) node[below] {$B$};
+			\filldraw (C) circle (2pt) node[below] {$C$};
+			\filldraw (D) circle (2pt) node[below] {$D$};
+
+			% Draw angle BAC
+			\pic [draw, thick, blue, angle radius=1cm, angle eccentricity=1.2, "$\theta$"] {angle = B--A--C};
+		\end{tikzpicture}
+	\end{center}
 	\[
 		A'(0,0), \quad
 		B'\left(-\frac{5}{2}, -\frac{5}{2}\right), \quad
@@ -1855,26 +1855,26 @@ Therefore
 			% Coordinate axes
 			\draw [<->] (-4,0) -- (4,0); % Adjusted to fit all points
 			\draw [<->] (0,-6) -- (0,1);
-		
+
 			% Points
 			\coordinate (A) at (0,0);
 			\coordinate (B) at (-2.5,-2.5);
 			\coordinate (C) at (2.5,-2.5);
 			\coordinate (D) at (0,-5);
-		
+
 			% Draw lines
 			\draw (A) -- (B) -- (D) -- (C) -- cycle;
-		
+
 			% Draw points
 			\filldraw (A) circle (2pt) node[above] {$A'$};
 			\filldraw (B) circle (2pt) node[below left] {$B'$};
 			\filldraw (C) circle (2pt) node[below right] {$C'$};
 			\filldraw (D) circle (2pt) node[below] {$D'$};
-		
+
 			% Draw angle B'A'C'
 			\pic [draw, thick, blue, angle radius=1cm, angle eccentricity=1.2, "$\theta$"] {angle = B--A--C};
 		\end{tikzpicture}
-		\end{center}
+	\end{center}
 
 	\[
 		\vec{AB} = \vec{v_2} =
@@ -1894,7 +1894,73 @@ Therefore
 	\]
 	\[
 		\therefore \theta = 90^\circ
-	\]	
+	\]
+}
+
+\subsection{ERP's and Identity Matrices}
+
+
+Let \( A'' \) be a matrix. Consider the augmented matrix:
+
+\[
+	\left[ A \mid I \right] : m \times 2m
+\]
+
+Perform a sequence of elementary row operations (ERPs) on \( A \) to turn it into the identity matrix \( I \):
+
+\[
+	E_p \dots E_2 E_1 A'' = B \left[ A \mid I \right] = \left[ BA \mid BI \right]
+\]
+
+where \( B \) is an \( m \times m \) matrix.
+
+If we achieve \( BA = I \), then:
+
+\[
+	B = A^{-1}
+\]
+
+\qs{Thinklet}{
+	Consider a set \( \mathcal{S}\) of vectors in \(\mathbb{R}^m\) who's tips form a straight line through the origin.	\\
+	If we linearly combine a set of vectors in \(\mathcal{S}\), is the result guaranteed to be in \(\mathcal{S}\)?
+}
+
+
+\sol DUH
+
+\dfn{Vector Space}{
+	A vector space is a set of vectors in \(\mathbb{R}^m\) for which the following hold:
+
+	\begin{enumerate}
+		\item The set is closed under addition: that is, if \(\vec{v_1}, \vec{v_2}\) are both in the set, then \(\vec{v_1} + \vec{v_2}\) is also in the set.
+		\item The set is closed under scalar multiplication: that is, if \(\vec{v}\) is in the set and \(c \in \mathbb{R}\), then \(c \vec{v}\) is also in the set.
+	\end{enumerate}
+}
+
+\dfn{Basis of a Vector Space}{
+	A basis for a vector space in \(\mathbb{R}^m\) is a set of independent vectors that span the vector space. The maximum number of vectors that could be in that basis is \( m \).\\
+	\(m\) is the \textbf{dimension} of the vector space.
+}
+
+\ex{Examples of Vector Spaces}{
+\[
+\begin{array}{|c|c|c|}
+\hline
+\mathcal{S} & \text{Basis} & \text{Dimension} \\
+\hline
+\{ \vec{0} \} & \varnothing & 0 \\
+\hline
+\left\{ \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_m \end{bmatrix} t \right\} & 
+\left\{ \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_m \end{bmatrix} \right\} & 1 \\
+\hline
+\left\{ \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_m \end{bmatrix} t_1 + \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{bmatrix} t_2 \right\} & 
+\left\{ \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_m \end{bmatrix}, \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{bmatrix} \right\} & 2 \\
+\hline
+\left\{ \sum_{i=1}^{k} \begin{bmatrix} a_{1i} \\ a_{2i} \\ \vdots \\ a_{mi} \end{bmatrix} t_i \right\} & 
+\left\{ \begin{bmatrix} a_{11} \\ a_{21} \\ \vdots \\ a_{m1} \end{bmatrix}, \begin{bmatrix} a_{12} \\ a_{22} \\ \vdots \\ a_{m2} \end{bmatrix}, \ldots, \begin{bmatrix} a_{1k} \\ a_{2k} \\ \vdots \\ a_{mk} \end{bmatrix} \right\} & k \\
+\hline
+\end{array}
+\]
 }
 
 \end{document}

@@ -2,7 +2,9 @@
 
 int sumElements(int *arr, int size)
 {
+    if (size <= 0) return 0; 
     int sum = 0;
+
     for (int i = 0; i < size; i++)
     {
         if (i % 2 == 0 || i == 0)
@@ -14,6 +16,8 @@ int sumElements(int *arr, int size)
             sum += arr[i];
         }
     }
+    
     sum += arr[0] * arr[size - 1];
+
     return sum;
 }

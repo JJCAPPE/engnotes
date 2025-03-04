@@ -2479,4 +2479,33 @@ TEST(ScaleTest, ZeroScale)
 	      measure progress towards completion
 \end{enumerate}
 
+\chapter{OOP}
+
+\section*{Operator Overloading Instead of toString}
+
+\ex{Code Example}{}
+\begin{lstlisting}[language=C++]
+class Point {
+private:
+	int x;
+	int y;
+public:
+	Point(int x, int y);
+	~Point();
+	int getX() const { return x; }
+	int getY() const { return y; }
+	
+	friend std::ostream\& operator<<(std::ostream\& os, 
+	const Point\& point) {
+		os << "Point(" << point.x << ", " << point.y << ")";
+		return os;
+	}
+};
+	\end{lstlisting}
+
+
+\nt{
+	need \texttt{friend} here because we are defining this operator on \texttt{std::ostream} and it needs to access private state of \texttt{Point}
+}
+
 \end{document}
