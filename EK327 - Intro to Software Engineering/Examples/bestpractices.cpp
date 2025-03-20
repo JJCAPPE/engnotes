@@ -33,6 +33,7 @@ int main1() {
     for (int lineIndex = 0; lineIndex < lineCount; lineIndex++) {
         processLine(lines[lineIndex]);
     }
+    return 0;
 }
 
 // ENCAPSULATION

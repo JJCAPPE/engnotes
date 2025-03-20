@@ -11,12 +11,6 @@ void printStringLength(char *string)
     }
     printf("The length of the string is: %d\n", index);
 }
-int mainn()
-{
-    char *cstyle = "hello";
-    printStringLength(cstyle);
-    return 0;
-}
 
 // arrays of cstyle strings
 // simply pointers to cstyle strings

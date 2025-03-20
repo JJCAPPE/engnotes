@@ -48,6 +48,9 @@ CoinArrays possibleChangeAmounts(int totalCents) {
     CoinArrays result;
     result.arrays = NULL;
     result.size = 0;
+    if(totalCents == 0) {
+        return result;
+    }
     Coin tempCombination[totalCents];  
     findCombinations(totalCents, 0, tempCombination, 0, &result);
     qsort(result.arrays, result.size, sizeof(struct CoinArray), compareCoinArrays);

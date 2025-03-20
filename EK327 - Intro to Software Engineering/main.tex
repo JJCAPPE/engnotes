@@ -16,6 +16,26 @@
 \usepackage{array}  % for more flexible tabular
 \usepackage{booktabs} % for nice rules
 \usepackage{forest}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green},
+    morecomment=[l][\color{magenta}]{\#},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=10pt,
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={\%*}{*)}
+}
 \usetikzlibrary{circuits.logic.US} % Load the correct library for US-style logic gates
 \usepgfplotslibrary{colormaps}
 \usepgfplotslibrary{groupplots}
@@ -2508,4 +2528,297 @@ public:
 	need \texttt{friend} here because we are defining this operator on \texttt{std::ostream} and it needs to access private state of \texttt{Point}
 }
 
+\section{Virtual Functions and Dynamic Dispatch in C++}
+
+In C++, virtual functions enable dynamic dispatch, allowing the program to determine at runtime which function to call based on the actual type of the object. This is particularly useful in polymorphism, where a base class pointer or reference can point to objects of derived classes.
+
+\subsection{Example: University Member and Student}
+
+Consider the following example with a base class \texttt{UniversityMember} and a derived class \texttt{Student}:
+
+\begin{verbatim}
+#include <iostream>
+#include <string>
+
+class University {
+public:
+    std::string getName() const {
+        return "Some University";
+    }
+};
+
+class UniversityMember {
+private:
+    std::string name;
+    int id;
+    University* university;
+public:
+    UniversityMember(std::string name, int id, University* university)
+        : name(name), id(id), university(university) {}
+
+    virtual std::string describe() const {
+        return "UM: " + name + "(" + std::to_string(id) +
+               ") attends: " + university->getName();
+    }
+
+    std::string getName() const {
+        return name;
+    }
+};
+
+class Student : public UniversityMember {
+private:
+    double gpa;
+public:
+    Student(std::string name, int id, University* university, double gpa)
+        : UniversityMember(name, id, university), gpa(gpa) {}
+
+    std::string describe() const override {
+        return UniversityMember::describe() +
+               " and my GPA is " + std::to_string(gpa);
+    }
+
+    double getGpa() const {
+        return gpa;
+    }
+};
+
+int main() {
+    University uni;
+    UniversityMember um("Alice", 123, &uni);
+    Student st("Bob", 456, &uni, 3.8);
+
+    UniversityMember* members[] = { &um, &st };
+
+    for (UniversityMember* member : members) {
+        std::cout << member->describe() << std::endl;
+    }
+
+    return 0;
+}
+\end{verbatim}
+
+\subsection{Explanation}
+
+\begin{itemize}
+	\item \textbf{Base Class \texttt{UniversityMember}}: This class has a virtual function \texttt{describe()} that returns a description of the university member.
+	\item \textbf{Derived Class \texttt{Student}}: This class overrides the \texttt{describe()} function to include the student's GPA in the description.
+	\item \textbf{Dynamic Dispatch}: In the \texttt{main()} function, an array of \texttt{UniversityMember*} pointers is created, containing pointers to both a \texttt{UniversityMember} object and a \texttt{Student} object. When the \texttt{describe()} function is called on each pointer, the correct version of the function is called based on the actual type of the object (i.e., the \texttt{Student} version for the \texttt{Student} object and the \texttt{UniversityMember} version for the \texttt{UniversityMember} object).
+\end{itemize}
+
+\subsection{Output}
+
+The output of the program will be:
+
+\begin{verbatim}
+UM: Alice(123) attends: Some University
+UM: Bob(456) attends: Some University and my GPA is 3.8
+\end{verbatim}
+
+This demonstrates how virtual functions enable dynamic dispatch, allowing the program to call the correct function based on the actual type of the object at runtime.
+
+\section{Abstract Classes}
+
+\subsection{Pure Virtual Functions}
+
+\begin{verbatim}
+	class LibraryLoader {
+		public:
+		virtual Book* loadBooks(int& bookCount) = 0;
+	}
+\end{verbatim}
+
+The = 0 part here means that
+\begin{itemize}
+	\item not only will invocations to \texttt{loadBooks} of \texttt{LibraryLoader} be routed to its derived class implementations
+	\item but \texttt{LibraryLoader} does not provide its own implementation at all!
+	\item Therefore invocations \textbf{have} to be routed to its derived classes
+	\item What else does this imply?
+	\item That \texttt{LibraryLoader} cannot be instantiated!
+	\item \texttt{LibraryLoader} is now an abstract class
+\end{itemize}
+
+\begin{verbatim}
+	int main() {
+		// LibraryLoader* loader = new FileSystemLibraryLoader(“books.txt”, 30);
+		LibraryLoader* loader = new GoogleAPIBooksLoader("horstmann", 30);
+		LibrarySearcher searcher(loader);
+		searcher.search("Big");
+		return 0;
+	}
+\end{verbatim}
+
+Here, LibrarySearcher does not care about the implementation of of the LibraryLoader, and uncommenting the first line and commenting the other would still work perfectly fine
+
+\subsection*{Virtual Destructors}
+
+Virtual Classes have no state, but the implementations of the functions of that class do, and when the destructor is called, it is called for the parent class and not the implementation of it.
+
+\ex{Example}{}
+	\begin{verbatim}
+		class FileSystemLibraryLoader : public LibraryLoader {
+			private:
+				std::string fileLocation;
+				int maxToLoad;
+				Book* loadedBooks;
+			public:
+				FileSystemLibraryLoader(std::string fileLocation, int maxToLoad) :
+				fileLocation(fileLocation), maxToLoad(maxToLoad) {}
+				~FileSystemLibraryLoader() {
+					std::cout << "Deleting books loaded from: " << fileLocation << std::endl;
+					delete[] loadedBooks;
+				}
+				Book* loadBooks(int &bookCount) override;
+		};
+	\end{verbatim}
+	Here, if the LibraryLoader virtual class goes out of scope, this destructor will not be called, we need to make it virtual
+
+	\begin{verbatim}
+		class LibraryLoader {
+			public:
+			virtual Book* loadBooks(int& bookCount) = 0;
+			virtual ~LibraryLoader() {}
+		};
+	\end{verbatim}
+
+	and then override it in the FileSystemLibraryLoader
+
+	\begin{verbatim}
+		class FileSystemLibraryLoader : public LibraryLoader {
+			private:
+				Book* loadedBooks;
+			public:
+				~FileSystemLibraryLoader() {
+					std::cout << "Deleting books loaded from: " << fileLocation << std::endl;
+					elete[] loadedBooks;
+				}
+		};
+	\end{verbatim}
+
+\section{Multiple Inheritance}
+
+\begin{verbatim}
+	
+	enum LOG_LEVEL {
+		DEBUG,
+		WARN,
+		ERROR
+	};
+	
+	class Logger {
+	private:
+		LOG_LEVEL level;
+	public:
+		Logger(LOG_LEVEL level) : level(level) {}
+		void log(std::string message, LOG_LEVEL level);
+	};
+	
+	void Logger::log(std::string message, LOG_LEVEL level) {
+		switch (level) {
+			case ERROR:
+				std::cout << message << std::endl;
+				break;
+			case WARN:
+				if (this->level != DEBUG) {
+					std::cout << message << std::endl;
+				}
+				break;
+			case DEBUG:
+				if (this->level == DEBUG) {
+					std::cout << message << std::endl;
+				}
+				break;
+		}
+	}
+
+And we want to use this logging utility from our FileSystemLibraryLoader how should we do that?
+\end{verbatim}
+
+\begin{lstlisting}
+	class FileSystemLibraryLoader : public LibraryLoader, public Logger {
+		private:
+			std::string fileLocation;
+			int maxToLoad;
+			Book* loadedBooks;
+		public:
+			FileSystemLibraryLoader(std::string fileLocation, int maxToLoad) :
+			Logger(DEBUG), fileLocation(fileLocation), maxToLoad(maxToLoad) {}
+\end{lstlisting}
+
+\subsection{Diamond Problem}
+
+
+The diamond problem occurs when a class inherits from two classes that have a common base class. This can lead to ambiguity in the inheritance hierarchy.
+
+\begin{center}
+\begin{tikzpicture}[
+    class/.style={rectangle, draw, minimum height=1cm, minimum width=2cm, align=center},
+    arrow/.style={-{Latex[length=3mm, width=2mm]}, thick},
+    node distance=2cm and 3cm
+]
+
+% Nodes
+\node[class] (A) {A};
+\node[class, below left=of A] (B) {B};
+\node[class, below right=of A] (C) {C};
+\node[class, below=of $(B)!0.5!(C)$] (D) {D};
+
+% Arrows
+\draw[arrow] (A) -- (B);
+\draw[arrow] (A) -- (C);
+\draw[arrow] (B) -- (D);
+\draw[arrow] (C) -- (D);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{lstlisting}
+	class A {
+		public:
+			void show() { std::cout << "A\n"; }
+	};
+	class B : public A {};
+	class C : public A {};
+	class D : public B, public C {};
+	int main() {
+		D d;
+		d.show();
+		return 0;
+	}
+\end{lstlisting}
+
+
+In this diagram:
+- Class \texttt{A} is the base class.
+- Classes \texttt{B} and \texttt{C} inherit from \texttt{A}.
+- Class \texttt{D} inherits from both \texttt{B} and \texttt{C}, creating a diamond-shaped inheritance structure.\\
+
+Another issue is when two inherited classes have the same function name. This can cause ambiguity and lead to unexpected behavior.
+
+\begin{lstlisting}
+	class A {
+		public:
+			void show() { std::cout << "A\n"; }
+	};
+	class B {
+		public:
+			void show() { std::cout << "B\n"; }
+	};
+	class C : public A, public B {};
+	int main() {
+		C c;
+		c.show();
+		return 0;
+	}
+\end{lstlisting}
+
+Can be fixed with 
+
+\begin{lstlisting}
+	C c;
+	c.A::show();
+	c.B::show();
+\end{lstlisting}
+
+Which disambiguates
 \end{document}

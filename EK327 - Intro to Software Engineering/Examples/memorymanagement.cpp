@@ -30,6 +30,7 @@ int mainn()
     int *roundedResult = roundUp(input);
     std::cout << "rounded up: " << *roundedResult << std::endl;
     free(roundedResult); // memory is freed and can be used for something else
+    return 0;
 }
 
 // Example of realloc

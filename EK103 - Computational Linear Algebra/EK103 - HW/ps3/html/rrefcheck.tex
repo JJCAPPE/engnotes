@@ -1,0 +1,63 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    \begin{verbatim}
+C = [3  5  -2  -1  1;
+     2  0   2   4  2;
+    -2  7  -9  -5  4];
+
+R = rref(C);
+disp(R);
+
+null_vec = null(sym(C));
+disp(null_vec);
+
+disp('C * (nullspace vector) = 0:');
+[nRows, nVec] = size(null_vec);
+for i = 1:nVec
+    xn = null_vec(:, i);
+    product = C * xn;
+    fprintf('Result for nullspace vector %d:\n', i);
+    disp(product);
+end
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}     1     0     1     0    -1
+     0     1    -1     0     1
+     0     0     0     1     1
+
+[-1,  1]
+[ 1, -1]
+[ 1,  0]
+[ 0, -1]
+[ 0,  1]
+ 
+C * (nullspace vector) = 0:
+Result for nullspace vector 1:
+0
+0
+0
+ 
+Result for nullspace vector 2:
+0
+0
+0
+ 
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+

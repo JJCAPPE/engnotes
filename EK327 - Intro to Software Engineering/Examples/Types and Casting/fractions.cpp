@@ -1,5 +1,3 @@
-#include "hw2_structs.h"
-#include "hw2_problem4.h"
 #include <cstdio>
 #include <iostream>
 #include <string>

@@ -739,7 +739,7 @@ Under the linear transformation given by
 \]
 we see that points are ``stretched to the right'' in the \(x_1\)-direction, while the \(x_2\) coordinate remains unchanged.
 
-\subsection*{Method 1 -- Vector Method}
+\subsection{Method 1 -- Vector Method}
 
 The matrix under consideration is
 \[
@@ -773,7 +773,7 @@ These are the images of the standard basis vectors \(\mathbf{e}_1\) and \(\mathb
 	\end{tikzpicture}
 \end{center}
 
-\subsection*{Method 2 -- Vertex Method}
+\subsection{Method 2 -- Vertex Method}
 
 Consider the unit square with vertices
 \[
@@ -1974,4 +1974,417 @@ If we achieve \( BA = I \), then:
 
 }
 
+\section{Linear Combinations and Column Space}
+
+\subsection{Basic Definitions and Concepts}
+
+\dfn{Matrix Notation}{
+An $m \times n$ matrix $A$ is a rectangular array of numbers with $m$ rows and $n$ columns. We can represent $A$ as a collection of column vectors:
+
+\[
+	A = [\vec{v}_1 \ \vec{v}_2 \ \dots \ \vec{v}_n]
+\]
+
+where each $\vec{v}_i$ is a vector in $\mathbb{R}^m$.
+}
+
+\dfn{Column Space (Col A)}{
+The column space of a matrix $A$, denoted as Col $A$, is the set of all linear combinations of the columns of $A$.  Formally, if $A = [\vec{v}_1 \ \vec{v}_2 \ \dots \ \vec{v}_n]$, then
+
+\[
+	\text{Col } A = \text{span}\{\vec{v}_1, \vec{v}_2, \dots, \vec{v}_n\} = \{t_1\vec{v}_1 + t_2\vec{v}_2 + \dots + t_n\vec{v}_n \mid t_1, t_2, \dots, t_n \in \mathbb{R}\}
+\]
+}
+
+\subsection{Dimension and Basis of the Column Space}
+
+\qs{What is the dimension of Col A?}{
+	The dimension of Col $A$ is equal to the number of pivot columns in the reduced row echelon form (REF) of $A$.
+}
+\sol{
+	The dimension corresponds to the number of linearly independent columns in matrix $A$.
+}
+
+\qs{What is the basis for Col A?}{
+	The basis for Col $A$ is formed by the column vectors of the \textbf{original} matrix $A$ that correspond to the pivot columns in the REF of $A$. These are referred to as the "basic columns."
+}
+
+\sol
+\begin{enumerate}
+	\item Find REF(A).
+	\item Identify the pivot columns in REF(A).
+	\item Select the corresponding columns from the \textbf{original* matrix A. These columns form the basis.}
+\end{enumerate}
+
+
+\subsection{Parametric Form of the Column Space}
+
+\qs{What is the parametric form of Col A?}{
+	If the basis for Col $A$ is $\{\vec{w}_1, \vec{w}_2, \dots, \vec{w}_k\}$, then the parametric form of any vector $\vec{v}$ in Col $A$ is given by:
+
+	\[
+		\vec{v} = t_1\vec{w}_1 + t_2\vec{w}_2 + \dots + t_k\vec{w}_k
+	\]
+
+	where $t_1, t_2, \dots, t_k$ are scalar parameters (real numbers).
+}
+\sol{
+	This expresses any vector in the column space as a linear combination of the basis vectors.
+}
+
+\begin{tikzpicture}[scale=0.8]
+	\draw[->] (0,0) -- (4,0) node[right] {$\vec{w}_1$};
+	\draw[->] (0,0) -- (1,3) node[above] {$\vec{w}_2$};
+	\draw[->, very thick] (0,0) -- (2,1.5) node[midway, below right] {$\vec{v}$};
+	\draw[dashed] (2,0) -- (2,1.5);
+	\draw[dashed] (0,1.5) -- (2,1.5);
+	\node at (2, -0.5) {$t_1\vec{w}_1$};
+	\node at (0.7, 2) {$t_2\vec{w}_2$};
+
+	\node at (2.5, 2.5) {$\vec{v} = t_1\vec{w}_1 + t_2\vec{w}_2$};
+\end{tikzpicture}
+
+\subsection{Geometry of the Column Space}
+
+\qs{What is the geometry of Col A?}{
+	The geometric interpretation of Col $A$ depends on its dimension:
+	\begin{itemize}
+		\item If dim(Col $A$) = 0, Col $A$ is a point (the origin, $\vec{0}$).
+		\item If dim(Col $A$) = 1, Col $A$ is a line through the origin.
+		\item If dim(Col $A$) = 2, Col $A$ is a plane through the origin.
+		\item If dim(Col $A$) = 3, Col $A$ is a volume (all of $\mathbb{R}^3$) through the origin.
+		\item In general, if  $A$ is an $m \times n$ matrix, and dim(Col $A$) = $k$,  Col $A$ is a k-dimensional subspace of $\mathbb{R}^m$.
+	\end{itemize}
+}
+\sol{
+	The dimension indicates the "degrees of freedom" or the number of independent directions spanned by the column vectors.
+}
+
+\subsection{Example}
+
+\ex{Example Calculation}{
+	Let
+	\[
+		A = \begin{bmatrix}
+			1 & 2 & 3 \\
+			3 & 2 & 1 \\
+			2 & 4 & 6
+		\end{bmatrix}
+	\]
+
+	Find the REF of $A$, the dimension of Col $A$, a basis for Col $A$, the parametric form of Col $A$, and the geometry of Col $A$.
+}
+
+\sol{
+	First, find the reduced row echelon form (REF) of $A$:
+
+	\[
+		\text{REF}(A) = \begin{bmatrix}
+			1 & 0  & -1 \\
+			0 & -4 & -8 \\
+			0 & 0  & 0
+		\end{bmatrix} \rightarrow
+		\begin{bmatrix}
+			1 & 0 & -1 \\
+			0 & 1 & 2  \\
+			0 & 0 & 0
+		\end{bmatrix}
+	\]
+
+	\begin{itemize}
+		\item \textbf{Dimension of Col A:} The REF has two pivot columns (the first and second columns). Therefore, dim(Col $A$) = 2.
+
+		\item \textbf{Basis for Col A:} The pivot columns in REF($A$) are the first and second columns.  We take the corresponding columns from the *original* matrix $A$ to form the basis:
+
+		      \[
+			      \text{Basis(Col } A) = \left\{ \begin{bmatrix} 1 \\ 3 \\ 2 \end{bmatrix}, \begin{bmatrix} 2 \\ 2 \\ 4 \end{bmatrix} \right\}
+		      \]
+
+		\item \textbf{Parametric Form of Col A:}  Any vector $\vec{v}$ in Col $A$ can be written as a linear combination of the basis vectors:
+
+		      \[
+			      \vec{v} = t_1 \begin{bmatrix} 1 \\ 3 \\ 2 \end{bmatrix} + t_2 \begin{bmatrix} 2 \\ 2 \\ 4 \end{bmatrix}
+		      \]
+		      where $t_1$ and $t_2$ are any real numbers.
+
+		\item \textbf{Geometry of Col A:} Since dim(Col $A$) = 2, Col $A$ is a plane in $\mathbb{R}^3$ that passes through the origin.
+	\end{itemize}
+}
+
+\section{Nullspace of a Matrix}
+
+\dfn{Nullspace}{
+	The nullspace of a matrix $A$, denoted by $\text{Nul } A$, is the set of all solutions to the homogeneous equation $A\vec{x} = \vec{0}$.
+}
+
+\nt{
+	The solution space for $A\vec{x} = \vec{0}$ is a vector space. The nullspace of $A$ resides in $\mathbb{R}^n$, where $n$ is the number of columns of $A$.
+}
+
+\qs{Dimension of Nullspace}{
+	What is the dimension of $\text{Nul } A$?
+}
+\sol{
+	The dimension of $\text{Nul } A$ is equal to the number of free columns in the reduced row echelon form (RREF) of $A$.  We write this as $\text{Dim}(\text{Nul } A) = $ \# of free columns in RREF($A$).
+}
+
+\qs{Basis for Nullspace}{
+	What is the basis for $\text{Nul } A$?
+}
+\sol{
+	To find the basis for $\text{Nul } A$, we first find the RREF of $A$.  If the solution space of $A\vec{x} = \vec{0}$ is given by
+	\[
+		\vec{x} = t_1 \vec{w}_1 + t_2 \vec{w}_2 + \dots + t_k \vec{w}_k
+	\]
+	where $k$ is the number of free columns in RREF($A$), and $t_1, t_2, \dots, t_k$ are arbitrary scalars, then the basis of $\text{Nul } A$ is the set $\{\vec{w}_1, \vec{w}_2, \dots, \vec{w}_k\}$.
+}
+\qs{Parametric Form of Nullspace}{
+	What is the parametric form of $\text{Nul } A$?
+}
+\sol{
+	The parametric form of $\text{Nul } A$ is given by the linear combination of the basis vectors:
+	\[
+		\vec{v} = t_1 \vec{w}_1 + t_2 \vec{w}_2 + \dots + t_k \vec{w}_k
+	\]
+	where $\vec{w}_1, \vec{w}_2, ..., \vec{w}_k$ are the basis vector for the nullspace.
+}
+
+\ex{Example}{
+	Let
+	\[
+		A = \begin{bmatrix}
+			1 & 2 & 3 \\
+			3 & 2 & 1 \\
+			2 & 4 & 6
+		\end{bmatrix}
+	\]
+	Find the nullspace, its dimension, basis, and the geometric interpretation.
+
+	First, find the RREF of $A$:
+	\[
+		\text{REF}(A) = \begin{bmatrix}
+			1 & 2  & 3  \\
+			0 & -4 & -8 \\
+			0 & 0  & 0
+		\end{bmatrix}
+	\]
+	Further reducing to RREF:
+	\[
+		\text{RREF}(A) = \begin{bmatrix}
+			1 & 0 & -1 \\
+			0 & 1 & 2  \\
+			0 & 0 & 0
+		\end{bmatrix}
+	\]
+
+	\begin{itemize}
+		\item The first column corresponds to a basic variable.
+		\item The second column corresponds to a basic variable.
+		\item The third column corresponds to a free variable.
+	\end{itemize}
+
+	The dimension of the nullspace is the number of free variables:
+	\[
+		\text{Dim}(\text{N}(A)) = 1
+	\]
+
+	To find the solution space for $A\vec{x} = \vec{0}$, we use the RREF:
+
+	Let $\vec{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix}$. The RREF gives us the following equations:
+	\begin{align*}
+		x_1 - x_3  & = 0 \\
+		x_2 + 2x_3 & = 0
+	\end{align*}
+	$x_3$ is free. Let $x_3 = t_3$.  Then $x_1 = t_3$ and $x_2 = -2t_3$. So,
+	\[
+		\vec{x} = \begin{bmatrix}
+			t_3 \\ -2t_3 \\ t_3
+		\end{bmatrix} = t_3 \begin{bmatrix}
+			1 \\ -2 \\ 1
+		\end{bmatrix}
+	\]
+
+	Therefore, the basis for $\text{Nul } A$ is:
+	\[
+		\text{Basis}(\text{Nul } A) = \left\{ \begin{bmatrix} 1 \\ -2 \\ 1 \end{bmatrix} \right\}
+	\]
+
+	The geometry of $\text{Nul } A$ is a line in $\mathbb{R}^3$ passing through the origin and in the direction of the vector $\begin{bmatrix} 1 \\ -2 \\ 1 \end{bmatrix}$.
+
+}
+\begin{tikzpicture}[scale=1.5]
+	\draw[->] (-0.5,0,0) -- (2,0,0) node[right] {$x_1$};
+	\draw[->] (0,-1.5,0) -- (0,1,0) node[above] {$x_2$};
+	\draw[->] (0,0,-0.5) -- (0,0,2) node[above left] {$x_3$};
+
+	\draw[->, very thick] (0,0,0) -- (1,-2,1) node[midway,above right] {$\begin{bmatrix} 1 \\ -2 \\ 1 \end{bmatrix}$};
+	\node[below] at (0,0,0) {Origin};
+	\node[above] at (1,-2,1) {Line};
+
+\end{tikzpicture}
+
+\section{Row Space of a Matrix}
+
+\dfn{Row Space}{
+	The row space of a matrix $A$, denoted as Row $A$, is defined as the column space of the transpose of $A$, i.e., Row $A$ = Col $A^T$.
+}
+
+Let's consider a matrix $A$ and its transpose $A^T$:
+
+\[
+	A = \begin{bmatrix}
+		- & r_1    & - \\
+		- & r_2    & - \\
+		  & \vdots &   \\
+		- & r_m    & -
+	\end{bmatrix}
+	\qquad
+	A^T = \begin{bmatrix}
+		|     & |     &       & |     \\
+		r_1^T & r_2^T & \dots & r_m^T \\
+		|     & |     &       & |
+	\end{bmatrix}
+\]
+
+Where $r_1, r_2, \dots, r_m$ represent the rows of matrix $A$. The rows of $A$ become the columns of $A^T$.
+
+\nt{
+	The row vectors $r_1, r_2, \dots, r_m$ live in $\mathbb{R}^n$.
+}
+\begin{tikzpicture}
+	\draw[->] (0,0) -- (1,0) node[anchor=north west] {$r_1$};
+	\draw[->] (0,0) -- (0,1) node[anchor=south east] {$r_2$};
+	\draw[->] (1.5,0) -- (2.5,0) node[anchor=north west] {$r_1^T$};
+	\draw[->] (1.5,0) -- (1.5,1) node[anchor=south east] {$r_2^T$};
+
+	\draw[<->,dashed] (0.5,-0.5)--(2,-0.5);
+
+	\node at (1.25,-0.8) {live in $\mathbb{R}^n$};
+\end{tikzpicture}
+
+\section{Dimension and Basis of Row Space}
+
+\qs{What is the dimension of Row $A$?}{
+	What is the dimension of the row space of a matrix $A$?
+}
+
+\sol{
+	The dimension of Row $A$ is equal to the number of pivots in the row echelon form (REF) of $A$. It is also equal to the number of pivots in the REF of $A^T$.
+	\[
+		\text{Dim(Row } A) = \text{\# pivots in REF}(A) = \text{\# pivots in REF}(A^T)
+	\]
+}
+\qs{What is the Basis of Row A}{
+	How to find the basis for the Row Space of A
+}
+
+\sol{
+	\begin{enumerate}
+		\item Identify all the rows of REF($A$) that have pivots.
+		\item The basis vectors for Row $A$ are:
+		      \begin{itemize}
+			      \item Vectors corresponding to rows (with pivots in REF($A$)) of $A$.
+		      \end{itemize}
+		      OR
+		      \begin{itemize}
+			      \item Vectors corresponding to rows (with pivots in REF($A$)) of REF($A$).
+		      \end{itemize}
+		      OR
+		      \begin{itemize}
+			      \item Vectors corresponding to rows (with pivots in REF($A$)) of RREF($A$).
+		      \end{itemize}
+	\end{enumerate}
+}
+
+\ex{Example: Finding the Basis and Dimension}{
+	Let
+	\[
+		A = \begin{bmatrix}
+			1 & 2 & 3 \\
+			2 & 4 & 6 \\
+			1 & 2 & 3
+		\end{bmatrix}
+	\]
+	Find the dimension and a basis for Row $A$.
+}
+
+\sol{
+	First, find the REF of $A$:
+	\[
+		\text{REF}(A) = \begin{bmatrix}
+			1 & 2 & 3 \\
+			0 & 0 & 0 \\
+			0 & 0 & 0
+		\end{bmatrix}
+	\]
+	The REF of $A$ has one pivot (in the first row).
+
+	Dimension of Row $A$:
+	\[
+		\text{Dim(Row } A) = 1
+	\]
+
+	Basis for Row $A$:
+	\begin{itemize}
+		\item Using rows of $A$ with pivots in REF($A$): {[1 2 3]}
+		\item Using rows of REF($A$) with pivots: {[1 2 3]}
+	\end{itemize}
+}
+\begin{algorithm}[H]
+	\KwIn{Matrix $A$}
+	\KwOut{Dimension of Row $A$, Basis of Row $A$}
+	\SetAlgoLined
+	\SetNoFillComment
+
+	\tcc{Compute the Row Echelon Form (REF) of A}
+	$REF\_A$ $\leftarrow$ REF($A$);
+
+	\tcc{Count the number of pivots in REF(A)}
+	$num\_pivots$ $\leftarrow$ Number of pivots in $REF\_A$;
+
+	\tcc{The dimension of Row A is the number of pivots}
+	$dim\_row\_A$ $\leftarrow$ $num\_pivots$;
+
+	\tcc{Initialize an empty set to store basis vectors}
+	$basis\_row\_A$ $\leftarrow$ $\emptyset$;
+
+	\tcc{Identify rows with pivots in REF(A)}
+	\ForEach{row $r$ in $REF\_A$}{
+		\If{row $r$ has a pivot}{
+
+			\tcc{Add corresponding row from original matrix A to basis}
+			Let $r'$ be the corresponding row in matrix $A$.
+			$basis\_row\_A$ $\leftarrow$ $basis\_row\_A$ $\cup$ \{$r'$\};
+		}
+	}
+	\Return{$dim\_row\_A$, $basis\_row\_A$};
+	\caption{Finding Dimension and Basis of Row Space}
+\end{algorithm}
+
+\section{Determinant of a Square Matrix}
+Consider a square Matrix
+\[
+	A: \, m \times m
+\]
+If
+\[
+	A^{-1} exists \Leftrightarrow \dim(Col(A)) = \dim(Row(A)) = m
+\]
+\[
+	\therefore Rank(A) = m \, \text{and} \, \text{Nul}(A) = \{0\}
+\]
+And most importantly, since the columns of A are linearly independent, 
+\[
+	det(ref(A)) \neq 0
+\]
+
+
+\vspace{0.5cm}
+To make $\text{REF}(A)$ unique for $A$, we require that in constructing $\text{REF}(A)$, we follow three rules:
+
+\begin{enumerate}
+	\item Use the ``REPLACE'' ERP freely.
+	\item When using the ``SWAP'' ERP, apply the ``SCALE'' ERP to one of the rows by $-1$.
+	\item Don't use the ``SCALE'' ERP for any other purpose than the one in Rule 2.
+\end{enumerate}
 \end{document}

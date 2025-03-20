@@ -33,6 +33,7 @@ int main2()
     BUClass cs = {"CS", 2023, FALL};
     Student ella = {"ella", "vator", 2027, 3.78, &cs};
     cout << ella.firstName << " " << ella.lastName << " will graduate in " << ella.graduationYear << "and is part of" << ella.classes[0]->name << " " << ella.classes[0]->year << " " << ella.classes[0]->semester << endl;
+    return 0;
 }
 
 // MAKE UML
@@ -70,7 +71,6 @@ int main()
 }
 
 // arrays are passed by reference
-
 void printArrayInfo(int array[])
 {
     std::cout << sizeof(array) / sizeof(array[0]) << std::endl;
@@ -105,7 +105,7 @@ BUClass ec400 = {"EC400", 2025, SPRING};
 BUClass ec440 = {"EC440", 2025, SPRING};
 BUClass ec527 = {"EC527", 2025, SPRING};
 
-int main()
+int main8()
 {
     Student students[80];
     for (int index = 0; index < 80; index++)
