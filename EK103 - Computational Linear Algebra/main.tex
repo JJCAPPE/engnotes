@@ -1928,6 +1928,8 @@ If we achieve \( BA = I \), then:
 
 \sol DUH
 
+\chapter{Vector Spaces}
+
 \dfn{Vector Space}{
 	A vector space is a set of vectors in \(\mathbb{R}^m\) for which the following hold:
 
@@ -1962,6 +1964,8 @@ If we achieve \( BA = I \), then:
 		\end{array}
 	\]
 }
+
+\section{Column Space}
 
 \dfn{Column space of matrix \(A\)}{
 	The \textit{column space} of an \( m \times n \) matrix \( A \), denoted as \( \text{Col}(A) \), is the subspace of \( \mathbb{R}^m \) spanned by the columns of \( A \). Formally,
@@ -2361,6 +2365,8 @@ Where $r_1, r_2, \dots, r_m$ represent the rows of matrix $A$. The rows of $A$ b
 	\caption{Finding Dimension and Basis of Row Space}
 \end{algorithm}
 
+\chapter{Properties of Matrices}
+
 \section{Determinant of a Square Matrix}
 Consider a square Matrix
 \[
@@ -2373,7 +2379,7 @@ If
 \[
 	\therefore Rank(A) = m \, \text{and} \, \text{Nul}(A) = \{0\}
 \]
-And most importantly, since the columns of A are linearly independent, 
+And most importantly, since the columns of A are linearly independent,
 \[
 	det(ref(A)) \neq 0
 \]
@@ -2387,4 +2393,133 @@ To make $\text{REF}(A)$ unique for $A$, we require that in constructing $\text{R
 	\item When using the ``SWAP'' ERP, apply the ``SCALE'' ERP to one of the rows by $-1$.
 	\item Don't use the ``SCALE'' ERP for any other purpose than the one in Rule 2.
 \end{enumerate}
+
+\subsection{Cofactor Algorithm for Computing Determinant}
+
+
+Given a square matrix \( A = [a_{ij}] \) of size \( n \times n \), the determinant can be computed by expanding along any row \( i \) (where \( 1 \leq i \leq n \)) as follows:
+
+\begin{enumerate}
+	\item \textbf{Base Case}: If \( n = 1 \), then \( \det(A) = a_{11} \).
+
+	\item \textbf{Recursive Case}: For \( n > 1 \):
+	      \[
+		      \det(A) = \sum_{j=1}^n (-1)^{i+j} \, a_{ij} \, \det(M_{ij}),
+	      \]
+	      where:
+	      \begin{itemize}
+		      \item \( M_{ij} \) is the \textbf{minor matrix} obtained by deleting row \( i \) and column \( j \) from \( A \),
+		      \item \( (-1)^{i+j} \, \det(M_{ij}) \) is the \textbf{cofactor} of the element \( a_{ij} \).
+	      \end{itemize}
+\end{enumerate}
+
+\noindent \textbf{Steps}:
+\begin{itemize}
+	\item Choose a row \( i \) (commonly the first row, \( i = 1 \), but any row works).
+	\item For each element \( a_{ij} \) in row \( i \):
+	      \begin{itemize}
+		      \item Compute the minor \( M_{ij} \).
+		      \item Recursively calculate \( \det(M_{ij}) \).
+		      \item Multiply \( a_{ij} \), \( (-1)^{i+j} \), and \( \det(M_{ij}) \).
+	      \end{itemize}
+	\item Sum the results for all columns \( j \) in row \( i \).
+\end{itemize}
+
+Say \(B\) which has the Form
+
+\[
+	\begin{bmatrix}
+		a_1 & a_2 & \dots \\
+		b_1 & b_2 & \dots \\
+	\end{bmatrix}
+\]
+
+And delimits an area in \( \mathbb{R}^2 \), then the absolute value of the determinant of a matrix \(A\) which applies a transformation to \(B\) gives the scaling of the area of \(B\)
+
+\subsection{Properties of Determinants}
+
+
+\begin{multicols}{2}
+	\begin{itemize}
+		\item \(det(A \cdot B) = det(A) \cdot det(B)\)
+		\item \(det(A^{-1}) = \frac{1}{det(A)}\)
+		\item \(det(A^T) = det(A)\)
+		\item \(det(I)=1\)
+		\item \(det(E_{REPLACE} \cdot A) = det(A)\)
+		\item \(det(E_{SCALE= \alpha} \cdot A) = \alpha \cdot det(A)\)
+		\item \(det(A) = 0 \Leftrightarrow det(REF(A))= 0\)
+	\end{itemize}
+\end{multicols}
+
+\section{EigenVectors and EigenValues}
+
+Given \(A \in \mathbb{R}^{n \times n}\)
+
+\[
+	A \vec{x} = \vec{0} \leftarrow \vec{x} \in Null(A)
+\]
+
+Can rewrite As
+
+\[
+	A \vec{x} = 0 \vec{x}
+\]
+
+Generalise
+
+\[
+	A \vec{x} = \lambda \vec{x}
+\]
+
+where the solution for \(\vec{x}\) also defines a vector space, called an \textbf{EigenSpace}, where any vector in this space is called and \textbf{EigenVector}, and has a corresponding value of \(\lambda\) called an \textbf{EigenValue}.
+
+\ex{Eigenvectors}{
+	\[
+		A =
+		\begin{bmatrix}
+			-2 & 0 \\
+			0  & 3
+		\end{bmatrix}
+	\]
+	is \(\begin{bmatrix} 2\\2 \end{bmatrix}\) an eigenvector for \(A\)?
+
+	\[
+		\begin{bmatrix}
+			-2 & 0 \\
+			0  & 3
+		\end{bmatrix}
+		\begin{bmatrix} 2\\2 \end{bmatrix}
+		=
+		\begin{bmatrix}
+			-4 \\
+			6
+		\end{bmatrix}
+		=
+		\lambda
+		\begin{bmatrix} 2\\2 \end{bmatrix}
+	\]
+	No such Lambda, therefore not eigenvector, but
+	\[
+		\begin{bmatrix}
+			-2 & 0 \\
+			0  & 3
+		\end{bmatrix}
+		\begin{bmatrix}
+			2 \\0
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-4 \\0
+		\end{bmatrix}
+		=
+		-2
+		\begin{bmatrix}
+			2 \\0
+		\end{bmatrix}
+	\]
+
+	So \(\lambda = -2\) is the EigenValue for the EigenVector that is \(\begin{bmatrix} 2\\0 \end{bmatrix}\)
+
+}
+
 \end{document}
