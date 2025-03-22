@@ -6,7 +6,7 @@
 
 
 int *alphabetCounter(string filename){
-    int *counter = (int*) malloc(26 * sizeof(int));
+    int *counter = (int*) calloc(26 ,sizeof(int));
     ifstream file(filename);
     char ch;
     while(file.get(ch)){

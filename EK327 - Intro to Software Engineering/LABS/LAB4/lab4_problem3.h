@@ -24,10 +24,16 @@ using namespace std;
 * Then student.getAverageScore() should return 80, the average of 100, 70, and 70.
 */
 // please provide the implementation in your cpp file
-class Student {
+class Student
+{
+private:
+    string name;
+    vector<int> quizScores;
 
-
+public:
+    Student(string name, int score = -1);
+    void addQuizScore(int score);
+    double getAverageScore();
 };
-
 
 #endif // LAB4_PROBLEM3_MIDDLE_H
