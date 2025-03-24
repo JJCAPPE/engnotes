@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 /**
- * @class Abstract ComplexNumber class
+ * @class Abstract ComplexNumber 
  * @brief Represents a complex number with integer components for the real and imaginary parts.
  */
 class ComplexNumber

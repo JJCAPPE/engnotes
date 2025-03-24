@@ -38,10 +38,8 @@ bool GaussianInteger::divides(const GaussianInteger &other){
     }
     ComplexNumber *conjThis = this->conjugate();
     ComplexNumber *numerator = nonConstOther.multiply(*conjThis);
-    delete conjThis;
     int numReal = numerator->getReal();
     int numImag = numerator->getImag();
-    delete numerator;
     if (numReal % normThis == 0 && numImag % normThis == 0)
     {
         return true;
