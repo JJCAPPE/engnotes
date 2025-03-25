@@ -3,6 +3,61 @@
 #include <sstream>
 #include <string>
 
+// Tests for the "divides" method in GaussianInteger
+
+// Test 1: Simple exact divisibility.
+// 2 divides 4: (2, 0) should divide (4, 0)
+TEST(GaussianDivisonTests, DividesMethod_ExactDivisibility) {
+    GaussianInteger divisor(2, 0);
+    GaussianInteger dividend(4, 0);
+    EXPECT_TRUE(divisor.divides(dividend));
+}
+
+// Test 2: Not divisible case.
+// 2 does not divide 1+1i since the quotient is not a Gaussian integer.
+TEST(GaussianDivisonTests, DividesMethod_NotDivisible) {
+    GaussianInteger divisor(2, 0);
+    GaussianInteger operand(1, 1);
+    EXPECT_FALSE(divisor.divides(operand));
+}
+
+// Test 3: Divisor is zero.
+// A zero divisor (norm==0) should always return false.
+TEST(GaussianDivisonTests, DividesMethod_ZeroDivisor) {
+    GaussianInteger zeroDivisor(0, 0);
+    GaussianInteger operand(3, 4);
+    EXPECT_FALSE(zeroDivisor.divides(operand));
+}
+
+// Test 4: Divisibility using known multiplication relationship.
+// Let a be an arbitrary Gaussian integer and q another arbitrary Gaussian integer,
+// then b = a * q. In that case, a should divide b.
+TEST(GaussianDivisonTests, DividesMethod_ProductRelation) {
+    GaussianInteger a(3, 4);
+    GaussianInteger q(2, -5);
+    // Compute b = a * q (using the multiply method via base class pointer)
+    ComplexNumber* productBase = a.multiply(q);
+    auto b = dynamic_cast<GaussianInteger*>(productBase);
+    ASSERT_NE(b, nullptr);
+    EXPECT_TRUE(a.divides(*b));
+    delete b;
+}
+
+// Test 5: Divisibility with negative components.
+// Construct divisor a and choose b such that b = a * q for a Gaussian q (with negative parts).
+TEST(GaussianDivisonTests, DividesMethod_NegativeComponents) {
+    GaussianInteger a(1, -1);   // divisor
+    GaussianInteger q(4, 3);    // chosen multiplier
+    ComplexNumber* productBase = a.multiply(q);
+    auto b = dynamic_cast<GaussianInteger*>(productBase);
+    ASSERT_NE(b, nullptr);
+    // Since b is constructed as a * q, a divides b.
+    EXPECT_TRUE(a.divides(*b));
+    // Also, check that if we modify b by adding an extra 1, divisibility is broken.
+    GaussianInteger bModified(b->getReal() + 1, b->getImag());
+    EXPECT_FALSE(a.divides(bModified));
+    delete b;
+}
 
 TEST(GaussianIntegerTests, DefaultConstructor) {
     GaussianInteger gi;
