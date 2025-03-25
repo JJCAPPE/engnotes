@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <iostream>
 
 int fieldCounter(string filenameCSV){
     ifstream file;
@@ -30,17 +29,11 @@ int fieldCounter(string filenameCSV){
             elements.push_back(element);
 
         }
+        if (!elements.empty() && elements.back().empty()) elements.pop_back();
         int currentElements = static_cast<int>(elements.size());
         if (currentElements > maxElements){
             maxElements = currentElements;
         }
     }
     return maxElements;
-}
-
-int main(){
-    string filenameCSV = "tast.csv";
-    int maxElements = fieldCounter(filenameCSV);
-    cout << "Max elements: " << maxElements << endl;
-    return 0;
 }

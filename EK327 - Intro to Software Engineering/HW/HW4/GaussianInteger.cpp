@@ -40,11 +40,9 @@ bool GaussianInteger::divides(const GaussianInteger &other){
     ComplexNumber *numerator = nonConstOther.multiply(*conjThis);
     int numReal = numerator->getReal();
     int numImag = numerator->getImag();
-    if (numReal % normThis == 0 && numImag % normThis == 0)
-    {
-        return true;
-    }
-    return false;
+    delete conjThis;
+    delete numerator;
+    return (numReal % normThis == 0 && numImag % normThis == 0);
 }
 
 GaussianInteger GaussianInteger::operator+(const GaussianInteger &other) const

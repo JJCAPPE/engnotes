@@ -2821,4 +2821,108 @@ Can be fixed with
 \end{lstlisting}
 
 Which disambiguates
+
+\section{Templates}
+
+Below is the modified version. The explanatory comments have been removed from the lstlisting environment and are now included as normal, formatted LaTeX text:
+
+\begin{itemize}
+	\item Templates in C++ allow you to write generic, reusable code that works with any data type.
+	\item The “typename” keyword (or alternatively “class”) is used to define a template parameter.
+	\item The following example shows a template class \texttt{Node} that stores data of any type \texttt{T}.
+	\item The \texttt{Node} class includes:
+		  \begin{itemize}
+			  \item A private data member (\texttt{data}) that holds the node’s value.
+			  \item A private pointer (\texttt{next}) pointing to the next node (e.g., in a linked list).
+			  \item A constructor that initializes the node with a value and sets the \texttt{next} pointer to \texttt{nullptr} by default.
+			  \item An alternative constructor that initializes both the data value and the \texttt{next} pointer.
+			  \item A member function \texttt{getData()} that returns the stored data.
+			  \item A member function \texttt{getNext()} that returns the pointer to the next node.
+		  \end{itemize}
+	\item Usage examples:
+		  \begin{itemize}
+			  \item Creating a node that stores an integer:
+					\begin{itemize}
+						\item \texttt{Node<int> intNode(5);}
+					\end{itemize}
+			  \item Creating a node that stores a \texttt{std::string}:
+					\begin{itemize}
+						\item \texttt{Node<std::string> strNode("Hello");}
+					\end{itemize}
+		  \end{itemize}
+	\item Templates thus let you avoid code duplication by allowing the same code structure to operate on different data types.
+\end{itemize}
+
+\bigskip
+
+Below is the corresponding C++ code without the inline comments:
+
+\begin{lstlisting}[language=C++]
+template <typename T>
+class Node {
+private:
+	T data;
+	Node* next;
+public:
+	Node(T data) : data(data), next(nullptr) {}
+	Node(T data, Node* next) : data(data), next(next) {}
+	T getData() { return data; }
+	Node* getNext() { return next; }
+};
+\end{lstlisting}
+
+The templated \texttt{LinkedList} class is defined as follows:
+\begin{lstlisting}[language=C++]
+template <typename T>
+class LinkedList {
+private:
+    Node<T>* head;
+public:
+    LinkedList(Node<T>* head) : head(head) {};
+    void insert(T value);
+    void printOut();
+    int size();
+    ~LinkedList();
+};
+
+#include "LinkedList.cpp"
+\end{lstlisting}
+
+
+Template compilation in C++ has a unique challenge: the compiler only generates code for a template when it is used with a specific type. This process is known as template instantiation. Because the compiler instantiates templates only upon encountering a concrete usage, both the template definitions and their implementations must be available at that point in the compilation process.
+
+\bigskip
+
+\textbf{Key Points:}
+\begin{itemize}
+    \item \textbf{Delayed Instantiation:}  
+          The compiler does not generate code for a templated class or function until it sees a concrete type with which the template is used. For instance, if you use \texttt{LinkedList<double>}, the compiler needs to see the complete definition and implementation of \texttt{LinkedList<T>} in order to generate code for \texttt{T = double}.
+    \item \textbf{Availability of Implementations:}  
+          To ensure the compiler can instantiate the template with the specific type, the implementation of the template must be visible at the point of use. This is why template implementations are typically placed in header files.
+    \item \textbf{Alternative: \texttt{\#include} Implementation in Header:}  
+          If you prefer to separate the implementation from the declaration, you must include the implementation file from the header (e.g., \texttt{\#include "LinkedList.cpp"}). This ensures that when the header is included in a source file that uses the template, both the declaration and the implementation are available to the compiler.
+\end{itemize}
+
+
+\bigskip
+
+\subsection*{Notes on Type Consistency}
+
+\begin{itemize}
+    \item \textbf{Template Parameter for Uniformity:}  
+          The declaration \texttt{template <typename T>} ensures that every instance of \texttt{LinkedList} is parameterized by a single type \texttt{T}. This type is propagated throughout the class, so data members (like \texttt{head}) and member functions (such as \texttt{insert(T value)}) all use the same type. This uniformity enforces type consistency across the entire linked list.
+
+    \item \textbf{Head Pointer Type:}  
+          The member variable \texttt{head} is declared as \texttt{Node<T>*}, where \texttt{Node} is also a templated class. This guarantees that only nodes holding data of type \texttt{T} are linked in the list. Thus, if you create a \texttt{LinkedList<int>}, every node in the list will store an \texttt{int}.
+
+    \item \textbf{Consistent Interface for Operations:}  
+          Functions such as \texttt{insert(T value)} require a parameter of type \texttt{T}. This ensures that you can only insert elements of the correct type into the list. Any attempt to pass a different type will be caught at compile time.
+
+    \item \textbf{Compile-Time Type Checking:}  
+          Since templates are instantiated during compilation, the compiler verifies that all operations and assignments are type-consistent. For example, trying to insert a \texttt{std::string} into a \texttt{LinkedList<int>} will result in a compilation error.
+
+    \item \textbf{Avoiding Code Duplication:}  
+          Templates allow the same code structure to be reused with different types. This not only reduces duplication, but it also ensures that the type checking logic is centralized in the template definition, thereby improving type safety across all instantiations.
+\end{itemize}
+
 \end{document}
