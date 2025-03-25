@@ -3,7 +3,111 @@
 #include <sstream>
 #include <string>
 
-// Ensure that getReal(), getImag(), getJ(), and getK() exist, or add helper functions
+
+TEST(GaussianIntegerTests, DefaultConstructor) {
+    GaussianInteger gi;
+    EXPECT_EQ(gi.getReal(), 0);
+    EXPECT_EQ(gi.getImag(), 0);
+} 
+TEST(GaussianIntegerTests, ParameterizedConstructor) {
+    GaussianInteger gi(3, -4);
+    EXPECT_EQ(gi.getReal(), 3);
+    EXPECT_EQ(gi.getImag(), -4);
+}
+
+TEST(GaussianIntegerTests, CopyConstructor) {
+    GaussianInteger gi1(5, 6);
+    GaussianInteger gi2(gi1);
+    EXPECT_EQ(gi2.getReal(), gi1.getReal());
+    EXPECT_EQ(gi2.getImag(), gi1.getImag());
+}
+
+TEST(GaussianIntegerTests, AddMethod) {
+    GaussianInteger gi1(1, 2);
+    GaussianInteger gi2(3, 4);
+    ComplexNumber* resultBase = gi1.add(gi2);
+    auto result = dynamic_cast<GaussianInteger*>(resultBase);
+    ASSERT_NE(result, nullptr);
+    EXPECT_EQ(result->getReal(), 1 + 3);
+    EXPECT_EQ(result->getImag(), 2 + 4);
+    delete result;
+}
+
+TEST(GaussianIntegerTests, MultiplyMethod) {
+    GaussianInteger gi1(1, 2);
+    GaussianInteger gi2(3, 4);
+    ComplexNumber* resultBase = gi1.multiply(gi2);
+    auto result = dynamic_cast<GaussianInteger*>(resultBase);
+    ASSERT_NE(result, nullptr);
+    // (1+2i) * (3+4i) = (1*3 - 2*4) + (1*4 + 2*3)i
+    EXPECT_EQ(result->getReal(), 1 * 3 - 2 * 4);
+    EXPECT_EQ(result->getImag(), 1 * 4 + 2 * 3);
+    delete result;
+}
+
+
+TEST(GaussianIntegerTests, OperatorPlus) {
+    GaussianInteger gi1(1, 2);
+    GaussianInteger gi2(3, 4);
+    GaussianInteger sum = gi1 + gi2;
+    EXPECT_EQ(sum.getReal(), 1 + 3);
+    EXPECT_EQ(sum.getImag(), 2 + 4);
+}
+
+TEST(GaussianIntegerTests, OperatorMultiply) {
+    GaussianInteger gi1(1, 2);
+    GaussianInteger gi2(3, 4);
+    GaussianInteger product = gi1 * gi2;
+    EXPECT_EQ(product.getReal(), 1 * 3 - 2 * 4);
+    EXPECT_EQ(product.getImag(), 1 * 4 + 2 * 3);
+}
+
+TEST(GaussianIntegerTests, OperatorEquality) {
+    GaussianInteger gi1(1, 2);
+    GaussianInteger gi2(1, 2);
+    GaussianInteger gi3(2, 3);
+    EXPECT_TRUE(gi1 == gi2);
+    EXPECT_FALSE(gi1 == gi3);
+}
+
+TEST(GaussianIntegerTests, OperatorStreamOutput) {
+    GaussianInteger gi(2, -3);
+    std::ostringstream oss;
+    oss << gi;
+    std::string output = oss.str();
+    // Check for substrings indicating correct output (e.g., "2", "-3i")
+    EXPECT_NE(output.find("2"), std::string::npos);
+    EXPECT_NE(output.find("3i"), std::string::npos);
+}
+
+
+TEST(GaussianIntegerTests, ConjugateMethod) {
+    GaussianInteger gi(3, 4);
+    ComplexNumber* conjBase = gi.conjugate();
+    auto conj = dynamic_cast<GaussianInteger*>(conjBase);
+    ASSERT_NE(conj, nullptr);
+    // Conjugate of a+bi is a-bi
+    EXPECT_EQ(conj->getReal(), 3);
+    EXPECT_EQ(conj->getImag(), -4);
+    delete conj;
+}
+
+TEST(GaussianIntegerTests, NormMethod) {
+    GaussianInteger gi(3, 4);
+    // norm = a^2 + b^2  => 3^2 + 4^2 = 9 + 16 = 25
+    EXPECT_EQ(gi.norm(), 25);
+}
+
+TEST(GaussianIntegerTests, DividesMethod) {
+    // Example 1: 2 divides 4 since 4 = 2 * 2
+    GaussianInteger giDivisor(2, 0);
+    GaussianInteger giDividend(4, 0);
+    EXPECT_TRUE(giDivisor.divides(giDividend));
+    
+    // Example 2: 2 does not divide (1 + i)
+    GaussianInteger giOperand(1, 1);
+    EXPECT_FALSE(giDivisor.divides(giOperand));
+}
 
 TEST(QuaternionTests, DefaultConstructor) {
     Quaternion q;
