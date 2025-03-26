@@ -29,19 +29,29 @@ int GaussianInteger::norm(){
     return (this->getReal() * this->getReal()) + (this->getImag() * this->getImag());
 }
 
-bool GaussianInteger::divides(const GaussianInteger &other){
+/**
+ * TEST(DivisionTest, WildcardDivisionTest) {
+    GaussianInteger* dividend = new GaussianInteger(-12, 72);
+    GaussianInteger* divisor = new GaussianInteger(6, 1);
+    bool result = dividend->divides(*divisor);
+
+    EXPECT_TRUE(result);
+}
+ */
+bool GaussianInteger::divides(const GaussianInteger &other) {
     GaussianInteger nonConstOther(other);
     int normThis = this->norm();
-    if (normThis == 0)
-    {
-        return false;
+    if (normThis == 0) {
+        return false; 
     }
-    ComplexNumber *conjThis = this->conjugate();
-    ComplexNumber *numerator = nonConstOther.multiply(*conjThis);
+    
+    std::unique_ptr<ComplexNumber> conjThis(this->conjugate());
+    
+    std::unique_ptr<ComplexNumber> numerator(nonConstOther.multiply(*conjThis));
+    
     int numReal = numerator->getReal();
     int numImag = numerator->getImag();
-    delete conjThis;
-    delete numerator;
+    
     return (numReal % normThis == 0 && numImag % normThis == 0);
 }
 

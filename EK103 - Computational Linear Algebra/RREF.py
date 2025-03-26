@@ -183,9 +183,9 @@ def generate_latex_output(steps):
 
 # Define the matrix
 matrix = [
-    [3, 2, 5, -5],
-    [0, 4, -2, 8],
-    [2, 0, 4, -6]
+    [-1, 1, 2],
+    [5, 5, 2],
+    [2, 3, 4]
 ]
 
 # Get REF with LaTeX steps
