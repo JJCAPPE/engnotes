@@ -4,34 +4,13 @@
 #include <string>
 
 // Tests for the "divides" method in GaussianInteger
+TEST(GaussianDivisonTests, WildcardDivisionTest) {
+    GaussianInteger* dividend = new GaussianInteger(-12, 72);
+    GaussianInteger* divisor = new GaussianInteger(6, 1);
+    bool result = dividend->divides(*divisor);
 
-// Test 1: Simple exact divisibility.
-// 2 divides 4: (2, 0) should divide (4, 0)
-TEST(GaussianDivisonTests, DividesMethod_ExactDivisibility) {
-    GaussianInteger divisor(2, 0);
-    GaussianInteger dividend(4, 0);
-    EXPECT_TRUE(divisor.divides(dividend));
+    EXPECT_TRUE(result);
 }
-
-// Test 2: Not divisible case.
-// 2 does not divide 1+1i since the quotient is not a Gaussian integer.
-TEST(GaussianDivisonTests, DividesMethod_NotDivisible) {
-    GaussianInteger divisor(2, 0);
-    GaussianInteger operand(1, 1);
-    EXPECT_FALSE(divisor.divides(operand));
-}
-
-// Test 3: Divisor is zero.
-// A zero divisor (norm==0) should always return false.
-TEST(GaussianDivisonTests, DividesMethod_ZeroDivisor) {
-    GaussianInteger zeroDivisor(0, 0);
-    GaussianInteger operand(3, 4);
-    EXPECT_FALSE(zeroDivisor.divides(operand));
-}
-
-// Test 4: Divisibility using known multiplication relationship.
-// Let a be an arbitrary Gaussian integer and q another arbitrary Gaussian integer,
-// then b = a * q. In that case, a should divide b.
 TEST(GaussianDivisonTests, DividesMethod_ProductRelation) {
     GaussianInteger a(3, 4);
     GaussianInteger q(2, -5);

@@ -2522,4 +2522,157 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 
 }
 
+\section*{Eigenvectors and Eigenvalues}
+
+\dfn{Eigenvector and Eigenvalue}{
+	Let $A$ be an $n \times n$ matrix. A non-zero vector $\vec{x}$ is an eigenvector of $A$ if there exists a scalar $\lambda$ (called an eigenvalue) such that:
+	\[A\vec{x} = \lambda\vec{x}\]
+}
+
+\nt{
+	The geometric interpretation of $A\vec{x} = \lambda\vec{x}$ is that applying the transformation represented by $A$ to the eigenvector $\vec{x}$ results in a vector that is simply a scaled version of $\vec{x}$.  The direction is either preserved (if $\lambda > 0$), reversed (if $\lambda < 0$), or the vector becomes the zero vector (if $\lambda = 0$).  Crucially, $\vec{x}$ *cannot* be the zero vector, but $\lambda$ can be.
+}
+
+\ex{Rotation Matrix}{
+	Consider a rotation matrix $A$ in 2D that rotates vectors by 45 degrees counterclockwise:
+
+	\[A = \begin{bmatrix} \cos(45^\circ) & -\sin(45^\circ) \\ \sin(45^\circ) & \cos(45^\circ) \end{bmatrix} = \begin{bmatrix} \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \end{bmatrix}\]
+
+	\begin{tikzpicture}
+		\draw[->] (-1.5,0) -- (1.5,0) node[right] {$x_1$};
+		\draw[->] (0,-1.5) -- (0,1.5) node[above] {$x_2$};
+		\draw[->, thick] (0,0) -- (1,0) node[midway, below] {$\vec{x}$};
+		\draw[->, thick, blue] (0,0) -- (0,1) node[midway, left] {$A\vec{x}$};
+		\draw (0.5,0) arc (0:90:0.5);
+		\node at (0.3,0.3) {$45^\circ$};
+	\end{tikzpicture}
+
+	This matrix $A$ has *no* real eigenvectors (and thus no real eigenvalues).  Applying $A$ to any non-zero vector $\vec{x}$ will *always* rotate it; there's no non-zero vector that will simply be scaled by $A$. The resulting vector $A\vec{x}$ will never have the same (or opposite) direction as the original $\vec{x}$.
+}
+
+\ex{Horizontal Shear and Stretch}{
+	Consider the matrix:
+
+	\[A = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix}\]
+
+	This matrix represents a horizontal shear and stretch.  Let's visualize its effect on a unit square:
+
+	\begin{tikzpicture}
+		\draw[->] (-1,0) -- (3,0) node[right] {$x_1$};
+		\draw[->] (0,-1) -- (0,2) node[above] {$x_2$};
+
+		\draw[step=1cm,gray,very thin] (-0.9,-0.9) grid (2.9,1.9);
+
+		% Original Square
+		\draw[thick] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+		\node at (0.5, 0.5) {Original};
+
+		% Transformed Square
+		\draw[thick, blue] (0,0) -- (2,0) -- (2.5,1) -- (0.5,1) -- cycle;
+		\node[blue] at (1.5, 0.5) {Transformed};
+	\end{tikzpicture}
+
+	\begin{itemize}
+		\item Vectors along the $x_1$-axis (of the form $\alpha \begin{bmatrix} 1 \\ 0 \end{bmatrix}$) are stretched by a factor of 2, but their direction remains unchanged.
+		\item Vectors along the $x_2$-axis (of the form $\alpha \begin{bmatrix} 0 \\ 1 \end{bmatrix}$) are sheared horizontally by 0.5 units, but their vertical component is unchanged.
+		\item  Consider a general vector $\begin{bmatrix} \alpha \\ \beta \end{bmatrix}$. Applying the transformation yields $A\begin{bmatrix} \alpha \\ \beta \end{bmatrix} = \begin{bmatrix} 2\alpha + 0.5\beta \\ \beta \end{bmatrix}$.
+	\end{itemize}
+
+	Let's find the eigenvectors and eigenvalues for this matrix.
+
+	\begin{itemize}
+		\item For vectors along the $x_1$ axis:
+		      \[A \begin{bmatrix} \alpha \\ 0 \end{bmatrix} = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} \alpha \\ 0 \end{bmatrix} = \begin{bmatrix} 2\alpha \\ 0 \end{bmatrix} = 2 \begin{bmatrix} \alpha \\ 0 \end{bmatrix}\]
+		      So, $\begin{bmatrix} \alpha \\ 0 \end{bmatrix}$ is an eigenvector with eigenvalue $\lambda = 2$.
+
+		\item For vectors along the $x_2$ axis, we might *think* they are eigenvectors, but let's check:
+		      \[A \begin{bmatrix} 0 \\ \alpha \end{bmatrix} = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 0 \\ \alpha \end{bmatrix} = \begin{bmatrix} 0.5\alpha \\ \alpha \end{bmatrix} = \alpha \begin{bmatrix} 0.5 \\ 1 \end{bmatrix}\]
+		      This is *not* a scalar multiple of the original vector $\begin{bmatrix} 0 \\ \alpha \end{bmatrix}$.  So, vectors along the $x_2$ axis are *not* eigenvectors.
+
+		\item Now consider the case where the transformed vector is $\alpha$ times the original:
+		      \[\begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} -0.5\alpha \\ \alpha \end{bmatrix} =
+			      \begin{bmatrix} -1\alpha + 0.5\alpha \\ \alpha \end{bmatrix} =
+			      \begin{bmatrix} -0.5\alpha \\ \alpha \end{bmatrix} = 1 * \begin{bmatrix} -0.5\alpha \\ \alpha \end{bmatrix}\]
+		      So $\begin{bmatrix} -0.5\alpha \\ \alpha \end{bmatrix}$ is an eigenvector corresponding to eigenvalue 1.
+
+	\end{itemize}
+}
+
+\subsection*{Finding Eigenvalues and Eigenvectors}
+
+\thm{Finding Eigenvalues}{
+	To find the eigenvalues of a matrix $A$, we solve the characteristic equation:
+	\[\det(A - \lambda I) = 0\]
+	where $I$ is the identity matrix of the same size as $A$.
+}
+\begin{proof}
+	We start with the definition $A\vec{x} = \lambda\vec{x}$.  Rearranging, we get:
+
+	\[A\vec{x} - \lambda\vec{x} = \vec{0}\]
+	\[A\vec{x} - \lambda I\vec{x} = \vec{0}\]
+	\[(A - \lambda I)\vec{x} = \vec{0}\]
+
+	Let $B = A - \lambda I$.  We have $B\vec{x} = \vec{0}$.  We are looking for non-zero vectors $\vec{x}$ that satisfy this equation.
+
+	\begin{itemize}
+		\item If $B$ is invertible (i.e., $\det(B) \neq 0$), then the only solution is $\vec{x} = \vec{0}$.  But eigenvectors are *non-zero* by definition.  Therefore, we must have $\det(B) = 0$.
+		\item If $\det(B) = 0$, then $B$ is *not* invertible, and the system $B\vec{x} = \vec{0}$ has infinitely many solutions (i.e., a non-trivial null space). These non-zero solutions are the eigenvectors.
+	\end{itemize}
+
+	Therefore, to find the eigenvalues $\lambda$, we must solve $\det(A - \lambda I) = 0$.
+\end{proof}
+
+\ex{Finding Eigenvalues (Continued)}{
+	Let's go back to our example:
+	\[A = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix}\]
+	We form $B = A - \lambda I$:
+	\[B = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix} - \lambda \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 2-\lambda & 0.5 \\ 0 & 1-\lambda \end{bmatrix}\]
+	Now we find the determinant of $B$:
+	\[\det(B) = (2-\lambda)(1-\lambda) - (0.5)(0) = (2-\lambda)(1-\lambda)\]
+	Setting $\det(B) = 0$, we get:
+	\[(2-\lambda)(1-\lambda) = 0\]
+	This gives us the eigenvalues $\lambda_1 = 2$ and $\lambda_2 = 1$.
+}
+
+\subsection*{Finding Eigenvectors}
+\begin{algorithm}[H]
+	\KwIn{A matrix $A$}
+	\KwOut{Eigenvalues and corresponding eigenvectors of $A$}
+	\SetAlgoLined
+	\SetNoFillComment
+	\vspace{3mm}
+	Calculate the characteristic polynomial: $\det(A - \lambda I)$\;
+	Solve the characteristic equation $\det(A-\lambda I) = 0$ to find the eigenvalues $\lambda_i$\;
+	\For{each eigenvalue $\lambda_i$}{
+		Form the matrix $B_i = A - \lambda_i I$\;
+		Solve the homogeneous system $B_i \vec{x} = \vec{0}$ to find the eigenvectors corresponding to $\lambda_i$\;
+		The solution set will typically involve free variables.  Express the eigenvectors in terms of these free variables.\;
+	}
+	\Return The eigenvalues $\lambda_i$ and their corresponding eigenvectors.
+	\caption{Finding Eigenvalues and Eigenvectors}
+\end{algorithm}
+
+\ex{Finding Eigenvectors (Continued)}{
+	We found the eigenvalues $\lambda_1 = 2$ and $\lambda_2 = 1$ for the matrix $A = \begin{bmatrix} 2 & 0.5 \\ 0 & 1 \end{bmatrix}$.  Now let's find the eigenvectors.
+
+	\begin{itemize}
+		\item For $\lambda_1 = 2$:
+		      \[B_1 = A - 2I = \begin{bmatrix} 2-2 & 0.5 \\ 0 & 1-2 \end{bmatrix} = \begin{bmatrix} 0 & 0.5 \\ 0 & -1 \end{bmatrix}\]
+		      We solve $B_1\vec{x} = \vec{0}$:
+		      \[\begin{bmatrix} 0 & 0.5 \\ 0 & -1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}\]
+		      Row reducing (although not strictly necessary here, we do it for demonstration):
+		      \[\begin{bmatrix} 0 & 0.5 \\ 0 & -1 \end{bmatrix} \rightarrow
+			      \begin{bmatrix} 0 & 1 \\ 0 & -1 \end{bmatrix} \rightarrow
+			      \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}\]
+		      This gives us $x_2 = 0$, and $x_1$ is free.  Let $x_1 = t_1$. Then the eigenvector is:
+		      \[\vec{x} = \begin{bmatrix} t_1 \\ 0 \end{bmatrix} = t_1 \begin{bmatrix} 1 \\ 0 \end{bmatrix}\]
+
+		\item For $\lambda_2 = 1$:
+		      \[B_2 = A - I = \begin{bmatrix} 2-1 & 0.5 \\ 0 & 1-1 \end{bmatrix} = \begin{bmatrix} 1 & 0.5 \\ 0 & 0 \end{bmatrix}\]
+		      We solve $B_2\vec{x} = \vec{0}$:
+		      \[\begin{bmatrix} 1 & 0.5 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}\]
+		      This system is already in row-echelon form. We have $x_1 + 0.5x_2 = 0$, so $x_1 = -0.5x_2$.  $x_2$ is free. Let $x_2 = t_2$. Then $x_1 = -0.5t_2$, and the eigenvector is:
+		      \[\vec{x} = \begin{bmatrix} -0.5t_2 \\ t_2 \end{bmatrix} = t_2 \begin{bmatrix} -0.5 \\ 1 \end{bmatrix}\]
+	\end{itemize}
+}
 \end{document}
