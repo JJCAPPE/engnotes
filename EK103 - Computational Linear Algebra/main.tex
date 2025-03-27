@@ -2675,4 +2675,360 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 		      \[\vec{x} = \begin{bmatrix} -0.5t_2 \\ t_2 \end{bmatrix} = t_2 \begin{bmatrix} -0.5 \\ 1 \end{bmatrix}\]
 	\end{itemize}
 }
+
+\section{Properties of Eigenvectors}
+
+\dfn{Dimension of eigenspace}{
+
+	When an eigenvalue repeats \(k\) times,
+	\[
+		1 \leq dim(\text{eigenspace for that eigenvalue}) \leq k
+	\]
+
+}
+
+\ex{Example 1 of this property}{
+	\[
+		A=
+		\begin{bmatrix}
+			1 & 0 & 0 \\
+			0 & 1 & 0 \\
+			0 & 0 & 1
+		\end{bmatrix}
+	\]
+	\[
+		A-\lambda I =
+		\begin{bmatrix}
+			1 - \lambda & 0           & 0           \\
+			0           & 1 - \lambda & 0           \\
+			0           & 0           & 1 - \lambda
+		\end{bmatrix}
+	\]
+	\[
+		\det(A- \lambda I) = (I1-\lambda)^3
+	\]
+	\[
+		\lambda_1 = 1, \lambda_2 = 1, \lambda_3 = 1, k=3
+	\]
+	\[
+		\lambda_1 \text{repeats} 3 (=k) \text{times}
+	\]
+	And the eigenspace for$ \lambda_1 = 1$ is
+	\[
+		A-\lambda_1 I =
+		\begin{bmatrix}
+			0 & 0 & 0 \\
+			0 & 0 & 0 \\
+			0 & 0 & 0
+		\end{bmatrix}
+	\]
+	therefore the eigenspace is
+	\[
+		\left\{ t_1 \begin{bmatrix}
+			1 \\ 0 \\ 0
+		\end{bmatrix} + t_2 \begin{bmatrix}
+			0 \\ 1 \\ 0
+		\end{bmatrix} + t_3 \begin{bmatrix}
+			0 \\ 0 \\ 1
+		\end{bmatrix} : t_1, t_2, t_3 \in \mathbb{R} \right\}
+	\]
+}
+
+\ex{Example 2 of this property}{
+	\[
+		A=
+		\begin{bmatrix}
+			1 & 0.5 \\
+			0 & 1
+		\end{bmatrix}
+	\]
+	\[
+		\det(A- \lambda I) = (I1-\lambda)^3
+	\]
+	\[
+		(1-\lambda)^2 -(0.5)(0) = 0
+	\]
+	\[
+		\lambda_1 = 1, \lambda_2 = 1, k=2
+	\]
+	Therefore the eigenspace is
+	\[
+		A-\lambda_1 I =
+		\begin{bmatrix}
+			0 & 0.5 \\
+			0 & 0
+		\end{bmatrix}
+		\xrightarrow{R_1 = 2R_1}
+		\begin{bmatrix}
+			0 & 1 \\
+			0 & 0
+		\end{bmatrix}
+	\]
+	Therefore the eigenspace for \(\lambda = 1\) is
+	\[
+		\left\{ t_1 \begin{bmatrix}
+			1 \\ 0
+		\end{bmatrix} : t_1 \in \mathbb{R} \right\}
+	\]
+	\[
+		\therefore dim(\text{eigenspace for } \lambda = 1) = 1 \leq k = 2
+	\]
+}
+\dfn{Dominant Eigenvector}{
+	An eigenvector whose eigenvalue (among all eigenvalues for some \(A : m \times m\)) has the largest magnitude (\(|\lambda|\)) gives the direction along which an initial blob of points is stretched the most.
+}
+
+\ex{Dominant Eigenvector Example}{
+	A=
+	\[
+		\begin{bmatrix}
+			2 & 4 \\
+			3 & 3
+		\end{bmatrix}
+	\]
+	\[
+		\det(A-\lambda I) = (2-\lambda)(3-\lambda) - 4*3 = 0
+	\]
+	\[
+		\therefore \lambda_1 = 6, \lambda_2 = -1
+	\]
+	Eigenspace for largest magnitude of eigenvalue \(\lambda_1 = 6\)
+	\[
+		A =
+		\begin{bmatrix}
+			-4 & 4  \\
+			3  & -3
+		\end{bmatrix}
+		\xrightarrow{R_2 = R_2 + \frac{3}{4}R_1}
+		\begin{bmatrix}
+			-4 & 4 \\
+			0  & 0
+		\end{bmatrix}
+		\xrightarrow{R_1 = -\frac{1}{4}R_1}
+		\begin{bmatrix}
+			1 & -1 \\
+			0 & 0
+		\end{bmatrix}
+	\]
+	\[
+		\therefore \vec{v}_1 = t_2 \begin{bmatrix}
+			1 \\ 1
+		\end{bmatrix}
+	\]
+	and the eigenspace for \(\lambda_1 = 6\) is
+	\[
+		\left\{ t \begin{bmatrix}
+			1 \\ 1
+		\end{bmatrix} : t \in \mathbb{R} \right\}
+	\]
+
+	Now apply the transformation to a set of points (unit square)
+
+	\[
+		\begin{bmatrix}
+			1 & 0 \\
+			0 & 1
+		\end{bmatrix}
+		\begin{bmatrix}
+			2 & 3 \\
+			4 & 3
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			2 & 3 \\
+			4 & 3
+		\end{bmatrix}
+	\]
+
+	Visually represented this looks like this
+
+	\begin{tikzpicture}[scale=1.2,>=stealth]
+		%--- Original Coordinate System ---
+		\draw[->] (-1.5,0) -- (2,0) node[right] {$x$};
+		\draw[->] (0,-1.5) -- (0,2) node[above] {$y$};
+		% Define the original square vertices
+		\coordinate (P) at (0,0);
+		\coordinate (Q) at (1,0);
+		\coordinate (R) at (1,1);
+		\coordinate (S) at (0,1);
+		% Draw the original square
+		\draw[step=1, gray, very thin] (P) grid (R);
+		\draw[thick] (P) -- (Q) -- (R) -- (S) -- cycle;
+		% Label original square vertices
+		\node[below left] at (P) {$P(0,0)$};
+		\node[below right] at (Q) {$Q(1,0)$};
+		\node[above right] at (R) {$R(1,1)$};
+		\node[above left] at (S) {$S(0,1)$};
+		\node at ($(P)!0.5!(S)+(-0.5,0)$) {Original};
+
+		%--- Transformation Arrow ---
+		\draw[->, thick] (2.2,0.5) -- (3.2,0.5) node[midway, above] {$A$};
+
+		%--- Transformed Coordinate System ---
+		% Apply the linear transformation A = [3 \, 1; 0 \, 2]
+		\begin{scope}[shift={(4.5,0)}]
+			\draw[->] (-1.5,0) -- (3,0) node[right] {$x'$};
+			\draw[->] (0,-1.5) -- (0,3) node[above] {$y'$};
+			% Define transformed square vertices (using given coordinates)
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (4,3);
+			\coordinate (C) at (6,6);
+			\coordinate (D) at (2,3);
+			\draw[thick, blue] (A) -- (B) -- (C) -- (D) -- cycle;
+			% Label transformed square vertices
+			\node[below left] at (A) {$A'(0,0)$};
+			\node[below right] at (B) {$B'(4,3)$};
+			\node[above right] at (C) {$C'(6,6)$};
+			\node[above left] at (D) {$D'(2,3)$};
+			\node at ($(A)!0.5!(D)+(-0.5,0)$) {Transformed};
+
+			% Transform the vector <1,1>:
+			% A(1,1) = (3*1+1*1,\,0*1+2*1) = (4,2)
+			\draw[->, ultra thick, red] (0,0) -- (1,1)
+			node[above right] {$\langle 1,1\rangle$};
+		\end{scope}
+	\end{tikzpicture}
+
+}
+\ex{Dominant Eigenvector Example 2}{
+	Consider
+	\[
+		A=\begin{bmatrix}3 & 1\\[4pt] 0 & 2\end{bmatrix}.
+	\]
+	The eigenvalues come from
+	\[
+		\det(A-\lambda I)=(3-\lambda)(2-\lambda)=0,
+	\]
+	so \(\lambda_1=3\) and \(\lambda_2=2\). The dominant eigenvalue is \(3\). To find its eigenvector, solve
+	\[
+		(A-3I)\vec{v}=\begin{bmatrix}0 & 1\\[4pt] 0 & -1\end{bmatrix}\begin{bmatrix}v_1\\v_2\end{bmatrix}=\vec{0}.
+	\]
+	The first row gives \(v_2=0\); choosing \(v_1=1\) yields
+	\[
+		\vec{v}_1=\begin{bmatrix}1\\0\end{bmatrix}.
+	\]
+	This indicates that the largest stretch occurs in the horizontal direction.
+
+	\medskip
+	\textbf{Transformation on a set of points:}
+
+	Consider the original set of points
+	\[
+		\mathcal{P}=\{(x,y)\mid -1\le x\le 1,\; -0.5\le y\le 0.5\}.
+	\]
+	Under the transformation \(A\), each point \((x,y)\) is mapped to
+	\[
+		(x',y')=(3x+y,\;2y).
+	\]
+	The four corners transform as follows:
+	\begin{itemize}
+		\item \((-1,-0.5)\) maps to \((3(-1)+(-0.5),\;2(-0.5))=(-3.5,\;-1)\).
+		\item \((1,-0.5)\) maps to \((3(1)+(-0.5),\;2(-0.5))=(2.5,\;-1)\).
+		\item \((1,0.5)\) maps to \((3(1)+(0.5),\;2(0.5))=(3.5,\;1)\).
+		\item \((-1,0.5)\) maps to \((3(-1)+(0.5),\;2(0.5))=(-2.5,\;1)\).
+	\end{itemize}
+	Thus, the image of \(\mathcal{P}\) is the quadrilateral
+	\[
+		\mathcal{P}'=\{(x',y')\}
+	\]
+	with vertices at \((-3.5,-1)\), \((2.5,-1)\), \((3.5,1)\), and \((-2.5,1)\).
+
+	\medskip
+	\textbf{Diagram:}
+
+	\begin{center}
+		\begin{tikzpicture}[scale=1.2,>=stealth]
+			% Left coordinate system: original space
+			\draw[->] (-2,0) -- (2,0) node[right] {$x$};
+			\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+			\filldraw[fill=blue!20, draw=blue] (-1,-0.5) rectangle (1,0.5);
+			\node at (0,0) {$\mathcal{P}$};
+
+			% Arrow indicating transformation
+			\draw[->, thick] (2.2,0) -- (3.3,0) node[midway, above] {Transformation};
+
+			% Right coordinate system: transformed space
+			\begin{scope}[shift={(4.5,0)}]
+				\draw[->] (-3.5,0) -- (4,0) node[right] {$x'$};
+				\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y'$};
+				\coordinate (A) at (-3.5,-1);
+				\coordinate (B) at (2.5,-1);
+				\coordinate (C) at (3.5,1);
+				\coordinate (D) at (-2.5,1);
+				\filldraw[fill=green!20, draw=green!70!black] (A) -- (B) -- (C) -- (D) -- cycle;
+				\node at (0.5,0.5) {$\mathcal{P}'$};
+
+				% Draw dominant eigenvector arrow
+				\draw[->, ultra thick, red] (0,0) -- (3,0) node[midway, below] {\(\vec{v}_1\)};
+				\draw[->, dashed, red] (3,0) -- (3.5,0) node[above] {Stretch Direction};
+			\end{scope}
+		\end{tikzpicture}
+	\end{center}
+}
+
+\dfn{Eigenvalues of Triangular Matrices}{
+	The elements on the main diagonal of a triangular matrix are the eigenvalues of that matrix.
+}
+
+\ex{EigenValues of Triangular matricies example}{
+	\[
+		A=
+		\begin{bmatrix}
+			1 & 2 & 3 \\
+			0 & 4 & 5 \\
+			0 & 0 & 6
+		\end{bmatrix}
+	\]
+	\[
+		\det(A-\lambda I) = (1-\lambda)(4-\lambda)(6-\lambda)
+	\]
+	\[
+		\lambda_1 = 1, \lambda_2 = 4, \lambda_3 = 6
+	\]
+	\[
+		\text{Eigenvalues of } A = \{1,4,6\}
+	\]
+}
+
+\dfn{Number of Distinct EigenValues}{
+	The number of distinct eigenvalues of a matrix \(A: m \times m\) is \(\leq m\)
+}
+\dfn{Eigenvalues and Determinant}{
+	For a matrix \(A: m \times m\)
+	\[
+		\det(A) = \lambda_1 \cdot \lambda_2 \cdot  \dots \cdot \lambda_m
+	\]
+	Proof:
+	\[
+		dat(A - \lambda I) = \pm \lambda^m + a_{m-1} \lambda^{m-1} + \dots + a_1 \lambda + a_0
+	\]
+	where the \(\pm\) follows
+	\[
+		\begin{cases}
+			+1, & m \% 2 = 0 \\
+			-1, & m \% 2 = 1 \\
+		\end{cases}
+	\]
+	\[
+		\therefore
+		|A-\lambda I| = 
+		\begin{cases}
+			\lambda^m - a_{m-1} \lambda^{m-1} + \dots - a_1 \lambda + a_0, & m \% 2 = 0 \\
+			-\lambda^m + a_{m-1} \lambda^{m-1} - \dots + a_1 \lambda - a_0, & m \% 2 = 1 \\
+		\end{cases}
+	\]
+	Set \(\lambda = 0\)
+	\[
+		|A| = 
+		\begin{cases}
+			\lambda_1, \lambda_2, \dots, \lambda_m, & m \% 2 = 0 \\
+			\lambda_1, \lambda_2, \dots, \lambda_m, & m \% 2 = 0 \\	
+		\end{cases}
+	\]
+}
+
+\dfn{Non-invertible Square matrix}{
+	For a non-invertible (singular) square matrix \(A: m \times m\), the determinant is 0, therefore at least one eigenvalue is 0.
+}
+
 \end{document}
