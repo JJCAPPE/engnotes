@@ -2655,7 +2655,7 @@ Here, LibrarySearcher does not care about the implementation of of the LibraryLo
 Virtual Classes have no state, but the implementations of the functions of that class do, and when the destructor is called, it is called for the parent class and not the implementation of it.
 
 \ex{Example}{}
-	\begin{verbatim}
+\begin{verbatim}
 		class FileSystemLibraryLoader : public LibraryLoader {
 			private:
 				std::string fileLocation;
@@ -2671,9 +2671,9 @@ Virtual Classes have no state, but the implementations of the functions of that 
 				Book* loadBooks(int &bookCount) override;
 		};
 	\end{verbatim}
-	Here, if the LibraryLoader virtual class goes out of scope, this destructor will not be called, we need to make it virtual
+Here, if the LibraryLoader virtual class goes out of scope, this destructor will not be called, we need to make it virtual
 
-	\begin{verbatim}
+\begin{verbatim}
 		class LibraryLoader {
 			public:
 			virtual Book* loadBooks(int& bookCount) = 0;
@@ -2681,9 +2681,9 @@ Virtual Classes have no state, but the implementations of the functions of that 
 		};
 	\end{verbatim}
 
-	and then override it in the FileSystemLibraryLoader
+and then override it in the FileSystemLibraryLoader
 
-	\begin{verbatim}
+\begin{verbatim}
 		class FileSystemLibraryLoader : public LibraryLoader {
 			private:
 				Book* loadedBooks;
@@ -2751,25 +2751,25 @@ And we want to use this logging utility from our FileSystemLibraryLoader how sho
 The diamond problem occurs when a class inherits from two classes that have a common base class. This can lead to ambiguity in the inheritance hierarchy.
 
 \begin{center}
-\begin{tikzpicture}[
-    class/.style={rectangle, draw, minimum height=1cm, minimum width=2cm, align=center},
-    arrow/.style={-{Latex[length=3mm, width=2mm]}, thick},
-    node distance=2cm and 3cm
-]
+	\begin{tikzpicture}[
+		class/.style={rectangle, draw, minimum height=1cm, minimum width=2cm, align=center},
+		arrow/.style={-{Latex[length=3mm, width=2mm]}, thick},
+		node distance=2cm and 3cm
+		]
 
-% Nodes
-\node[class] (A) {A};
-\node[class, below left=of A] (B) {B};
-\node[class, below right=of A] (C) {C};
-\node[class, below=of $(B)!0.5!(C)$] (D) {D};
+		% Nodes
+		\node[class] (A) {A};
+		\node[class, below left=of A] (B) {B};
+		\node[class, below right=of A] (C) {C};
+		\node[class, below=of $(B)!0.5!(C)$] (D) {D};
 
-% Arrows
-\draw[arrow] (A) -- (B);
-\draw[arrow] (A) -- (C);
-\draw[arrow] (B) -- (D);
-\draw[arrow] (C) -- (D);
+		% Arrows
+		\draw[arrow] (A) -- (B);
+		\draw[arrow] (A) -- (C);
+		\draw[arrow] (B) -- (D);
+		\draw[arrow] (C) -- (D);
 
-\end{tikzpicture}
+	\end{tikzpicture}
 \end{center}
 
 \begin{lstlisting}
@@ -2812,7 +2812,7 @@ Another issue is when two inherited classes have the same function name. This ca
 	}
 \end{lstlisting}
 
-Can be fixed with 
+Can be fixed with
 
 \begin{lstlisting}
 	C c;
@@ -2821,4 +2821,397 @@ Can be fixed with
 \end{lstlisting}
 
 Which disambiguates
+
+\section{Templates}
+
+Below is the modified version. The explanatory comments have been removed from the lstlisting environment and are now included as normal, formatted LaTeX text:
+
+\begin{itemize}
+	\item Templates in C++ allow you to write generic, reusable code that works with any data type.
+	\item The “typename” keyword (or alternatively “class”) is used to define a template parameter.
+	\item The following example shows a template class \texttt{Node} that stores data of any type \texttt{T}.
+	\item The \texttt{Node} class includes:
+	      \begin{itemize}
+		      \item A private data member (\texttt{data}) that holds the node’s value.
+		      \item A private pointer (\texttt{next}) pointing to the next node (e.g., in a linked list).
+		      \item A constructor that initializes the node with a value and sets the \texttt{next} pointer to \texttt{nullptr} by default.
+		      \item An alternative constructor that initializes both the data value and the \texttt{next} pointer.
+		      \item A member function \texttt{getData()} that returns the stored data.
+		      \item A member function \texttt{getNext()} that returns the pointer to the next node.
+	      \end{itemize}
+	\item Usage examples:
+	      \begin{itemize}
+		      \item Creating a node that stores an integer:
+		            \begin{itemize}
+			            \item \texttt{Node<int> intNode(5);}
+		            \end{itemize}
+		      \item Creating a node that stores a \texttt{std::string}:
+		            \begin{itemize}
+			            \item \texttt{Node<std::string> strNode("Hello");}
+		            \end{itemize}
+	      \end{itemize}
+	\item Templates thus let you avoid code duplication by allowing the same code structure to operate on different data types.
+\end{itemize}
+
+\bigskip
+
+Below is the corresponding C++ code without the inline comments:
+
+\begin{lstlisting}[language=C++]
+template <typename T>
+class Node {
+private:
+	T data;
+	Node* next;
+public:
+	Node(T data) : data(data), next(nullptr) {}
+	Node(T data, Node* next) : data(data), next(next) {}
+	T getData() { return data; }
+	Node* getNext() { return next; }
+};
+\end{lstlisting}
+
+The templated \texttt{LinkedList} class is defined as follows:
+\begin{lstlisting}[language=C++]
+template <typename T>
+class LinkedList {
+private:
+    Node<T>* head;
+public:
+    LinkedList(Node<T>* head) : head(head) {};
+    void insert(T value);
+    void printOut();
+    int size();
+    ~LinkedList();
+};
+
+#include "LinkedList.cpp"
+\end{lstlisting}
+
+
+Template compilation in C++ has a unique challenge: the compiler only generates code for a template when it is used with a specific type. This process is known as template instantiation. Because the compiler instantiates templates only upon encountering a concrete usage, both the template definitions and their implementations must be available at that point in the compilation process.
+
+\bigskip
+
+\textbf{Key Points:}
+\begin{itemize}
+	\item \textbf{Delayed Instantiation:}
+	      The compiler does not generate code for a templated class or function until it sees a concrete type with which the template is used. For instance, if you use \texttt{LinkedList<double>}, the compiler needs to see the complete definition and implementation of \texttt{LinkedList<T>} in order to generate code for \texttt{T = double}.
+	\item \textbf{Availability of Implementations:}
+	      To ensure the compiler can instantiate the template with the specific type, the implementation of the template must be visible at the point of use. This is why template implementations are typically placed in header files.
+	\item \textbf{Alternative: \texttt{\#include} Implementation in Header:}
+	      If you prefer to separate the implementation from the declaration, you must include the implementation file from the header (e.g., \texttt{\#include "LinkedList.cpp"}). This ensures that when the header is included in a source file that uses the template, both the declaration and the implementation are available to the compiler.
+\end{itemize}
+
+
+\bigskip
+
+\subsection*{Notes on Type Consistency}
+
+\begin{itemize}
+	\item \textbf{Template Parameter for Uniformity:}
+	      The declaration \texttt{template <typename T>} ensures that every instance of \texttt{LinkedList} is parameterized by a single type \texttt{T}. This type is propagated throughout the class, so data members (like \texttt{head}) and member functions (such as \texttt{insert(T value)}) all use the same type. This uniformity enforces type consistency across the entire linked list.
+
+	\item \textbf{Head Pointer Type:}
+	      The member variable \texttt{head} is declared as \texttt{Node<T>*}, where \texttt{Node} is also a templated class. This guarantees that only nodes holding data of type \texttt{T} are linked in the list. Thus, if you create a \texttt{LinkedList<int>}, every node in the list will store an \texttt{int}.
+
+	\item \textbf{Consistent Interface for Operations:}
+	      Functions such as \texttt{insert(T value)} require a parameter of type \texttt{T}. This ensures that you can only insert elements of the correct type into the list. Any attempt to pass a different type will be caught at compile time.
+
+	\item \textbf{Compile-Time Type Checking:}
+	      Since templates are instantiated during compilation, the compiler verifies that all operations and assignments are type-consistent. For example, trying to insert a \texttt{std::string} into a \texttt{LinkedList<int>} will result in a compilation error.
+
+	\item \textbf{Avoiding Code Duplication:}
+	      Templates allow the same code structure to be reused with different types. This not only reduces duplication, but it also ensures that the type checking logic is centralized in the template definition, thereby improving type safety across all instantiations.
+\end{itemize}
+
+\section{Standard Template Library}
+
+Say you have a book class
+
+\begin{lstlisting}[language=C++]
+class Book {
+private:
+	std::string ISBN;
+	std::string title;
+	std::string author;
+	int publicationYear;
+	int copiesInLibrary;
+	int copiesAvailable;
+public:
+	Book(std::string ISBN, std::string title, std::string author, int publicationYear)
+		: ISBN(ISBN),
+		  title(title),
+		  author(author),
+		  publicationYear(publicationYear),
+		  copiesInLibrary(0),
+		  copiesAvailable(0)
+	{}
+
+	void addCopy();
+	bool checkOut();
+
+	std::string getISBN() const { return ISBN; }
+	std::string getTitle() const { return title; }
+	std::string getAuthor() const { return author; }
+	int getPublicationYear() const { return publicationYear; }
+	int getCopiesAvailable() const { return copiesAvailable; }
+
+	friend std::ostream& operator<<(std::ostream& os, const Book& book) {
+		os << book.getISBN() << " : " << book.getTitle() << " by " 
+		   << book.getAuthor() << ". copies: " 
+		   << book.copiesInLibrary << ":" << book.getCopiesAvailable();
+		return os;
+	}
+};
+
+void Book::addCopy() {
+	copiesInLibrary++;
+	copiesAvailable++;
+}
+
+bool Book::checkOut() {
+	if (copiesAvailable == 0) {
+		return false;
+	}
+	copiesAvailable--;
+	return true;
+}
+\end{lstlisting}
+
+And implement a simple library class in old fashoned way without STL
+
+\begin{lstlisting}[language=C++]
+	#define START_BOOKS 1000
+
+	class Library {
+	private:
+		Book books[START_BOOKS];
+
+	public:
+		void addBook(const Book& book);
+		Book* checkOutBook();
+		void printCatalog();
+	};
+\end{lstlisting}
+
+Issues with this method are many
+\begin{itemize}
+	\item Fixed size array
+	\item Slow searching (O(n))
+	\item No sorting or removing in place
+\end{itemize}
+
+\subsection{Containers}
+
+\begin{itemize}
+	\item Sequential:
+	      \begin{itemize}
+		      \item list
+		      \item vector
+	      \end{itemize}
+	\item Associative \& Sorted:
+	      \begin{itemize}
+		      \item map
+		      \item set
+	      \end{itemize}
+	\item Associated \& Unsorted:
+	      \begin{itemize}
+		      \item unordered map
+		      \item unordered set
+	      \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Vector}
+
+Higher level abstraction of an array, with dynamic size, and many functions like push\_back, pop\_back, insert, erase, etc. Still has the same drawbacks under the hood. We can change to
+
+\begin{lstlisting}[language=C++]
+#define START_BOOKS 1000
+
+class Library {
+private:
+	std::vector<Book> books;
+	
+public:
+	void addBook(const Book& book);
+	Book* checkOutBook();
+	void printCatalog();
+};
+
+void Library::addBook(const Book& book) {
+	// check if we already have book
+	for (Book& libraryBook : books) { //books is from class level
+		if (libraryBook.getISBN() == book.getISBN()) {
+			libraryBook.addCopy();
+			return;
+		}
+	}
+	Book libraryBook(book);
+	libraryBook.addCopy();
+	books.push_back(libraryBook); //resizing handled through api
+}
+\end{lstlisting}
+
+Good for something like a wait list, easy to push to back and search.
+
+\begin{lstlisting}
+class Book {
+private:
+	. . .
+	std::vector<std::string> waitList;
+	void addToWaitList(std::string memberName) {
+		waitList.push_back(memberName);
+	}
+public:
+	. . .
+	int getWaitListLength() {
+		return waitList.size();
+	}
+	std::string getMemberAtWaitListPosition(int position) {
+		return waitList[position - 1];
+	}
+};
+\end{lstlisting}
+
+\subsubsection{List}
+
+Backed by linked lists, so insertion and deletion is O(1), but searching is O(n). Efficient to add/remove in middle of array.
+
+\begin{lstlisting}[language=C++]
+constexpr size_t NUM_BOOKS = 10'000'000;
+
+int main() {
+	std::vector<Book> bookVector;
+	std::list<Book> bookList;
+
+	{
+		Timer timer("Inserting into vector");
+		bookVector.reserve(NUM_BOOKS);
+		for (size_t i = 0; i < NUM_BOOKS; ++i) {
+			Book book = Book(std::to_string(i), generateRandomTitle(), "A. Author", getRandomInt(1900, 2025));
+			bookVector.push_back(book);
+		}
+	}
+
+	{
+		Timer timer("Inserting into list");
+		for (size_t i = 0; i < NUM_BOOKS; ++i) {
+			Book book = Book(std::to_string(i), generateRandomTitle(), "A. Author", getRandomInt(1900, 2025));
+			bookList.push_back(book);
+		}
+	}
+
+	{
+		Timer timer("Get by index from vector");
+		std::cout << " book at index 341100 " << bookVector[341100] << std::endl;
+	}
+
+	{
+		Timer timer("Get by index from list");
+		std::list<Book>::iterator bookListIterator = bookList.begin();
+		std::advance(bookListIterator, 341100);
+		std::cout << " book at index 341100 " << *bookListIterator << std::endl;
+	}
+
+	return 0;
+}
+\end{lstlisting}
+
+Insertion is similar for lists and vectors, but search is obviously much faster in vectors.
+
+\subsection{Map and unordered Map}
+
+Backed by arrays (of tuples). Makes an associative array with key value pairs. Map is sorted, unordered map is not. Could have a map where values are collections so that the function the map maps is not onto.
+
+\begin{lstlisting}[language=C++]
+	class Library {
+	private:
+		std::vector<Book*> books;
+		std::map<std::string, Book*> booksByTitle;
+	public:
+		void addBook(const Book& book);
+		// ...
+		Book* lookUpByTitle(std::string title);
+	};
+};
+
+\end{lstlisting}
+
+Here it makes it easy and efficinet to look up books if title is known. This makes checking if we have a book easy
+
+\begin{lstlisting}[language=C++]
+void Library::addBook(const Book& book) {
+	Book* existingBook = booksByTitle[book.getTitle()];
+	if (existingBook != NULL) {
+		existingBook->addCopy();
+		return;
+	}
+	Book* libraryBook = new Book(book);
+	libraryBook->addCopy();
+	booksByTitle[libraryBook->getTitle()] = libraryBook; //incrementing size of our library has little overead as we are adding associations, not copies, and accesssing the same instances.
+	books.push_back(libraryBook);
+}
+	Book *Library::lookUpByTitle(std::string title) {
+		return booksByTitle[title];
+	}
+
+\end{lstlisting}
+\subsection{Iterators}
+
+A single API that works across all containers, and can be used to iterate over the container. Used for Reading, Modifying, Inserting and Deleting elements.
+
+\begin{lstlisting}[language=C++]
+	std::list<Book>::iterator bookListIterator = bookList.begin(); // begin initialises iterator
+	std::advance(bookListIterator, 341100); // find element at index 341100
+	std::cout << " book at index 341100 " << bookListIterator->getTitle() << std::endl; // get iterated element with pointer
+\end{lstlisting}
+
+\begin{itemize}
+	\item \textbf{begin() / end()}
+	      \begin{itemize}
+		      \item Return an iterator to the first element and one past the last element of a container.
+	      \end{itemize}
+	\item \textbf{rbegin() / rend()}
+	      \begin{itemize}
+		      \item Return reverse iterators to traverse the container from the last element back to the first.
+	      \end{itemize}
+	\item \textbf{*iterator}
+	      \begin{itemize}
+		      \item Dereferences an iterator to access the element at its current position.
+	      \end{itemize}
+	\item \textbf{++iterator / - -iterator}
+	      \begin{itemize}
+		      \item Move the iterator one position forward (pre-increment) or backward (pre-decrement).
+	      \end{itemize}
+	\item \textbf{find}
+	      \begin{itemize}
+		      \item Searches a range for a specified value and returns an iterator to the first occurrence.
+		      \item \textit{Requires including} \texttt{<algorithm>}.
+	      \end{itemize}
+	\item \textbf{find\_if}
+	      \begin{itemize}
+		      \item Searches for the first element in a range that fulfills a given predicate.
+	      \end{itemize}
+	\item \textbf{next}
+	      \begin{itemize}
+		      \item Returns a new iterator that is N positions ahead of the given iterator without modifying it.
+		      \item \textit{Requires including} \texttt{<iterator>}.
+	      \end{itemize}
+	\item \textbf{advance}
+	      \begin{itemize}
+		      \item Advances the given iterator by N positions, modifying it directly.
+	      \end{itemize}
+\end{itemize}
+
+\begin{lstlisting}
+	for (std::list<Book>::iterator book = bookList.begin(); book != bookList.end(); ++book) {
+		std::cout << *book << std::endl;
+}
+\end{lstlisting}
+
+\subsection{Algorithms}
+
+
 \end{document}
