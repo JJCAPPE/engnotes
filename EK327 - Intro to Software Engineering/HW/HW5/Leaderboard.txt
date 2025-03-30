@@ -1,0 +1,5 @@
+1. By using an std::map<string, int> the entries will be sorted by the string values (usernames), which in our usecase is not particularly useful but enables O(log(n)) for searching the high score of a given user, beacsue with the entries being sorted some sort of binary search algorithm can be implemented. Conversely, with an std::unordered_map we would have a worst case of O(n) in search times since it has to check at most all values to find the specified one. Insertion though will be faster in the unordered_map.
+2. 
+    - addOrUpdatePlayer() → O(log(S))
+    - removePlayer() → O(log(S))
+    - getTopN(N) → O(N) (because i still need to traverse N elements to return them)
