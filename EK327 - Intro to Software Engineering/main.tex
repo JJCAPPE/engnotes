@@ -3213,5 +3213,247 @@ A single API that works across all containers, and can be used to iterate over t
 
 \subsection{Algorithms}
 
+\section{Smart Pointers}
+
+\noindent Pointers are fucking horrible\\
+
+\noindent Moving away from manual memory
+management towards more automated
+memory management, is referred to as
+dynamic memory management\\
+
+\begin{itemize}
+	\item \textbf{Pointer Ownership:}
+		  \begin{itemize}
+			  \item As we pass pointers around, who is ultimately responsible for freeing the memory they point to?
+			  \item For example, by calling \texttt{delete}.
+		  \end{itemize}
+	\item \textbf{Resource Acquisition Is Initialization (RAII):}
+		  \begin{itemize}
+			  \item The idea that shared resources, such as:
+					\begin{itemize}
+						\item File handles
+						\item Database connections
+						\item Web sockets
+					\end{itemize}
+			  \item \textbf{Should be released at the same time that the memory referencing them goes out of scope.}
+		  \end{itemize}
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+class FileWrapper {
+	private:
+		std::string fileName;
+		FILE *file;
+	public:
+		FileWrapper(std::string fileName);
+		~FileWrapper();
+		FILE* getFile() const { return file; }
+};
+
+FileWrapper::FileWrapper(std::string fileName) {
+	this->fileName = fileName;
+	file = fopen(fileName.c_str(), "r");
+	if (!file) {
+		std::cout << "Error: could not open file '" << fileName << "'\n";
+	} else {
+		std::cout << "Opened file '" << fileName << "' successfully.\n";
+	}
+}
+
+FileWrapper::~FileWrapper() {
+	std::cout << "File Wrapper Destructor called: closing file '" << fileName << "'\n";
+	fclose(file);
+}
+\end{lstlisting}
+
+\begin{itemize}
+	\item constructed with path to a file
+	\item Creates a FILE handle on construction
+	\item releases the FILE handle on destruction
+	\item memory lifecycle of FileWrapper tied to lifecycle of FILE handle resource - RAII principle
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+	class WordCounter {
+	private:
+		FileWrapper& fileWrapper;
+	public:
+		WordCounter(FileWrapper& fileWrapper) : fileWrapper(fileWrapper) {}
+		int countWords();
+	};
+
+	class MostFrequentWord {
+	private:
+		FileWrapper& fileWrapper;
+	public:
+		MostFrequentWord(FileWrapper& fileWrapper) : fileWrapper(fileWrapper) {}
+		std::string mostFrequentWord();
+	};
+\end{lstlisting}
+
+\subsection{Syntax}
+
+\subsubsection{Unique Pointer}
+\subsection{Smart Pointers Summary}
+
+Smart pointers in C++ provide automated memory management, reducing the risk of memory leaks and dangling pointers. They follow the RAII (Resource Acquisition Is Initialization) principle, ensuring that resources are released when the smart pointer goes out of scope.
+
+\begin{itemize}
+	\item \textbf{Unique Pointer (\texttt{std::unique\_ptr}):}
+	\begin{itemize}
+		\item Provides sole ownership of a dynamically allocated resource.
+		\item Automatically deletes the resource when the pointer goes out of scope.
+		\item Cannot be copied, ensuring unique ownership.
+		\item Syntax: \texttt{std::unique\_ptr<Type> ptr = std::make\_unique<Type>(...);}
+	\end{itemize}
+	\item \textbf{Advantages of Smart Pointers:}
+	\begin{itemize}
+		\item Eliminate manual memory management (no need for \texttt{new}/\texttt{delete}).
+		\item Prevent memory leaks by ensuring proper deallocation.
+		\item Avoid dangling pointers by tying resource lifetime to pointer scope.
+	\end{itemize}
+
+	\item \textbf{Use Cases:}
+	\begin{itemize}
+		\item Use \texttt{std::unique\_ptr} when a resource has a single owner.
+		\item Use \texttt{std::shared\_ptr} when a resource is shared among multiple owners.
+	\end{itemize}
+\end{itemize}
+
+\dfn{Syntax for Unique Pointer}{
+	\centering
+	\texttt{std::unique\_ptr<FileWrapper> fileWrapper}
+}
+
+\textbf{Ownership}
+\begin{itemize}
+    \item Sole responsibility for a dynamically allocated piece of memory
+\end{itemize}
+
+\textbf{RAII}
+\begin{itemize}
+    \item Memory automatically deallocated when the \textit{sole} reference goes out of scope.
+\end{itemize}
+
+\textbf{Restrictions}
+\begin{itemize}
+    \item Cannot be copied (would violate uniqueness of memory reference)
+\end{itemize}
+
+\textbf{Benefit}
+\begin{itemize}
+    \item automatically calls \texttt{delete} on underlying object when variable goes out scope
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+	int main()
+	{
+		std::string filename = "/Users/edsolovey/BU/spring2025-ec327/EC327-Lectures/code/lecture13/books.txt";
+		WordCounter* counter = nullptr;
+		{ // RAII - define scope lifecycle within main function
+			std::unique_ptr<FileWrapper> fileWrapper = std::make_unique<FileWrapper>(filename);
+			counter = new WordCounter(*fileWrapper);
+			std::cout << "The file has " << counter->countWords() << " words.\n";
+		} // RAII - end of scope lifecycle within main function
+		std::cout << "reached end of program" << std::endl;
+		return 0;
+	}
+\end{lstlisting}
+
+\subsubsection{Shared Pointer}
+
+\begin{itemize}
+	\item \textbf{Shared Pointer (\texttt{std::shared\_ptr}):}
+	\begin{itemize}
+		\item Allows multiple shared ownership of a resource.
+		\item Keeps a reference count to track how many \texttt{shared\_ptr} instances share ownership.
+		\item Automatically deletes the resource when the last \texttt{shared\_ptr} goes out of scope.
+		\item Syntax: \texttt{std::shared\_ptr<Type> ptr = std::make\_shared<Type>(...);}
+	\end{itemize}
+\end{itemize}
+
+\dfn{Syntax for Shared Pointer}{
+	\centering
+	\texttt{std::shared\_ptr<FileWrapper> fileWrapper}
+}
+
+\dfn{Ownership count}{
+	\centering
+	Checks multiple references number to the same memory location with \texttt{pointer.use\_count()}
+}
+
+\subsubsection{Weak Pointer}
+
+\begin{itemize}
+	\item \textbf{Weak Pointer (\texttt{std::weak\_ptr}):}
+	\begin{itemize}
+		\item Provides a non-owning reference to a resource managed by a \texttt{std::shared\_ptr}.
+		\item Does not affect the reference count of the \texttt{std::shared\_ptr}.
+		\item Useful for breaking circular references in shared ownership scenarios.
+		\item Syntax: \texttt{std::weak\_ptr<Type> weakPtr = sharedPtr;}
+	\end{itemize}
+\end{itemize}
+
+\dfn{Syntax for Weak Pointer}{
+	\centering
+	\texttt{std::weak\_ptr<FileWrapper> weakFileWrapper}
+}
+
+\textbf{Key Features:}
+\begin{itemize}
+	\item \textbf{Non-Ownership:}
+		  \begin{itemize}
+			  \item Does not own the resource, so it does not contribute to the reference count.
+			  \item Prevents memory leaks caused by circular references.
+		  \end{itemize}
+	\item \textbf{Accessing the Resource:}
+		  \begin{itemize}
+			  \item Use \texttt{lock()} to obtain a \texttt{std::shared\_ptr} from a \texttt{std::weak\_ptr}.
+			  \item If the resource has already been deallocated, \texttt{lock()} returns an empty \texttt{std::shared\_ptr}.
+		  \end{itemize}
+\end{itemize}
+
+\textbf{Example: Breaking Circular References:}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <memory>
+
+class Node {
+public:
+	std::string name;
+	std::shared_ptr<Node> next;
+	std::weak_ptr<Node> prev; // Weak pointer to avoid circular reference
+
+	Node(std::string name) : name(name) {}
+	~Node() { std::cout << "Node " << name << " destroyed.\n"; }
+};
+
+int main() {
+	auto node1 = std::make_shared<Node>("Node1");
+	auto node2 = std::make_shared<Node>("Node2");
+
+	node1->next = node2;
+	node2->prev = node1; // Weak pointer prevents circular reference
+
+	std::cout << "Exiting main...\n";
+	return 0;
+}
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+Node Node2 destroyed.
+Node Node1 destroyed.
+Exiting main...
+\end{verbatim}
+
+\textbf{Advantages of Weak Pointers:}
+\begin{itemize}
+	\item Prevents memory leaks in shared ownership scenarios.
+	\item Allows safe access to a resource without extending its lifetime.
+	\item Useful for caching, observer patterns, and breaking circular dependencies.
+\end{itemize}
+
 
 \end{document}
