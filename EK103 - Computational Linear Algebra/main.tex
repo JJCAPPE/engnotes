@@ -3011,18 +3011,18 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 	\]
 	\[
 		\therefore
-		|A-\lambda I| = 
+		|A-\lambda I| =
 		\begin{cases}
-			\lambda^m - a_{m-1} \lambda^{m-1} + \dots - a_1 \lambda + a_0, & m \% 2 = 0 \\
+			\lambda^m - a_{m-1} \lambda^{m-1} + \dots - a_1 \lambda + a_0,  & m \% 2 = 0 \\
 			-\lambda^m + a_{m-1} \lambda^{m-1} - \dots + a_1 \lambda - a_0, & m \% 2 = 1 \\
 		\end{cases}
 	\]
 	Set \(\lambda = 0\)
 	\[
-		|A| = 
+		|A| =
 		\begin{cases}
 			\lambda_1, \lambda_2, \dots, \lambda_m, & m \% 2 = 0 \\
-			\lambda_1, \lambda_2, \dots, \lambda_m, & m \% 2 = 0 \\	
+			\lambda_1, \lambda_2, \dots, \lambda_m, & m \% 2 = 0 \\
 		\end{cases}
 	\]
 }
@@ -3035,6 +3035,331 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 \dfn{Spanning Eigenvectors}{
 	The eigenvectors of \(A\) span all of \(\mathbb{R}^m\) if and only if \(A\) has \(m\) distinct eigenvalues. If an eigenvalue repeats \(k\) times, the dimension of the corresponding space is \(k\).
 }
+\thm{}{
+	If \(A: m \times m\) has \(m\) linearly independent eigenvectors $\iff$ Every eigenvalue that repeats \(k : k \in \mathbb{Z}^{++}\) times has an eigenspace of dimension \(k\) $\iff$  \(A\) is diagonalizable.
+}
+
+\dfn{Diagonalizable Matrices}{
+	A square matrix \(A\) is said to be diagonalizable if there exists an invertible matrix \(P\) and a diagonal matrix \(D\) such that:
+	\[
+		A = P D P^{-1}.
+	\]
+	In this case, the diagonal entries of \(D\) are the eigenvalues of \(A\), and the columns of \(P\) are the corresponding eigenvectors of \(A\).
+
+	\textbf{Key Conditions:}
+	\begin{itemize}
+		\item \(A\) is diagonalizable if and only if \(A\) has \(m\) linearly independent eigenvectors, where \(m\) is the size of \(A\).
+		\item If \(A\) has \(m\) distinct eigenvalues, then \(A\) is guaranteed to be diagonalizable.
+		\item If an eigenvalue \(\lambda\) of \(A\) has algebraic multiplicity \(k\), the dimension of its eigenspace (geometric multiplicity) must also be \(k\) for \(A\) to be diagonalizable.
+	\end{itemize}
+}
+
+\pf{Diagonalizable Matrices}{
+Suppose A has $m$ independent eigenvectors, $\overline{v_1}, \overline{v_2}, ..., \overline{v_m}$.
+
+
+Let $$P = [\overline{v_1} \ \overline{v_2} \ ... \ \overline{v_m}]$$ Clearly, P is invertible.
+
+$$AP = [A\overline{v_1} \ A\overline{v_2} \ ... \ A\overline{v_m}] $$
+
+
+$$ = [\lambda_1\overline{v_1} \ \lambda_2\overline{v_2} \ ... \ \lambda_m\overline{v_m}] $$ because $$\overline{v_1} ... \overline{v_m}$$ are eigenvectors
+
+$$ = [\overline{v_1} \ \overline{v_2} \ ... \ \overline{v_m}]
+	\begin{bmatrix}
+		\lambda_1 &           &        &           \\
+		          & \lambda_2 &        &           \\
+		          &           & \ddots &           \\
+		          &           &        & \lambda_m
+	\end{bmatrix}
+$$
+
+$$\Rightarrow AP = PD$$
+$$\Rightarrow P^{-1}AP = D$$
+$$P^{-1}AP \text{ is Diagonal}$$
+
+Suppose
+\[
+	P^{-1}AP =
+	\begin{bmatrix}
+		d_1 &     &        &     \\
+		    & d_2 &        &     \\
+		    &     & \ddots &     \\
+		    &     &        & d_m
+	\end{bmatrix}
+\]
+Multiply both sides by \(P\)
+
+\[
+	AP = PD
+\]
+
+suppose $$P=\begin{bmatrix}
+		\overline{\vec{w_1}} & \overline{\vec{w_2}} & \dots & \overline{\vec{w_m}}
+	\end{bmatrix}$$
+
+Then
+
+\[
+	\therefore
+	\begin{bmatrix}
+		A\overline{\vec{w_1}} & A\overline{\vec{w_2}} & \dots & A\overline{\vec{w_m}}
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		d_1 \overline{\vec{w_1}} & d_2 \overline{\vec{w_2}} & \dots & d_m \overline{\vec{w_m}}
+	\end{bmatrix}
+\]
+\[
+	\begin{cases}
+		A\overline{\vec{w_1}} & = d_1 \overline{\vec{w_1}} \\
+		A\overline{\vec{w_2}} & = d_2 \overline{\vec{w_2}} \\
+		                      & \vdots                     \\
+		A\overline{\vec{w_m}} & = d_m \overline{\vec{w_m}}
+	\end{cases}
+\]
+}
+
+
+\ex{Diagonalizable Matricies}{\[
+		A =
+		\begin{bmatrix}
+			1 & 1 \\
+			0 & 0
+		\end{bmatrix}
+		\Rightarrow
+		\text{Entries are not linearly independent}
+		\iff
+		\text{Non invertible}
+	\]
+	for \(\lambda_1 = 1\) solve for nullspace of \(A - \lambda_1 I\)
+	\[
+		A - \lambda_1 I =
+		\begin{bmatrix}
+			0 & 1  \\
+			0 & -1
+		\end{bmatrix}
+		\rightarrow
+		\begin{bmatrix}
+			0 & 1 \\
+			0 & 0
+		\end{bmatrix}
+		\Rightarrow
+		Null(A - \lambda_1 I) =
+		\left \{
+		t_1 \begin{bmatrix}
+			1 \\ 0
+		\end{bmatrix}
+		: t_1 \in \mathbb{R}
+		\right \}
+	\]
+	for \(\lambda_2 = 0\) solve for nullspace of \(A - \lambda_2 I\)
+	\[
+		A - \lambda_1 I =
+		\begin{bmatrix}
+			1 & 1 \\
+			0 & 0
+		\end{bmatrix}
+		\Rightarrow
+		Null(A - \lambda_1 I) =
+		\left \{
+		t_2 \begin{bmatrix}
+			-1 \\ 1
+		\end{bmatrix}
+		: t_2 \in \mathbb{R}
+		\right \}
+	\]
+	\[
+		\therefore
+		\left\{
+		\begin{bmatrix}
+			1 \\ 0
+		\end{bmatrix}
+		,
+		\begin{bmatrix}
+			-1 \\ 1
+		\end{bmatrix}
+		\right \}
+		\text{are linearly independent}
+	\]
+	\[
+		\text{Eigenvectors are linearly independent}
+		\iff
+		\text{Eigenvalues are distinct}
+		\iff
+		\text{Diagonalizable}
+	\]
+	\[
+		B =
+		\begin{bmatrix}
+			1 & 1 \\
+			0 & 1
+		\end{bmatrix}
+		\Rightarrow
+		\text{Entries are  linearly independent}
+		\iff
+		\text{Invertible}
+	\]
+	\[
+		\lambda_1 = 1, \lambda_2 = 1 \Rightarrow \text{Repeting } k = 2 \text{ times}
+	\]
+	\[
+		B-\lambda_1 I =
+		\begin{bmatrix}
+			0 & 1 \\
+			0 & 0
+		\end{bmatrix}
+		\Rightarrow
+		Null(B - \lambda_1 I) =
+		\left \{
+		t_1 \begin{bmatrix}
+			1 \\ 0
+		\end{bmatrix}
+		: t_1 \in \mathbb{R}
+		\right \}
+		\Rightarrow Dim(Eigenspace) = 1 < k = 2
+	\]
+	\[
+		\therefore
+		B \text{ is not diagonalizable}
+	\]
+}
+
+
+\section{Consequence of Diagonalizability}
+
+\dfn{Diagonalizable}{
+	A matrix $A$ is diagonalizable if there exists an invertible matrix $P$ and a diagonal matrix $D$ such that $A = PDP^{-1}$.
+}
+
+\nt{
+	If $A$ is diagonalizable, then $A = PDP^{-1}$, where $D$ is a diagonal matrix of eigenvalues and $P$ is a matrix whose columns are the corresponding eigenvectors.
+}
+
+Given $A = PDP^{-1}$, then $A^k = (PDP^{-1})^k$ for $k \in \mathbb{Z}^+$.
+$$A^k = (PDP^{-1})(PDP^{-1})\cdots(PDP^{-1}) = PD^kP^{-1}$$
+Since $D$ is a diagonal matrix, $D^k$ is easily computed by raising each diagonal element (eigenvalue) to the power of $k$.
+
+\thm{Eigenvalues of $A^k$}{
+	If $\lambda$ is an eigenvalue of $A$, then $\lambda^k$ is an eigenvalue of $A^k$.
+}
+
+\nt{
+	Eigenvectors of $A$ and $A^k$ are the same.
+}
+
+
+\subsection{Markov Chain Problems}
+
+\dfn{Markov Chain}{
+	A Markov chain is a stochastic model describing a sequence of possible events in which the probability of each event depends only on the state attained in the previous event.
+}
+
+\nt{
+	Population members can fall into states as a function of time that is indexed by steps.
+}
+
+\ex{People in Boston}{
+	Consider a population of people who either live in the city of Boston or in the suburbs.
+	Let's denote:
+	\begin{itemize}
+		\item State 1: City (C)
+		\item State 2: Suburbs (S)
+	\end{itemize}
+
+	Suppose that initially, the distribution is:
+	\begin{itemize}
+		\item 10\% move to the city (C)
+		\item 90\% move to the suburbs (S)
+	\end{itemize}
+
+	\nt{
+		Markov Assumption: The fraction of population that changes from one state to another is always the same.
+	}
+}
+
+\nt{
+	Markov Diagram:
+}
+\begin{center}
+	\begin{tikzpicture}
+		\node[circle, draw] (C) at (0,0) {C};
+		\node[circle, draw] (S) at (3,0) {S};
+
+		\draw[->, loop left] (C) to node[above left] {0.8} (C);
+		\draw[->] (C) to node[above] {0.2} (S);
+		\draw[->] (S) to node[below] {0.4} (C);
+		\draw[->, loop right] (S) to node[above right] {0.6} (S);
+	\end{tikzpicture}
+\end{center}
+
+\qs{Question}{
+	What fraction of people in Boston will be living in the city after 20 years?
+}
+
+\sol
+\nt{
+	State vector for year $k$: $\vec{x}_k = \begin{bmatrix} c \\ s \end{bmatrix}$, where $c$ and $s$ are the fractions of people in the city and suburbs, respectively.  These elements are probabilities, so it is a probability vector.
+}
+
+\nt{
+	Initial state vector: $\vec{x}_0 = \begin{bmatrix} c \\ s \end{bmatrix}$
+}
+
+\nt{
+	Year 1: $\vec{x}_1 = \begin{bmatrix} 0.8 & 0.4 \\ 0.2 & 0.6 \end{bmatrix} \begin{bmatrix} c \\ s \end{bmatrix}$
+}
+
+\dfn{State Transition Matrix}{
+$A = [a_{ij}]$ is the fraction of people in state $i$ at time $(k)$ that end up in state $j$ at $(k+1)$.
+}
+
+\nt{
+	Year $k$: $\vec{x}_k = \begin{bmatrix} 0.8 & 0.4 \\ 0.2 & 0.6 \end{bmatrix}^k \vec{x}_0$.  How to find $A^k$?
+}
+
+\nt{
+	If $A$ is known to be diagonalizable with real eigenvalues and eigenvectors, the matrix $A$ is a stochastic matrix.
+}
+
+\thm{Properties of Stochastic Matrices}{
+	\begin{enumerate}
+		\item $\lambda = 1$ is always an eigenvalue.
+		\item If there are no $0$ values, all other eigenvalues will have $|\lambda| < 1$.
+	\end{enumerate}
+}
+
+\thm{Consequence}{
+	$$\lim_{k \to \infty} \vec{x}_k$$
+	is the probability vector that is an eigenvector corresponding to $\lambda = 1$.
+}
+
+\ex{Back to Example}{
+	$A = \begin{bmatrix} 0.8 & 0.4 \\ 0.2 & 0.6 \end{bmatrix}$
+
+	$\det(A - \lambda I) = (0.8 - \lambda)(0.6 - \lambda) - 0.2 \cdot 0.4 = 0$
+
+	$(0.8 - \lambda)(0.6 - \lambda) - 0.08 = \lambda^2 - 1.4\lambda + 0.4 = 0$
+	$(\lambda - 1)(\lambda - 0.4) = 0$
+
+	Eigenvalues: $\lambda_1 = 1$, $\lambda_2 = 0.4$.
+
+	For $\lambda = 1$:
+	$$A - I = \begin{bmatrix} -0.2 & 0.4 \\ 0.2 & -0.4 \end{bmatrix} \to \begin{bmatrix} -0.2 & 0.4 \\ 0 & 0 \end{bmatrix}$$
+	$-0.2x_1 + 0.4x_2 = 0$, so $x_1 = 2x_2$.
+
+	Null$(A-I) = span\{\begin{bmatrix} 2 \\ 1 \end{bmatrix}\}$.
+
+	Probability vector: $\begin{bmatrix} 2/3 \\ 1/3 \end{bmatrix}$
+
+	\nt{
+		Therefore, in the long run, $\frac{2}{3}$ will live in the city and $\frac{1}{3}$ will live in the suburbs.
+	}
+}
+
+\section{Projections}
+
+
 
 \chapter{Projections}
 

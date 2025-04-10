@@ -1,0 +1,38 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{main}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{Book}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{bookVector}\PYG{p}{;}
+\PYG{+w}{	}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{list}\PYG{o}{\PYGZlt{}}\PYG{n}{Book}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{bookList}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{Timer}\PYG{+w}{ }\PYG{n}{timer}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Inserting into vector}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{bookVector}\PYG{p}{.}\PYG{n}{reserve}\PYG{p}{(}\PYG{n}{NUM\PYGZus{}BOOKS}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{size\PYGZus{}t}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{NUM\PYGZus{}BOOKS}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{+}\PYG{o}{+}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{Book}\PYG{+w}{ }\PYG{n}{book}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Book}\PYG{p}{(}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{generateRandomTitle}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{A. Author}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{getRandomInt}\PYG{p}{(}\PYG{l+m+mi}{1900}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2025}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{			}\PYG{n}{bookVector}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{book}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{Timer}\PYG{+w}{ }\PYG{n}{timer}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Inserting into list}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{k}{for}\PYG{+w}{ }\PYG{p}{(}\PYG{k+kt}{size\PYGZus{}t}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{NUM\PYGZus{}BOOKS}\PYG{p}{;}\PYG{+w}{ }\PYG{o}{+}\PYG{o}{+}\PYG{n}{i}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{Book}\PYG{+w}{ }\PYG{n}{book}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Book}\PYG{p}{(}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{to\PYGZus{}string}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{generateRandomTitle}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{A. Author}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{getRandomInt}\PYG{p}{(}\PYG{l+m+mi}{1900}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2025}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{			}\PYG{n}{bookList}\PYG{p}{.}\PYG{n}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{book}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{Timer}\PYG{+w}{ }\PYG{n}{timer}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Get by index from vector}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ book at index 341100 }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{bookVector}\PYG{p}{[}\PYG{l+m+mi}{341100}\PYG{p}{]}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{Timer}\PYG{+w}{ }\PYG{n}{timer}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Get by index from list}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{list}\PYG{o}{\PYGZlt{}}\PYG{n}{Book}\PYG{o}{\PYGZgt{}}\PYG{o}{:}\PYG{o}{:}\PYG{n}{iterator}\PYG{+w}{ }\PYG{n}{bookListIterator}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{bookList}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{advance}\PYG{p}{(}\PYG{n}{bookListIterator}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{341100}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ book at index 341100 }\PYG{l+s}{\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{bookListIterator}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{:}\PYG{o}{:}\PYG{n}{endl}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}
