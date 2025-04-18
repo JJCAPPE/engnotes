@@ -2522,7 +2522,7 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 
 }
 
-\section*{Eigenvectors and Eigenvalues}
+\section{Eigenvectors and Eigenvalues}
 
 \dfn{Eigenvector and Eigenvalue}{
 	Let $A$ be an $n \times n$ matrix. A non-zero vector $\vec{x}$ is an eigenvector of $A$ if there exists a scalar $\lambda$ (called an eigenvalue) such that:
@@ -2598,7 +2598,7 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 	\end{itemize}
 }
 
-\subsection*{Finding Eigenvalues and Eigenvectors}
+\subsection{Finding Eigenvalues and Eigenvectors}
 
 \thm{Finding Eigenvalues}{
 	To find the eigenvalues of a matrix $A$, we solve the characteristic equation:
@@ -2634,7 +2634,7 @@ where the solution for \(\vec{x}\) also defines a vector space, called an \textb
 	This gives us the eigenvalues $\lambda_1 = 2$ and $\lambda_2 = 1$.
 }
 
-\subsection*{Finding Eigenvectors}
+\subsection{Finding Eigenvectors}
 \begin{algorithm}[H]
 	\KwIn{A matrix $A$}
 	\KwOut{Eigenvalues and corresponding eigenvectors of $A$}
@@ -3364,31 +3364,31 @@ $A = [a_{ij}]$ is the fraction of people in state $i$ at time $(k)$ that end up 
 \chapter{Projections}
 
 \dfn{Projection of a vector $\mathbf{v}$ onto a line $S$}{
-Let $S = \{t\mathbf{a} \mid t \in \mathbb{R}\}$ be a line spanned by a vector $\mathbf{a}$. The projection of a vector $\mathbf{v}$ onto $S$ is the vector $\mathbf{x}$ such that $\mathbf{x} \in S$ and $\mathbf{v} - \mathbf{x}$ is orthogonal to $S$.
+	Let $S = \{t\mathbf{a} \mid t \in \mathbb{R}\}$ be a line spanned by a vector $\mathbf{a}$. The projection of a vector $\mathbf{v}$ onto $S$ is the vector $\mathbf{x}$ such that $\mathbf{x} \in S$ and $\mathbf{v} - \mathbf{x}$ is orthogonal to $S$.
 }
 
 \subsection{Finding the Projection}
 
 \qs{Question}{
-Find the projection of $\begin{bmatrix} 1 \\ 3 \end{bmatrix}$ onto $\mathbf{a}$.
+	Find the projection of $\begin{bmatrix} 1 \\ 3 \end{bmatrix}$ onto $\mathbf{a}$.
 }
 
 \nt{
-We have that $\mathbf{x} = p\mathbf{a}$, where $p \in \mathbb{R}$.  Also, $\mathbf{a} \perp (\mathbf{v} - \mathbf{x})$.
+	We have that $\mathbf{x} = p\mathbf{a}$, where $p \in \mathbb{R}$.  Also, $\mathbf{a} \perp (\mathbf{v} - \mathbf{x})$.
 }
 
 \begin{center}
-\begin{tikzpicture}[scale=1.0]
-\draw[->] (0,0) -- (2,0) node[right] {$x_1$};
-\draw[->] (0,0) -- (0,2) node[above] {$x_2$};
+	\begin{tikzpicture}[scale=1.0]
+		\draw[->] (0,0) -- (2,0) node[right] {$x_1$};
+		\draw[->] (0,0) -- (0,2) node[above] {$x_2$};
 
-\draw[->, thick, blue] (0,0) -- (1,1) node[midway, above right] {$\mathbf{a}$};
-\draw[->, thick, red] (0,0) -- (1,3) node[midway, above right] {$\mathbf{v}$};
-\draw[->, thick, green] (0,0) -- (0.5,0.5) node[midway, above right] {$\mathbf{x}$};
+		\draw[->, thick, blue] (0,0) -- (1,1) node[midway, above right] {$\mathbf{a}$};
+		\draw[->, thick, red] (0,0) -- (1,3) node[midway, above right] {$\mathbf{v}$};
+		\draw[->, thick, green] (0,0) -- (0.5,0.5) node[midway, above right] {$\mathbf{x}$};
 
-\draw[->, thick, orange] (0.5,0.5) -- (1,3) node[midway, right] {$\mathbf{v}-\mathbf{x}$};
+		\draw[->, thick, orange] (0.5,0.5) -- (1,3) node[midway, right] {$\mathbf{v}-\mathbf{x}$};
 
-\end{tikzpicture}
+	\end{tikzpicture}
 \end{center}
 
 \sol
@@ -3396,21 +3396,21 @@ Since $\mathbf{a} \cdot (\mathbf{v} - \mathbf{x}) = 0$, we have $\mathbf{a} \cdo
 Therefore, $p = \frac{\mathbf{a}^T \mathbf{v}}{\mathbf{a}^T \mathbf{a}}$, and $\mathbf{x} = p \mathbf{a} = \frac{\mathbf{a}^T \mathbf{v}}{\mathbf{a}^T \mathbf{a}} \mathbf{a}$.
 We can rewrite $\mathbf{x}$ as
 \[
-\mathbf{x} = \mathbf{a} \frac{\mathbf{a}^T \mathbf{v}}{\mathbf{a}^T \mathbf{a}} = \frac{\mathbf{a} \mathbf{a}^T}{\mathbf{a}^T \mathbf{a}} \mathbf{v} = P\mathbf{v}
+	\mathbf{x} = \mathbf{a} \frac{\mathbf{a}^T \mathbf{v}}{\mathbf{a}^T \mathbf{a}} = \frac{\mathbf{a} \mathbf{a}^T}{\mathbf{a}^T \mathbf{a}} \mathbf{v} = P\mathbf{v}
 \]
 where $P = \frac{\mathbf{a} \mathbf{a}^T}{\mathbf{a}^T \mathbf{a}}$ is the projection matrix. In this case, $P$ is a $2 \times 2$ matrix.
 
 \ex{Example}{
-Let $\mathbf{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ and $\mathbf{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}$.
-Then $\mathbf{a}^T \mathbf{a} = \begin{bmatrix} 1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \end{bmatrix} = 1 + 1 = 2$.
-Also,
-\[
-P = \frac{\begin{bmatrix} 1 \\ 1 \end{bmatrix} \begin{bmatrix} 1 & 1 \end{bmatrix}}{2} = \frac{1}{2} \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix} = \begin{bmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2} \end{bmatrix}.
-\]
-Then,
-\[
-P\mathbf{v} = \begin{bmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2} \end{bmatrix} \begin{bmatrix} 1 \\ 3 \end{bmatrix} = \begin{bmatrix} \frac{1}{2} + \frac{3}{2} \\ \frac{1}{2} + \frac{3}{2} \end{bmatrix} = \begin{bmatrix} 2 \\ 2 \end{bmatrix} = \mathbf{x}.
-\]
+	Let $\mathbf{a} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ and $\mathbf{v} = \begin{bmatrix} 1 \\ 3 \end{bmatrix}$.
+	Then $\mathbf{a}^T \mathbf{a} = \begin{bmatrix} 1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \end{bmatrix} = 1 + 1 = 2$.
+	Also,
+	\[
+		P = \frac{\begin{bmatrix} 1 \\ 1 \end{bmatrix} \begin{bmatrix} 1 & 1 \end{bmatrix}}{2} = \frac{1}{2} \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix} = \begin{bmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2} \end{bmatrix}.
+	\]
+	Then,
+	\[
+		P\mathbf{v} = \begin{bmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1}{2} \end{bmatrix} \begin{bmatrix} 1 \\ 3 \end{bmatrix} = \begin{bmatrix} \frac{1}{2} + \frac{3}{2} \\ \frac{1}{2} + \frac{3}{2} \end{bmatrix} = \begin{bmatrix} 2 \\ 2 \end{bmatrix} = \mathbf{x}.
+	\]
 }
 
 \section{Generalization to $\mathbb{R}^m$ for $m > 2$}
@@ -3418,11 +3418,440 @@ P\mathbf{v} = \begin{bmatrix} \frac{1}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{1
 Let $S = \{\mathbf{a}_1 t_1 + \mathbf{a}_2 t_2 + \dots + \mathbf{a}_k t_k \mid t_i \in \mathbb{R}, k < m\}$.
 
 \nt{
-If $\sum_i \mathbf{a}_i t_i = 0$, then $t_i = 0$ for all $i$. This implies that $A = \{\mathbf{a}_1, \mathbf{a}_2, \dots, \mathbf{a}_k\}$ and $\text{rank}(A) = k$.
+	If $\sum_i \mathbf{a}_i t_i = 0$, then $t_i = 0$ for all $i$. This implies that $A = \{\mathbf{a}_1, \mathbf{a}_2, \dots, \mathbf{a}_k\}$ and $\text{rank}(A) = k$.
 }
 
 The projection matrix is given by
 \[
-P = A(A^T A)^{-1} A^T.
+	P = A(A^T A)^{-1} A^T.
 \]
+
+
+\chapter{Statistics}
+
+\section{Fitting a Straight Line to Data Points}
+
+\begin{center}
+	\begin{tikzpicture}[scale=0.8]
+		\draw[->] (-0.5,0) -- (3,0) node[right] {$x$};
+		\draw[->] (0,-0.5) -- (0,5) node[above] {$y$};
+		\draw (0,4) node[circle,fill,inner sep=1.5pt,label={above left:$(0,4)$}]{};
+		\draw (1,2) node[circle,fill,inner sep=1.5pt,label={above right:$(1,2)$}]{};
+		\draw (2,1) node[circle,fill,inner sep=1.5pt,label={above right:$(2,1)$}]{};
+	\end{tikzpicture}
+\end{center}
+
+\qs*{Can we draw a straight line through the given three points?
+}
+
+\sol
+No, the points do not lie on a straight line.
+
+
+\qs*{How can we phrase the previous question in linear algebra terms, solving for $m$ and $b$ in $y = mx + b$ by forming a system of linear equations? Figure out the values of $a_{ij}$.
+}
+
+\sol
+We can represent the problem as a system of linear equations:
+\[
+	A\vec{x} = \vec{b}
+\]
+where
+\[
+	A = \begin{bmatrix}
+		0 & 1 \\
+		1 & 1 \\
+		2 & 1
+	\end{bmatrix}, \quad
+	\vec{x} = \begin{bmatrix}
+		m \\
+		b
+	\end{bmatrix}, \quad
+	\vec{b} = \begin{bmatrix}
+		4 \\
+		2 \\
+		1
+	\end{bmatrix}
+\]
+
+\subsection{Solving the System}
+
+The augmented matrix $A'$ is:
+\[
+	A' = \begin{bmatrix}
+		0 & 1 & 4 \\
+		1 & 1 & 2 \\
+		2 & 1 & 1
+	\end{bmatrix}
+\]
+We perform row reduction to find the row echelon form (REF):
+
+\begin{enumerate}
+	\item Swap rows 1 and 2:
+	      \[
+		      \begin{bmatrix}
+			      1 & 1 & 2 \\
+			      0 & 1 & 4 \\
+			      2 & 1 & 1
+		      \end{bmatrix}
+	      \]
+	\item Subtract 2 times row 1 from row 3:
+	      \[
+		      \begin{bmatrix}
+			      1 & 1  & 2  \\
+			      0 & 1  & 4  \\
+			      0 & -1 & -3
+		      \end{bmatrix}
+	      \]
+	\item Add row 2 to row 3:
+	      \[
+		      \begin{bmatrix}
+			      1 & 1 & 2 \\
+			      0 & 1 & 4 \\
+			      0 & 0 & 1
+		      \end{bmatrix}
+	      \]
+\end{enumerate}
+
+The REF of $A'$ has a pivot in the last column. This indicates that the system $A\vec{x} = \vec{b}$ has no solution, which confirms that the three points do not lie on a straight line.
+
+\subsection{Best Fit Straight Line}
+
+Since we cannot find a line that passes through all three points, we seek the "best fit" straight line through the given data points.
+
+\nt{
+	Instead of requiring $A\vec{x} - \vec{b} = 0$, we require $\|A\vec{x} - \vec{b}\|^2$ to be as small as possible.
+}
+
+\begin{center}
+	\begin{tikzpicture}[scale=1.2]
+		\draw[->] (-0.5,0) -- (2.5,0) node[right] {$x$};
+		\draw[->] (0,-0.5) -- (0,2.5) node[above] {$y$};
+
+		\draw[blue, thick] (0,0.8) -- (2,0.8);
+		\draw[red, dashed] (0,0.8) -- (0,4);
+		\draw[red, dashed] (1,0.8) -- (1,2);
+		\draw[red, dashed] (2,0.8) -- (2,1);
+
+		\filldraw[black] (0,4) circle (1pt) node[anchor=south west] {$(0,4)$};
+		\filldraw[black] (1,2) circle (1pt) node[anchor=south west] {$(1,2)$};
+		\filldraw[black] (2,1) circle (1pt) node[anchor=south west] {$(2,1)$};
+
+		\draw[<->, thick] (0.8,0) -- (0.8,0.8) node[midway, left] {$\vec{b} - A\vec{x}$};
+		\draw (0.8,0.4) node[right] {minimize $\|A\vec{x} - \vec{b}\|$};
+
+		\draw (1.6,0) node[anchor=north] {$\text{Col } A$};
+		\draw (0,0.8) node[anchor=east] {$A\vec{x}$};
+	\end{tikzpicture}
+\end{center}
+
+\nt{
+	Find an $\vec{x}$ such that $A\vec{x} - \vec{b}$ is as small as possible in its length.
+}
+
+\subsection{Finding the Optimal $\vec{x}$}
+
+We can find this $\vec{x}$ by requiring $(A\vec{x} - \vec{b})$ to be orthogonal to $A\vec{x}$.  This means the error vector is orthogonal to the column space of A.
+
+\[
+	(A\vec{x} - \vec{b}) \text{ is orthogonal to } A\vec{x}
+\]
+\[
+	(A\vec{x} - \vec{b})^T (A\vec{x}) = 0
+\]
+\[
+	(A\vec{x})^T (A\vec{x} - \vec{b}) = 0
+\]
+\[
+	\vec{x}^T A^T (A\vec{x} - \vec{b}) = 0
+\]
+\[
+	\vec{x}^T A^T A\vec{x} = \vec{x}^T A^T \vec{b}
+\]
+\[
+	A^T A\vec{x} = A^T \vec{b}
+\]
+If $A^T A$ is invertible, then
+
+\dfn{Least Squares Solution}{
+	The least squares solution to the system $A\vec{x} = \vec{b}$ is given by
+	\[
+		\boxed{\vec{x} = (A^T A)^{-1} A^T \vec{b}}
+	\]
+}
+
+\ex{Least Squares Fit Example}{
+	Consider the matrix
+	\[
+		A = \begin{bmatrix}
+			0 & 1 \\
+			1 & 1 \\
+			2 & 1
+		\end{bmatrix}
+	\]
+	Then the transpose of $A$ is
+	\[
+		A^T = \begin{bmatrix}
+			0 & 1 & 2 \\
+			1 & 1 & 1
+		\end{bmatrix}
+	\]
+	Now we compute $A^T A$:
+	\[
+		A^T A = \begin{bmatrix}
+			0 & 1 & 2 \\
+			1 & 1 & 1
+		\end{bmatrix} \begin{bmatrix}
+			0 & 1 \\
+			1 & 1 \\
+			2 & 1
+		\end{bmatrix} = \begin{bmatrix}
+			5 & 3 \\
+			3 & 3
+		\end{bmatrix}
+	\]
+	The determinant of $A^T A$ is $|A^T A| = (5)(3) - (3)(3) = 15 - 9 = 6$. Since the determinant is non-zero, $A^T A$ is invertible.
+	The inverse of $A^T A$ is
+	\[
+		(A^T A)^{-1} = \frac{1}{6} \begin{bmatrix}
+			3  & -3 \\
+			-3 & 5
+		\end{bmatrix}
+	\]
+	Now suppose we want to find the best least squares fit to the data points $(0, 4)$, $(1, 2)$, and $(2, 1)$. We can represent this as $y = mx + b$, where we want to find $x = \begin{bmatrix} m \\ b \end{bmatrix}$.
+	Let $\vec{b} = \begin{bmatrix} 4 \\ 2 \\ 1 \end{bmatrix}$. Then the least squares solution $\bar{x}$ is given by
+	\[
+		\bar{x} = (A^T A)^{-1} A^T \vec{b} = \frac{1}{6} \begin{bmatrix}
+			3  & -3 \\
+			-3 & 5
+		\end{bmatrix} \begin{bmatrix}
+			0 & 1 & 2 \\
+			1 & 1 & 1
+		\end{bmatrix} \begin{bmatrix} 4 \\ 2 \\ 1 \end{bmatrix}
+	\]
+	This represents the line $y = mx + b$ that is the best least squares fit to the 3 data points given.
+}
+
+
+\thm{Invertibility of $A^T A$}{
+	If $A$ is an $m \times k$ matrix and has $k$ independent columns, then $A^T A$ is invertible.
+}
+
+\section*{Proof of Invertibility of $A^T A$}
+
+
+\qs{Why is $A^TA$ invertible when $A$ has independent columns?}{
+	We need to show that the nullspace of $A^T A$ contains only the zero vector.
+}
+
+\sol
+Suppose $\vec{x} \in \text{Nul}(A)$. Then $A\vec{x} = \vec{0}$. Multiplying by $A^T$, we get $A^T A \vec{x} = A^T \vec{0} = \vec{0}$. Thus, $\vec{x} \in \text{Nul}(A^T A)$.
+
+Now suppose $\vec{x} \in \text{Nul}(A^T A)$. Then $A^T A \vec{x} = \vec{0}$. Multiplying by $\vec{x}^T$ on the left, we get $\vec{x}^T A^T A \vec{x} = \vec{x}^T \vec{0} = 0$. This can be rewritten as $(A\vec{x})^T (A\vec{x}) = 0$, which is equivalent to $\|A\vec{x}\|^2 = 0$. This implies that $A\vec{x} = \vec{0}$, so $\vec{x} \in \text{Nul}(A)$.
+
+Therefore, $\text{Nul}(A^T A) = \text{Nul}(A)$.
+
+
+\nt{
+	Since $A$ has $k$ independent columns, the nullspace of $A$ contains only the zero vector.
+}
+
+
+\nt{
+	Since the nullspace of $A^T A$ contains only the zero vector, $A^T A$ is invertible.
+}
+
+
+\section*{Parabola Fitting}
+
+Consider the problem of finding a parabola that passes through the points $(-1, 5)$, $(0, 4)$, and $(5, 6)$. We are given that the general form of a parabola is $y = ax^2 + bx + c$. Our goal is to determine the coefficients $a$, $b$, and $c$.
+
+\begin{center}
+	\begin{tikzpicture}[scale=0.7]
+		\begin{axis}[
+				axis lines = center,
+				xmin=-3, xmax=7,
+				ymin=-1, ymax=8,
+				xlabel=$x$, ylabel=$y$,
+				xtick={-1,0,2,5},
+				ytick={1,4,5,6},
+				clip=false
+			]
+			\addplot[only marks, mark=*] coordinates {(-1,5) (0,4) (2,1) (5,6)};
+			\node at (axis cs:-1,5) [above left] {$(-1,5)$};
+			\node at (axis cs:0,4) [above left] {$(0,4)$};
+			\node at (axis cs:2,1) [below right] {$(2,1)$};
+			\node at (axis cs:5,6) [above right] {$(5,6)$};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+For each point $(x, y)$, we substitute the $x$ and $y$ values into the general equation of the parabola.
+
+\begin{enumerate}
+	\item Point $(-1, 5)$:  Substituting $x = -1$ and $y = 5$ gives us:
+	      $5 = a(-1)^2 + b(-1) + c$, which simplifies to $a - b + c = 5$.
+
+	\item Point $(0, 4)$: Substituting $x = 0$ and $y = 4$ gives us:
+	      $4 = a(0)^2 + b(0) + c$, which simplifies to $c = 4$.
+
+	\item Point $(5, 6)$: Substituting $x = 5$ and $y = 6$ gives us:
+	      $6 = a(5)^2 + b(5) + c$, which simplifies to $25a + 5b + c = 6$.
+\end{enumerate}
+
+We now have a system of three linear equations:
+
+\begin{align*}
+	a - b + c    & = 5 \\
+	c            & = 4 \\
+	25a + 5b + c & = 6
+\end{align*}
+
+\subsection{Matrix Representation}
+
+This system of equations can be represented in matrix form as $A\vec{x} = \vec{b}$, where:
+
+\begin{itemize}
+	\item $A$ is the coefficient matrix:
+	      $$A = \begin{bmatrix} 1 & -1 & 1 \\ 0 & 0 & 1 \\ 25 & 5 & 1 \end{bmatrix}$$
+
+	\item $\vec{x}$ is the vector of unknowns (the coefficients $a$, $b$, and $c$):
+	      $$\vec{x} = \begin{bmatrix} a \\ b \\ c \end{bmatrix}$$
+
+	\item $\vec{b}$ is the vector of constants (the $y$ values):
+	      $$\vec{b} = \begin{bmatrix} 5 \\ 4 \\ 6 \end{bmatrix}$$
+\end{itemize}
+
+Thus, we have:
+
+$$
+	\begin{bmatrix} 1 & -1 & 1 \\ 0 & 0 & 1 \\ 25 & 5 & 1 \end{bmatrix}
+	\begin{bmatrix} a \\ b \\ c \end{bmatrix}
+	=
+	\begin{bmatrix} 5 \\ 4 \\ 6 \end{bmatrix}
+$$
+
+\nt{
+	The matrix representation is a compact way to express the system of linear equations. It allows us to use linear algebra techniques to solve for the unknowns $a$, $b$, and $c$.
+}
+
+\subsection{Overdetermined System}
+The original image also includes a point (2,1) and creates a 4x3 system, which means more equations than unknowns. This is known as an overdetermined system. In such cases, a unique solution might not exist. We typically seek a "best fit" solution, often obtained using techniques like least squares. The system would then look like:
+
+$$
+	\begin{bmatrix} 1 & -1 & 1 \\ 0 & 0 & 1 \\ 4 & 2 & 1 \\ 25 & 5 & 1 \end{bmatrix}
+	\begin{bmatrix} a \\ b \\ c \end{bmatrix}
+	=
+	\begin{bmatrix} 5 \\ 4 \\ 1 \\ 6 \end{bmatrix}
+$$
+
+\nt{
+	When dealing with overdetermined systems, the goal shifts from finding an exact solution to finding the best possible approximation. The least squares method minimizes the sum of the squares of the errors between the predicted values (from the equation) and the actual values.
+}
+
+\subsection{Solving the System}
+
+\textbf{Least Squares (for overdetermined systems):} If the system is overdetermined, you can find the least squares solution by solving the normal equations: $A^T A \vec{x} = A^T \vec{b}$.  This gives you the coefficients that minimize the error.
+
+
+Once you find the values of $a$, $b$, and $c$, you can substitute them back into the equation $y = ax^2 + bx + c$ to obtain the equation of the parabola.
+
+
+\section{Orthogonality and Orthonormality}
+
+\subsection{Orthogonal Matrix}
+
+\dfn{Orthogonal Matrix}{
+	An orthogonal matrix is a square matrix $A$ of size $m \times m$ such that all of its columns are orthogonal and non-zero.
+}
+
+\nt{
+	Let $A$ be an orthogonal matrix.  We can represent $A$ as a matrix whose columns are vectors:
+	\[
+		A = \begin{bmatrix}
+			\vec{v}_1 & \vec{v}_2 & \cdots & \vec{v}_m
+		\end{bmatrix}
+	\]
+}
+
+\nt{
+	The columns of an orthogonal matrix satisfy the following properties:
+	\begin{enumerate}
+		\item $\vec{v}_i \cdot \vec{v}_j = 0$ whenever $i \neq j$ (orthogonality).
+		\item $||\vec{v}_j|| \neq 0$ for all $j$ (non-zero vectors).
+	\end{enumerate}
+}
+
+\qs{Is an Orthogonal Matrix Invertible?}{
+	Is an orthogonal matrix always an invertible matrix?
+}
+
+\sol
+Yes.
+\nt{
+	To demonstrate this, let's consider the matrix-vector product:
+	\[
+		A \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} = x_1 \vec{v}_1 + x_2 \vec{v}_2 + \cdots + x_m \vec{v}_m
+	\]
+}
+
+\nt{
+	Now, let's take the dot product of the first column vector $\vec{v}_1$ with the result of this matrix-vector product:
+	\[
+		\vec{v}_1^T (x_1 \vec{v}_1 + x_2 \vec{v}_2 + \cdots + x_m \vec{v}_m) = x_1 ||\vec{v}_1||^2 + x_2 (\vec{v}_1 \cdot \vec{v}_2) + \cdots + x_m (\vec{v}_1 \cdot \vec{v}_m)
+	\]
+	Since the vectors are orthogonal, all dot products $\vec{v}_1 \cdot \vec{v}_j$ for $j \neq 1$ are zero. Therefore, we get:
+	\[
+		\vec{v}_1^T (x_1 \vec{v}_1 + x_2 \vec{v}_2 + \cdots + x_m \vec{v}_m) = x_1 ||\vec{v}_1||^2 = 0
+	\]
+	Similarly, for other columns:
+	\[
+		\vec{v}_2^T (x_1 \vec{v}_1 + x_2 \vec{v}_2 + \cdots + x_m \vec{v}_m) = x_2 ||\vec{v}_2||^2 = 0
+	\]
+	\[
+		\vdots
+	\]
+	\[
+		\vec{v}_m^T (x_1 \vec{v}_1 + x_2 \vec{v}_2 + \cdots + x_m \vec{v}_m) = x_m ||\vec{v}_m||^2 = 0
+	\]
+}
+
+\nt{
+	Since $||\vec{v}_j|| \neq 0$, it follows that $x_1, x_2, \ldots, x_m$ must all be zero.  This implies that the columns $\vec{v}_1, \vec{v}_2, \ldots, \vec{v}_m$ are linearly independent.
+}
+
+\nt{
+	A matrix with linearly independent columns is invertible. Therefore, $A$ must be invertible.
+}
+
+\subsection{Orthonormal Matrix}
+
+\dfn{Orthonormal Matrix}{
+	An orthonormal matrix $A$ of size $m \times m$ is an orthogonal matrix where each of its columns has a norm (magnitude) of 1.
+}
+
+\nt{
+	In other words, the columns of an orthonormal matrix are not only orthogonal to each other but also are unit vectors.
+}
+
+\ex{Example}{
+	Let's examine some matrices and determine if they are orthogonal and/or orthonormal.
+
+	\begin{itemize}
+		\item $A = \begin{bmatrix} 2 & 0 \\ 0 & 3 \end{bmatrix}$.
+		\item $B = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.
+		\item $C = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}$.
+	\end{itemize}
+
+}
+
+\nt{
+	\begin{itemize}
+		\item Matrix $A$ is orthogonal, but not orthonormal because the columns are orthogonal, but their norms are not 1.
+		\item Matrix $B$ is both orthogonal and orthonormal because the columns are orthogonal and have a norm of 1.
+		\item Matrix $C$ is both orthogonal and orthonormal because the columns are orthogonal and have a norm of 1. This matrix represents a rotation in the plane.
+	\end{itemize}
+}
+
+
 \end{document}
