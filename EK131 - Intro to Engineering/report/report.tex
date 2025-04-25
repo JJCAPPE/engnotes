@@ -1,0 +1,128 @@
+\documentclass[10pt]{article} \usepackage[margin=1in]{geometry}
+\usepackage{setspace} \usepackage{graphicx} \usepackage{caption}
+\usepackage{subcaption} \usepackage{array} \usepackage{booktabs}
+\usepackage{listings} \usepackage{float}
+
+% 1.5 line spacing
+\setstretch{1.5}
+
+\title{Design process of room temperature monitor} \author{Your Name \\ BU ID:
+Your BU ID} \date{}  % leave empty to omit date
+
+\begin{document} \maketitle
+
+% REMINDER: Report should be no more than 5 pages.
+
+\section{Summary}
+% Quarter- to half-page.  Briefly state what you did, how you did it, main
+% outcomes & significance.  Do NOT include background, motivation, or refer to
+% figures/tables.
+\noindent
+% \dots
+
+\section{Introduction} Maintaining a stable indoor temperature is key to both
+comfort and energy efficiency. Commercial thermostats can be costly and rigid,
+so this project explores a low-cost, modular alternative. We build a room
+temperature monitor using a TMP36 sensor, a $16\times2$ I\textsuperscript{2}C
+LCD, and an Arduino Uno, powered by a $9\,$V battery, with green and red LEDs
+(with $1\,\mathrm{k}\Omega$ and $220\,\Omega$ resistors) and a buzzer for status
+indication.
+
+The aims are to mimic basic thermostat functions using components we explored
+during the semeter and to gain hands-on experience in electronics assembly,
+firmware development, and CAD design. We modeled and fabricated a enclosure,
+lid, battery holder, and base plate in CAD (OnShape), wiring everything with
+$22$ AWG and female-to-female jumper cables for the I\textsuperscript{2}C
+monitor.
+
+This report details the component selection, mechanical design, circuit
+assembly, and code implementation, and evaluates the system's performance in
+achieving the design objectives.
+
+\section{Design elements} Explain your design decisions. Address each of the
+following:
+
+\begin{enumerate}
+	\item \textbf{List all components used in your design}
+	      electronic components, hardware, etc.  \item \textbf{Precision measurements}
+	      Make a table of relevant dimensions (see example below).  
+		  \begin{table}[H]
+		      \centering \caption{Relevant dimensions of all components} 
+			  \begin{tabular}{l l c c c c}
+				\toprule
+				Item & Sketch identification & W [mm] & L [mm] & H [mm] & Diameter [mm] \\
+				\midrule
+				ABS enclosure        &                  &        &        &        &               \\
+				Arduino Board        &                  &        &        &        &               \\
+				Switch               &                  &        &        &        &               \\
+				LCD 2X16             &                  &        &        &        &               \\
+				Buzzer               &                  &        &        &        &               \\
+				Temperature sensor   &                  &        &        &        &               \\
+				LED                  &                  &        &        &        &               \\
+				\bottomrule
+			  \end{tabular} 
+			\end{table}
+
+	\item \textbf{CAD drawings}\\ Include a screenshot of your final assembly.
+	      \begin{figure}[H] \centering
+		      % \includegraphics[width=0.7\textwidth]{cad_assembly.png}
+		      \caption{CAD assembly of the prototype.} \end{figure}
+
+	\item \textbf{Prototype photographs}\\ Top view of actual prototype, with and
+	      without lid, powered on.  \begin{figure}[H] \centering
+		      \begin{subfigure}[b]{0.45\textwidth}
+			      % \includegraphics[width=\textwidth]{prototype_with_lid.jpg}
+			      \caption{With lid} \end{subfigure} \hfill \begin{subfigure}[b]{0.45\textwidth}
+			      % \includegraphics[width=\textwidth]{prototype_without_lid.jpg}
+			      \caption{Without lid} \end{subfigure} \caption{Top views of the working
+			      prototype.} \end{figure}
+
+	\item \textbf{Purpose of using an Arduino board}\\ Explain role of the Arduino
+	      in the circuit.
+
+	\item \textbf{Wiring diagram and methods}\\ Show diagram and discuss soldering,
+	      jumper wires, twist nut caps, spade connectors, etc.  \begin{figure}[H]
+		      \centering
+		      % \includegraphics[width=0.8\textwidth]{wiring_diagram.png}
+		      \caption{Circuit wiring diagram.} \end{figure}
+
+	\item \textbf{Wire gauge and resistor values}\\ Specify wire gauge used and
+	      justify choice (jumper vs.\ 22 AWG).  State resistor values in series with
+	      green/red LEDs, calculate operating currents using KVL.
+
+	\item \textbf{Internal power supply}\\ Discuss why a 9 V battery, its charge
+	      capacity, expected runtime, and external power options.
+
+	\item \textbf{Arduino code}\\ Provide the code listing used in your design.
+	      \begin{lstlisting}[language=C, caption={Arduino sketch for temperature
+monitoring}]
+// Example placeholder code
+void setup() { Serial.begin(9600);
+// initialization...
+} void loop() { float temp = readTemperature(); Serial.println(temp);
+// control LEDs...
+delay(1000); } \end{lstlisting}
+
+
+	\item \textbf{Prototype specifications}\\ List: \begin{itemize} \item Voltage of
+		            power supply \item Operating voltage of circuit \item Total current drawn
+		            (measured with DMM) \item Battery operating time \item Sensor temperature range
+		            (from datasheet) \item Comfortable temperature range \item Use KVL to explain
+		            resistor choices (1 k $\Omega$ for green LED, 220 $\Omega$ for red LED)
+	      \end{itemize}
+
+\end{enumerate}
+
+\section{Evaluation of Results} \begin{itemize} \item Degree to which design
+	      objectives were met \item Summary of outcomes and comparison to standard
+	      thermometers \item Limitations and recommendations for future work (battery
+	      life, size, weight, etc.) \item Highlight usefulness of the design \end{itemize}
+
+\appendix \section{Supporting Materials}
+% Detailed sketches or CAD technical drawings that are too long for the main
+% body.
+\noindent
+% \dots
+
+\end{document}
+
