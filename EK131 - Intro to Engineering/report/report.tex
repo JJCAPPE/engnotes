@@ -9,13 +9,13 @@
 \usepackage{booktabs}
 \usepackage{listings} 
 \usepackage{float}
+\usepackage{enumitem}
 
 % 1.5 line spacing
 \setstretch{1.5}
 
-\title{Design Process of Room Temperature Monitor} \author{Giacomo Cappelletto\\ BU ID:
-U91023753} \date{04/28/2025}  % leave empty to omit date
-
+\title{Design Process of Room Temperature Monitor} \author{Giacomo Cappelletto\\ BU ID: U91023753} % leave empty to omit date
+\date{}
 \begin{document} \maketitle
 
 \section{Summary}
@@ -65,7 +65,7 @@ monitoring tool.
 \section{Design elements} Explain your design decisions. Address each of the
 following:
 
-\begin{enumerate}
+\begin{enumerate}[label=\Alph*.]
 	\item \textbf{List Of Used Components}
 	      \begin{multicols}{2}
 		      \begin{itemize}
@@ -78,7 +78,7 @@ following:
 			      \item 1 $\times$ $9 V$ Battery
 			      \item 1 $\times$ PLA FDM Printed $9 V$ Battery holder
 			      \item 1 $\times$ Arduino UNO microcontroller
-			      \item 1 $\times$ Alphanumeric $16 \times 2$ I\textsuperscript{2}C LCD with SDA SCL pins
+			      \item 1 $\times$ Alphanumeric $16 \times 2$ I\textsuperscript{2}C LCD with IIC
 			      \item 1 $\times$ TMP36 Analog Temperature sensor
 			      \item 1 $\times$ Piezo Capsule Buzzer
 			      \item 1 $\times$ Red LED
@@ -95,28 +95,40 @@ following:
 	\item \textbf{Precision measurements}
 	      \begin{table}[H]
 		      \centering
-		      \caption{Relevant dimensions of major components (see Appendix A for Figures)}
+		      \caption{Relevant dimensions of major components (see Appendix A for Figures 2-8)}
 		      \label{tab:dim_condensed}
 		      \begin{tabular}{l c c c c c}
 			      \toprule
-			      Item                                               & Fig.\ ID & W [mm] & L [mm] & H [mm] & $\O$ [mm] \\
+			      Item                                               & Fig.\ ID                & W [mm] & L [mm] & H [mm] & $\O$ [mm] \\
 			      \midrule
-			      Injection Mold ABS Enclosure (Bottom \& Lid)       & 1        & 100    & 200    & 50     & -         \\
-			      Transparent Acrylic Laser-Cut Base Plate           & 2        & 200    & 100    & 3      & -         \\
-			      9 V Battery \& PLA-Printed Holder                  & 3        & 60     & 30     & 20     & -         \\
-			      Arduino UNO Microcontroller                        & 4        & 70     & 50     & 15     & -         \\
-			      Alphanumeric $16\times2$ I\textsuperscript{2}C LCD & 5        & 80     & 35     & 15     & -         \\
-			      TMP36 Analog Temperature Sensor                    & 6        & -      & -      & 5      & 3         \\
-			      Piezo Capsule Buzzer                               & 7        & -      & -      & -      & 10        \\
-			      LEDs (Red \& Green)                                & 8        & -      & -      & 5      & 5         \\
-			      2-Way Switch                                       & 9        & 10     & 20     & 15     & -         \\
+			      Full Assembly                                      & \ref{fig:full_assembly} & 123,8  & 146,1  & 63,1   & -         \\
+
+			      Injection Mold ABS Enclosure Bottom                & \ref{fig:1-c}           & 119,0  & 146,1  & 57,4   & -         \\
+			      Injection Mold ABS Enclosure Lid                   & \ref{fig:2-c}           & 119,0  & 120,1  & 5,5    & -         \\
+			      Transparent Acrylic Laser-Cut Base Plate           & \ref{fig:3-c}           & 95,0   & 96,1   & 9,0    & -         \\
+			      Arduino UNO Microcontroller                        & \ref{fig:4-c}                       & 53,3   & 74,9   & 15,2   & -         \\
+			      9 V Battery and PLA-Printed Holder                  & \ref{fig:5-c}                       & 29,7   & 48,8   & 21,0   & -         \\
+			      Alphanumeric $16\times2$ I\textsuperscript{2}C LCD & \ref{fig:6-c}                       & 36,0   & 80,0   & 22,0   & -         \\
+			      TMP36 Analog Temperature Sensor                    & \ref{fig:7-c}                       & -      & -      & 14,6   & 2,5       \\
+			      Piezo Capsule Buzzer                               & \ref{fig:8-c}                       & -      & -      & 21,3   & 20,0      \\
+			      LEDs (Red and Green)                                & \ref{fig:8-c}                       & -      & -      & 36,5   & 3,0       \\
+			      2-Way Switch                                       & \ref{fig:8-c}                       & 14,8   & 20,8   & 23,3   & -         \\
 			      \bottomrule
 		      \end{tabular}
 	      \end{table}
-	\item \textbf{CAD drawings}\\ Include a screenshot of your final assembly.
+	\item \textbf{CAD drawings}
 	      \begin{figure}[H] \centering
-		      % \includegraphics[width=0.7\textwidth]{cad_assembly.png}
-		      \caption{CAD assembly of the prototype.} \end{figure}
+		      \includegraphics[width=0.7\textwidth]{cad/c-c.jpeg}
+		      \caption{CAD assembly of the prototype.}
+		      \label{fig:full_assembly}
+	      \end{figure}
+
+
+	      \begin{center}
+		      \textit{Figures 2-8 in Appendix (see Section \ref{sec:appendixA})}
+	      \end{center}
+
+
 
 	\item \textbf{Prototype photographs}\\ Top view of actual prototype, with and
 	      without lid, powered on.  \begin{figure}[H] \centering
@@ -144,14 +156,129 @@ following:
 	      capacity, expected runtime, and external power options.
 
 	\item \textbf{Arduino code}\\ Provide the code listing used in your design.
-	      \begin{lstlisting}[language=C, caption={Arduino sketch for temperature
-monitoring}]
-// Example placeholder code
-void setup() { Serial.begin(9600);
-// initialization...
-} void loop() { float temp = readTemperature(); Serial.println(temp);
-// control LEDs...
-delay(1000); } \end{lstlisting}
+	      \begin{lstlisting}[language=C, caption={Arduino sketch for running average temperature monitoring}]
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+const int TEMP_PIN = A0;
+const int RED_LED_PIN = 3;
+const int BUZZER_PIN = 5;
+const float TEMP_THRESHOLD_C = 26.0;
+const int LCD_ADDR = 0x27;
+const int LCD_COLS = 16;
+const int LCD_ROWS = 2;
+const unsigned long READ_INTERVAL_MS = 1000;
+const int BUZZER_FREQ_HZ = 1000;
+const int NUM_SAMPLES = 5; // sample size (NUM_SAMPLES * READ_INTERVAL_MS) is 5s
+
+float TempC = 0.0;
+float TempF = 0.0;
+bool isAlarmActive = false;
+unsigned long lastReadTime = 0;
+float tempSumC = 0.0;
+int sampleCount = 0;
+
+LiquidCrystal_I2C lcd(LCD_ADDR, LCD_COLS, LCD_ROWS);
+
+void setup() {
+	lcd.init();
+	lcd.backlight();
+	lcd.setCursor(3, 0);
+	lcd.print("Starting...");
+
+	pinMode(RED_LED_PIN, OUTPUT);
+	pinMode(BUZZER_PIN, OUTPUT);
+
+	digitalWrite(RED_LED_PIN, LOW);
+	noTone(BUZZER_PIN);
+
+	delay(1500);
+	lcd.clear();
+	printNormalLabels();
+}
+
+void loop() {
+	unsigned long currentTime = millis();
+	if (currentTime - lastReadTime >= READ_INTERVAL_MS) {
+		lastReadTime = currentTime;
+
+		int TADC = analogRead(TEMP_PIN);
+		float VTEMP = 5.0 * (TADC / 1024.0);
+		float newTempC = 100.0 * (VTEMP - 0.5);
+
+		// running average filter for smooth temperature displaying
+		tempSumC -= TempC;
+		tempSumC += newTempC;
+		TempC = tempSumC / NUM_SAMPLES;
+		TempF = TempC * 9.0 / 5.0 + 32.0;
+
+		bool shouldAlarmBeActive = (TempC > TEMP_THRESHOLD_C);
+
+		if (shouldAlarmBeActive != isAlarmActive) {
+			isAlarmActive = shouldAlarmBeActive;
+			lcd.clear();
+
+			if (isAlarmActive) {
+				digitalWrite(RED_LED_PIN, HIGH);
+				tone(BUZZER_PIN, BUZZER_FREQ_HZ);
+
+				lcd.setCursor(0, 0);  // Top left
+				lcd.print("!!");
+
+				lcd.setCursor(5, 0);
+				lcd.print(TempC, 1);
+				lcd.print((char)223);
+				lcd.print("C");
+
+				lcd.setCursor(14, 0); // Top right (leave space)
+				lcd.print("!!");
+
+				lcd.setCursor(0, 1); // Bottom Left
+				lcd.print("!!");
+
+				lcd.setCursor(5, 1);
+				lcd.print(TempF, 1);
+				lcd.print((char)223);
+				lcd.print("F");
+
+				lcd.setCursor(14, 1); // Bottom Right (leave space)
+				lcd.print("!!");
+			} else {
+				digitalWrite(RED_LED_PIN, LOW);
+				noTone(BUZZER_PIN);
+				printNormalLabels();
+				updateNormalDisplay();
+			}
+		} else {
+			if (!isAlarmActive) {
+				updateNormalDisplay();
+			}
+		}
+	}
+}
+
+void printNormalLabels() {
+	lcd.setCursor(9, 0);
+	lcd.print((char)223);
+	lcd.print("C");
+	lcd.setCursor(9, 1);
+	lcd.print((char)223);
+	lcd.print("F");
+}
+
+void updateNormalDisplay() {
+	lcd.setCursor(5, 0);
+	lcd.print(TempC, 1);
+	if (TempC < 10.0 && TempC >= 0.0) lcd.print(" ");
+	if (TempC < 0.0 && TempC > -10.0) lcd.print(" ");
+
+	lcd.setCursor(5, 1);
+	lcd.print(TempF, 1);
+	if (TempF < 100.0 && TempF >= 10.0) lcd.print(" ");
+	else if (TempF < 10.0 && TempF >= 0.0) lcd.print("  ");
+	else if (TempF < 0.0 && TempF > -10.0) lcd.print(" ");
+}
+\end{lstlisting}
 
 
 	\item \textbf{Prototype specifications}\\ List: \begin{itemize} \item Voltage of
@@ -168,11 +295,60 @@ delay(1000); } \end{lstlisting}
 	      thermometers \item Limitations and recommendations for future work (battery
 	      life, size, weight, etc.) \item Highlight usefulness of the design \end{itemize}
 
-\appendix \section{Supporting Materials}
+\appendix
+
+\section{Detail CAD Drawings of Components} \label{sec:appendixA}
 % Detailed sketches or CAD technical drawings that are too long for the main
 % body.
 \noindent
-% \dots
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/1-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:1-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/2-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:2-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/3-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:3-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/4-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:4-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/5-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:5-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/6-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:6-c}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+	\includegraphics[width=0.7\textwidth]{cad/7-c.jpeg}
+	\caption{Full assembly of the prototype.}
+	\label{fig:7-c}
+\end{figure}
+
 
 \end{document}
-
