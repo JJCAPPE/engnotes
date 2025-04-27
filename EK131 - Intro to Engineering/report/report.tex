@@ -1,17 +1,22 @@
-\documentclass[10pt]{article} \usepackage[margin=1in]{geometry}
-\usepackage{setspace} \usepackage{graphicx} \usepackage{caption}
-\usepackage{subcaption} \usepackage{array} \usepackage{booktabs}
-\usepackage{listings} \usepackage{float}
+\documentclass[10pt]{article} 
+\usepackage[margin=0.5in]{geometry}
+\usepackage{setspace} 
+\usepackage{graphicx} 
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{subcaption} 
+\usepackage{array} 
+\usepackage{booktabs}
+\usepackage{listings} 
+\usepackage{float}
 
 % 1.5 line spacing
 \setstretch{1.5}
 
-\title{Design process of room temperature monitor} \author{Your Name \\ BU ID:
-Your BU ID} \date{}  % leave empty to omit date
+\title{Design Process of Room Temperature Monitor} \author{Giacomo Cappelletto\\ BU ID:
+U91023753} \date{04/28/2025}  % leave empty to omit date
 
 \begin{document} \maketitle
-
-% REMINDER: Report should be no more than 5 pages.
 
 \section{Summary}
 % Quarter- to half-page.  Briefly state what you did, how you did it, main
@@ -20,49 +25,94 @@ Your BU ID} \date{}  % leave empty to omit date
 \noindent
 % \dots
 
-\section{Introduction} Maintaining a stable indoor temperature is key to both
-comfort and energy efficiency. Commercial thermostats can be costly and rigid,
-so this project explores a low-cost, modular alternative. We build a room
-temperature monitor using a TMP36 sensor, a $16\times2$ I\textsuperscript{2}C
-LCD, and an Arduino Uno, powered by a $9\,$V battery, with green and red LEDs
-(with $1\,\mathrm{k}\Omega$ and $220\,\Omega$ resistors) and a buzzer for status
-indication.
+\section{Introduction}
 
-The aims are to mimic basic thermostat functions using components we explored
-during the semeter and to gain hands-on experience in electronics assembly,
-firmware development, and CAD design. We modeled and fabricated a enclosure,
-lid, battery holder, and base plate in CAD (OnShape), wiring everything with
-$22$ AWG and female-to-female jumper cables for the I\textsuperscript{2}C
-monitor.
+Maintaining a comfortable and stable indoor temperature
+is crucial to modern building management and directly impacts both energy
+consumption as well as the wellbeing of those who occupy it. Traditional thermostats regulate heating and
+cooling systems based on set threshold temperatures, but commercial units can be costly
+and therefore inaccessible for small-scale or experimental applications. In response to
+growing concerns over energy efficiency and sustainability, it is important to
+explore low-cost, modular solutions that allow fine-grained temperature
+monitoring and control in real world environments.
 
-This report details the component selection, mechanical design, circuit
-assembly, and code implementation, and evaluates the system's performance in
-achieving the design objectives.
+This project addresses the need for an accessible, do-it-yourself room
+temperature monitoring system by integrating a TMP36 analog temperature sensor,
+a $16\times 2$ I\textsuperscript{2}C LCD, and an Arduino UNO microcontroller. By
+automating the measurement and display of ambient temperature, the device can
+inform control actions in the event loop (such as triggering a fan or heater),
+enabling users to avoid over-adjusting the temperature in their spaces, reducing
+unnecessary energy use. A $9\,$V battery, switch, green and red LEDs, and a
+buzzer provide basic power, status indication, and alerts without reliance on
+wall plug electricity.
+
+This project has two main aims: first, to replicate the core functionality of a
+simple thermostat using components and techniques covered in our course. Second,
+to develop skills in assembling electronic hardware, writing
+microcontroller code (in C++), and designing enclosures in CAD. For that part of the project
+enclosure, lid, battery holder, and internal baseplate were modeled and
+fabricated to store and organize all components, wired using $22$ AWG and
+female-to-female jumper cables for I\textsuperscript{2}C data connections.
+
+The purpose of this report is to document the design process, from component
+selection and design to circuit assembly and firmware development, and
+to evaluate the system's performance against expected objectives. By following
+the design methodology outlined here, we demonstrate how simple and
+easily sourceable parts can be combined into a cohesive temperature
+monitoring tool.
+
 
 \section{Design elements} Explain your design decisions. Address each of the
 following:
 
 \begin{enumerate}
-	\item \textbf{List all components used in your design}
-	      electronic components, hardware, etc.  \item \textbf{Precision measurements}
-	      Make a table of relevant dimensions (see example below).  
-		  \begin{table}[H]
-		      \centering \caption{Relevant dimensions of all components} 
-			  \begin{tabular}{l l c c c c}
-				\toprule
-				Item & Sketch identification & W [mm] & L [mm] & H [mm] & Diameter [mm] \\
-				\midrule
-				ABS enclosure        &                  &        &        &        &               \\
-				Arduino Board        &                  &        &        &        &               \\
-				Switch               &                  &        &        &        &               \\
-				LCD 2X16             &                  &        &        &        &               \\
-				Buzzer               &                  &        &        &        &               \\
-				Temperature sensor   &                  &        &        &        &               \\
-				LED                  &                  &        &        &        &               \\
-				\bottomrule
-			  \end{tabular} 
-			\end{table}
-
+	\item \textbf{List Of Used Components}
+	      \begin{multicols}{2}
+		      \begin{itemize}
+			      \item 1 $\times$ Injection Mold ABS Enclosure (Bottom and Lid)
+			      \item 1 $\times$ Transparent Acrylic Lase Cut Base Plate
+			      \item 8 $\times$ Polycarbonate Flat Top Phillips Screws
+			      \item 8 $\times$ Polycarbonate Bolts
+			      \item 8 $\times$ Metal Round Head Phillips Screws
+			      \item 8 $\times$ Plastic 0.5 mm spacers
+			      \item 1 $\times$ $9 V$ Battery
+			      \item 1 $\times$ PLA FDM Printed $9 V$ Battery holder
+			      \item 1 $\times$ Arduino UNO microcontroller
+			      \item 1 $\times$ Alphanumeric $16 \times 2$ I\textsuperscript{2}C LCD with SDA SCL pins
+			      \item 1 $\times$ TMP36 Analog Temperature sensor
+			      \item 1 $\times$ Piezo Capsule Buzzer
+			      \item 1 $\times$ Red LED
+			      \item 1 $\times$ Green LED
+			      \item 1 $\times$ 2 way switch
+			      \item 2 $\times$ Female-Female $4''$ jumper wires
+			      \item 15 $\times$ $6''$ 22 AWG Wires (White and Red)
+			      \item 1 $\times$ $220 \Omega$ resistor
+			      \item 1 $\times$ $1 k\Omega$ resistor
+			      \item 2 $\times$ Twist Nut Caps
+			      \item 2 $\times$ Spade Connectors
+		      \end{itemize}
+	      \end{multicols}
+	\item \textbf{Precision measurements}
+	      \begin{table}[H]
+		      \centering
+		      \caption{Relevant dimensions of major components (see Appendix A for Figures)}
+		      \label{tab:dim_condensed}
+		      \begin{tabular}{l c c c c c}
+			      \toprule
+			      Item                                               & Fig.\ ID & W [mm] & L [mm] & H [mm] & $\O$ [mm] \\
+			      \midrule
+			      Injection Mold ABS Enclosure (Bottom \& Lid)       & 1        & 100    & 200    & 50     & -         \\
+			      Transparent Acrylic Laser-Cut Base Plate           & 2        & 200    & 100    & 3      & -         \\
+			      9 V Battery \& PLA-Printed Holder                  & 3        & 60     & 30     & 20     & -         \\
+			      Arduino UNO Microcontroller                        & 4        & 70     & 50     & 15     & -         \\
+			      Alphanumeric $16\times2$ I\textsuperscript{2}C LCD & 5        & 80     & 35     & 15     & -         \\
+			      TMP36 Analog Temperature Sensor                    & 6        & -      & -      & 5      & 3         \\
+			      Piezo Capsule Buzzer                               & 7        & -      & -      & -      & 10        \\
+			      LEDs (Red \& Green)                                & 8        & -      & -      & 5      & 5         \\
+			      2-Way Switch                                       & 9        & 10     & 20     & 15     & -         \\
+			      \bottomrule
+		      \end{tabular}
+	      \end{table}
 	\item \textbf{CAD drawings}\\ Include a screenshot of your final assembly.
 	      \begin{figure}[H] \centering
 		      % \includegraphics[width=0.7\textwidth]{cad_assembly.png}
