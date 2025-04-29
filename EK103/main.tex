@@ -3637,7 +3637,7 @@ If $A^T A$ is invertible, then
 	If $A$ is an $m \times k$ matrix and has $k$ independent columns, then $A^T A$ is invertible.
 }
 
-\section*{Proof of Invertibility of $A^T A$}
+\section{Proof of Invertibility of $A^T A$}
 
 
 \qs{Why is $A^TA$ invertible when $A$ has independent columns?}{
@@ -3662,7 +3662,7 @@ Therefore, $\text{Nul}(A^T A) = \text{Nul}(A)$.
 }
 
 
-\section*{Parabola Fitting}
+\section{Parabola Fitting}
 
 Consider the problem of finding a parabola that passes through the points $(-1, 5)$, $(0, 4)$, and $(5, 6)$. We are given that the general form of a parabola is $y = ax^2 + bx + c$. Our goal is to determine the coefficients $a$, $b$, and $c$.
 
@@ -3852,5 +3852,411 @@ Yes.
 		\item Matrix $C$ is both orthogonal and orthonormal because the columns are orthogonal and have a norm of 1. This matrix represents a rotation in the plane.
 	\end{itemize}
 }
+
+\section{Application: Near-Infrared (NIR) Spectroscopy for Quality Control of Mixtures}
+
+\subsection{Context: Analyzing Mixtures}
+Near-Infrared (NIR) spectroscopy is a technique used to analyze the composition of materials. In this example, it's applied to determine the relative amounts of three components (Casein, Lactose, Sucrose) in various mixture samples. A total of 231 different mixture samples were prepared and analyzed.
+
+\begin{center}
+	\begin{tikzpicture}[scale=1.5]
+		\coordinate (C) at (90:2); % Casein 100%
+		\coordinate (L) at (210:2); % Lactose 100%
+		\coordinate (S) at (330:2); % Sucrose 100%
+
+		\draw (L) -- (C) -- (S) -- cycle;
+
+		\node[above] at (C) {Casein 100\%};
+		\node[below left] at (L) {Lactose 100\%};
+		\node[below right] at (S) {Sucrose 100\%};
+
+		% Grid lines (simplified representation)
+		\foreach \i in {1,...,9} {
+				\draw[gray, thin, densely dotted] ($(L)!\i/10!(C)$) -- ($(L)!\i/10!(S)$);
+				\draw[gray, thin, densely dotted] ($(C)!\i/10!(L)$) -- ($(C)!\i/10!(S)$);
+				\draw[gray, thin, densely dotted] ($(S)!\i/10!(L)$) -- ($(S)!\i/10!(C)$);
+			}
+		% Sample points (illustrative)
+		\foreach \x in {0.1, 0.2, ..., 0.9} {
+				\foreach \y in {0.1, 0.2, ..., 0.9} {
+						\pgfmathsetmacro{\z}{1-\x-\y}
+						\ifdim \z pt > 0.01pt % Check if z > 0 approximately
+							\ifdim \z pt < 0.99pt % Check if z < 1 approximately
+								\coordinate (P) at (${\x}*(C) + {\y}*(L) + {\z}*(S)$);
+								\fill (P) circle (0.5pt);
+							\fi
+						\fi
+					}
+			}
+		\node[below, text width=8cm, align=center] at (0,-2.5) {Ternary diagram illustrating the composition space of the three components. Each point inside the triangle represents a unique mixture composition. A total of 231 mixture samples were analyzed.};
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Data Representation: Spectra as Vectors}
+Each mixture sample yields a spectrum when analyzed by NIR spectroscopy. This spectrum measures the absorbance (or reflectance) of light at various wavelengths. In this specific case, measurements are taken at 700 distinct wavelengths.
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+				width=10cm,
+				height=6cm,
+				xlabel={Wavelength (nm)},
+				ylabel={Absorbance (arbitrary units)},
+				xmin=1100, xmax=2500,
+				ymin=-0.05, ymax=0.11,
+				grid=major,
+				tick label style={font=\tiny},
+				label style={font=\small},
+				title style={yshift=-1ex},
+				title={Sample NIR Spectrum},
+			]
+			% Approximate plot based on the image
+			\addplot[smooth, blue] coordinates {
+					(1100, 0.01) (1200, 0.02) (1300, 0.005) (1400, 0.04) (1450, 0.09)
+					(1500, 0.05) (1600, 0.03) (1700, 0.06) (1750, 0.01) (1800, -0.01)
+					(1900, 0.08) (1950, 0.10) (2000, 0.07) (2100, 0.01) (2200, 0.03)
+					(2300, 0.05) (2400, 0.02) (2500, 0.00)
+				};
+		\end{axis}
+		\node[below, text width=10cm, align=center] at (5,-3.5) {Example NIR spectrum for one mixture sample. The horizontal axis represents the wavelength of light, and the vertical axis represents the measured absorbance. Data is collected at 700 discrete wavelengths.};
+	\end{tikzpicture}
+\end{center}
+
+Mathematically, we can represent the spectrum of a single sample as a vector. Since there are 700 measurements (one for each wavelength), each spectrum corresponds to a vector in a 700-dimensional space, $\mathbb{R}^{700}$.
+
+\dfn{Spectrum Vector}{
+	Let $\vec{s}$ be the vector representing a single NIR spectrum. The components of $\vec{s}$ are the absorbance values at the 700 measured wavelengths:
+	\[
+		\vec{s} = \begin{bmatrix} s_1 \\ s_2 \\ \vdots \\ s_{700} \end{bmatrix} \in \mathbb{R}^{700}
+	\]
+	where $s_i$ is the absorbance at the $i$-th wavelength.
+}
+
+\nt{
+	Often, raw spectral data is pre-processed. A common step is mean-centering, where the average spectrum (calculated across all samples) is subtracted from each individual spectrum. This results in data where the mean of each feature (wavelength) across all samples is zero. The notes mention replacing data with a mean of zero, implying mean-centering might have been performed.
+}
+
+The entire dataset consists of 231 such vectors, which can be organized into a matrix.
+
+\dfn{Data Matrix}{
+	Let $A$ be the matrix containing all 231 sample spectra. Each row of $A$ corresponds to the spectrum vector of one sample.
+	\[
+		A = \begin{bmatrix} \longleftarrow & \vec{s}_1^T & \longrightarrow \\ \longleftarrow & \vec{s}_2^T & \longrightarrow \\ & \vdots & \\ \longleftarrow & \vec{s}_{231}^T & \longrightarrow \end{bmatrix}
+	\]
+	Here, $\vec{s}_i^T$ denotes the row vector representing the spectrum of the $i$-th sample. The matrix $A$ has dimensions $231 \times 700$.
+}
+
+\subsection{Goal: Principal Components Analysis (PCA)}
+The primary goal is to analyze this high-dimensional dataset ($231$ points in $\mathbb{R}^{700}$) using Principal Components Analysis (PCA). PCA aims to find the directions (principal components) in the 700-dimensional space along which the data varies the most. These directions can reveal underlying patterns, reduce dimensionality, and help visualize the relationships between the different mixture samples.
+
+\nt{
+	PCA finds a new set of orthogonal basis vectors (the principal components) for the data space. The first principal component (PC1) is the direction of maximum variance. The second principal component (PC2) is the direction of maximum variance among all directions orthogonal to PC1, and so on.
+}
+
+We will build up the concept of PCA, starting with a simple geometric interpretation.
+
+\section{Part One: Geometric Interpretation (Single Spectrum)}
+
+\qs{Maximizing Projection}{
+	Given a single spectrum vector $\vec{s} \in \mathbb{R}^{700}$, how can we find a direction, represented by a unit vector $\vec{v} \in \mathbb{R}^{700}$ (meaning $||\vec{v}||^2 = \vec{v}^T\vec{v} = 1$), such that the projection of $\vec{s}$ onto $\vec{v}$ is maximized?
+}
+
+\sol
+Let's recall the definition of the projection of a vector $\vec{s}$ onto a vector $\vec{v}$.
+
+\dfn{Projection of \(\vec{s}\) onto \(\vec{v}\)}{
+The scalar projection of $\vec{s}$ onto $\vec{v}$ is given by $\text{comp}_{\vec{v}} \vec{s} = \frac{\vec{s} \cdot \vec{v}}{||\vec{v}||}$.
+The vector projection of $\vec{s}$ onto $\vec{v}$ is given by $\text{proj}_{\vec{v}} \vec{s} = \left(\frac{\vec{s} \cdot \vec{v}}{||\vec{v}||^2}\right) \vec{v}$.
+The length (norm) of the vector projection is $||\text{proj}_{\vec{v}} \vec{s}|| = \left| \frac{\vec{s} \cdot \vec{v}}{||\vec{v}||^2} \right| ||\vec{v}|| = \frac{|\vec{s} \cdot \vec{v}|}{||\vec{v}||}$.
+}
+
+We are looking for a unit vector $\vec{v}$ ($||\vec{v}||=1$) that maximizes the length (or magnitude) of the projection, which simplifies to maximizing $|\vec{s} \cdot \vec{v}|$.
+
+Recall the geometric definition of the dot product:
+\[
+	\vec{s} \cdot \vec{v} = ||\vec{s}|| \, ||\vec{v}|| \cos \theta
+\]
+where $\theta$ is the angle between the vectors $\vec{s}$ and $\vec{v}$.
+
+Since we require $\vec{v}$ to be a unit vector, $||\vec{v}||=1$. Therefore:
+\[
+	\vec{s} \cdot \vec{v} = ||\vec{s}|| \cos \theta
+\]
+To maximize the projection length $|\vec{s} \cdot \vec{v}| = ||\vec{s}|| |\cos \theta|$, we need to maximize $|\cos \theta|$. The maximum value of $|\cos \theta|$ is 1, which occurs when $\theta = 0$ or $\theta = \pi$.
+\begin{itemize}
+	\item If $\theta = 0$, $\vec{v}$ points in the same direction as $\vec{s}$. Then $\vec{v} = \frac{\vec{s}}{||\vec{s}||}$, and the projection length is $||\vec{s}|| \cos 0 = ||\vec{s}||$.
+	\item If $\theta = \pi$, $\vec{v}$ points in the opposite direction of $\vec{s}$. Then $\vec{v} = -\frac{\vec{s}}{||\vec{s}||}$, and the projection length is $||\vec{s}|| |\cos \pi| = ||\vec{s}||$.
+\end{itemize}
+In both cases, the maximum projection length is $||\vec{s}||$. The direction $\vec{v}$ that maximizes this projection is aligned with the vector $\vec{s}$ itself.
+
+\begin{center}
+	\begin{tikzpicture}
+		\coordinate (O) at (0,0);
+		\coordinate (S) at (4,1);
+		\coordinate (V) at (1,0); % Unit vector v along x-axis for simplicity
+		\coordinate (P) at ($(O)!(O)!(V)$); % Origin
+		\coordinate (P) at ($(O)!(S)!(V)$); % Projection of S onto V direction (x-axis)
+
+		% Draw vectors
+		\draw[-latex, thick, blue] (O) -- (S) node[above right] {$\vec{s}$};
+		\draw[-latex, thick, red] (O) -- (V) node[below right] {$\vec{v}$ ($||\vec{v}||=1$)};
+
+		% Draw projection
+		\draw[dashed, gray] (S) -- (P);
+		\draw[-latex, thick, green] (O) -- (P) node[below] {Projection of $\vec{s}$ onto $\vec{v}$};
+
+		% Angle theta
+		\draw pic[draw, angle radius=1cm, angle eccentricity=1.3, "$\theta$"] {angle = V--O--S};
+
+		% Labels
+		\node at (2,-1) {Goal: Maximize length of green vector by choosing direction of red vector $\vec{v}$};
+		\node at (2,-1.5) {Maximum occurs when $\theta=0$, i.e., $\vec{v}$ is parallel to $\vec{s}$.};
+	\end{tikzpicture}
+\end{center}
+
+\nt{
+	For a single data point (vector) $\vec{s}$, the direction that "best represents" it or captures its magnitude is simply its own direction. PCA becomes more interesting when we consider multiple data points.
+}
+
+\section{Part Two: Generalization to Two Spectra}
+
+Now, let's consider two spectrum vectors, $\vec{s}_1$ and $\vec{s}_2$, both in $\mathbb{R}^{700}$.
+
+\qs{Maximizing Sum of Squared Projections}{
+	Find a unit vector $\vec{v} \in \mathbb{R}^{700}$ ($||\vec{v}||=1$) such that the sum of the squared lengths of the projections of $\vec{s}_1$ and $\vec{s}_2$ onto $\vec{v}$ is maximized.
+}
+
+\sol
+The length of the projection of $\vec{s}_1$ onto the unit vector $\vec{v}$ is $|\vec{s}_1 \cdot \vec{v}|$.
+The length of the projection of $\vec{s}_2$ onto the unit vector $\vec{v}$ is $|\vec{s}_2 \cdot \vec{v}|$.
+
+We want to maximize the sum of the squares of these lengths:
+\[
+	L = (|\vec{s}_1 \cdot \vec{v}|)^2 + (|\vec{s}_2 \cdot \vec{v}|)^2 = (\vec{s}_1 \cdot \vec{v})^2 + (\vec{s}_2 \cdot \vec{v})^2
+\]
+We can express the dot products using matrix notation. Let's define a matrix $A$ where the rows are the (transposed) spectrum vectors:
+\[
+	A = \begin{bmatrix} \vec{s}_1^T \\ \vec{s}_2^T \end{bmatrix}
+\]
+This is a $2 \times 700$ matrix. Now consider the product $A\vec{v}$:
+\[
+	A\vec{v} = \begin{bmatrix} \vec{s}_1^T \\ \vec{s}_2^T \end{bmatrix} \vec{v} = \begin{bmatrix} \vec{s}_1^T \vec{v} \\ \vec{s}_2^T \vec{v} \end{bmatrix} = \begin{bmatrix} \vec{s}_1 \cdot \vec{v} \\ \vec{s}_2 \cdot \vec{v} \end{bmatrix}
+\]
+The resulting vector, let's call it $\vec{q} = A\vec{v}$, is a $2 \times 1$ vector (in $\mathbb{R}^2$) whose components are the scalar projections of $\vec{s}_1$ and $\vec{s}_2$ onto $\vec{v}$.
+
+Now, let's look at the squared norm (squared length) of $\vec{q}$:
+\[
+	||\vec{q}||^2 = ||A\vec{v}||^2 = \left\| \begin{bmatrix} \vec{s}_1 \cdot \vec{v} \\ \vec{s}_2 \cdot \vec{v} \end{bmatrix} \right\|^2 = (\vec{s}_1 \cdot \vec{v})^2 + (\vec{s}_2 \cdot \vec{v})^2
+\]
+This is exactly the quantity $L$ we want to maximize!
+
+So, the problem is equivalent to maximizing $||A\vec{v}||^2$ subject to the constraint $||\vec{v}||=1$.
+
+Let's expand $||A\vec{v}||^2$ using matrix transpose properties:
+\[
+	||A\vec{v}||^2 = (A\vec{v})^T (A\vec{v}) = (\vec{v}^T A^T) (A\vec{v}) = \vec{v}^T (A^T A) \vec{v}
+\]
+Let $C = A^T A$.
+\[
+	A^T = \begin{bmatrix} \vec{s}_1 & \vec{s}_2 \end{bmatrix} \quad (700 \times 2 \text{ matrix})
+\]
+\[
+	C = A^T A = \begin{bmatrix} \vec{s}_1 & \vec{s}_2 \end{bmatrix} \begin{bmatrix} \vec{s}_1^T \\ \vec{s}_2^T \end{bmatrix} \quad (\text{This is incorrect dimensions in notes, let's re-evaluate } A^TA)
+\]
+Let's re-check the dimensions.
+$A$ is $2 \times 700$.
+$A^T$ is $700 \times 2$.
+$\vec{v}$ is $700 \times 1$.
+$A\vec{v}$ is $2 \times 1$.
+$A^T A$ is $(700 \times 2) \times (2 \times 700) = 700 \times 700$.
+$\vec{v}^T$ is $1 \times 700$.
+$\vec{v}^T (A^T A) \vec{v}$ is $(1 \times 700) \times (700 \times 700) \times (700 \times 1) = 1 \times 1$ (a scalar), which is correct.
+
+The matrix $C = A^T A$ is a $700 \times 700$ matrix. It is constructed as:
+\[
+	C = A^T A = \begin{bmatrix} \vec{s}_1 & \vec{s}_2 \end{bmatrix} \begin{bmatrix} \vec{s}_1^T \\ \vec{s}_2^T \end{bmatrix} = \vec{s}_1 \vec{s}_1^T + \vec{s}_2 \vec{s}_2^T \quad (\text{Still incorrect, this is outer product sum})
+\]
+Let's write $A^T$ and $A$ properly:
+\[
+	A^T = \begin{bmatrix} | & | \\ \vec{s}_1 & \vec{s}_2 \\ | & | \end{bmatrix} \quad (700 \times 2)
+\]
+\[
+	A = \begin{bmatrix} \text{---} & \vec{s}_1^T & \text{---} \\ \text{---} & \vec{s}_2^T & \text{---} \end{bmatrix} \quad (2 \times 700)
+\]
+The product $C = A^T A$ is indeed a $700 \times 700$ matrix. The $(i, j)$-th element of $C$ is the dot product of the $i$-th column of $A^T$ and the $j$-th row of $A$. This doesn't seem right. Let's use the definition $C = A^T A$.
+
+The problem is now:
+Maximize $\vec{v}^T C \vec{v}$ subject to $||\vec{v}|| = 1$, where $C = A^T A$.
+
+This is a standard problem in linear algebra related to quadratic forms and eigenvalues.
+
+\section{Part Three: Generalization to Multiple Spectra}
+
+We now extend the idea to the full dataset of $m=231$ spectra, $\{\vec{s}_1, \vec{s}_2, \dots, \vec{s}_{231}\}$, each in $\mathbb{R}^{700}$.
+
+\qs{Maximizing Total Sum of Squared Projections}{
+	Let $A$ be the $231 \times 700$ data matrix where the $i$-th row is $\vec{s}_i^T$. Find a unit vector $\vec{v} \in \mathbb{R}^{700}$ ($||\vec{v}||=1$) that maximizes the sum of the squared lengths of the projections of all 231 spectra onto $\vec{v}$.
+}
+
+\sol
+The quantity we want to maximize is:
+\[
+	L = \sum_{i=1}^{231} (\text{length of projection of } \vec{s}_i \text{ onto } \vec{v})^2 = \sum_{i=1}^{231} (\vec{s}_i \cdot \vec{v})^2
+\]
+Following the same logic as in Part Two, we define the data matrix $A$:
+\[
+	A = \begin{bmatrix} \longleftarrow & \vec{s}_1^T & \longrightarrow \\ \longleftarrow & \vec{s}_2^T & \longrightarrow \\ & \vdots & \\ \longleftarrow & \vec{s}_{231}^T & \longrightarrow \end{bmatrix} \quad (231 \times 700)
+\]
+Consider the product $A\vec{v}$:
+\[
+	A\vec{v} = \begin{bmatrix} \vec{s}_1^T \\ \vec{s}_2^T \\ \vdots \\ \vec{s}_{231}^T \end{bmatrix} \vec{v} = \begin{bmatrix} \vec{s}_1^T \vec{v} \\ \vec{s}_2^T \vec{v} \\ \vdots \\ \vec{s}_{231}^T \vec{v} \end{bmatrix} = \begin{bmatrix} \vec{s}_1 \cdot \vec{v} \\ \vec{s}_2 \cdot \vec{v} \\ \vdots \\ \vec{s}_{231} \cdot \vec{v} \end{bmatrix} = \vec{q}
+\]
+The vector $\vec{q} = A\vec{v}$ is a $231 \times 1$ vector containing the scalar projections of each spectrum onto $\vec{v}$.
+
+The squared norm of $\vec{q}$ is:
+\[
+	||\vec{q}||^2 = ||A\vec{v}||^2 = \sum_{i=1}^{231} (\vec{s}_i \cdot \vec{v})^2 = L
+\]
+Again, we need to maximize $||A\vec{v}||^2$ subject to $||\vec{v}||=1$.
+As before, we rewrite this using the matrix $C = A^T A$:
+\[
+	||A\vec{v}||^2 = (A\vec{v})^T (A\vec{v}) = \vec{v}^T A^T A \vec{v} = \vec{v}^T C \vec{v}
+\]
+Here, $A^T$ is $700 \times 231$, and $A$ is $231 \times 700$.
+The matrix $C = A^T A$ is a $700 \times 700$ matrix.
+
+The problem is:
+Maximize the quadratic form $\vec{v}^T C \vec{v}$ subject to the constraint $||\vec{v}||^2 = \vec{v}^T\vec{v} = 1$.
+
+\nt{
+	The matrix $C = A^T A$ is closely related to the covariance matrix of the data, especially if the data matrix $A$ is mean-centered. If $A$ is mean-centered, then $C = A^T A$ is proportional to the sample covariance matrix (specifically, $C = (m-1) \times \text{Cov}$, where $m=231$ is the number of samples). Maximizing $\vec{v}^T C \vec{v}$ is equivalent to finding the direction $\vec{v}$ along which the variance of the projected data points ($q_i = \vec{s}_i \cdot \vec{v}$) is maximized.
+}
+
+\section{Mathematical Foundation: Eigenvalue Analysis of C = A\textsuperscript{T}A}
+
+We need to find the unit vector $\vec{v}$ that maximizes $\vec{v}^T C \vec{v}$, where $C = A^T A$. Let's analyze the properties of the matrix $C$.
+
+\subsection{Properties of C}
+\begin{enumerate}
+	\item \textbf{Size:} $C$ is a $700 \times 700$ matrix.
+	\item \textbf{Symmetry:} $C$ is a symmetric matrix.
+	      Proof: $C^T = (A^T A)^T = (A)^T (A^T)^T = A^T A = C$.
+\end{enumerate}
+
+\thm{Spectral Theorem for Symmetric Matrices}{
+	Any real symmetric matrix $C$ (like our $n \times n$ matrix $C=A^T A$, where $n=700$) has the following properties:
+	\begin{itemize}
+		\item All eigenvalues of $C$ are real numbers.
+		\item $C$ is orthogonally diagonalizable. This means there exists an orthogonal matrix $P$ and a diagonal matrix $D$ such that $C = P D P^T$.
+		\item The columns of the matrix $P$ are orthonormal eigenvectors of $C$. Let these eigenvectors be $\vec{v}_1, \vec{v}_2, \dots, \vec{v}_n$.
+		\item The diagonal entries of $D$ are the corresponding eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_n$.
+		      \[
+			      D = \begin{bmatrix} \lambda_1 & 0 & \dots & 0 \\ 0 & \lambda_2 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \lambda_n \end{bmatrix}
+		      \]
+		\item The relationship $C = P D P^T$ implies $C \vec{v}_i = \lambda_i \vec{v}_i$ for each $i=1, \dots, n$.
+		\item Since $P$ is orthogonal, $P^T P = P P^T = I$, and $P^{-1} = P^T$. The eigenvectors $\{\vec{v}_1, \dots, \vec{v}_n\}$ form an orthonormal basis for $\mathbb{R}^n$. That is, $\vec{v}_i \cdot \vec{v}_j = \vec{v}_i^T \vec{v}_j = \delta_{ij}$ (1 if $i=j$, 0 if $i \neq j$). In particular, $||\vec{v}_i||^2 = 1$ for all $i$.
+	\end{itemize}
+}
+
+\subsection{Relationship to the Maximization Problem}
+We want to maximize $\vec{v}^T C \vec{v}$ subject to $||\vec{v}||=1$.
+Let the eigenvalues of $C$ be ordered such that $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_{700}$.
+Let the corresponding orthonormal eigenvectors be $\vec{v}_1, \vec{v}_2, \dots, \vec{v}_{700}$.
+
+Any unit vector $\vec{v} \in \mathbb{R}^{700}$ can be written as a linear combination of the orthonormal basis of eigenvectors:
+\[
+	\vec{v} = c_1 \vec{v}_1 + c_2 \vec{v}_2 + \dots + c_{700} \vec{v}_{700}
+\]
+Since $||\vec{v}||=1$ and the eigenvectors are orthonormal:
+\[
+	||\vec{v}||^2 = \vec{v}^T \vec{v} = (c_1 \vec{v}_1 + \dots + c_{700} \vec{v}_{700})^T (c_1 \vec{v}_1 + \dots + c_{700} \vec{v}_{700}) = \sum_{i=1}^{700} c_i^2 = 1
+\]
+Now let's evaluate the quadratic form $\vec{v}^T C \vec{v}$:
+\begin{align*} \vec{v}^T C \vec{v} &= \vec{v}^T C \left( \sum_{j=1}^{700} c_j \vec{v}_j \right) \\ &= \vec{v}^T \left( \sum_{j=1}^{700} c_j (C \vec{v}_j) \right) \\ &= \vec{v}^T \left( \sum_{j=1}^{700} c_j (\lambda_j \vec{v}_j) \right) \quad (\text{since } C\vec{v}_j = \lambda_j \vec{v}_j) \\ &= \left( \sum_{i=1}^{700} c_i \vec{v}_i \right)^T \left( \sum_{j=1}^{700} c_j \lambda_j \vec{v}_j \right) \\ &= \sum_{i=1}^{700} \sum_{j=1}^{700} c_i c_j \lambda_j (\vec{v}_i^T \vec{v}_j) \end{align*}
+Since $\vec{v}_i^T \vec{v}_j = \delta_{ij}$ (it's 1 if $i=j$ and 0 otherwise), the double summation simplifies:
+\[
+	\vec{v}^T C \vec{v} = \sum_{i=1}^{700} c_i^2 \lambda_i
+\]
+So, we want to maximize $\sum_{i=1}^{700} c_i^2 \lambda_i$ subject to the constraint $\sum_{i=1}^{700} c_i^2 = 1$.
+
+Since $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_{700}$, we have:
+\[
+	\sum_{i=1}^{700} c_i^2 \lambda_i \le \sum_{i=1}^{700} c_i^2 \lambda_1 = \lambda_1 \left( \sum_{i=1}^{700} c_i^2 \right) = \lambda_1 (1) = \lambda_1
+\]
+The maximum value of $\vec{v}^T C \vec{v}$ is $\lambda_1$, the largest eigenvalue of $C$.
+This maximum is achieved when the expression becomes an equality. This happens if all the "weight" $c_i^2$ is on the term corresponding to $\lambda_1$. That is, when $c_1^2 = 1$ and $c_i^2 = 0$ for $i > 1$.
+This means $c_1 = \pm 1$ and $c_i = 0$ for $i > 1$.
+In this case, the vector $\vec{v}$ is $\vec{v} = (\pm 1) \vec{v}_1 + 0 + \dots + 0 = \pm \vec{v}_1$.
+
+Therefore, the unit vector $\vec{v}$ that maximizes $\vec{v}^T C \vec{v}$ is the eigenvector $\vec{v}_1$ corresponding to the largest eigenvalue $\lambda_1$ (or its negative, $-\vec{v}_1$). This vector $\vec{v}_1$ is the first principal component of the data.
+
+\subsection{Non-negativity of Eigenvalues}
+
+\thm{Eigenvalues of \(A^T A\)}{
+	The eigenvalues of the matrix $C = A^T A$, where $A$ is any real matrix, are always non-negative ($\lambda_i \ge 0$).
+}
+
+\textit{Justification:}
+Let $\lambda_i$ be an eigenvalue of $C$ and $\vec{v}_i$ be the corresponding normalized eigenvector ($||\vec{v}_i||=1$).
+We know $C \vec{v}_i = \lambda_i \vec{v}_i$.
+Substitute $C = A^T A$:
+\[
+	A^T A \vec{v}_i = \lambda_i \vec{v}_i
+\]
+Now, consider the squared norm of the vector $A\vec{v}_i$:
+\[
+	||A\vec{v}_i||^2 = (A\vec{v}_i)^T (A\vec{v}_i)
+\]
+This squared norm must be non-negative, i.e., $||A\vec{v}_i||^2 \ge 0$.
+Let's expand the expression:
+\begin{align*} ||A\vec{v}_i||^2 &= (\vec{v}_i^T A^T) (A\vec{v}_i) \\ &= \vec{v}_i^T (A^T A) \vec{v}_i \\ &= \vec{v}_i^T (C \vec{v}_i) \\ &= \vec{v}_i^T (\lambda_i \vec{v}_i) \quad (\text{using the eigenvalue equation}) \\ &= \lambda_i (\vec{v}_i^T \vec{v}_i) \\ &= \lambda_i ||\vec{v}_i||^2 \end{align*}
+Since the eigenvector $\vec{v}_i$ is normalized, $||\vec{v}_i||^2 = 1$.
+So, we have:
+\[
+	||A\vec{v}_i||^2 = \lambda_i
+\]
+Since $||A\vec{v}_i||^2 \ge 0$, it directly follows that $\lambda_i \ge 0$.
+All eigenvalues of $C = A^T A$ must be non-negative.
+
+\begin{center}
+	\begin{tikzpicture}
+		% Coordinate system
+		\draw[-latex] (-1,0) -- (5,0) node[right] {Value};
+		\draw (0,0.1) -- (0,-0.1) node[below] {0};
+
+		% Eigenvalues
+		\fill (0.5,0) circle (1.5pt) node[above] {$\lambda_{700}$};
+		\fill (1.2,0) circle (1.5pt) node[above] {$\dots$};
+		\fill (2.5,0) circle (1.5pt) node[above] {$\lambda_3$};
+		\fill (3.5,0) circle (1.5pt) node[above] {$\lambda_2$};
+		\fill (4.5,0) circle (1.5pt) node[above] {$\lambda_1$};
+
+		% Arrow indicating non-negative
+		\draw[red, thick, -latex] (4.5, -0.5) .. controls (3,-1.5) and (1,-1) .. (0.1, -0.2);
+		\node[red, rotate=0, anchor=north] at (2.5,-1.5) {All $\lambda_i \ge 0$};
+
+		\node at (2,-2.5) {Schematic representation of the non-negative eigenvalues of $C=A^T A$.};
+	\end{tikzpicture}
+\end{center}
+
+\section{Summary: Finding Principal Components}
+
+Principal Components Analysis (PCA) for a data matrix $A$ (with $m$ samples as rows and $n$ features as columns, here $m=231, n=700$) involves the following steps, based on the analysis above:
+
+\begin{enumerate}
+	\item \textbf{Mean-Center Data (Optional but Recommended):} Subtract the mean of each column (feature/wavelength) from the corresponding column entries in $A$. Let the resulting matrix still be denoted by $A$.
+	\item \textbf{Form the Covariance-Related Matrix:} Calculate $C = A^T A$. This is an $n \times n$ ($700 \times 700$) symmetric matrix. (Alternatively, calculate the actual covariance matrix $\text{Cov} = \frac{1}{m-1} A^T A$).
+	\item \textbf{Find Eigenvalues and Eigenvectors:} Solve the eigenvalue problem for $C$: $C \vec{v} = \lambda \vec{v}$. This yields $n$ eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_n$ (which are all $\ge 0$) and their corresponding eigenvectors $\vec{v}_1, \vec{v}_2, \dots, \vec{v}_n$.
+	\item \textbf{Order Eigenpairs:} Sort the eigenvalues in descending order: $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0$. Reorder the corresponding eigenvectors $\vec{v}_1, \vec{v}_2, \dots, \vec{v}_n$ accordingly. Ensure the eigenvectors are normalized ($||\vec{v}_i||=1$) and mutually orthogonal ($\vec{v}_i \cdot \vec{v}_j = 0$ for $i \neq j$).
+	\item \textbf{Identify Principal Components:}
+	      \begin{itemize}
+		      \item The first principal component (PC1) is the eigenvector $\vec{v}_1$ corresponding to the largest eigenvalue $\lambda_1$. This is the direction in $\mathbb{R}^{700}$ that captures the maximum variance in the data.
+		      \item The second principal component (PC2) is the eigenvector $\vec{v}_2$ corresponding to the second largest eigenvalue $\lambda_2$. This is the direction orthogonal to PC1 that captures the maximum remaining variance.
+		      \item ...and so on. The $k$-th principal component (PCk) is the eigenvector $\vec{v}_k$.
+	      \end{itemize}
+	\item \textbf{Project Data (Optional):} To visualize the data or perform dimensionality reduction, project the original data points (rows of $A$) onto the first few principal components. The coordinates of the $i$-th data point $\vec{s}_i$ in the new PC basis are given by the components of the vector $A \vec{v}_j$ or simply $\vec{s}_i \cdot \vec{v}_j$. For example, the coordinates in the PC1-PC2 plane are $(\vec{s}_i \cdot \vec{v}_1, \vec{s}_i \cdot \vec{v}_2)$.
+\end{enumerate}
+
+The eigenvalue $\lambda_k$ represents the variance of the data when projected onto the $k$-th principal component $\vec{v}_k$. Specifically, $\lambda_k = ||A\vec{v}_k||^2 = \sum_{i=1}^{m} (\vec{s}_i \cdot \vec{v}_k)^2$. If data was mean-centered and the actual covariance matrix was used, $\lambda_k$ would be the variance directly.
 
 \end{document}
