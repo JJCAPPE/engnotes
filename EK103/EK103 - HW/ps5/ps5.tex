@@ -1,0 +1,292 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\title{P.S. 5}
+\author{Giacomo Cappelletto}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{1)}
+
+\subsection*{A)}
+
+\[
+	\begin{bmatrix}
+		1 & 3  \\
+		2 & -5
+	\end{bmatrix}
+	\xrightarrow{R_2 = R_2 - 2R_1}
+	\begin{bmatrix}
+		1 & 3   \\
+		0 & -11
+	\end{bmatrix}
+\]
+Linearly Independent, as number of columns is equal to number of pivots
+\subsection*{B)}
+
+\[
+	\begin{bmatrix}
+		1  & -2 \\
+		-3 & 6
+	\end{bmatrix}
+	\xrightarrow{R_2 = R_2 + 3R_1}
+	\begin{bmatrix}
+		1 & -2 \\
+		0 & 0
+	\end{bmatrix}
+\]
+Linearly Dependent because \(\vec{v} = \vec{u} \cdot -2\)
+
+\subsection*{C)}
+\[
+	\begin{bmatrix}
+		1  & 4  \\
+		2  & 5  \\
+		-3 & -6
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 & = R_2 - 2R_1 \\
+			R_3 & = R_3 + 3R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 4  \\
+		0 & -3 \\
+		0 & 6
+	\end{bmatrix}
+\]
+Linearly Independent because number of columns is equal to number of pivots (and therefore only solution to \(A\vec{x}=\vec{0}\) is the trivial one)
+
+
+\subsection*{D)}
+
+\[
+	\begin{bmatrix}
+		2  & 3   \\
+		4  & 6   \\
+		-8 & -12
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 & = R_2 - 2R_1 \\
+			R_3 & = R_3 + 4R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		2 & 3 \\
+		0 & 0 \\
+		0 & 0
+	\end{bmatrix}
+\]
+
+Linearly Dependent because \(\vec{v} = \vec{u} \cdot \frac{3}{2}\)
+
+\section*{2)}
+
+\subsection*{A)}
+
+\[
+	\begin{bmatrix}
+		1 & 2 & 1 \\
+		2 & 5 & 5 \\
+		5 & 1 & 2
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = R_2 - 2R_1 \\
+			R_3 = R_3 - 5R_1 \\
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 2  & 1  \\
+		0 & 1  & 3  \\
+		0 & -9 & -3
+	\end{bmatrix}
+	\xrightarrow{R_3 = R_3 + 9R_2}
+	\begin{bmatrix}
+		1 & 2 & 1  \\
+		0 & 1 & 3  \\
+		0 & 0 & 24
+	\end{bmatrix}
+\]
+
+Linearly Independent because number of columns is equal to number of pivots (and therefore only solution to \(A\vec{x}=\vec{0}\) is the trivial one)
+
+\subsection*{B)}
+
+\[
+	\begin{bmatrix}
+		1 & 0 & 1 \\
+		2 & 0 & 5 \\
+		3 & 0 & 6
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = R_2 - 2R_1 \\
+			R_3 = R_3 - 3R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 0 & 1 \\
+		0 & 0 & 3 \\
+		0 & 0 & 3
+	\end{bmatrix}
+	\xrightarrow{
+		R_3=R_3-R_2
+	}
+	\begin{bmatrix}
+		1 & 0 & 1 \\
+		0 & 0 & 3 \\
+		0 & 0 & 0
+	\end{bmatrix}
+\]
+
+Linearly Dependent due to the presence of the column \(\vec{0}\), which immediately makes the set dependent, since now the number of pivots cannot exceed 2, 1 less than number of columns
+
+\subsection*{C)}
+
+\[
+	\begin{bmatrix}
+		1 & 1 & 2 & 3 \\
+		2 & 3 & 5 & 1 \\
+		5 & 1 & 7 & 4
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = R_2 - 2R_1 \\
+			R_3 = R_3 - 5R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 1  & 2  & 3   \\
+		0 & 1  & 1  & -5  \\
+		0 & -4 & -3 & -11
+	\end{bmatrix}
+	\xrightarrow{
+		R_3 = R_3 + 4R_2
+	}
+	\begin{bmatrix}
+		1 & 1 & 2 & 3   \\
+		0 & 1 & 1 & -5  \\
+		0 & 0 & 1 & -31
+	\end{bmatrix}
+\]
+
+Linearly Dependent because of free variable in column 4
+
+\section*{3)}
+
+\[
+	C^{-1}=
+	\frac{1}{-2}
+	\begin{bmatrix}
+		5  & -3 \\
+		-4 & 2
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		-\frac{5}{2} & \frac{3}{2} \\
+		2            & -1
+	\end{bmatrix}
+\]
+
+\[
+	\det(D) = 0 \Longrightarrow  D^{-1} \, DNE
+\]
+
+\section*{4)}
+
+\[
+	A \times B =
+	\begin{bmatrix}
+		1 & 0  & 2 \\
+		2 & -1 & 3 \\
+		4 & 1  & 8
+	\end{bmatrix}
+	\times
+	\begin{bmatrix}
+		-11 & 2  & 2  \\
+		-4  & 0  & 1  \\
+		6   & -1 & -1
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 0 & 1
+	\end{bmatrix}
+\]
+
+\section*{5)}
+
+\[
+	\begin{bmatrix}
+		1 & 0  & 2 & 1 & 0 & 0 \\
+		2 & -1 & 3 & 0 & 1 & 0 \\
+		4 & 1  & 8 & 0 & 0 & 1
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = R_2 - 2R_1 \\
+			R_3 = R_3 - 4R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 0  & 2  & 1  & 0 & 0 \\
+		0 & -1 & -1 & -2 & 1 & 0 \\
+		0 & 1  & 0  & -4 & 0 & 1
+	\end{bmatrix}
+	\xrightarrow{R_3=R_3+R_2}
+	\begin{bmatrix}
+		1 & 0  & 2  & 1  & 0 & 0 \\
+		0 & -1 & -1 & -2 & 1 & 0 \\
+		0 & 0  & -1 & -6 & 1 & 1
+	\end{bmatrix}
+\]
+\[
+	\xrightarrow{
+		\begin{aligned}
+			R_2 = -R_2 \\
+			R_3 = -R_3 - 5R_1
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 0 & 2 & 1 & 0  & 0  \\
+		0 & 1 & 1 & 2 & -1 & 0  \\
+		0 & 0 & 1 & 6 & -1 & -1
+	\end{bmatrix}
+	\xrightarrow{
+		\begin{aligned}
+			R_1 = R_1 - 2R_3 \\
+			R_2 = R_2 - R_3
+		\end{aligned}
+	}
+	\begin{bmatrix}
+		1 & 0 & 0 & -11 & 2  & 2  \\
+		0 & 1 & 0 & -4  & 0  & 1  \\
+		0 & 0 & 1 & 6   & -1 & -1
+	\end{bmatrix}
+\]
+\[
+	\therefore A^{-1} =
+	\begin{bmatrix}
+		-11 & 2  & 2  \\
+		-4  & 0  & 1  \\
+		6   & -1 & -1
+	\end{bmatrix}
+\]
+
+\end{document}
