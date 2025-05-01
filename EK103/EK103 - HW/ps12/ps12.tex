@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx} % Not used here, but often useful
+
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\il}[1]{\[#1\]}
+
+% Define matrix and vector commands for convenience
+\title{PS12}
+\author{Giacomo Cappelletto}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\il{
+  S = 
+  \mat{
+    1&2\\
+    2&4\\
+  }
+}
+\section*{1}
+
+\il{
+  \det{(S - \lambda I)} = 0 
+}
+\il{
+   (1 - \lambda)(4 - \lambda) - 2 \cdot 2 = 0
+}
+\il{
+  5 \lambda + \lambda^2 = 0
+}
+\il{
+  \lambda ( 5 + \lambda) = 0
+}
+\il{
+  \lambda_1 = 0 \, \lambda_2 = -5
+}
+
+\il{
+  \mat{
+    -5 & 0\\
+    0 & 0\\
+  }
+}
+
+\section*{2}
+
+\il{
+Null(S - 5I) = \vec{v_1}
+}
+\il{
+  \mat{
+    -4 & 2\\
+    2 & -1\\
+  }
+  \xrightarrow{R_2 = R_2 + \frac{1}{2} R_1}
+  \mat{
+    -4 & 2\\
+    0 & 0\\
+  }
+  \xrightarrow{R_1 = -\frac{1}{4} R_1}
+  \mat{
+    1 & -\frac{1}{2}\\
+    0 & 0\\
+  }
+}
+\il{
+  x_2 = t_2 \Rightarrow \vec{x_h} = t_2 \mat{-\frac{1}{2} \\ 1} \Rightarrow \, \therefore \vec{v_1} = \mat{-1 \\ 2}
+}
+\il{
+Null(S) = \vec{v_2}
+}
+\il{
+  \mat{
+    1 & 2\\
+    2 & 4\\
+  }
+  \xrightarrow{R_2 = R_2 - 2R_1}
+  \mat{
+    1&2\\
+    0&0\\
+  }
+}
+\il{
+  x_2 = t_2 \Rightarrow \vec{x_h} = t_2 \mat{-2 \\ 1} \Rightarrow \, \therefore \vec{v_2} = \mat{-2 \\ 1}
+}
+
+\il{
+  v_1 \cdot v_2 = v_1^T v_2 = \mat{-1 & 2} \mat{-2 \\ 1} = 0
+}
+\il{
+  \therefore \text{ angle between }\vec{v_1} \, , \, \vec{v_2} = 90^{\circ}
+}
+
+
+
+
+\end{document}
