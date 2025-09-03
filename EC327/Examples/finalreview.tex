@@ -1,0 +1,318 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+\title{EC327 – Practice Exam II (with Answers)}
+\date{}
+\begin{document}
+\maketitle
+
+\section{True or False – General Knowledge (14 pts, 2 pts each)}
+State True or False and give a one-sentence explanation.
+\begin{enumerate}[label=\arabic*.]
+\item A well-designed dependency injection system removes all need for unit testing.\\
+\textbf{Answer:} False. DI makes testing easier by decoupling, but it does not eliminate the need for unit tests.
+\item Android’s \texttt{onClickListener} callback runs on the main UI thread.\\
+\textbf{Answer:} True. All UI callbacks in Android are dispatched on the main thread.
+\item Objects allocated with \texttt{new} on the stack must be explicitly \texttt{delete}-ed.\\
+\textbf{Answer:} False. \texttt{new} allocates on the heap; stack objects are automatic and never use \texttt{new}.
+\item In Scrum, story points measure the actual hours a task will take.\\
+\textbf{Answer:} False. Story points measure relative effort, not calendar hours.
+\item In C++, marking a method \texttt{override} changes its dispatch from static to dynamic.\\
+\textbf{Answer:} False. \texttt{override} enforces that a method overrides a virtual base; \texttt{virtual} controls dispatch.
+\item Accessing Android UI widgets from a background thread is safe if you synchronize.\\
+\textbf{Answer:} False. The Android UI toolkit is not thread-safe; changes must occur on the main thread.
+\item In object-oriented design, child classes should freely access parent private members.\\
+\textbf{Answer:} False. Private members are inaccessible to subclasses; use \texttt{protected} if needed.
+\end{enumerate}
+
+\section{Multiple Choice (12 pts, 2 pts each)}
+Choose the single best answer and provide the letter.
+\begin{enumerate}[label=\arabic*.]
+\item Which is \emph{not} a benefit of using \texttt{std::vector} over raw arrays?
+\begin{enumerate}[label=(\Alph*)]
+\item automatic resizing
+\item bounds checking on \texttt{at()}
+\item constant-time \texttt{push\_back} amortized
+\item built-in garbage collection
+\end{enumerate}
+\textbf{Answer:} D
+\item In Kanban, how is work typically assigned?
+\begin{enumerate}[label=(\Alph*)]
+\item Manager pushes tasks to developers
+\item Developers pull tasks when ready
+\item Tasks are auto-assigned by the tool
+\item Tasks are planned six months in advance
+\end{enumerate}
+\textbf{Answer:} B
+\item What does the C++ \texttt{final} specifier on a virtual function do?
+\begin{enumerate}[label=(\Alph*)]
+\item Disables further overriding
+\item Forces dynamic dispatch
+\item Makes it inlineable
+\item Marks it as pure virtual
+\end{enumerate}
+\textbf{Answer:} A
+\item Which Android persistence option is best for storing small key-value pairs?
+\begin{enumerate}[label=(\Alph*)]
+\item SQLite via Room
+\item Files in internal storage
+\item SharedPreferences
+\item External SD card files
+\end{enumerate}
+\textbf{Answer:} C
+\item In a \texttt{std::map}, what is the complexity of \texttt{lower\_bound(k)}?
+\begin{enumerate}[label=(\Alph*)]
+\item O(1)
+\item O(log N)
+\item O(N)
+\item O(N log N)
+\end{enumerate}
+\textbf{Answer:} B
+\item What’s the primary difference between composition and inheritance?
+\begin{enumerate}[label=(\Alph*)]
+\item Composition reuses code, inheritance does not
+\item Inheritance models “has-a,” composition models “is-a”
+\item Composition favors interfaces, inheritance builds hierarchies
+\item Inheritance is always preferable for code reuse
+\end{enumerate}
+\textbf{Answer:} C
+\end{enumerate}
+
+\section{Templatized Class (12 pts)}
+\subsection{Implementation (9 pts)}
+Declare and implement in \texttt{stack.h}:
+\begin{lstlisting}
+\#ifndef STACK\_H
+\#define STACK\_H
+
+\#include <vector>
+\#include <algorithm>
+
+template<typename T>
+class SimpleStack {
+private:
+std::vector<T> elements;
+public:
+void push(const T& value) { elements.push\_back(value); }
+void pop() { elements.pop\_back(); }
+T& top() { return elements.back(); }
+bool empty() const { return elements.empty(); }
+bool contains(const T& value) const {
+return std::find(elements.begin(), elements.end(), value)
+!= elements.end();
+}
+};
+
+\#endif // STACK\_H
+\end{lstlisting}
+
+\subsection{Complexity (3 pts)}
+\begin{itemize}
+\item \texttt{push}: O(1) amortized
+\item \texttt{pop}: O(1)
+\item \texttt{contains}: O(N)
+\end{itemize}
+
+\section{Inheritance \&  Dispatch (12 pts)}
+\subsection{NotificationSender Base (3 pts)}
+\begin{lstlisting}
+// notificationsender.h
+\#ifndef NOTIFICATION\_SENDER\_H
+\#define NOTIFICATION\_SENDER\_H
+
+\#include <string>
+
+class NotificationSender {
+public:
+virtual void send(const std::string& msg) = 0;
+virtual \~NotificationSender() = default;
+};
+
+\#endif
+\end{lstlisting}
+
+\subsection{SMSSender Subclass (2 pts)}
+\begin{lstlisting}
+// smssender.h
+\#ifndef SMS\_SENDER\_H
+\#define SMS\_SENDER\_H
+
+\#include "notificationsender.h"
+
+class SMSSender : public NotificationSender {
+public:
+void send(const std::string& msg) override {
+// ... send via SMS ...
+}
+};
+
+\#endif
+\end{lstlisting}
+
+\subsection{EmailSender Subclass (3 pts)}
+\begin{lstlisting}
+// emailsender.h
+\#ifndef EMAIL\_SENDER\_H
+\#define EMAIL\_SENDER\_H
+
+\#include "notificationsender.h"
+\#include <string>
+
+class EmailSender : public NotificationSender {
+private:
+std::string\* server;
+public:
+EmailSender(std::string\* srv) : server(srv) {}
+void send(const std::string& msg) override {
+// ... send via \*server ...
+}
+\~EmailSender() override { delete server; }
+};
+
+\#endif
+\end{lstlisting}
+
+\subsection{Runtime Behavior (4 pts)}
+Given:
+\begin{lstlisting}
+auto\* srv = new std::string("smtp");
+NotificationSender\* s = new EmailSender(srv);
+s->send("hello");
+delete s;
+\end{lstlisting}
+\begin{itemize}
+\item \textbf{Output:} EmailSender’s send logic runs (e.g. sending "hello" via SMTP).
+\item \textbf{Dispatch:} Virtual dispatch via v-table calls EmailSender::send.
+\item \textbf{Destructor:} \texttt{\~EmailSender} runs first (deleting server), then \texttt{\~NotificationSender}.
+\end{itemize}
+
+\section{Standard Template Library (20 pts)}
+\subsection{Declarations (8 pts)}
+\begin{lstlisting}
+\#include <string>
+\#include \<unordered\_map>
+\#include <map>
+\#include <vector>
+
+class User; // forward
+
+class UserManager {
+private:
+std::unordered\_map\<std::string,const User\*> usersByName;
+std::map\<int,std::vector\<const User\*>> usersByAge;
+public:
+bool registerNewUser(const User\*);
+const User\* getUser(const std::string&) const;
+const User\* getYoungestUserOlderThan(int) const;
+};
+\end{lstlisting}
+
+\subsection{Implementations (6 pts)}
+\begin{lstlisting}
+\#include "usermanager.h"
+\#include "user.h"
+
+bool UserManager::registerNewUser(const User\* u) {
+auto \[it, inserted] = usersByName.emplace(u->getUsername(), u);
+if (!inserted) return false;
+usersByAge\[u->getAge()].push\_back(u);
+return true;
+}
+
+const User\* UserManager::getUser(const std::string& name) const {
+auto it = usersByName.find(name);
+return it != usersByName.end() ? it->second : nullptr;
+}
+
+const User\* UserManager::getYoungestUserOlderThan(int age) const {
+auto it = usersByAge.lower\_bound(age);
+if (it == usersByAge.cend()) return nullptr;
+return it->second.front();
+}
+\end{lstlisting}
+
+\subsection{Complexity Explanations (6 pts)}
+\begin{itemize}
+\item \textbf{getUser O(1):} Unordered map lookup on hash table is average O(1).
+\item \textbf{getYoungestUserOlderThan O(log N):} \texttt{map::lower\_bound} on red-black tree is O(log N), plus O(1) to return the first element.
+\end{itemize}
+
+\section{Android Development (20 pts)}
+\subsection{Code Analysis (6 pts)}
+\begin{enumerate}[label=6.1.\arabic*.]
+\item Adds an \texttt{OnClickListener} to \texttt{addButton}; on click, reads text, updates list, and refreshes the \texttt{TextView}.\\
+\textbf{Answer:} See description.
+\item Must avoid long work in the click callback because it runs on the UI thread; blocking it causes ANR.\\
+\textbf{Answer:} UI thread must remain responsive.
+\item Yes. In-memory updates and cheap \texttt{TextView\.setText} keep 50 rapid additions smooth.\\
+\textbf{Answer:} Operations are light and asynchronous persistence does not block UI.
+\end{enumerate}
+
+\subsection{Persistence (8 pts)}
+\begin{enumerate}[label=6.2.\arabic*.]
+\item Strategy: Load once in \texttt{onCreate} from \texttt{SharedPreferences}; updates never saved by default.\\
+\textbf{Answer:} Uses \texttt{prefs.getString} in \texttt{loadItems} only.
+\item Shortcomings: \texttt{saveItems()} is never called, so disk never updated; data lost on process death.\\
+\textbf{Answer:} No persistence of user actions.
+\item Fix: Call \texttt{saveItems()} after each add or in \texttt{onPause()}.\\
+\textbf{Answer:} Ensures \texttt{apply()} is invoked.
+\item Alternatives: SQLite/Room (structured, schema), JSON/XML files (manual parsing), external storage (permissions/trade-offs).\\
+\textbf{Answer:} Varying complexity and performance.
+\end{enumerate}
+
+\subsection{Server Sync (6 pts)}
+\begin{enumerate}[label=6.3.\arabic*.]
+\item No: network I/O on UI thread throws \texttt{NetworkOnMainThreadException} and risks ANR.\\
+\textbf{Answer:} Must offload network work.
+\item Better: Use \texttt{ExecutorService} or background \texttt{Thread}, then post results via \texttt{runOnUiThread} or \texttt{Handler}.\\
+\textbf{Answer:} Keeps UI responsive.
+\item On success/failure callback, use \texttt{runOnUiThread} to show a Toast or update a status indicator.\\
+\textbf{Answer:} UI update on main thread after background completion.
+\end{enumerate}
+
+\section{Polymorphism, Composition \& Inheritance (10 pts)}
+Given the \texttt{Entity} interface and subclasses:
+\subsection{Design Questions (4 pts)}
+\begin{enumerate}[label=7.1.\arabic*.]
+\item Does this support polymorphism?\\
+\textbf{Answer:} Yes; you can treat any subclass as an \texttt{Entity}.
+\item Are these relationships “is-a” or “has-a”?\\
+\textbf{Answer:} \emph{Is-a} (each subclass extends the base interface).
+\item Is this composition or inheritance?\\
+\textbf{Answer:} Inheritance (classes implement/extend \texttt{Entity}).
+\end{enumerate}
+
+\subsection{Alternative with Composition (2 pts)}
+Instead of inheritance, each \texttt{Player}, \texttt{Enemy}, etc. could \emph{contain} a \texttt{BasicEntityImpl} and delegate calls:
+\begin{lstlisting}
+class Player : public Entity {
+private:
+BasicEntityImpl impl;
+public:
+void move(int x,int y) override { impl.move(x,y); }
+void render(GameScreen s) override { impl.render(s); }
+Entity collide(Entity e) override { return impl.collide(e); }
+};
+\end{lstlisting}
+
+\subsection{Pros/Cons (3 pts)}
+\begin{itemize}
+\item Composition:
+\begin{itemize}
+\item + Better encapsulation, flexibility, and decoupling.
+\item – More boilerplate delegation code.
+\end{itemize}
+\item Inheritance:
+\begin{itemize}
+\item + Less boilerplate, direct reuse of base logic.
+\item – Tighter coupling, fragile base-class issues.
+\end{itemize}
+\end{itemize}
+
+\subsection{Dependency Injection (1 pt)}
+You could inject different implementations of collision or rendering logic (e.g., via constructor parameters) rather than hard-coding in subclasses.
+
+\end{document}
