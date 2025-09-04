@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# Source directory containing template files
+SOURCE_DIR="/Users/giacomo/Documents/Engineering/Notes/jsk-lecnotes"
+
+# Files to copy
+FILES=("lib.typ")
+
+# Extract CLASSCODE and CLASSNAME from the current directory name
+CURRENT_DIR=$(basename "$PWD")
+CLASSCODE="${CURRENT_DIR%% -*}" # Text before " -"
+CLASSNAME="${CURRENT_DIR#*- }" # Text after " -"
+
+# Check if CLASSCODE and CLASSNAME are valid
+if [[ -z "$CLASSCODE" || -z "$CLASSNAME" ]]; then
+    echo "Error: Directory name must follow the 'CLASSCODE - CLASSNAME' format."
+    exit 1
+fi
+
+# Copy each file
+for file in "${FILES[@]}"; do
+    if [ -f "$SOURCE_DIR/$file" ]; then
+        cp "$SOURCE_DIR/$file" .
+        echo "Copied $file to the current directory."
+    else
+        echo "File $file not found in $SOURCE_DIR."
+    fi
+done
+
+# Create main.typ based on example.typ template
+cat > main.typ << 'EOF'
+#import "lib.typ": *
+
+#show: template.with(
+  title: [CLASSCODE: CLASSNAME],
+  short_title: "CLASSCODE",
+  description: [
+    Lecture notes for CLASSNAME
+  ],
+  date: datetime.today(),
+  authors: (
+    (
+      name: "Giacomo Cappelletto",
+      // link: "https://your-website.com", // Uncomment and add your link if desired
+    ),
+  ),
+  
+  lof: true
+  // lot: true,  // Uncomment for list of tables  
+  // lol: true,  // Uncomment for list of listings
+  paper_size: "a4",
+  // landscape: true,  // Uncomment for landscape orientation
+  cols: 1,
+  text_font: "STIX Two Text",
+  code_font: "Cascadia Mono",
+  accent: "#DC143C", // Crimson red - change to your preferred color
+  h1-prefix: "Lecture",
+  colortab: false,
+)
+
+// Your content starts here
+= Introduction
+
+Welcome to CLASSNAME (CLASSCODE)!
+
+// Example of using the template features:
+
+#definition("Example Definition")[
+  This is an example definition box. You can use it to highlight important definitions in your notes.
+]
+
+#example("Example Usage")[
+  This is an example box showing how to use various features of the template.
+]
+
+#note("Important Note")[
+  This is a note box for highlighting important information.
+]
+
+// Example of mathematical content
+Consider the equation:
+$ f(x) = x^2 + 2x + 1 $
+
+// Example of code
+Here's some sample code:
+```python
+def hello_world():
+    print("Hello, CLASSNAME!")
+```
+
+// Add your lecture content below this line
+EOF
+
+# Replace placeholders in main.typ
+if [ -f "main.typ" ]; then
+    sed -i.bak \
+        -e "s/CLASSCODE/$CLASSCODE/g" \
+        -e "s/CLASSNAME/$CLASSNAME/g" \
+        main.typ
+    rm main.typ.bak # Remove backup created by sed
+    echo "Created main.typ with CLASSCODE='$CLASSCODE' and CLASSNAME='$CLASSNAME'."
+else
+    echo "Error: Failed to create main.typ."
+    exit 1
+fi
+
+echo "Done! You can now edit main.typ and compile with:"
+echo "  typst compile main.typ"
+echo "  typst watch main.typ    # for auto-compilation" 
