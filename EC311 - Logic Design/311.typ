@@ -243,6 +243,28 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
   After 8 shifts: BCD = 0010 0100 0011 → digits 2 4 3.
 ]
 
+#figure(
+  table(
+    columns: (2.4fr, 1.6fr, 2.2fr),
+    align: left,
+    stroke: none,
+    inset: 2pt,
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11110011]], [Initialization],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0001]], [#text(10pt, font: "DejaVu Sans Mono")[11100110]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0011]], [#text(10pt, font: "DejaVu Sans Mono")[11001100]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0111]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 1010]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Add 3 to ONES (was 7)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 0101]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 1000]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Add 3 to ONES (was 5)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0011 0000]], [#text(10pt, font: "DejaVu Sans Mono")[01100000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0110 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 1001 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Add 3 to TENS (was 6)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0001 0010 0001]], [#text(10pt, font: "DejaVu Sans Mono")[10000000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0010 0100 0011]], [#text(10pt, font: "DejaVu Sans Mono")[00000000]], [Shift],
+  ),
+  caption: [Double‑dabble run for 243₁₀ (11110011₂). Left: BCD register; Right: original register. Transparent grid mimics textbook layout. Result: 0010 0100 0011 → digits 2 4 3.]
+) <double-dabble-243>
+
 == Modern Technology: MOS and CMOS
 
 #definition("MOSFET Technology")[
