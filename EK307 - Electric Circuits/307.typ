@@ -220,6 +220,271 @@
   $$sum_i^n p_i = 0$$
 ]
 
+== Circuit Elements
+
+Circuit elements are the building blocks of electrical circuits. They fall into two main categories:
+
+#definition("Passive Elements")[
+  Passive elements can only absorb or store energy - they cannot generate energy. Examples include:
+
+  - *Resistors*: Convert electrical energy to heat (always absorb power)
+  - *Capacitors*: Store energy in electric fields
+  - *Inductors*: Store energy in magnetic fields
+
+  Under the passive sign convention, passive elements have $p ≥ 0$ when current enters the positive terminal.
+]
+
+#definition("Active Elements")[
+  Active elements can supply energy to a circuit. The primary active elements are:
+
+  - *Voltage Sources*: Maintain a specified voltage across their terminals
+  - *Current Sources*: Maintain a specified current through them
+
+  Active elements can have $p < 0$ (delivering power) under the passive sign convention.
+]
+
+== Independent Sources
+
+Independent sources provide a specified voltage or current that does not depend on other circuit variables.
+
+=== Voltage Sources
+
+#figure(
+  canvas(length: 1.2cm, {
+    import draw: *
+
+    // Ideal voltage source
+    let vs_pos = (0, 1)
+    circle(vs_pos, radius: 0.4, stroke: 2.5pt + black)
+    content(vs_pos, text(10pt)[*V*])
+    content((vs_pos.at(0) - 0.2, vs_pos.at(1)), text(9pt)[*+*])
+    content((vs_pos.at(0) + 0.2, vs_pos.at(1)), text(9pt)[*-*])
+    line((-0.8, vs_pos.at(1)), (vs_pos.at(0) - 0.4, vs_pos.at(1)), stroke: 2.5pt + black)
+    line((vs_pos.at(0) + 0.4, vs_pos.at(1)), (0.8, vs_pos.at(1)), stroke: 2.5pt + black)
+    content((0, 0.2), text(11pt)[*Ideal*])
+
+    // Real voltage source
+    let real_vs_pos = (3, 1)
+    circle(real_vs_pos, radius: 0.4, stroke: 2.5pt + black)
+    content(real_vs_pos, text(10pt)[*V*])
+    content((real_vs_pos.at(0) - 0.2, real_vs_pos.at(1)), text(9pt)[*+*])
+    content((real_vs_pos.at(0) + 0.2, real_vs_pos.at(1)), text(9pt)[*-*])
+
+    // Internal resistance
+    let r_zigzag = (
+      (real_vs_pos.at(0) + 0.5, real_vs_pos.at(1)),
+      (real_vs_pos.at(0) + 0.7, real_vs_pos.at(1) + 0.1),
+      (real_vs_pos.at(0) + 0.9, real_vs_pos.at(1) - 0.1),
+      (real_vs_pos.at(0) + 1.1, real_vs_pos.at(1)),
+    )
+    for i in range(r_zigzag.len() - 1) {
+      line(r_zigzag.at(i), r_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((real_vs_pos.at(0) + 0.8, real_vs_pos.at(1) + 0.3), text(8pt)[*R*])
+
+    line((2.2, real_vs_pos.at(1)), (real_vs_pos.at(0) - 0.4, real_vs_pos.at(1)), stroke: 2.5pt + black)
+    line((real_vs_pos.at(0) + 1.1, real_vs_pos.at(1)), (3.8, real_vs_pos.at(1)), stroke: 2.5pt + black)
+    content((3, 0.2), text(11pt)[*Real*])
+  }),
+  caption: [Ideal vs Real Voltage Sources],
+) <voltage-sources>
+
+#definition("Ideal Voltage Source")[
+  An ideal voltage source maintains a constant voltage $V_s$ across its terminals regardless of the current flowing through it. Key properties:
+
+  - Terminal voltage is always $V_s$ (independent of current)
+  - Can supply unlimited current if needed
+  - Internal resistance $R_s = 0$
+  - *Open circuit*: $V = V_s$, $I = 0$
+  - *Short circuit*: $V = 0$, $I = ∞$ (not physically realizable)
+]
+
+#definition("Real Voltage Source")[
+  A real voltage source has internal resistance $R_s$ in series with an ideal voltage source. Properties:
+
+  - Terminal voltage: $V = V_s - I R_s$
+  - *Open circuit*: $V = V_s$, $I = 0$
+  - *Short circuit*: $V = 0$, $I = V_s/R_s$
+  - Maximum power transfer occurs when load resistance equals $R_s$
+]
+
+=== Current Sources
+
+#figure(
+  canvas(length: 1.2cm, {
+    import draw: *
+
+    // Ideal current source
+    let is_pos = (0, 1)
+    circle(is_pos, radius: 0.4, stroke: 2.5pt + black)
+    content(is_pos, text(10pt)[*I*])
+    line((-0.8, is_pos.at(1)), (is_pos.at(0) - 0.4, is_pos.at(1)), stroke: 2.5pt + black)
+    line((is_pos.at(0) + 0.4, is_pos.at(1)), (0.8, is_pos.at(1)), stroke: 2.5pt + black)
+    // Current arrow through source
+    line((-0.15, is_pos.at(1)), (0.15, is_pos.at(1)), mark: (end: ">", stroke: blue + 1.5pt), stroke: blue + 1.5pt)
+    content((0, 0.2), text(11pt)[*Ideal*])
+
+    // Real current source
+    let real_is_pos = (3, 1)
+    circle(real_is_pos, radius: 0.4, stroke: 2.5pt + black)
+    content(real_is_pos, text(10pt)[*I*])
+
+    // Parallel resistance (above the source)
+    line(
+      (real_is_pos.at(0) - 0.4, real_is_pos.at(1)),
+      (real_is_pos.at(0) - 0.4, real_is_pos.at(1) + 0.6),
+      stroke: 2pt + black,
+    )
+    let r_zigzag = (
+      (real_is_pos.at(0) - 0.3, real_is_pos.at(1) + 0.6),
+      (real_is_pos.at(0) - 0.1, real_is_pos.at(1) + 0.75),
+      (real_is_pos.at(0) + 0.1, real_is_pos.at(1) + 0.45),
+      (real_is_pos.at(0) + 0.3, real_is_pos.at(1) + 0.6),
+    )
+    for i in range(r_zigzag.len() - 1) {
+      line(r_zigzag.at(i), r_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    line(
+      (real_is_pos.at(0) + 0.4, real_is_pos.at(1) + 0.6),
+      (real_is_pos.at(0) + 0.4, real_is_pos.at(1)),
+      stroke: 2pt + black,
+    )
+    content((real_is_pos.at(0), real_is_pos.at(1) + 0.9), text(8pt)[*R*])
+
+    line((2.2, real_is_pos.at(1)), (real_is_pos.at(0) - 0.4, real_is_pos.at(1)), stroke: 2.5pt + black)
+    line((real_is_pos.at(0) + 0.4, real_is_pos.at(1)), (3.8, real_is_pos.at(1)), stroke: 2.5pt + black)
+    // Current arrow through source
+    line(
+      (real_is_pos.at(0) - 0.15, real_is_pos.at(1)),
+      (real_is_pos.at(0) + 0.15, real_is_pos.at(1)),
+      mark: (end: ">", stroke: blue + 1.5pt),
+      stroke: blue + 1.5pt,
+    )
+    content((3, 0.2), text(11pt)[*Real*])
+  }),
+  caption: [Ideal vs Real Current Sources],
+) <current-sources>
+
+#definition("Ideal Current Source")[
+  An ideal current source maintains a constant current $I_s$ through it regardless of the voltage across its terminals. Key properties:
+
+  - Current is always $I_s$ (independent of voltage)
+  - Can develop unlimited voltage if needed
+  - Internal resistance $R_s = ∞$
+  - *Open circuit*: $I = 0$, $V = ∞$ (not physically realizable)
+  - *Short circuit*: $I = I_s$, $V = 0$
+]
+
+#definition("Real Current Source")[
+  A real current source has internal resistance $R_s$ in parallel with an ideal current source. Properties:
+
+  - Terminal current: $I = I_s - V/R_s$
+  - *Open circuit*: $I = 0$, $V = I_s R_s$
+  - *Short circuit*: $I = I_s$, $V = 0$
+  - Norton equivalent circuit representation
+]
+
+== Dependent Sources
+
+Dependent (controlled) sources have outputs that depend on other voltages or currents in the circuit. They are essential for modeling active devices like transistors and operational amplifiers.
+
+#figure(
+  canvas(length: 1cm, {
+    import draw: *
+
+    // VCVS (diamond symbol with +/- polarity)
+    let vcvs_pos = (1, 2)
+    line((vcvs_pos.at(0) - 0.3, vcvs_pos.at(1)), (vcvs_pos.at(0), vcvs_pos.at(1) + 0.3), stroke: 2.5pt + black)
+    line((vcvs_pos.at(0), vcvs_pos.at(1) + 0.3), (vcvs_pos.at(0) + 0.3, vcvs_pos.at(1)), stroke: 2.5pt + black)
+    line((vcvs_pos.at(0) + 0.3, vcvs_pos.at(1)), (vcvs_pos.at(0), vcvs_pos.at(1) - 0.3), stroke: 2.5pt + black)
+    line((vcvs_pos.at(0), vcvs_pos.at(1) - 0.3), (vcvs_pos.at(0) - 0.3, vcvs_pos.at(1)), stroke: 2.5pt + black)
+    // Voltage polarity markings
+    content((vcvs_pos.at(0) - 0.15, vcvs_pos.at(1)), text(10pt, fill: red)[*+*])
+    content((vcvs_pos.at(0) + 0.15, vcvs_pos.at(1)), text(10pt, fill: red)[*-*])
+    content((vcvs_pos.at(0), vcvs_pos.at(1) + 0.4), text(8pt)[*μv*])
+    content((vcvs_pos.at(0), vcvs_pos.at(1) - 0.6), text(9pt)[*VCVS*])
+
+    // CCCS (diamond symbol with current arrow)
+    let cccs_pos = (3.5, 2)
+    line((cccs_pos.at(0) - 0.3, cccs_pos.at(1)), (cccs_pos.at(0), cccs_pos.at(1) + 0.3), stroke: 2.5pt + black)
+    line((cccs_pos.at(0), cccs_pos.at(1) + 0.3), (cccs_pos.at(0) + 0.3, cccs_pos.at(1)), stroke: 2.5pt + black)
+    line((cccs_pos.at(0) + 0.3, cccs_pos.at(1)), (cccs_pos.at(0), cccs_pos.at(1) - 0.3), stroke: 2.5pt + black)
+    line((cccs_pos.at(0), cccs_pos.at(1) - 0.3), (cccs_pos.at(0) - 0.3, cccs_pos.at(1)), stroke: 2.5pt + black)
+    // Current arrow
+    line(
+      (cccs_pos.at(0) - 0.15, cccs_pos.at(1)),
+      (cccs_pos.at(0) + 0.15, cccs_pos.at(1)),
+      mark: (end: ">", stroke: blue + 2pt),
+      stroke: blue + 2pt,
+    )
+    content((cccs_pos.at(0), cccs_pos.at(1) + 0.4), text(8pt)[*βi*])
+    content((cccs_pos.at(0), cccs_pos.at(1) - 0.6), text(9pt)[*CCCS*])
+
+    // VCCS (diamond symbol with current arrow)
+    let vccs_pos = (1, 0.5)
+    line((vccs_pos.at(0) - 0.3, vccs_pos.at(1)), (vccs_pos.at(0), vccs_pos.at(1) + 0.3), stroke: 2.5pt + black)
+    line((vccs_pos.at(0), vccs_pos.at(1) + 0.3), (vccs_pos.at(0) + 0.3, vccs_pos.at(1)), stroke: 2.5pt + black)
+    line((vccs_pos.at(0) + 0.3, vccs_pos.at(1)), (vccs_pos.at(0), vccs_pos.at(1) - 0.3), stroke: 2.5pt + black)
+    line((vccs_pos.at(0), vccs_pos.at(1) - 0.3), (vccs_pos.at(0) - 0.3, vccs_pos.at(1)), stroke: 2.5pt + black)
+    // Current arrow
+    line(
+      (vccs_pos.at(0) - 0.15, vccs_pos.at(1)),
+      (vccs_pos.at(0) + 0.15, vccs_pos.at(1)),
+      mark: (end: ">", stroke: blue + 2pt),
+      stroke: blue + 2pt,
+    )
+    content((vccs_pos.at(0), vccs_pos.at(1) + 0.4), text(8pt)[*gv*])
+    content((vccs_pos.at(0), vccs_pos.at(1) - 0.6), text(9pt)[*VCCS*])
+
+    // CCVS (diamond symbol with +/- polarity)
+    let ccvs_pos = (3.5, 0.5)
+    line((ccvs_pos.at(0) - 0.3, ccvs_pos.at(1)), (ccvs_pos.at(0), ccvs_pos.at(1) + 0.3), stroke: 2.5pt + black)
+    line((ccvs_pos.at(0), ccvs_pos.at(1) + 0.3), (ccvs_pos.at(0) + 0.3, ccvs_pos.at(1)), stroke: 2.5pt + black)
+    line((ccvs_pos.at(0) + 0.3, ccvs_pos.at(1)), (ccvs_pos.at(0), ccvs_pos.at(1) - 0.3), stroke: 2.5pt + black)
+    line((ccvs_pos.at(0), ccvs_pos.at(1) - 0.3), (ccvs_pos.at(0) - 0.3, ccvs_pos.at(1)), stroke: 2.5pt + black)
+    // Voltage polarity markings
+    content((ccvs_pos.at(0) - 0.15, ccvs_pos.at(1)), text(10pt, fill: red)[*+*])
+    content((ccvs_pos.at(0) + 0.15, ccvs_pos.at(1)), text(10pt, fill: red)[*-*])
+    content((ccvs_pos.at(0), ccvs_pos.at(1) + 0.4), text(8pt)[*ri*])
+    content((ccvs_pos.at(0), ccvs_pos.at(1) - 0.6), text(9pt)[*CCVS*])
+  }),
+  caption: [Four types of dependent sources (diamond symbols)],
+) <dependent-sources>
+
+#definition("Voltage Controlled Voltage Source (VCVS)")[
+  Output voltage depends on a controlling voltage elsewhere in the circuit:
+  $ v_"out" = μ v_"control" $
+  where $μ$ is the voltage gain (dimensionless). Used to model voltage amplifiers.
+]
+
+#definition("Current Controlled Current Source (CCCS)")[
+  Output current depends on a controlling current elsewhere in the circuit:
+  $ i_"out" = β i_"control" $
+  where $β$ is the current gain (dimensionless). Used to model current amplifiers like BJTs.
+]
+
+#definition("Voltage Controlled Current Source (VCCS)")[
+  Output current depends on a controlling voltage elsewhere in the circuit:
+  $ i_"out" = g v_"control" $
+  where $g$ is the transconductance (units: S = A/V). Used to model devices like FETs.
+]
+
+#definition("Current Controlled Voltage Source (CCVS)")[
+  Output voltage depends on a controlling current elsewhere in the circuit:
+  $ v_"out" = r i_"control" $
+  where $r$ is the transresistance (units: Ω = V/A). Less commonly used in practice.
+]
+
+#example("Power Calculation with Dependent Sources")[
+  Consider a circuit with a CCCS where $β = 0.6$ and the controlling current is $i_"control" = 3"A"$.
+
+  If the dependent source has 5V across its terminals:
+  - Output current: $i_"out" = β i_"control" = 0.6 × 3"A" = 1.8"A"$
+  - Power delivered: $p = v i = 5"V" × 1.8"A" = 9"W"$
+
+  This demonstrates that dependent sources can deliver power to a circuit, making them active elements.
+]
+
 == Understanding the Passive Sign Convention
 
 The passive sign convention (PSC) is crucial for determining whether a circuit element absorbs or delivers power. The key insight is that *both current direction and voltage polarity are reference choices* - we can choose them arbitrarily, but the power calculation depends on how we choose them relative to each other.
@@ -431,4 +696,470 @@ The passive sign convention (PSC) is crucial for determining whether a circuit e
   *Key insight*: The flipped polarity on the 6V device means it has a negative power sign in this reference frame, even though it's still physically absorbing power. The algebraic sum of all powers equals zero, confirming energy conservation.
 
   *Note*: In this idealized circuit, we're treating the devices as having fixed voltage drops at 3A current, demonstrating the passive sign convention rather than pure resistive behavior.
+]
+
+= Circuit Topology: Nodes, Branches, and Loops
+
+Understanding circuit topology is essential for analyzing electrical circuits systematically. We need to identify the basic structural elements that define how components are connected.
+
+== Definitions
+
+#definition("Node")[
+  A node is a point where two or more circuit elements connect. All points connected by ideal wires (zero resistance) are considered to be at the same node and have the same voltage.
+]
+
+#definition("Branch")[
+  A branch is a single circuit element or a series combination of elements between two nodes. Current through all elements in a branch is identical.
+]
+
+#definition("Loop")[
+  A loop is any closed path through the circuit that starts and ends at the same node without passing through any node more than once.
+]
+
+== Circuit Topology Examples
+
+The following three diagrams show the same circuit with different aspects highlighted:
+
+#figure(
+  canvas(length: 1.2cm, {
+    import draw: *
+
+    // Define positions for a more complex circuit
+    let node_a = (0, 2)
+    let node_b = (3, 2)
+    let node_c = (6, 2)
+    let node_d = (6, 0)
+    let node_e = (3, 0)
+    let node_f = (0, 0)
+
+    // Voltage source between nodes f and a
+    line(
+      (node_a.at(0) - 0.1, node_a.at(1) - 0.3),
+      (node_a.at(0) - 0.1, node_a.at(1) + 0.3),
+      stroke: 3pt + black,
+    )
+    line(
+      (node_a.at(0) + 0.1, node_a.at(1) - 0.2),
+      (node_a.at(0) + 0.1, node_a.at(1) + 0.2),
+      stroke: 3pt + black,
+    )
+    content((node_a.at(0), node_a.at(1) - 0.6), text(9pt)[*12V*])
+    content((node_a.at(0) - 0.25, node_a.at(1)), text(10pt)[*+*])
+    content((node_a.at(0) + 0.25, node_a.at(1)), text(10pt)[*-*])
+
+    // R1 between nodes a and b (top horizontal)
+    let r1_zigzag = (
+      (node_a.at(0) + 0.7, node_a.at(1)),
+      (node_a.at(0) + 0.9, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.1, node_a.at(1) - 0.15),
+      (node_a.at(0) + 1.3, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.5, node_a.at(1)),
+    )
+    for i in range(r1_zigzag.len() - 1) {
+      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_a.at(0) + 1.1, node_a.at(1) + 0.4), text(9pt)[*R₁*])
+    content((node_a.at(0) + 1.1, node_a.at(1) - 0.4), text(9pt)[*4Ω*])
+
+    // R2 between nodes b and c (top horizontal)
+    let r2_zigzag = (
+      (node_b.at(0) + 0.7, node_b.at(1)),
+      (node_b.at(0) + 0.9, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.1, node_b.at(1) - 0.15),
+      (node_b.at(0) + 1.3, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.5, node_b.at(1)),
+    )
+    for i in range(r2_zigzag.len() - 1) {
+      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_b.at(0) + 1.1, node_b.at(1) + 0.4), text(9pt)[*R₂*])
+    content((node_b.at(0) + 1.1, node_b.at(1) - 0.4), text(9pt)[*2Ω*])
+
+    // R3 between nodes b and e (vertical)
+    let r3_zigzag = (
+      (node_b.at(0), node_b.at(1) - 0.3),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.5),
+      (node_b.at(0) + 0.15, node_b.at(1) - 0.7),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.9),
+      (node_b.at(0), node_b.at(1) - 1.1),
+    )
+    for i in range(r3_zigzag.len() - 1) {
+      line(r3_zigzag.at(i), r3_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_b.at(0) + 0.4, node_b.at(1) - 0.7), text(9pt)[*R₃*])
+    content((node_b.at(0) + 0.4, node_b.at(1) - 0.9), text(9pt)[*6Ω*])
+
+    // R4 between nodes c and d (vertical)
+    let r4_zigzag = (
+      (node_c.at(0), node_c.at(1) - 0.3),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.5),
+      (node_c.at(0) + 0.15, node_c.at(1) - 0.7),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.9),
+      (node_c.at(0), node_c.at(1) - 1.1),
+    )
+    for i in range(r4_zigzag.len() - 1) {
+      line(r4_zigzag.at(i), r4_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_c.at(0) + 0.4, node_c.at(1) - 0.7), text(9pt)[*R₄*])
+    content((node_c.at(0) + 0.4, node_c.at(1) - 0.9), text(9pt)[*3Ω*])
+
+    // Connecting wires
+    line((node_a.at(0) + 0.1, node_a.at(1)), (node_a.at(0) + 0.7, node_a.at(1)), stroke: 2pt + black) // a to R1
+    line((node_a.at(0) + 1.5, node_a.at(1)), (node_b.at(0), node_b.at(1)), stroke: 2pt + black) // R1 to b
+    line((node_b.at(0) + 0.7, node_b.at(1)), (node_b.at(0) + 1.5, node_b.at(1)), stroke: 2pt + black) // b to R2
+    line((node_b.at(0) + 1.5, node_b.at(1)), (node_c.at(0), node_c.at(1)), stroke: 2pt + black) // R2 to c
+    line((node_b.at(0), node_b.at(1) - 0.3), (node_b.at(0), node_b.at(1) - 1.1), stroke: 2pt + black) // b to R3 to e
+    line((node_c.at(0), node_c.at(1) - 0.3), (node_c.at(0), node_c.at(1) - 1.1), stroke: 2pt + black) // c to R4 to d
+    line((node_e.at(0), node_e.at(1)), (node_d.at(0), node_d.at(1)), stroke: 2pt + black) // e to d (bottom)
+    line((node_f.at(0), node_f.at(1)), (node_e.at(0), node_e.at(1)), stroke: 2pt + black) // f to e (bottom)
+    line((node_a.at(0) - 0.1, node_a.at(1)), (node_f.at(0), node_f.at(1)), stroke: 2pt + black) // a to f (left side)
+
+    // Highlight nodes with red filled circles
+    circle(node_a, radius: 0.08, fill: red, stroke: red + 2pt)
+    circle(node_b, radius: 0.08, fill: red, stroke: red + 2pt)
+    circle(node_c, radius: 0.08, fill: red, stroke: red + 2pt)
+    circle(node_d, radius: 0.08, fill: red, stroke: red + 2pt)
+    circle(node_e, radius: 0.08, fill: red, stroke: red + 2pt)
+    circle(node_f, radius: 0.08, fill: red, stroke: red + 2pt)
+
+    // Node labels
+    content((node_a.at(0) - 0.3, node_a.at(1) + 0.15), text(11pt, fill: red)[*a*])
+    content((node_b.at(0) - 0.15, node_b.at(1) + 0.25), text(11pt, fill: red)[*b*])
+    content((node_c.at(0) + 0.15, node_c.at(1) + 0.25), text(11pt, fill: red)[*c*])
+    content((node_d.at(0) + 0.15, node_d.at(1) - 0.25), text(11pt, fill: red)[*d*])
+    content((node_e.at(0) - 0.15, node_e.at(1) - 0.25), text(11pt, fill: red)[*e*])
+    content((node_f.at(0) - 0.3, node_f.at(1) - 0.15), text(11pt, fill: red)[*f*])
+  }),
+  caption: [Circuit with *nodes* highlighted (red circles). This circuit has 6 nodes: a, b, c, d, e, f],
+) <nodes-diagram>
+
+#figure(
+  canvas(length: 1.2cm, {
+    import draw: *
+
+    // Same circuit layout as above
+    let node_a = (0, 2)
+    let node_b = (3, 2)
+    let node_c = (6, 2)
+    let node_d = (6, 0)
+    let node_e = (3, 0)
+    let node_f = (0, 0)
+
+    // Voltage source between nodes f and a
+    line(
+      (node_a.at(0) - 0.1, node_a.at(1) - 0.3),
+      (node_a.at(0) - 0.1, node_a.at(1) + 0.3),
+      stroke: 3pt + black,
+    )
+    line(
+      (node_a.at(0) + 0.1, node_a.at(1) - 0.2),
+      (node_a.at(0) + 0.1, node_a.at(1) + 0.2),
+      stroke: 3pt + black,
+    )
+    content((node_a.at(0), node_a.at(1) - 0.6), text(9pt)[*12V*])
+    content((node_a.at(0) - 0.25, node_a.at(1)), text(10pt)[*+*])
+    content((node_a.at(0) + 0.25, node_a.at(1)), text(10pt)[*-*])
+
+    // R1 between nodes a and b (highlighted as branch 1)
+    let r1_zigzag = (
+      (node_a.at(0) + 0.7, node_a.at(1)),
+      (node_a.at(0) + 0.9, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.1, node_a.at(1) - 0.15),
+      (node_a.at(0) + 1.3, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.5, node_a.at(1)),
+    )
+    for i in range(r1_zigzag.len() - 1) {
+      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 3pt + blue)
+    }
+    content((node_a.at(0) + 1.1, node_a.at(1) + 0.4), text(9pt, fill: blue)[*R₁*])
+    content((node_a.at(0) + 1.1, node_a.at(1) - 0.4), text(9pt)[*4Ω*])
+
+    // R2 between nodes b and c (highlighted as branch 2)
+    let r2_zigzag = (
+      (node_b.at(0) + 0.7, node_b.at(1)),
+      (node_b.at(0) + 0.9, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.1, node_b.at(1) - 0.15),
+      (node_b.at(0) + 1.3, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.5, node_b.at(1)),
+    )
+    for i in range(r2_zigzag.len() - 1) {
+      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 3pt + green)
+    }
+    content((node_b.at(0) + 1.1, node_b.at(1) + 0.4), text(9pt, fill: green)[*R₂*])
+    content((node_b.at(0) + 1.1, node_b.at(1) - 0.4), text(9pt)[*2Ω*])
+
+    // R3 between nodes b and e (highlighted as branch 3)
+    let r3_zigzag = (
+      (node_b.at(0), node_b.at(1) - 0.3),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.5),
+      (node_b.at(0) + 0.15, node_b.at(1) - 0.7),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.9),
+      (node_b.at(0), node_b.at(1) - 1.1),
+    )
+    for i in range(r3_zigzag.len() - 1) {
+      line(r3_zigzag.at(i), r3_zigzag.at(i + 1), stroke: 3pt + orange)
+    }
+    content((node_b.at(0) + 0.4, node_b.at(1) - 0.7), text(9pt, fill: orange)[*R₃*])
+    content((node_b.at(0) + 0.4, node_b.at(1) - 0.9), text(9pt)[*6Ω*])
+
+    // R4 between nodes c and d (highlighted as branch 4)
+    let r4_zigzag = (
+      (node_c.at(0), node_c.at(1) - 0.3),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.5),
+      (node_c.at(0) + 0.15, node_c.at(1) - 0.7),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.9),
+      (node_c.at(0), node_c.at(1) - 1.1),
+    )
+    for i in range(r4_zigzag.len() - 1) {
+      line(r4_zigzag.at(i), r4_zigzag.at(i + 1), stroke: 3pt + purple)
+    }
+    content((node_c.at(0) + 0.4, node_c.at(1) - 0.7), text(9pt, fill: purple)[*R₄*])
+    content((node_c.at(0) + 0.4, node_c.at(1) - 0.9), text(9pt)[*3Ω*])
+
+    // Connecting wires (regular black)
+    line((node_a.at(0) + 0.1, node_a.at(1)), (node_a.at(0) + 0.7, node_a.at(1)), stroke: 3pt + blue) // a to R1
+    line((node_a.at(0) + 1.5, node_a.at(1)), (node_b.at(0), node_b.at(1)), stroke: 3pt + blue) // R1 to b
+    line((node_b.at(0) + 0.7, node_b.at(1)), (node_b.at(0) + 1.5, node_b.at(1)), stroke: 3pt + green) // b to R2
+    line((node_b.at(0) + 1.5, node_b.at(1)), (node_c.at(0), node_c.at(1)), stroke: 3pt + green) // R2 to c
+    line((node_b.at(0), node_b.at(1) - 0.3), (node_b.at(0), node_b.at(1) - 1.1), stroke: 3pt + orange) // b to R3 to e
+    line((node_c.at(0), node_c.at(1) - 0.3), (node_c.at(0), node_c.at(1) - 1.1), stroke: 3pt + purple) // c to R4 to d
+    line((node_e.at(0), node_e.at(1)), (node_d.at(0), node_d.at(1)), stroke: 3pt + maroon) // e to d (bottom) - branch 5
+    line((node_f.at(0), node_f.at(1)), (node_e.at(0), node_e.at(1)), stroke: 3pt + maroon) // f to e (bottom) - branch 5
+    line((node_a.at(0) - 0.1, node_a.at(1)), (node_f.at(0), node_f.at(1)), stroke: 3pt + navy) // a to f (left side) - branch 6
+
+    // Small node markers
+    circle(node_a, radius: 0.05, fill: black)
+    circle(node_b, radius: 0.05, fill: black)
+    circle(node_c, radius: 0.05, fill: black)
+    circle(node_d, radius: 0.05, fill: black)
+    circle(node_e, radius: 0.05, fill: black)
+    circle(node_f, radius: 0.05, fill: black)
+
+    // Branch labels (positioned to avoid overlaps)
+    content((node_a.at(0) + 1.1, node_a.at(1) + 1.0), text(9pt)[Branch 1])
+    content((node_b.at(0) + 1.1, node_b.at(1) + 1.0), text(9pt)[Branch 2])
+    content((node_b.at(0) - 1.0, node_b.at(1) - 0.7), text(9pt)[Branch 3])
+    content((node_c.at(0) + 1.0, node_c.at(1) - 0.7), text(9pt)[Branch 4])
+    content((node_e.at(0) + 1.5, node_e.at(1) - 0.3), text(9pt)[Branch 5])
+    content((node_f.at(0) - 0.8, node_f.at(1) + 1.2), text(9pt)[Branch 6])
+  }),
+  caption: [Circuit with *branches* highlighted (different colors). This circuit has 6 branches: 4 resistors, 1 voltage source, and 1 connecting wire],
+) <branches-diagram>
+
+#figure(
+  canvas(length: 1.2cm, {
+    import draw: *
+
+    // Same circuit layout as above
+    let node_a = (0, 2)
+    let node_b = (3, 2)
+    let node_c = (6, 2)
+    let node_d = (6, 0)
+    let node_e = (3, 0)
+    let node_f = (0, 0)
+
+    // Voltage source between nodes f and a
+    line(
+      (node_a.at(0) - 0.1, node_a.at(1) - 0.3),
+      (node_a.at(0) - 0.1, node_a.at(1) + 0.3),
+      stroke: 3pt + black,
+    )
+    line(
+      (node_a.at(0) + 0.1, node_a.at(1) - 0.2),
+      (node_a.at(0) + 0.1, node_a.at(1) + 0.2),
+      stroke: 3pt + black,
+    )
+    content((node_a.at(0), node_a.at(1) - 0.6), text(9pt)[*12V*])
+    content((node_a.at(0) - 0.25, node_a.at(1)), text(10pt)[*+*])
+    content((node_a.at(0) + 0.25, node_a.at(1)), text(10pt)[*-*])
+
+    // R1 between nodes a and b
+    let r1_zigzag = (
+      (node_a.at(0) + 0.7, node_a.at(1)),
+      (node_a.at(0) + 0.9, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.1, node_a.at(1) - 0.15),
+      (node_a.at(0) + 1.3, node_a.at(1) + 0.15),
+      (node_a.at(0) + 1.5, node_a.at(1)),
+    )
+    for i in range(r1_zigzag.len() - 1) {
+      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_a.at(0) + 1.1, node_a.at(1) + 0.3), text(9pt)[*R₁*])
+    content((node_a.at(0) + 1.1, node_a.at(1) - 0.3), text(9pt)[*4Ω*])
+
+    // R2 between nodes b and c
+    let r2_zigzag = (
+      (node_b.at(0) + 0.7, node_b.at(1)),
+      (node_b.at(0) + 0.9, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.1, node_b.at(1) - 0.15),
+      (node_b.at(0) + 1.3, node_b.at(1) + 0.15),
+      (node_b.at(0) + 1.5, node_b.at(1)),
+    )
+    for i in range(r2_zigzag.len() - 1) {
+      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_b.at(0) + 1.1, node_b.at(1) + 0.3), text(9pt)[*R₂*])
+    content((node_b.at(0) + 1.1, node_b.at(1) - 0.3), text(9pt)[*2Ω*])
+
+    // R3 between nodes b and e
+    let r3_zigzag = (
+      (node_b.at(0), node_b.at(1) - 0.3),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.5),
+      (node_b.at(0) + 0.15, node_b.at(1) - 0.7),
+      (node_b.at(0) - 0.15, node_b.at(1) - 0.9),
+      (node_b.at(0), node_b.at(1) - 1.1),
+    )
+    for i in range(r3_zigzag.len() - 1) {
+      line(r3_zigzag.at(i), r3_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_b.at(0) - 0.6, node_b.at(1) - 0.7), text(9pt)[*R₃*])
+    content((node_b.at(0) - 0.6, node_b.at(1) - 0.9), text(9pt)[*6Ω*])
+
+    // R4 between nodes c and d
+    let r4_zigzag = (
+      (node_c.at(0), node_c.at(1) - 0.3),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.5),
+      (node_c.at(0) + 0.15, node_c.at(1) - 0.7),
+      (node_c.at(0) - 0.15, node_c.at(1) - 0.9),
+      (node_c.at(0), node_c.at(1) - 1.1),
+    )
+    for i in range(r4_zigzag.len() - 1) {
+      line(r4_zigzag.at(i), r4_zigzag.at(i + 1), stroke: 2pt + black)
+    }
+    content((node_c.at(0) - 0.6, node_c.at(1) - 0.7), text(9pt)[*R₄*])
+    content((node_c.at(0) - 0.6, node_c.at(1) - 0.9), text(9pt)[*3Ω*])
+
+    // Connecting wires (regular black)
+    line((node_a.at(0) + 0.1, node_a.at(1)), (node_a.at(0) + 0.7, node_a.at(1)), stroke: 2pt + black)
+    line((node_a.at(0) + 1.5, node_a.at(1)), (node_b.at(0), node_b.at(1)), stroke: 2pt + black)
+    line((node_b.at(0) + 0.7, node_b.at(1)), (node_b.at(0) + 1.5, node_b.at(1)), stroke: 2pt + black)
+    line((node_b.at(0) + 1.5, node_b.at(1)), (node_c.at(0), node_c.at(1)), stroke: 2pt + black)
+    line((node_b.at(0), node_b.at(1) - 0.3), (node_b.at(0), node_b.at(1) - 1.1), stroke: 2pt + black)
+    line((node_c.at(0), node_c.at(1) - 0.3), (node_c.at(0), node_c.at(1) - 1.1), stroke: 2pt + black)
+    line((node_e.at(0), node_e.at(1)), (node_d.at(0), node_d.at(1)), stroke: 2pt + black)
+    line((node_f.at(0), node_f.at(1)), (node_e.at(0), node_e.at(1)), stroke: 2pt + black)
+    line((node_a.at(0) - 0.1, node_a.at(1)), (node_f.at(0), node_f.at(1)), stroke: 2pt + black)
+
+    // Small node markers
+    circle(node_a, radius: 0.05, fill: black)
+    circle(node_b, radius: 0.05, fill: black)
+    circle(node_c, radius: 0.05, fill: black)
+    circle(node_d, radius: 0.05, fill: black)
+    circle(node_e, radius: 0.05, fill: black)
+    circle(node_f, radius: 0.05, fill: black)
+
+    // Complete loop indicators with arrows going all the way around
+
+    // Loop 1: a → b → e → f → a (RED) - inner left loop
+    let loop1_offset = 0.15
+    let loop1_path = (
+      // Top: a to b (above R1)
+      (node_a.at(0) + 0.5, node_a.at(1) + loop1_offset),
+      (node_b.at(0) - 0.5, node_b.at(1) + loop1_offset),
+      // Right: b to e (right of R3)
+      (node_b.at(0) + loop1_offset, node_b.at(1) - 0.2),
+      (node_b.at(0) + loop1_offset, node_e.at(1) + 0.2),
+      // Bottom: e to f (below bottom wire)
+      (node_e.at(0) + 0.5, node_e.at(1) - loop1_offset),
+      (node_f.at(0) - 0.5, node_f.at(1) - loop1_offset),
+      // Left: f to a (left of voltage source)
+      (node_f.at(0) - loop1_offset, node_f.at(1) + 0.2),
+      (node_a.at(0) - loop1_offset, node_a.at(1) - 0.2),
+      // Close the loop
+      (node_a.at(0) + 0.5, node_a.at(1) + loop1_offset),
+    )
+    for i in range(loop1_path.len() - 1) {
+      line(loop1_path.at(i), loop1_path.at(i + 1), stroke: red + 2.5pt)
+    }
+    // Add arrow on top segment
+    line(
+      (node_a.at(0) + 1.2, node_a.at(1) + loop1_offset),
+      (node_a.at(0) + 1.8, node_a.at(1) + loop1_offset),
+      mark: (end: ">", stroke: red + 2.5pt),
+      stroke: red + 2.5pt,
+    )
+    content((node_a.at(0) + 0.8, node_a.at(1) - 0.8), text(11pt, fill: red)[Loop 1])
+
+    // Loop 2: b → c → d → e → b (BLUE) - inner right loop
+    let loop2_offset = 0.15
+    let loop2_path = (
+      // Top: b to c (above R2)
+      (node_b.at(0) + 0.5, node_b.at(1) + loop2_offset),
+      (node_c.at(0) - 0.5, node_c.at(1) + loop2_offset),
+      // Right: c to d (right of R4)
+      (node_c.at(0) + loop2_offset, node_c.at(1) - 0.2),
+      (node_c.at(0) + loop2_offset, node_d.at(1) + 0.2),
+      // Bottom: d to e (below bottom wire)
+      (node_d.at(0) - 0.5, node_d.at(1) - loop2_offset),
+      (node_e.at(0) + 0.5, node_e.at(1) - loop2_offset),
+      // Left: e to b (left of R3)
+      (node_e.at(0) - loop2_offset, node_e.at(1) + 0.2),
+      (node_b.at(0) - loop2_offset, node_b.at(1) - 0.2),
+      // Close the loop
+      (node_b.at(0) + 0.5, node_b.at(1) + loop2_offset),
+    )
+    for i in range(loop2_path.len() - 1) {
+      line(loop2_path.at(i), loop2_path.at(i + 1), stroke: blue + 2.5pt)
+    }
+    // Add arrow on top segment
+    line(
+      (node_b.at(0) + 1.2, node_b.at(1) + loop2_offset),
+      (node_b.at(0) + 1.8, node_b.at(1) + loop2_offset),
+      mark: (end: ">", stroke: blue + 2.5pt),
+      stroke: blue + 2.5pt,
+    )
+    content((node_c.at(0) - 0.8, node_c.at(1) - 0.8), text(11pt, fill: blue)[Loop 2])
+
+    // Loop 3: a → b → c → d → e → f → a (GREEN) - outer loop
+    let loop3_offset = 0.3
+    let loop3_path = (
+      // Top: a to c (above entire top section)
+      (node_a.at(0) + 0.3, node_a.at(1) + loop3_offset),
+      (node_c.at(0) - 0.3, node_c.at(1) + loop3_offset),
+      // Right: c to d (far right of circuit)
+      (node_c.at(0) + loop3_offset, node_c.at(1) + 0.1),
+      (node_c.at(0) + loop3_offset, node_d.at(1) - 0.1),
+      // Bottom: d to f (below entire bottom section)
+      (node_d.at(0) - 0.3, node_d.at(1) - loop3_offset),
+      (node_f.at(0) + 0.3, node_f.at(1) - loop3_offset),
+      // Left: f to a (far left of circuit)
+      (node_f.at(0) - loop3_offset, node_f.at(1) - 0.1),
+      (node_a.at(0) - loop3_offset, node_a.at(1) + 0.1),
+      // Close the loop
+      (node_a.at(0) + 0.3, node_a.at(1) + loop3_offset),
+    )
+    for i in range(loop3_path.len() - 1) {
+      line(loop3_path.at(i), loop3_path.at(i + 1), stroke: green + 2.5pt)
+    }
+    // Add arrow on top segment
+    line(
+      (node_a.at(0) + 2.4, node_a.at(1) + loop3_offset),
+      (node_a.at(0) + 3.6, node_a.at(1) + loop3_offset),
+      mark: (end: ">", stroke: green + 2.5pt),
+      stroke: green + 2.5pt,
+    )
+    content((node_a.at(0) + 3, node_a.at(1) + 1.0), text(11pt, fill: green)[Loop 3])
+
+    // Node labels
+    content((node_a.at(0) - 0.3, node_a.at(1) + 0.15), text(9pt)[*a*])
+    content((node_b.at(0) - 0.15, node_b.at(1) + 0.25), text(9pt)[*b*])
+    content((node_c.at(0) + 0.15, node_c.at(1) + 0.25), text(9pt)[*c*])
+    content((node_d.at(0) + 0.15, node_d.at(1) - 0.25), text(9pt)[*d*])
+    content((node_e.at(0) - 0.15, node_e.at(1) - 0.25), text(9pt)[*e*])
+    content((node_f.at(0) - 0.3, node_f.at(1) - 0.15), text(9pt)[*f*])
+  }),
+  caption: [Circuit with *loops* highlighted (colored arrows). This circuit has several possible loops, with three examples shown],
+) <loops-diagram>
+
+#note("Counting Circuit Elements")[
+  For this example circuit:
+
+  - *Nodes*: 6 total (a, b, c, d, e, f)
+  - *Branches*: 6 total (voltage source + 4 resistors + 1 connecting wire)
+  - *Loops*: Many possible loops exist. The three shown are:
+    - *Loop 1*: a → R₁ → b → R₃ → e → (bottom wire) → f → (voltage source) → a
+    - *Loop 2*: b → R₂ → c → R₄ → d → (bottom wire) → e → R₃ → b
+    - *Loop 3*: Outer loop through all components a → R₁ → b → R₂ → c → R₄ → d → (bottom wire) → e → (bottom wire) → f → (voltage source) → a
+
+  Understanding these topological elements is essential for applying systematic circuit analysis methods like nodal analysis and mesh analysis.
 ]

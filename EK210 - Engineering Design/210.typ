@@ -10,12 +10,12 @@
   authors: (
     (
       name: "Giacomo Cappelletto",
-      // link: "https://your-website.com", // Uncomment and add your link if desired
+      link: "github.com/JJCAPPE", // Uncomment and add your link if desired
     ),
   ),
   
   // lof: true,  // Uncomment for list of figures
-  // lot: true,  // Uncomment for list of tables  
+  lot: true,  // Uncomment for list of tables  
   // lol: true,  // Uncomment for list of listings
   bibliography_file: "refs.bib",
   paper_size: "a4",
@@ -24,7 +24,7 @@
   text_font: "STIX Two Text",
   code_font: "Cascadia Mono",
   accent: "#DC143C", // Crimson red - change to your preferred color
-  h1-prefix: "Lecture",
+  h1-prefix: "Chapter",
   colortab: false,
 )
 
