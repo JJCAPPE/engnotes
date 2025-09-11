@@ -218,6 +218,53 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
   These expressions show that XOR outputs 1 when inputs differ, while XNOR outputs 1 when inputs are the same.
 ]
 
+=== Decimal to BCD and Binary to BCD (Double‑Dabble)
+
+#definition("Binary‑Coded Decimal (BCD)")[
+  BCD encodes each decimal digit (0–9) in 4 bits. For example,
+  2 → 0010, 4 → 0100, 3 → 0011.
+]
+
+#example("Decimal → BCD")[
+  Encode each decimal digit independently: 243 → 2|4|3 →
+  0010 0100 0011.
+]
+
+#example("Binary → BCD with double‑dabble")[
+  Convert an n‑bit binary number to BCD by repeating for each bit (MSB→LSB):
+  1) If any BCD nibble ≥ 5, add 3 to that nibble.  
+  2) Shift the entire BCD register left by 1 and shift in the next input bit.  
+  After all shifts, the BCD nibbles are the decimal digits.
+
+  Tiny example for 243₁₀ = 11110011₂ (8 bits):  
+  - Ones nibble hits 7 → add 3 → 10 before shifting  
+  - Later ones hits 5 → add 3 → 8  
+  - Tens hits 6 → add 3 → 9  
+  After 8 shifts: BCD = 0010 0100 0011 → digits 2 4 3.
+]
+
+#figure(
+  table(
+    columns: (2.4fr, 1.6fr, 2.2fr),
+    align: left,
+    stroke: none,
+    inset: 2pt,
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11110011]], [Initialization],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0001]], [#text(10pt, font: "DejaVu Sans Mono")[11100110]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0011]], [#text(10pt, font: "DejaVu Sans Mono")[11001100]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0111]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 1010]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Add 3 to ONES (was 7)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 0101]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 1000]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Add 3 to ONES (was 5)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0011 0000]], [#text(10pt, font: "DejaVu Sans Mono")[01100000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0110 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 1001 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Add 3 to TENS (was 6)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0001 0010 0001]], [#text(10pt, font: "DejaVu Sans Mono")[10000000]], [Shift],
+    [#text(10pt, font: "DejaVu Sans Mono")[0010 0100 0011]], [#text(10pt, font: "DejaVu Sans Mono")[00000000]], [Shift],
+  ),
+  caption: [Double‑dabble run for 243₁₀ (11110011₂). Left: BCD register; Right: original register. Transparent grid mimics textbook layout. Result: 0010 0100 0011 → digits 2 4 3.]
+) <double-dabble-243>
+
 == Modern Technology: MOS and CMOS
 
 #definition("MOSFET Technology")[
