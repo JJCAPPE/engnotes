@@ -251,42 +251,18 @@ Independent sources provide a specified voltage or current that does not depend 
 
 #figure(
   canvas(length: 1.2cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Ideal voltage source
-    let vs_pos = (0, 1)
-    circle(vs_pos, radius: 0.4, stroke: 2.5pt + black)
-    content(vs_pos, text(10pt)[*V*])
-    content((vs_pos.at(0) - 0.2, vs_pos.at(1)), text(9pt)[*+*])
-    content((vs_pos.at(0) + 0.2, vs_pos.at(1)), text(9pt)[*-*])
-    line((-0.8, vs_pos.at(1)), (vs_pos.at(0) - 0.4, vs_pos.at(1)), stroke: 2.5pt + black)
-    line((vs_pos.at(0) + 0.4, vs_pos.at(1)), (0.8, vs_pos.at(1)), stroke: 2.5pt + black)
-    content((0, 0.2), text(11pt)[*Ideal*])
+    // Ideal voltage source represented as a branch with labeled voltage
+    to("short", (-0.8, 1.2), (0.8, 1.2), v: $V_s$)
+    content((0, 0.6), text(11pt)[Ideal])
 
-    // Real voltage source
-    let real_vs_pos = (3, 1)
-    circle(real_vs_pos, radius: 0.4, stroke: 2.5pt + black)
-    content(real_vs_pos, text(10pt)[*V*])
-    content((real_vs_pos.at(0) - 0.2, real_vs_pos.at(1)), text(9pt)[*+*])
-    content((real_vs_pos.at(0) + 0.2, real_vs_pos.at(1)), text(9pt)[*-*])
-
-    // Internal resistance
-    let r_zigzag = (
-      (real_vs_pos.at(0) + 0.5, real_vs_pos.at(1)),
-      (real_vs_pos.at(0) + 0.7, real_vs_pos.at(1) + 0.1),
-      (real_vs_pos.at(0) + 0.9, real_vs_pos.at(1) - 0.1),
-      (real_vs_pos.at(0) + 1.1, real_vs_pos.at(1)),
-    )
-    for i in range(r_zigzag.len() - 1) {
-      line(r_zigzag.at(i), r_zigzag.at(i + 1), stroke: 2pt + black)
-    }
-    content((real_vs_pos.at(0) + 0.8, real_vs_pos.at(1) + 0.3), text(8pt)[*R*])
-
-    line((2.2, real_vs_pos.at(1)), (real_vs_pos.at(0) - 0.4, real_vs_pos.at(1)), stroke: 2.5pt + black)
-    line((real_vs_pos.at(0) + 1.1, real_vs_pos.at(1)), (3.8, real_vs_pos.at(1)), stroke: 2.5pt + black)
-    content((3, 0.2), text(11pt)[*Real*])
+    // Real voltage source represented as series V_s with internal resistance R_s
+    to("short", (2.2, 1.2), (3.0, 1.2), v: $V_s$)
+    to("R", (3.0, 1.2), (3.8, 1.2), label: [$R_s$])
+    content((3.0, 0.6), text(11pt)[Real])
   }),
-  caption: [Ideal vs Real Voltage Sources],
+  caption: [Ideal vs. real voltage source (stylized with package primitives)],
 ) <voltage-sources>
 
 #definition("Ideal Voltage Source")[
@@ -312,57 +288,23 @@ Independent sources provide a specified voltage or current that does not depend 
 
 #figure(
   canvas(length: 1.2cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
     // Ideal current source
-    let is_pos = (0, 1)
-    circle(is_pos, radius: 0.4, stroke: 2.5pt + black)
-    content(is_pos, text(10pt)[*I*])
-    line((-0.8, is_pos.at(1)), (is_pos.at(0) - 0.4, is_pos.at(1)), stroke: 2.5pt + black)
-    line((is_pos.at(0) + 0.4, is_pos.at(1)), (0.8, is_pos.at(1)), stroke: 2.5pt + black)
-    // Current arrow through source
-    line((-0.15, is_pos.at(1)), (0.15, is_pos.at(1)), mark: (end: ">", stroke: blue + 1.5pt), stroke: blue + 1.5pt)
-    content((0, 0.2), text(11pt)[*Ideal*])
+    to("isourceAM", (-0.6, 0.6), (-0.6, 1.8), label: $I_s$)
+    to("short", (-0.6, 0.6), (0.6, 0.6))
+    to("short", (-0.6, 1.8), (0.6, 1.8))
+    content((0, 0.2), text(11pt)[Ideal])
 
-    // Real current source
-    let real_is_pos = (3, 1)
-    circle(real_is_pos, radius: 0.4, stroke: 2.5pt + black)
-    content(real_is_pos, text(10pt)[*I*])
-
-    // Parallel resistance (above the source)
-    line(
-      (real_is_pos.at(0) - 0.4, real_is_pos.at(1)),
-      (real_is_pos.at(0) - 0.4, real_is_pos.at(1) + 0.6),
-      stroke: 2pt + black,
-    )
-    let r_zigzag = (
-      (real_is_pos.at(0) - 0.3, real_is_pos.at(1) + 0.6),
-      (real_is_pos.at(0) - 0.1, real_is_pos.at(1) + 0.75),
-      (real_is_pos.at(0) + 0.1, real_is_pos.at(1) + 0.45),
-      (real_is_pos.at(0) + 0.3, real_is_pos.at(1) + 0.6),
-    )
-    for i in range(r_zigzag.len() - 1) {
-      line(r_zigzag.at(i), r_zigzag.at(i + 1), stroke: 2pt + black)
-    }
-    line(
-      (real_is_pos.at(0) + 0.4, real_is_pos.at(1) + 0.6),
-      (real_is_pos.at(0) + 0.4, real_is_pos.at(1)),
-      stroke: 2pt + black,
-    )
-    content((real_is_pos.at(0), real_is_pos.at(1) + 0.9), text(8pt)[*R*])
-
-    line((2.2, real_is_pos.at(1)), (real_is_pos.at(0) - 0.4, real_is_pos.at(1)), stroke: 2.5pt + black)
-    line((real_is_pos.at(0) + 0.4, real_is_pos.at(1)), (3.8, real_is_pos.at(1)), stroke: 2.5pt + black)
-    // Current arrow through source
-    line(
-      (real_is_pos.at(0) - 0.15, real_is_pos.at(1)),
-      (real_is_pos.at(0) + 0.15, real_is_pos.at(1)),
-      mark: (end: ">", stroke: blue + 1.5pt),
-      stroke: blue + 1.5pt,
-    )
-    content((3, 0.2), text(11pt)[*Real*])
+    // Real current source (source in parallel with resistor)
+    to("isourceAM", (2.4, 0.6), (2.4, 1.8), label: $I_s$)
+    to("R", (2.0, 1.8), (2.8, 1.8), label: [$R_s$])
+    to("short", (2.0, 0.6), (2.8, 0.6))
+    to("short", (2.0, 1.8), (2.0, 0.6))
+    to("short", (2.8, 1.8), (2.8, 0.6))
+    content((2.4, 0.2), text(11pt)[Real])
   }),
-  caption: [Ideal vs Real Current Sources],
+  caption: [Ideal vs. real current source (stylized with package primitives)],
 ) <current-sources>
 
 #definition("Ideal Current Source")[
@@ -604,82 +546,17 @@ The passive sign convention (PSC) is crucial for determining whether a circuit e
 
 #figure(
   canvas(length: 1.2cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Define circuit component positions
-    let battery_pos = (0, 1)
-    let r1_pos = (2.5, 1)
-    let r2_pos = (5, 1)
-
-    // Battery symbol (two parallel lines, different heights)
-    line(
-      (battery_pos.at(0) - 0.1, battery_pos.at(1) - 0.4),
-      (battery_pos.at(0) - 0.1, battery_pos.at(1) + 0.4),
-      stroke: 3pt + black,
-    )
-    line(
-      (battery_pos.at(0) + 0.1, battery_pos.at(1) - 0.2),
-      (battery_pos.at(0) + 0.1, battery_pos.at(1) + 0.2),
-      stroke: 3pt + black,
-    )
-    content((battery_pos.at(0), battery_pos.at(1) - 0.7), text(11pt)[*12V*])
-    content((battery_pos.at(0) - 0.25, battery_pos.at(1)), text(12pt)[*+*])
-    content((battery_pos.at(0) + 0.25, battery_pos.at(1)), text(12pt)[*-*])
-
-    // R1: 6Ω resistor with clean zigzag pattern
-    let r1_zigzag = (
-      (r1_pos.at(0) - 0.4, r1_pos.at(1)),
-      (r1_pos.at(0) - 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0), r1_pos.at(1) - 0.15),
-      (r1_pos.at(0) + 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0) + 0.4, r1_pos.at(1)),
-    )
-    for i in range(r1_zigzag.len() - 1) {
-      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r1_pos.at(0), r1_pos.at(1) - 0.4), text(10pt)[*6Ω*])
-
-    // Voltage polarity for R1 (+18V)
-    content((r1_pos.at(0) - 0.5, r1_pos.at(1) + 0.15), text(9pt, fill: red)[*+*])
-    content((r1_pos.at(0) + 0.5, r1_pos.at(1) + 0.15), text(9pt, fill: red)[*-*])
-    content((r1_pos.at(0), r1_pos.at(1) + 0.4), text(9pt, fill: red)[*18V*])
-
-    // R2: 2Ω resistor with clean zigzag pattern
-    let r2_zigzag = (
-      (r2_pos.at(0) - 0.4, r2_pos.at(1)),
-      (r2_pos.at(0) - 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0), r2_pos.at(1) - 0.15),
-      (r2_pos.at(0) + 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0) + 0.4, r2_pos.at(1)),
-    )
-    for i in range(r2_zigzag.len() - 1) {
-      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r2_pos.at(0), r2_pos.at(1) - 0.4), text(10pt)[*2Ω*])
-
-    // Flipped voltage polarity for R2 (-6V)
-    content((r2_pos.at(0) - 0.5, r2_pos.at(1) + 0.15), text(9pt, fill: red)[*-*])
-    content((r2_pos.at(0) + 0.5, r2_pos.at(1) + 0.15), text(9pt, fill: red)[*+*])
-    content((r2_pos.at(0), r2_pos.at(1) + 0.4), text(9pt, fill: red)[*-6V*])
-
-    // Connecting wires
-    line((battery_pos.at(0) + 0.1, battery_pos.at(1)), (r1_pos.at(0) - 0.4, r1_pos.at(1)), stroke: 2.5pt + black)
-    line((r1_pos.at(0) + 0.4, r1_pos.at(1)), (r2_pos.at(0) - 0.4, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((r2_pos.at(0) + 0.4, r2_pos.at(1)), (7, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((7, r2_pos.at(1)), (7, -0.2), stroke: 2.5pt + black)
-    line((7, -0.2), (battery_pos.at(0) - 0.1, -0.2), stroke: 2.5pt + black)
-    line((battery_pos.at(0) - 0.1, -0.2), (battery_pos.at(0) - 0.1, battery_pos.at(1)), stroke: 2.5pt + black)
-
-    // Current arrow and label
-    line((1.2, r1_pos.at(1) + 0.7), (2, r1_pos.at(1) + 0.7), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((1.6, r1_pos.at(1) + 0.95), text(11pt, fill: blue)[*I = 3A*])
-
-    // Ground symbol
-    line((battery_pos.at(0) - 0.3, -0.2), (battery_pos.at(0) + 0.1, -0.2), stroke: 2.5pt + black)
-    line((battery_pos.at(0) - 0.2, -0.3), (battery_pos.at(0), -0.3), stroke: 2.5pt + black)
-    line((battery_pos.at(0) - 0.1, -0.4), (battery_pos.at(0) - 0.05, -0.4), stroke: 2.5pt + black)
+    // Simple series loop: Vs in series with R1 and R2
+    to("short", (-0.6, 1.8), (0.8, 1.8), v: $12\,V$)
+    to("R", (0.8, 1.8), (3.0, 1.8), label: [$6\,\Omega$], i: (">_", $I$))
+    to("R", (3.0, 1.8), (5.2, 1.8), label: [$2\,\Omega$], i: (">_", $I$))
+    to("short", (5.2, 1.8), (5.2, 0.2))
+    to("short", (5.2, 0.2), (-0.6, 0.2))
+    to("short", (-0.6, 0.2), (-0.6, 1.8))
   }),
-  caption: [Series circuit with 12V battery, 6Ω and 2Ω resistors (showing voltage polarity references)],
+  caption: [Series circuit using package primitives: 12V source with 6Ω and 2Ω in series],
 ) <series-circuit>
 
 #note("Passive Sign Convention and Power Balance")[
@@ -1177,107 +1054,14 @@ Resistors can be combined in two fundamental ways: series and parallel connectio
 
 #figure(
   canvas(length: 1.5cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Individual resistors in series
-    let r1_pos = (1, 2)
-    let r2_pos = (3, 2)
-    let r3_pos = (5, 2)
-
-    // R1
-    let r1_zigzag = (
-      (r1_pos.at(0) - 0.3, r1_pos.at(1)),
-      (r1_pos.at(0) - 0.1, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0) + 0.1, r1_pos.at(1) - 0.15),
-      (r1_pos.at(0) + 0.3, r1_pos.at(1)),
-    )
-    for i in range(r1_zigzag.len() - 1) {
-      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r1_pos.at(0), r1_pos.at(1) - 0.4), text(10pt)[*R₁*])
-
-    // R2
-    let r2_zigzag = (
-      (r2_pos.at(0) - 0.3, r2_pos.at(1)),
-      (r2_pos.at(0) - 0.1, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0) + 0.1, r2_pos.at(1) - 0.15),
-      (r2_pos.at(0) + 0.3, r2_pos.at(1)),
-    )
-    for i in range(r2_zigzag.len() - 1) {
-      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r2_pos.at(0), r2_pos.at(1) - 0.4), text(10pt)[*R₂*])
-
-    // R3
-    let r3_zigzag = (
-      (r3_pos.at(0) - 0.3, r3_pos.at(1)),
-      (r3_pos.at(0) - 0.1, r3_pos.at(1) + 0.15),
-      (r3_pos.at(0) + 0.1, r3_pos.at(1) - 0.15),
-      (r3_pos.at(0) + 0.3, r3_pos.at(1)),
-    )
-    for i in range(r3_zigzag.len() - 1) {
-      line(r3_zigzag.at(i), r3_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r3_pos.at(0), r3_pos.at(1) - 0.4), text(10pt)[*R₃*])
-
-    // Connecting wires
-    line((0, r1_pos.at(1)), (r1_pos.at(0) - 0.3, r1_pos.at(1)), stroke: 2.5pt + black)
-    line((r1_pos.at(0) + 0.3, r1_pos.at(1)), (r2_pos.at(0) - 0.3, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((r2_pos.at(0) + 0.3, r2_pos.at(1)), (r3_pos.at(0) - 0.3, r3_pos.at(1)), stroke: 2.5pt + black)
-    line((r3_pos.at(0) + 0.3, r3_pos.at(1)), (6, r3_pos.at(1)), stroke: 2.5pt + black)
-
-    // Current arrows and labels
-    line((0.3, r1_pos.at(1) + 0.4), (0.7, r1_pos.at(1) + 0.4), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((0.5, r1_pos.at(1) + 0.65), text(10pt, fill: blue)[*I*])
-
-    line((2.3, r2_pos.at(1) + 0.4), (2.7, r2_pos.at(1) + 0.4), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((2.5, r2_pos.at(1) + 0.65), text(10pt, fill: blue)[*I*])
-
-    line((4.3, r3_pos.at(1) + 0.4), (4.7, r3_pos.at(1) + 0.4), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((4.5, r3_pos.at(1) + 0.65), text(10pt, fill: blue)[*I*])
-
-    // Terminals
-    circle((0, r1_pos.at(1)), radius: 0.06, fill: black)
-    circle((6, r3_pos.at(1)), radius: 0.06, fill: black)
-    content((0, r1_pos.at(1) + 0.3), text(9pt)[*a*])
-    content((6, r3_pos.at(1) + 0.3), text(9pt)[*b*])
-
-    // Equivalent circuit below
-    content((3, 0.8), text(12pt)[*≡*])
-
-    let req_pos = (3, 0)
-    let req_zigzag = (
-      (req_pos.at(0) - 0.5, req_pos.at(1)),
-      (req_pos.at(0) - 0.2, req_pos.at(1) + 0.2),
-      (req_pos.at(0), req_pos.at(1) - 0.2),
-      (req_pos.at(0) + 0.2, req_pos.at(1) + 0.2),
-      (req_pos.at(0) + 0.5, req_pos.at(1)),
-    )
-    for i in range(req_zigzag.len() - 1) {
-      line(req_zigzag.at(i), req_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((req_pos.at(0), req_pos.at(1) - 0.5), text(10pt)[*R*#sub[eq] *= R₁ + R₂ + R₃*])
-
-    // Connecting wires for equivalent
-    line((1, req_pos.at(1)), (req_pos.at(0) - 0.5, req_pos.at(1)), stroke: 2.5pt + black)
-    line((req_pos.at(0) + 0.5, req_pos.at(1)), (5, req_pos.at(1)), stroke: 2.5pt + black)
-
-    // Current for equivalent
-    line(
-      (1.8, req_pos.at(1) + 0.4),
-      (2.2, req_pos.at(1) + 0.4),
-      mark: (end: ">", stroke: blue + 2pt),
-      stroke: blue + 2pt,
-    )
-    content((2, req_pos.at(1) + 0.65), text(10pt, fill: blue)[*I*])
-
-    // Terminals for equivalent
-    circle((1, req_pos.at(1)), radius: 0.06, fill: black)
-    circle((5, req_pos.at(1)), radius: 0.06, fill: black)
-    content((1, req_pos.at(1) - 0.3), text(9pt)[*a*])
-    content((5, req_pos.at(1) - 0.3), text(9pt)[*b*])
+    // Simple series chain using package primitives
+    to("R", (0, 1.5), (2, 1.5), label: [$R_1$], i: (">_", $I$), poles: "*-*")
+    to("R", (), (4, 1.5), label: [$R_2$], i: (">_", $I$), poles: "*-*")
+    to("R", (), (6, 1.5), label: [$R_3$], i: (">_", $I$), poles: "*-*")
   }),
-  caption: [Series resistor combination: same current flows through each resistor],
+  caption: [Series resistor combination (2‑terminal chain using package primitives)],
 ) <series-resistors>
 
 #note("Series Resistor Properties")[
@@ -1299,103 +1083,18 @@ Resistors can be combined in two fundamental ways: series and parallel connectio
 
 #figure(
   canvas(length: 1.5cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Parallel resistors
-    let left_node = (1, 1.5)
-    let right_node = (5, 1.5)
+    // Buses
+    to("short", (0, 0.6), (0, 2.4))
+    to("short", (4, 0.6), (4, 2.4))
 
-    // Top branch with R1
-    let r1_pos = (3, 2.2)
-    let r1_zigzag = (
-      (r1_pos.at(0) - 0.4, r1_pos.at(1)),
-      (r1_pos.at(0) - 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0), r1_pos.at(1) - 0.15),
-      (r1_pos.at(0) + 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0) + 0.4, r1_pos.at(1)),
-    )
-    for i in range(r1_zigzag.len() - 1) {
-      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r1_pos.at(0), r1_pos.at(1) + 0.4), text(10pt)[*R₁*])
-
-    // Middle branch with R2
-    let r2_pos = (3, 1.5)
-    let r2_zigzag = (
-      (r2_pos.at(0) - 0.4, r2_pos.at(1)),
-      (r2_pos.at(0) - 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0), r2_pos.at(1) - 0.15),
-      (r2_pos.at(0) + 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0) + 0.4, r2_pos.at(1)),
-    )
-    for i in range(r2_zigzag.len() - 1) {
-      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r2_pos.at(0), r2_pos.at(1) + 0.4), text(10pt)[*R₂*])
-
-    // Bottom branch with R3
-    let r3_pos = (3, 0.8)
-    let r3_zigzag = (
-      (r3_pos.at(0) - 0.4, r3_pos.at(1)),
-      (r3_pos.at(0) - 0.2, r3_pos.at(1) + 0.15),
-      (r3_pos.at(0), r3_pos.at(1) - 0.15),
-      (r3_pos.at(0) + 0.2, r3_pos.at(1) + 0.15),
-      (r3_pos.at(0) + 0.4, r3_pos.at(1)),
-    )
-    for i in range(r3_zigzag.len() - 1) {
-      line(r3_zigzag.at(i), r3_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r3_pos.at(0), r3_pos.at(1) - 0.4), text(10pt)[*R₃*])
-
-    // Connecting wires - left side
-    line((left_node.at(0), left_node.at(1)), (left_node.at(0), r1_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), r1_pos.at(1)), (r1_pos.at(0) - 0.4, r1_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), left_node.at(1)), (r2_pos.at(0) - 0.4, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), left_node.at(1)), (left_node.at(0), r3_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), r3_pos.at(1)), (r3_pos.at(0) - 0.4, r3_pos.at(1)), stroke: 2.5pt + black)
-
-    // Connecting wires - right side
-    line((right_node.at(0), right_node.at(1)), (right_node.at(0), r1_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), r1_pos.at(1)), (r1_pos.at(0) + 0.4, r1_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), right_node.at(1)), (r2_pos.at(0) + 0.4, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), right_node.at(1)), (right_node.at(0), r3_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), r3_pos.at(1)), (r3_pos.at(0) + 0.4, r3_pos.at(1)), stroke: 2.5pt + black)
-
-    // External connections
-    line((0, left_node.at(1)), (left_node.at(0), left_node.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), right_node.at(1)), (6, right_node.at(1)), stroke: 2.5pt + black)
-
-    // Current arrows
-    line((1.8, r1_pos.at(1) + 0.2), (2.2, r1_pos.at(1) + 0.2), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((1.4, r1_pos.at(1) + 0.2), text(10pt, fill: blue)[*I₁*])
-
-    line((1.8, r2_pos.at(1) + 0.2), (2.2, r2_pos.at(1) + 0.2), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((1.4, r2_pos.at(1) + 0.2), text(10pt, fill: blue)[*I₂*])
-
-    line((1.8, r3_pos.at(1) + 0.2), (2.2, r3_pos.at(1) + 0.2), mark: (end: ">", stroke: blue + 2pt), stroke: blue + 2pt)
-    content((1.4, r3_pos.at(1) + 0.2), text(10pt, fill: blue)[*I₃*])
-
-    // Total current
-    line(
-      (0.3, left_node.at(1) + 0.2),
-      (0.7, left_node.at(1) + 0.2),
-      mark: (end: ">", stroke: red + 2pt),
-      stroke: red + 2pt,
-    )
-    content((0.5, left_node.at(1) + 0.5), text(10pt, fill: red)[*I*])
-
-    // Voltage across parallel combination
-    content((left_node.at(0) - 0.2, left_node.at(1) + 0.8), text(10pt, fill: green)[*+*])
-    content((right_node.at(0) + 0.2, right_node.at(1) + 0.8), text(10pt, fill: green)[*-*])
-    content((3, 3), text(10pt, fill: green)[*V*])
-
-    // Node labels
-    circle((left_node.at(0), left_node.at(1)), radius: 0.06, fill: black)
-    circle((right_node.at(0), right_node.at(1)), radius: 0.06, fill: black)
-    content((left_node.at(0) - 0.2, left_node.at(1) - 0.2), text(9pt)[*a*])
-    content((right_node.at(0) + 0.2, right_node.at(1) - 0.2), text(9pt)[*b*])
+    // Three parallel branches
+    to("R", (0, 2.2), (4, 2.2), label: [$R_1$], i: (">_", $I_1$))
+    to("R", (0, 1.5), (4, 1.5), label: [$R_2$], i: (">_", $I_2$))
+    to("R", (0, 0.8), (4, 0.8), label: [$R_3$], i: (">_", $I_3$))
   }),
-  caption: [Parallel resistor combination: same voltage across each resistor],
+  caption: [Parallel resistor combination (three branches using package primitives)],
 ) <parallel-resistors>
 
 #note("Parallel Resistor Properties")[
@@ -1419,87 +1118,20 @@ When resistors are connected in series, the total voltage divides among them pro
 
 #figure(
   canvas(length: 1.8cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Voltage source
-    let vs_pos = (1, 1.5)
-    line(
-      (vs_pos.at(0) - 0.1, vs_pos.at(1) - 0.4),
-      (vs_pos.at(0) - 0.1, vs_pos.at(1) + 0.4),
-      stroke: 3pt + black,
-    )
-    line(
-      (vs_pos.at(0) + 0.1, vs_pos.at(1) - 0.3),
-      (vs_pos.at(0) + 0.1, vs_pos.at(1) + 0.3),
-      stroke: 3pt + black,
-    )
-    content((vs_pos.at(0), vs_pos.at(1) - 0.7), text(10pt)[*V*#sub[s]])
-    content((vs_pos.at(0) - 0.25, vs_pos.at(1)), text(11pt)[*+*])
-    content((vs_pos.at(0) + 0.25, vs_pos.at(1)), text(11pt)[*-*])
+    // Simple series divider
+    to("R", (0, 2.4), (0, 1.4), label: [$R_1$], i: (">_", $I$))
+    to("R", (), (0, 0.4), label: [$R_2$], i: (">_", $I$))
 
-    // R1 (top resistor)
-    let r1_pos = (3, 2.5)
-    let r1_zigzag = (
-      (r1_pos.at(0), r1_pos.at(1) - 0.3),
-      (r1_pos.at(0) - 0.15, r1_pos.at(1) - 0.1),
-      (r1_pos.at(0) + 0.15, r1_pos.at(1) + 0.1),
-      (r1_pos.at(0) - 0.15, r1_pos.at(1) + 0.3),
-      (r1_pos.at(0), r1_pos.at(1) + 0.5),
-    )
-    for i in range(r1_zigzag.len() - 1) {
-      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r1_pos.at(0) + 0.4, r1_pos.at(1) + 0.1), text(10pt)[*R₁*])
-
-    // Voltage across R1
-    content((r1_pos.at(0) - 0.4, r1_pos.at(1) + 0.3), text(10pt, fill: red)[*+*])
-    content((r1_pos.at(0) - 0.4, r1_pos.at(1) - 0.1), text(10pt, fill: red)[*-*])
-    content((r1_pos.at(0) - 0.8, r1_pos.at(1) + 0.1), text(10pt, fill: red)[*V₁*])
-
-    // R2 (bottom resistor)
-    let r2_pos = (3, 0.5)
-    let r2_zigzag = (
-      (r2_pos.at(0), r2_pos.at(1) - 0.3),
-      (r2_pos.at(0) - 0.15, r2_pos.at(1) - 0.1),
-      (r2_pos.at(0) + 0.15, r2_pos.at(1) + 0.1),
-      (r2_pos.at(0) - 0.15, r2_pos.at(1) + 0.3),
-      (r2_pos.at(0), r2_pos.at(1) + 0.5),
-    )
-    for i in range(r2_zigzag.len() - 1) {
-      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r2_pos.at(0) + 0.4, r2_pos.at(1) + 0.1), text(10pt)[*R₂*])
-
-    // Voltage across R2
-    content((r2_pos.at(0) - 0.4, r2_pos.at(1) + 0.3), text(10pt, fill: blue)[*+*])
-    content((r2_pos.at(0) - 0.4, r2_pos.at(1) - 0.1), text(10pt, fill: blue)[*-*])
-    content((r2_pos.at(0) - 0.8, r2_pos.at(1) + 0.1), text(10pt, fill: blue)[*V₂*])
-
-    // Connecting wires
-    line((vs_pos.at(0) + 0.1, vs_pos.at(1)), (4.5, vs_pos.at(1)), stroke: 2.5pt + black)
-    line((4.5, vs_pos.at(1)), (4.5, r1_pos.at(1) + 0.5), stroke: 2.5pt + black)
-    line((4.5, r1_pos.at(1) + 0.5), (r1_pos.at(0), r1_pos.at(1) + 0.5), stroke: 2.5pt + black)
-    line((r1_pos.at(0), r1_pos.at(1) - 0.3), (r2_pos.at(0), r2_pos.at(1) + 0.5), stroke: 2.5pt + black)
-    line((r2_pos.at(0), r2_pos.at(1) - 0.3), (4.5, r2_pos.at(1) - 0.3), stroke: 2.5pt + black)
-    line((4.5, r2_pos.at(1) - 0.3), (4.5, -0.5), stroke: 2.5pt + black)
-    line((4.5, -0.5), (vs_pos.at(0) - 0.1, -0.5), stroke: 2.5pt + black)
-    line((vs_pos.at(0) - 0.1, -0.5), (vs_pos.at(0) - 0.1, vs_pos.at(1)), stroke: 2.5pt + black)
-
-    // Current arrow
-    line(
-      (3.8, r1_pos.at(1) + 0.7),
-      (4.2, r1_pos.at(1) + 0.7),
-      mark: (end: ">", stroke: green + 2pt),
-      stroke: green + 2pt,
-    )
-    content((4, r1_pos.at(1) + 0.95), text(10pt, fill: green)[*I*])
-
-    // Ground symbol
-    line((4.3, -0.5), (4.7, -0.5), stroke: 2.5pt + black)
-    line((4.4, -0.6), (4.6, -0.6), stroke: 2.5pt + black)
-    line((4.45, -0.7), (4.55, -0.7), stroke: 2.5pt + black)
+    // Input and output annotations
+    to("short", (-0.8, 2.4), (0, 2.4), v: $V_\text{in}$)
+    to("short", (0, 1.4), (2.2, 1.4))
+    to("short", (0, 0.4), (2.2, 0.4))
+    to("short", (-0.8, 0.4), (0, 0.4))
+    to("short", (2.2, 1.4), (2.2, 0.4), v: $V_\text{out}$)
   }),
-  caption: [Voltage divider circuit showing voltage division across series resistors],
+  caption: [Voltage divider shown with package primitives and labeled $V_\text{in}$ and $V_\text{out}$],
 ) <voltage-divider>
 
 #example("Voltage Divider Calculation")[
@@ -1530,88 +1162,19 @@ When resistors are connected in parallel, the total current divides among them i
 
 #figure(
   canvas(length: 1.8cm, {
-    import draw: *
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
 
-    // Current source
-    let is_pos = (1, 1.5)
-    circle(is_pos, radius: 0.4, stroke: 2.5pt + black)
-    content(is_pos, text(10pt)[*I*#sub[s]])
-    line((-0.5, is_pos.at(1)), (is_pos.at(0) - 0.4, is_pos.at(1)), stroke: 2.5pt + black)
-    line((is_pos.at(0) + 0.4, is_pos.at(1)), (2, is_pos.at(1)), stroke: 2.5pt + black)
-    // Current arrow through source
-    line(
-      (is_pos.at(0) - 0.15, is_pos.at(1)),
-      (is_pos.at(0) + 0.15, is_pos.at(1)),
-      mark: (end: ">", stroke: blue + 1.5pt),
-      stroke: blue + 1.5pt,
-    )
+    // Current source feeding a shunt
+    to("isourceAM", (0, 0), (0, 2.6), label: $I_s$)
+    to("short", (), (2.2, 2.6))
+    to("R", (), (2.2, 0), label: [$R_1$], i: (">_", $I_1$))
+    to("short", (), (0, 0))
 
-    // Parallel resistors
-    let left_node = (2, 1.5)
-    let right_node = (4.5, 1.5)
-
-    // R1 (top branch)
-    let r1_pos = (3.25, 2.2)
-    let r1_zigzag = (
-      (r1_pos.at(0) - 0.4, r1_pos.at(1)),
-      (r1_pos.at(0) - 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0), r1_pos.at(1) - 0.15),
-      (r1_pos.at(0) + 0.2, r1_pos.at(1) + 0.15),
-      (r1_pos.at(0) + 0.4, r1_pos.at(1)),
-    )
-    for i in range(r1_zigzag.len() - 1) {
-      line(r1_zigzag.at(i), r1_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r1_pos.at(0), r1_pos.at(1) + 0.4), text(10pt)[*R₁*])
-
-    // R2 (bottom branch)
-    let r2_pos = (3.25, 0.8)
-    let r2_zigzag = (
-      (r2_pos.at(0) - 0.4, r2_pos.at(1)),
-      (r2_pos.at(0) - 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0), r2_pos.at(1) - 0.15),
-      (r2_pos.at(0) + 0.2, r2_pos.at(1) + 0.15),
-      (r2_pos.at(0) + 0.4, r2_pos.at(1)),
-    )
-    for i in range(r2_zigzag.len() - 1) {
-      line(r2_zigzag.at(i), r2_zigzag.at(i + 1), stroke: 2.5pt + black)
-    }
-    content((r2_pos.at(0), r2_pos.at(1) - 0.4), text(10pt)[*R₂*])
-
-    // Connecting wires for parallel branches
-    line((left_node.at(0), left_node.at(1)), (left_node.at(0), r1_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), r1_pos.at(1)), (r1_pos.at(0) - 0.4, r1_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), right_node.at(1)), (right_node.at(0), r1_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), r1_pos.at(1)), (r1_pos.at(0) + 0.4, r1_pos.at(1)), stroke: 2.5pt + black)
-
-    line((left_node.at(0), left_node.at(1)), (left_node.at(0), r2_pos.at(1)), stroke: 2.5pt + black)
-    line((left_node.at(0), r2_pos.at(1)), (r2_pos.at(0) - 0.4, r2_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), right_node.at(1)), (right_node.at(0), r2_pos.at(1)), stroke: 2.5pt + black)
-    line((right_node.at(0), r2_pos.at(1)), (r2_pos.at(0) + 0.4, r2_pos.at(1)), stroke: 2.5pt + black)
-
-    // Return path
-    line((right_node.at(0), right_node.at(1)), (5.5, right_node.at(1)), stroke: 2.5pt + black)
-    line((5.5, right_node.at(1)), (5.5, -0.5), stroke: 2.5pt + black)
-    line((5.5, -0.5), (-0.5, -0.5), stroke: 2.5pt + black)
-    line((-0.5, -0.5), (-0.5, is_pos.at(1)), stroke: 2.5pt + black)
-
-    // Current arrows
-    line((2.6, r1_pos.at(1) + 0.2), (3, r1_pos.at(1) + 0.2), mark: (end: ">", stroke: red + 2pt), stroke: red + 2pt)
-    content((2.3, r1_pos.at(1) + 0.4), text(10pt, fill: red)[*I₁*])
-
-    line((2.6, r2_pos.at(1) + 0.2), (3, r2_pos.at(1) + 0.2), mark: (end: ">", stroke: green + 2pt), stroke: green + 2pt)
-    content((2.3, r2_pos.at(1) + 0.4), text(10pt, fill: green)[*I₂*])
-
-    // Voltage across parallel combination
-    content((left_node.at(0) - 0.2, left_node.at(1) + 0.2), text(10pt, fill: purple)[*+*])
-    content((right_node.at(0) + 0.2, right_node.at(1) + 0.2), text(10pt, fill: purple)[*-*])
-    content((3.25, 3), text(10pt, fill: purple)[*V*])
-
-    // Node markers
-    circle((left_node.at(0), left_node.at(1)), radius: 0.06, fill: black)
-    circle((right_node.at(0), right_node.at(1)), radius: 0.06, fill: black)
+    to("short", (2.2, 2.6), (4.4, 2.6))
+    to("R", (), (4.4, 0), label: [$R_2$], i: (">_", $I_2$))
+    to("short", (), (2.2, 0))
   }),
-  caption: [Current divider circuit showing current division across parallel resistors],
+  caption: [Current divider built with package primitives (two shunt resistors)],
 ) <current-divider>
 
 #example("Current Divider Calculation")[
