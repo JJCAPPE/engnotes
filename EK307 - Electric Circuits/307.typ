@@ -1,5 +1,5 @@
 #import "../jsk-lecnotes/lib.typ": *
-#import "@preview/cetz:0.3.1": canvas, draw
+#import "@preview/cetz:0.4.2": canvas, draw
 
 #show: template.with(
   title: [EK307: Circuits],
@@ -252,6 +252,7 @@ Independent sources provide a specified voltage or current that does not depend 
 #figure(
   canvas(length: 1.2cm, {
     import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
+    import draw: *
 
     // Ideal voltage source represented as a branch with labeled voltage
     to("short", (-0.8, 1.2), (0.8, 1.2), v: $V_s$)
@@ -289,6 +290,7 @@ Independent sources provide a specified voltage or current that does not depend 
 #figure(
   canvas(length: 1.2cm, {
     import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
+    import draw: *
 
     // Ideal current source
     to("isourceAM", (-0.6, 0.6), (-0.6, 1.8), label: $I_s$)
@@ -550,8 +552,8 @@ The passive sign convention (PSC) is crucial for determining whether a circuit e
 
     // Simple series loop: Vs in series with R1 and R2
     to("short", (-0.6, 1.8), (0.8, 1.8), v: $12\,V$)
-    to("R", (0.8, 1.8), (3.0, 1.8), label: [$6\,\Omega$], i: (">_", $I$))
-    to("R", (3.0, 1.8), (5.2, 1.8), label: [$2\,\Omega$], i: (">_", $I$))
+    to("R", (0.8, 1.8), (3.0, 1.8), label: [$6\,Ω$], i: (">_", $I$))
+    to("R", (3.0, 1.8), (5.2, 1.8), label: [$2\,Ω$], i: (">_", $I$))
     to("short", (5.2, 1.8), (5.2, 0.2))
     to("short", (5.2, 0.2), (-0.6, 0.2))
     to("short", (-0.6, 0.2), (-0.6, 1.8))
@@ -1049,7 +1051,7 @@ Resistors can be combined in two fundamental ways: series and parallel connectio
 
 #definition("Series Resistors")[
   Resistors are in series when they share the same current (i.e., when current has only one path to flow through all of them). The equivalent resistance is the sum of individual resistances:
-  $ #iboxed($R_"eq" = sum_(i=1)^n R_i = R_1 + R_2 + R_3 + dots$) $
+  $ #iboxed($R_"eq" = sum_(i=1)^n R_i = R_1 + R_2 + R_3 + \ldots$) $
 ]
 
 #figure(
@@ -1058,8 +1060,8 @@ Resistors can be combined in two fundamental ways: series and parallel connectio
 
     // Simple series chain using package primitives
     to("R", (0, 1.5), (2, 1.5), label: [$R_1$], i: (">_", $I$), poles: "*-*")
-    to("R", (), (4, 1.5), label: [$R_2$], i: (">_", $I$), poles: "*-*")
-    to("R", (), (6, 1.5), label: [$R_3$], i: (">_", $I$), poles: "*-*")
+    to("R", (2, 1.5), (4, 1.5), label: [$R_2$], i: (">_", $I$), poles: "*-*")
+    to("R", (4, 1.5), (6, 1.5), label: [$R_3$], i: (">_", $I$), poles: "*-*")
   }),
   caption: [Series resistor combination (2‑terminal chain using package primitives)],
 ) <series-resistors>
@@ -1076,7 +1078,7 @@ Resistors can be combined in two fundamental ways: series and parallel connectio
 
 #definition("Parallel Resistors")[
   Resistors are in parallel when they share the same voltage (i.e., when they are connected across the same two nodes). The reciprocal of equivalent resistance equals the sum of reciprocals:
-  $ #iboxed($1/R_"eq" = sum_(i=1)^n 1/R_i = 1/R_1 + 1/R_2 + 1/R_3 + dots$) $
+  $ #iboxed($1/R_"eq" = sum_(i=1)^n 1/R_i = 1/R_1 + 1/R_2 + 1/R_3 + \ldots$) $
 
   For two resistors: $R_"eq" = (R_1 R_2)/(R_1 + R_2)$ (product over sum)
 ]
@@ -1122,16 +1124,16 @@ When resistors are connected in series, the total voltage divides among them pro
 
     // Simple series divider
     to("R", (0, 2.4), (0, 1.4), label: [$R_1$], i: (">_", $I$))
-    to("R", (), (0, 0.4), label: [$R_2$], i: (">_", $I$))
+    to("R", (0, 1.4), (0, 0.4), label: [$R_2$], i: (">_", $I$))
 
     // Input and output annotations
-    to("short", (-0.8, 2.4), (0, 2.4), v: $V_\text{in}$)
+    to("short", (-0.8, 2.4), (0, 2.4), v: $V_(text("in"))$)
     to("short", (0, 1.4), (2.2, 1.4))
     to("short", (0, 0.4), (2.2, 0.4))
     to("short", (-0.8, 0.4), (0, 0.4))
-    to("short", (2.2, 1.4), (2.2, 0.4), v: $V_\text{out}$)
+    to("short", (2.2, 1.4), (2.2, 0.4), v: $V_(text("out"))$)
   }),
-  caption: [Voltage divider shown with package primitives and labeled $V_\text{in}$ and $V_\text{out}$],
+  caption: [Voltage divider shown with package primitives and labeled $V_(text("in"))$ and $V_(text("out"))$],
 ) <voltage-divider>
 
 #example("Voltage Divider Calculation")[
@@ -1166,13 +1168,13 @@ When resistors are connected in parallel, the total current divides among them i
 
     // Current source feeding a shunt
     to("isourceAM", (0, 0), (0, 2.6), label: $I_s$)
-    to("short", (), (2.2, 2.6))
-    to("R", (), (2.2, 0), label: [$R_1$], i: (">_", $I_1$))
-    to("short", (), (0, 0))
+    to("short", (0, 2.6), (2.2, 2.6))
+    to("R", (2.2, 2.6), (2.2, 0), label: [$R_1$], i: (">_", $I_1$))
+    to("short", (2.2, 0), (0, 0))
 
     to("short", (2.2, 2.6), (4.4, 2.6))
-    to("R", (), (4.4, 0), label: [$R_2$], i: (">_", $I_2$))
-    to("short", (), (2.2, 0))
+    to("R", (4.4, 2.6), (4.4, 0), label: [$R_2$], i: (">_", $I_2$))
+    to("short", (4.4, 0), (2.2, 0))
   }),
   caption: [Current divider built with package primitives (two shunt resistors)],
 ) <current-divider>
@@ -1204,3 +1206,159 @@ When resistors are connected in parallel, the total current divides among them i
 
   These relationships are fundamental for analyzing more complex circuits.
 ]
+
+= Nodal Voltage Analysis (NVA)
+
+Nodal analysis is a systematic method to determine the node voltages of a circuit relative to a chosen reference (ground). It applies Kirchhoff's Current Law (KCL) and Ohm's law expressed with conductances.
+
+== Idea and Notation
+
+#definition("Setup and notation")[
+  - Choose a reference node (ground) and label the remaining node voltages $V_1, V_2, \ldots, V_n$ relative to ground.
+  - Replace resistances with conductances: $G = 1/R$. For a branch between nodes $a$ and $b$ with resistance $R_(a\; b)$, the current from $a$ to $b$ (passive sign) is $i_(a\; b) = G_(a\; b)(V_a - V_b)$.
+  - KCL at each non‑reference node: algebraic sum of currents leaving the node equals the algebraic sum of source currents leaving that node.
+]
+
+#note("Existence and uniqueness (∃ !)")[
+  For a linear resistive network (resistors and independent current/voltage sources) with a chosen reference and after handling any voltage‑source constraints (supernodes), the nodal system has a unique solution (∃!) provided every node has a path to the reference through finite conductance (no isolated floating subcircuits) and there are no independent loops formed solely by ideal voltage sources.
+]
+
+== Algorithm (procedural)
+
+1. Pick a reference node (ground).
+2. Define unknown node voltages $V_1, \ldots, V_n$ at all other nodes.
+3. For each node, write KCL: sum of currents through connected elements expressed with conductances and voltage differences. Treat current sources as known injections (positive when flowing into the node).
+4. If a voltage source directly connects two non‑reference nodes, form a supernode that encloses them; write KCL for the entire supernode and add the voltage constraint equation relating their node voltages.
+5. Solve the resulting linear system for the unknown node voltages.
+
+== Matrix Form: G v = I
+
+Collecting the node equations yields
+$$ G \; v = I, $$
+where $v = [V_1, V_2, \ldots, V_n]^T$ and the conductance matrix $G$ is built by inspection:
+
+#note("By‑inspection rules for G and I")[
+  - Diagonal entries: $G_(i\, i) =$ sum of all conductances connected to node $i$ (to ground and to other nodes).
+  - Off‑diagonals: $G_(i\, j) = -$ sum of conductances directly between nodes $i$ and $j$ ($i \neq j$).
+  - Source vector entries $I_i$ (currents injected into node $i$):
+    - Current source from ground to node $i$ with arrow into $i$: add $+I_s$ to $I_i$; arrow from $i$ to ground: add $-I_s$.
+    - Current source from node $i$ to node $j$ (arrow $i \to j$): add $-I_s$ to $I_i$ and $+I_s$ to $I_j$.
+]
+
+#example("Two‑node network by inspection")[
+  Circuit: $R_1 = 2\,"kΩ"$ from $V_A$ to ground, $R_2 = 3\,"kΩ"$ from $V_B$ to ground, and $R_3 = 1\,"kΩ"$ between $V_A$ and $V_B$. A current source injects $I_1 = 1\,"mA"$ into node $A$ (from ground to $A$). No source at $B$.
+
+  Conductances: $G_1 = 1/R_1 = 0.5\,"mS"$, $G_2 = 1/R_2 approx 0.333\,"mS"$, $G_3 = 1/R_3 = 1\,"mS"$.
+
+  By inspection, the node equations are
+  $$ (G_1 + G_3)\,V_A - G_3\,V_B = I_1, $$
+  $$ -G_3\,V_A + (G_2 + G_3)\,V_B = 0. $$
+
+  Numerically: $(1.5\,"mS") V_A - (1\,"mS") V_B = 1\,"mA"$ and $-(1\,"mS") V_A + (1.333\,"mS") V_B = 0$. Solving gives
+  $$ V_A = \tfrac{4}{3}\,"V" = 1.333\,"V",\quad V_B = 1.000\,"V". $$
+]
+
+#figure(
+  canvas(length: 1.4cm, {
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
+
+    // Geometry
+    let xI = -0.8
+    let xA = 0
+    let xB = 3.6
+    let y0 = 0
+    let y1 = 2.2
+    let ytap = y1 - 0.25
+
+    // Ground rail
+    to("short", (xI, y0), (xB, y0))
+
+    // Node voltage risers (with labels)
+    to("short", (xA, y0), (xA, ytap), v: $V_A$)
+    to("short", (xB, y0), (xB, ytap), v: $V_B$)
+
+    // Close risers to the top node line
+    to("short", (xA, ytap), (xA, y1))
+    to("short", (xB, ytap), (xB, y1))
+
+    // Top coupling resistor R3 between nodes A and B
+    to("R", (xA, y1), (xB, y1), label: [$R_3 = 1\,"kΩ"$])
+
+    // Shunt resistor R1 to ground (connected to node A)
+    to("R", (xA + 0.6, ytap), (xA + 0.6, y0), label: [$R_1 = 2\,"kΩ"$])
+    to("short", (xA, ytap), (xA + 0.6, ytap))
+
+    // Shunt resistor R2 to ground (connected to node B)
+    to("R", (xB - 0.6, ytap), (xB - 0.6, y0), label: [$R_2 = 3\,"kΩ"$])
+    to("short", (xB, ytap), (xB - 0.6, ytap))
+
+    // Current source injecting I1 into node A from ground
+    to("isourceAM", (xI, y0), (xI, ytap), label: $I_1 = 1\,"mA"$)
+    to("short", (xI, ytap), (xA, ytap))
+  }),
+  caption: [Two‑node network for by‑inspection example],
+) <nva-by-inspection-fig>
+
+== Supernodes
+
+#definition("Supernode")[
+  If two (or more) non‑reference nodes are connected by an ideal voltage source, KCL cannot be written across that branch using only conductances. Treat the connected nodes and the source as a single supernode. Write:
+  - One KCL equation for the entire supernode (sum of currents from all elements that leave the supernode to elements outside it equals the algebraic sum of current‑source injections), and
+  - A constraint equation imposed by the voltage source, e.g., $V_a - V_b = V_s$ for a source from $b$ to $a$ with polarity $+\,V_s$ at $a$.
+]
+
+#example("Supernode with two nodes and one source")[
+  Circuit: Nodes $A$ and $B$ form a supernode due to an ideal source $V_s = 24\,"V"$ with $V_A - V_B = 24$. Resistors: $R_A = 8\,Ω$ from $A$ to ground and $R_B = 6\,Ω$ from $B$ to ground. A current source of $I_0 = 7\,"A"$ injects current into node $A$ (from ground to $A$).
+
+  Let $G_A = 1/R_A = 1/8\,"S"$ and $G_B = 1/R_B = 1/6\,"S"$. KCL for the supernode (currents to ground) and the voltage constraint give
+  $$
+  \begin{aligned}
+  G_A V_A + G_B V_B &= I_0, \\
+  V_A - V_B &= 24.
+  \end{aligned}
+  $$
+  Multiply the first equation by $24$ to simplify: $3 V_A + 4 V_B = 168$. Solving the $2 times 2$ system:
+  $$ V_B = \tfrac{96}{7}\,"V" \approx 13.714\,"V", \quad V_A = V_B + 24 \approx 37.714\,"V". $$
+]
+
+#note("Matrix with constraint rows")[
+  Supernodes can be incorporated into a linear system by keeping the KCL rows and appending the voltage‑constraint row(s). The resulting matrix is square and nonsingular under the same conditions as above (∃!).
+]
+
+#figure(
+  canvas(length: 1.6cm, {
+    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
+
+    // Geometry
+    let xI = -0.8
+    let xA = 0
+    let xB = 3.2
+    let y0 = 0
+    let y1 = 2.0
+    let ytap = y1 - 0.25
+
+    // Ground rail
+    to("short", (xI, y0), (xB + 0.4, y0))
+
+    // Node voltage risers
+    to("short", (xA, y0), (xA, ytap), v: $V_A$)
+    to("short", (xB, y0), (xB, ytap), v: $V_B$)
+    to("short", (xA, ytap), (xA, y1))
+    to("short", (xB, ytap), (xB, y1))
+
+    // Ideal voltage source tying A and B (orientation gives V_A - V_B = 24 V)
+    to("short", (xB, y1), (xA, y1), v: $24\,V$)
+
+    // Shunt resistors to ground
+    to("R", (xA + 0.6, ytap), (xA + 0.6, y0), label: [$8\,Ω$])
+    to("short", (xA, ytap), (xA + 0.6, ytap))
+    to("R", (xB - 0.6, ytap), (xB - 0.6, y0), label: [$6\,Ω$])
+    to("short", (xB, ytap), (xB - 0.6, ytap))
+
+    // Current source injecting 7 A into node A
+    to("isourceAM", (xI, y0), (xI, ytap), label: $I_0 = 7\,A$)
+    to("short", (xI, ytap), (xA, ytap))
+  }),
+  caption: [Supernode example used in the worked solution],
+) <nva-supernode-fig>
+

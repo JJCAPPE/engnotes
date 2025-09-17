@@ -547,6 +547,149 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
 ]
 
 
+=== Binary Cubes (Hypercube View)
+
+#definition("Binary n-cube")[
+  The binary hypercube $Q_n$ is the graph of all $n$-bit vectors:
+
+  - Vertices: all bitstrings of length $n$ (minterms)
+  - Edges: connect vertices that differ in exactly one bit (Hamming distance 1)
+  - Adjacency drives implicant merging in Karnaugh maps and algebraic minimization
+]
+
+#note("Cubes as implicants")[
+  A product term with don't-cares (dashes) corresponds to an axis-aligned sub-cube of $Q_n$.
+  - dimension: number of don't-cares = $k$
+  - size: $2^k$ minterms covered
+  - Example: term $c$ in 3 variables covers 4 minterms — a 2D face where $c = 1$
+]
+
+#figure(
+  canvas(length: 1cm, {
+    import draw: *
+
+    // Q1
+    content((0.6, 6.6), text(11pt, weight: "bold")[Q1])
+    line((1.0, 6.0), (2.2, 6.0), stroke: 2pt + black)
+    circle((1.0, 6.0), radius: 0.05, fill: black)
+    circle((2.2, 6.0), radius: 0.05, fill: black)
+    content((0.9, 6.2), text(10pt, font: "DejaVu Sans Mono")[0])
+    content((2.25, 6.2), text(10pt, font: "DejaVu Sans Mono")[1])
+
+    // Q2 (Gray order around the square)
+    content((0.6, 4.8), text(11pt, weight: "bold")[Q2])
+    line((1.0, 4.4), (2.2, 4.4), stroke: 2pt)
+    line((1.0, 3.2), (2.2, 3.2), stroke: 2pt)
+    line((1.0, 4.4), (1.0, 3.2), stroke: 2pt)
+    line((2.2, 4.4), (2.2, 3.2), stroke: 2pt)
+    circle((1.0, 4.4), radius: 0.05, fill: black)
+    circle((2.2, 4.4), radius: 0.05, fill: black)
+    circle((2.2, 3.2), radius: 0.05, fill: black)
+    circle((1.0, 3.2), radius: 0.05, fill: black)
+    content((0.82, 4.6), text(10pt, font: "DejaVu Sans Mono")[00])
+    content((2.25, 4.6), text(10pt, font: "DejaVu Sans Mono")[01])
+    content((2.25, 3.0), text(10pt, font: "DejaVu Sans Mono")[11])
+    content((0.82, 3.0), text(10pt, font: "DejaVu Sans Mono")[10])
+
+    // Q3 (front: c=0, back: c=1)
+    content((4.0, 4.8), text(11pt, weight: "bold")[Q3])
+    let dx = 0.7
+    let dy = 0.55
+
+    // front square (c = 0)
+    line((4.0, 4.4), (5.2, 4.4), stroke: 2pt + black)
+    line((4.0, 3.2), (5.2, 3.2), stroke: 2pt + black)
+    line((4.0, 4.4), (4.0, 3.2), stroke: 2pt + black)
+    line((5.2, 4.4), (5.2, 3.2), stroke: 2pt + black)
+
+    // back square (c = 1)
+    line((4.0 + dx, 4.4 + dy), (5.2 + dx, 4.4 + dy), stroke: 2pt + gray)
+    line((4.0 + dx, 3.2 + dy), (5.2 + dx, 3.2 + dy), stroke: 2pt + gray)
+    line((4.0 + dx, 4.4 + dy), (4.0 + dx, 3.2 + dy), stroke: 2pt + gray)
+    line((5.2 + dx, 4.4 + dy), (5.2 + dx, 3.2 + dy), stroke: 2pt + gray)
+
+    // connectors
+    line((4.0, 4.4), (4.0 + dx, 4.4 + dy), stroke: 2pt + gray)
+    line((5.2, 4.4), (5.2 + dx, 4.4 + dy), stroke: 2pt + gray)
+    line((4.0, 3.2), (4.0 + dx, 3.2 + dy), stroke: 2pt + gray)
+    line((5.2, 3.2), (5.2 + dx, 3.2 + dy), stroke: 2pt + gray)
+
+    // vertices (front, c=0)
+    circle((4.0, 4.4), radius: 0.05, fill: black)
+    circle((5.2, 4.4), radius: 0.05, fill: black)
+    circle((5.2, 3.2), radius: 0.05, fill: black)
+    circle((4.0, 3.2), radius: 0.05, fill: black)
+
+    // vertices (back, c=1)
+    circle((4.0 + dx, 4.4 + dy), radius: 0.05, fill: black)
+    circle((5.2 + dx, 4.4 + dy), radius: 0.05, fill: black)
+    circle((5.2 + dx, 3.2 + dy), radius: 0.05, fill: black)
+    circle((4.0 + dx, 3.2 + dy), radius: 0.05, fill: black)
+
+    // labels (Gray order on each square: 00,01,11,10 for ab; c is 0/1)
+    content((4.0 - 0.18, 4.6), text(9pt, font: "DejaVu Sans Mono")[a b: 00])
+    content((5.2 + 0.06, 4.6), text(9pt, font: "DejaVu Sans Mono")[01])
+    content((5.2 + 0.06, 3.0), text(9pt, font: "DejaVu Sans Mono")[11])
+    content((4.0 - 0.18, 3.0), text(9pt, font: "DejaVu Sans Mono")[10])
+    content((4.0 + dx - 0.18, 4.6 + dy), text(9pt, font: "DejaVu Sans Mono")[00])
+    content((5.2 + dx + 0.06, 4.6 + dy), text(9pt, font: "DejaVu Sans Mono")[01])
+    content((5.2 + dx + 0.06, 3.0 + dy), text(9pt, font: "DejaVu Sans Mono")[11])
+    content((4.0 + dx - 0.18, 3.0 + dy), text(9pt, font: "DejaVu Sans Mono")[10])
+
+    content((3.7, 5.3), text(9pt)[front: c = 0])
+    content((5.2 + dx + 0.25, 5.2), text(9pt, fill: green.darken(10%))[back: c = 1])
+  }),
+  caption: [Binary 1-, 2-, and 3-cubes $Q_1$, $Q_2$, $Q_3$. Edges connect minterms that differ in one bit (Hamming distance 1).],
+) <binary-cubes>
+
+#example("Implicant as a sub-cube")[
+  Consider $F(a, b, c)$ with minterms $m(1, 3, 5, 7)$. The four minterms lie on the face where $c = 1$,
+  forming a 2D cube (size 4). The corresponding prime implicant is simply $c$.
+]
+
+#figure(
+  canvas(length: 1cm, {
+    import draw: *
+
+    // Reuse Q3 layout and highlight the c = 1 face
+    let dx = 0.7
+    let dy = 0.55
+
+    // front square (c = 0)
+    line((4.0, 4.4), (5.2, 4.4), stroke: 2pt + gray.lighten(30%))
+    line((4.0, 3.2), (5.2, 3.2), stroke: 2pt + gray.lighten(30%))
+    line((4.0, 4.4), (4.0, 3.2), stroke: 2pt + gray.lighten(30%))
+    line((5.2, 4.4), (5.2, 3.2), stroke: 2pt + gray.lighten(30%))
+
+    // back square (c = 1) highlighted
+    line((4.0 + dx, 4.4 + dy), (5.2 + dx, 4.4 + dy), stroke: 3pt + green)
+    line((4.0 + dx, 3.2 + dy), (5.2 + dx, 3.2 + dy), stroke: 3pt + green)
+    line((4.0 + dx, 4.4 + dy), (4.0 + dx, 3.2 + dy), stroke: 3pt + green)
+    line((5.2 + dx, 4.4 + dy), (5.2 + dx, 3.2 + dy), stroke: 3pt + green)
+
+    // connectors (dimmed)
+    line((4.0, 4.4), (4.0 + dx, 4.4 + dy), stroke: 2pt + gray.lighten(30%))
+    line((5.2, 4.4), (5.2 + dx, 4.4 + dy), stroke: 2pt + gray.lighten(30%))
+    line((4.0, 3.2), (4.0 + dx, 3.2 + dy), stroke: 2pt + gray.lighten(30%))
+    line((5.2, 3.2), (5.2 + dx, 3.2 + dy), stroke: 2pt + gray.lighten(30%))
+
+    // mark the four minterms 001, 011, 101, 111
+    let pts = (
+      (4.0 + dx, 3.2 + dy), // 001
+      (5.2 + dx, 3.2 + dy), // 011
+      (4.0 + dx, 4.4 + dy), // 101
+      (5.2 + dx, 4.4 + dy), // 111
+    )
+    for p in pts {
+      circle(p, radius: 0.07, fill: red)
+    }
+
+    content((5.6 + dx, 3.8 + dy), text(10pt, weight: "bold", fill: green.darken(10%))[c = 1 face])
+    content((4.0, 2.5), text(10pt)[Implicant: c (covers 4 minterms)])
+  }),
+  caption: [Face $c = 1$ (green) is a 2D cube covering 4 minterms: $001, 011, 101, 111$ — implicant $c$.],
+) <cube-implicant-c-face>
+
 #figure(
   canvas(length: 1cm, {
     import draw: *
@@ -674,14 +817,14 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
 
 #example("Binary → BCD with double‑dabble")[
   Convert an n‑bit binary number to BCD by repeating for each bit (MSB→LSB):
-  1) If any BCD nibble ≥ 5, add 3 to that nibble.  
-  2) Shift the entire BCD register left by 1 and shift in the next input bit.  
+  1) If any BCD nibble ≥ 5, add 3 to that nibble.
+  2) Shift the entire BCD register left by 1 and shift in the next input bit.
   After all shifts, the BCD nibbles are the decimal digits.
 
-  Tiny example for 243₁₀ = 11110011₂ (8 bits):  
-  - Ones nibble hits 7 → add 3 → 10 before shifting  
-  - Later ones hits 5 → add 3 → 8  
-  - Tens hits 6 → add 3 → 9  
+  Tiny example for 243₁₀ = 11110011₂ (8 bits):
+  - Ones nibble hits 7 → add 3 → 10 before shifting
+  - Later ones hits 5 → add 3 → 8
+  - Tens hits 6 → add 3 → 9
   After 8 shifts: BCD = 0010 0100 0011 → digits 2 4 3.
 ]
 
@@ -691,20 +834,32 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
     align: left,
     stroke: none,
     inset: 2pt,
-    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11110011]], [Initialization],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0000]],
+    [#text(10pt, font: "DejaVu Sans Mono")[11110011]],
+    [Initialization],
+
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0001]], [#text(10pt, font: "DejaVu Sans Mono")[11100110]], [Shift],
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0011]], [#text(10pt, font: "DejaVu Sans Mono")[11001100]], [Shift],
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 0111]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Shift],
-    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 1010]], [#text(10pt, font: "DejaVu Sans Mono")[10011000]], [Add 3 to ONES (was 7)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0000 1010]],
+    [#text(10pt, font: "DejaVu Sans Mono")[10011000]],
+    [Add 3 to ONES (was 7)],
+
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 0101]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Shift],
-    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 1000]], [#text(10pt, font: "DejaVu Sans Mono")[00110000]], [Add 3 to ONES (was 5)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 0001 1000]],
+    [#text(10pt, font: "DejaVu Sans Mono")[00110000]],
+    [Add 3 to ONES (was 5)],
+
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0011 0000]], [#text(10pt, font: "DejaVu Sans Mono")[01100000]], [Shift],
     [#text(10pt, font: "DejaVu Sans Mono")[0000 0110 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Shift],
-    [#text(10pt, font: "DejaVu Sans Mono")[0000 1001 0000]], [#text(10pt, font: "DejaVu Sans Mono")[11000000]], [Add 3 to TENS (was 6)],
+    [#text(10pt, font: "DejaVu Sans Mono")[0000 1001 0000]],
+    [#text(10pt, font: "DejaVu Sans Mono")[11000000]],
+    [Add 3 to TENS (was 6)],
+
     [#text(10pt, font: "DejaVu Sans Mono")[0001 0010 0001]], [#text(10pt, font: "DejaVu Sans Mono")[10000000]], [Shift],
     [#text(10pt, font: "DejaVu Sans Mono")[0010 0100 0011]], [#text(10pt, font: "DejaVu Sans Mono")[00000000]], [Shift],
   ),
-  caption: [Double‑dabble run for 243₁₀ (11110011₂). Left: BCD register; Right: original register. Transparent grid mimics textbook layout. Result: 0010 0100 0011 → digits 2 4 3.]
+  caption: [Double‑dabble run for 243₁₀ (11110011₂). Left: BCD register; Right: original register. Transparent grid mimics textbook layout. Result: 0010 0100 0011 → digits 2 4 3.],
 ) <double-dabble-243>
 
 == Modern Technology: MOS and CMOS
