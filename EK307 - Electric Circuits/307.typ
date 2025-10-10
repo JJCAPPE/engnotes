@@ -250,20 +250,123 @@ Independent sources provide a specified voltage or current that does not depend 
 === Voltage Sources
 
 #figure(
-  canvas(length: 1.2cm, {
-    import "../jsk-lecnotes/cirCeTZ/circuitypst.typ": to
+  canvas(length: 1.6cm, {
     import draw: *
 
-    // Ideal voltage source represented as a branch with labeled voltage
-    to("short", (-0.8, 1.2), (0.8, 1.2), v: $V_s$)
-    content((0, 0.6), text(11pt)[Ideal])
+    // Geometry (shared)
+    let yt = 1.8
+    let yb = 0.4
 
-    // Real voltage source represented as series V_s with internal resistance R_s
-    to("short", (2.2, 1.2), (3.0, 1.2), v: $V_s$)
-    to("R", (3.0, 1.2), (3.8, 1.2), label: [$R_s$])
-    content((3.0, 0.6), text(11pt)[Real])
+    // =====================
+    // Left: Ideal source + load
+    // =====================
+    let xL0 = -1.6
+    let xL1 = -0.2
+
+    // Top and bottom rails
+    line((xL0, yt), (xL1, yt), stroke: 2.5pt + black)
+    line((xL0, yb), (xL1, yb), stroke: 2.5pt + black)
+
+    // Battery plates (ideal voltage source)
+    let xLp1 = xL0 + 0.2 // long plate (positive)
+    let xLp2 = xL0 + 0.4 // short plate (negative)
+    line((xLp1, yb), (xLp1, yt), stroke: 2.5pt + black)
+    line((xLp2, yb + 0.2), (xLp2, yt - 0.2), stroke: 2.5pt + black)
+
+    // Connect rails to the plates
+    line((xL0, yt), (xLp1, yt), stroke: 2.5pt + black)
+    line((xL0, yb), (xLp2, yb), stroke: 2.5pt + black)
+
+    // Polarity and label
+    content((xLp1 - 0.18, yt - 0.15), text(9pt, fill: red)[+])
+    content((xLp2 + 0.18, yb + 0.15), text(9pt, fill: red)[-])
+    content((xLp1 + 0.08, (yt + yb) / 2), text(10pt)[$V_s$])
+
+    // Load resistor (vertical) on the right side
+    let xLR = xL1
+    let rL_top = yt - 0.2
+    let rL_bot = yb + 0.2
+    // Leads to the resistor body
+    line((xLR, yt), (xLR, rL_top), stroke: 2.5pt + black)
+    line((xLR, rL_bot), (xLR, yb), stroke: 2.5pt + black)
+    // Resistor body (zigzag)
+    let zigL = (
+      (xLR, rL_top),
+      (xLR - 0.12, rL_top - 0.15),
+      (xLR + 0.12, rL_top - 0.35),
+      (xLR - 0.12, rL_top - 0.55),
+      (xLR + 0.12, rL_top - 0.75),
+      (xLR, rL_bot),
+    )
+    for i in range(zigL.len() - 1) {
+      line(zigL.at(i), zigL.at(i + 1), stroke: 2.5pt + black)
+    }
+    content((xLR + 0.28, (rL_top + rL_bot) / 2), text(9pt)[$R_L$])
+    content(((xL0 + xL1) / 2, yb - 0.35), text(11pt)[Ideal])
+
+    // =====================
+    // Right: Real source (Vs in series with Rs) + load
+    // =====================
+    let xR0 = 1.0
+    let xR1 = 2.6
+
+    // Rails
+    line((xR0, yt), (xR1, yt), stroke: 2.5pt + black)
+    line((xR0, yb), (xR1, yb), stroke: 2.5pt + black)
+
+    // Battery plates for Vs
+    let xRp1 = xR0 + 0.2
+    let xRp2 = xR0 + 0.4
+    line((xRp1, yb), (xRp1, yt), stroke: 2.5pt + black)
+    line((xRp2, yb + 0.2), (xRp2, yt - 0.2), stroke: 2.5pt + black)
+    line((xR0, yt), (xRp1, yt), stroke: 2.5pt + black)
+    line((xR0, yb), (xRp2, yb), stroke: 2.5pt + black)
+    content((xRp1 - 0.18, yt - 0.15), text(9pt, fill: red)[+])
+    content((xRp2 + 0.18, yb + 0.15), text(9pt, fill: red)[-])
+    content((xRp1 + 0.08, (yt + yb) / 2), text(10pt)[$V_s$])
+
+    // Series internal resistor Rs on the top rail
+    let rs_x0 = xRp1 + 0.18
+    let rs_x1 = xR1 - 0.55
+    // Leads
+    line((xRp1, yt), (rs_x0, yt), stroke: 2.5pt + black)
+    line((rs_x1, yt), (xR1, yt), stroke: 2.5pt + black)
+    // Zigzag body (horizontal)
+    let step = (rs_x1 - rs_x0) / 4
+    let rsh = 0.15
+    let rs_pts = (
+      (rs_x0, yt),
+      (rs_x0 + step, yt + rsh),
+      (rs_x0 + 2 * step, yt - rsh),
+      (rs_x0 + 3 * step, yt + rsh),
+      (rs_x1, yt),
+    )
+    for i in range(rs_pts.len() - 1) {
+      line(rs_pts.at(i), rs_pts.at(i + 1), stroke: 2.5pt + black)
+    }
+    content(((rs_x0 + rs_x1) / 2, yt + 0.35), text(9pt)[$R_s$])
+
+    // Load resistor on the right side (same as left)
+    let xRR = xR1
+    let rR_top = yt - 0.2
+    let rR_bot = yb + 0.2
+    line((xRR, yt), (xRR, rR_top), stroke: 2.5pt + black)
+    line((xRR, rR_bot), (xRR, yb), stroke: 2.5pt + black)
+    let zigR = (
+      (xRR, rR_top),
+      (xRR - 0.12, rR_top - 0.15),
+      (xRR + 0.12, rR_top - 0.35),
+      (xRR - 0.12, rR_top - 0.55),
+      (xRR + 0.12, rR_top - 0.75),
+      (xRR, rR_bot),
+    )
+    for i in range(zigR.len() - 1) {
+      line(zigR.at(i), zigR.at(i + 1), stroke: 2.5pt + black)
+    }
+    content((xRR + 0.28, (rR_top + rR_bot) / 2), text(9pt)[$R_L$])
+    content(((xR0 + xR1) / 2, yb - 0.35), text(11pt)[Real])
   }),
-  caption: [Ideal vs. real voltage source (stylized with package primitives)],
+  caption: [Ideal vs. real voltage source (proper circuit depiction with load and internal resistance)],
 ) <voltage-sources>
 
 #definition("Ideal Voltage Source")[
@@ -293,17 +396,16 @@ Independent sources provide a specified voltage or current that does not depend 
     import draw: *
 
     // Ideal current source
+    to("short", (-1.0, 0.6), (0.2, 0.6))
+    to("short", (-1.0, 1.8), (0.2, 1.8))
     to("isourceAM", (-0.6, 0.6), (-0.6, 1.8), label: $I_s$)
-    to("short", (-0.6, 0.6), (0.6, 0.6))
-    to("short", (-0.6, 1.8), (0.6, 1.8))
     content((0, 0.2), text(11pt)[Ideal])
 
     // Real current source (source in parallel with resistor)
-    to("isourceAM", (2.4, 0.6), (2.4, 1.8), label: $I_s$)
-    to("R", (2.0, 1.8), (2.8, 1.8), label: [$R_s$])
-    to("short", (2.0, 0.6), (2.8, 0.6))
-    to("short", (2.0, 1.8), (2.0, 0.6))
-    to("short", (2.8, 1.8), (2.8, 0.6))
+    to("short", (1.8, 0.6), (3.2, 0.6))
+    to("short", (1.8, 1.8), (3.2, 1.8))
+    to("isourceAM", (2.2, 0.6), (2.2, 1.8), label: $I_s$)
+    to("R", (3.0, 0.6), (3.0, 1.8), label: [$R_s$])
     content((2.4, 0.2), text(11pt)[Real])
   }),
   caption: [Ideal vs. real current source (stylized with package primitives)],

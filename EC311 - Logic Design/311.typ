@@ -862,6 +862,233 @@ For 2 input variables (X, Y), there are $2^(2^2) = 16$ possible Boolean function
   caption: [Double‑dabble run for 243₁₀ (11110011₂). Left: BCD register; Right: original register. Transparent grid mimics textbook layout. Result: 0010 0100 0011 → digits 2 4 3.],
 ) <double-dabble-243>
 
+= Verilog HDL
+
+== Module, ports, and declarations
+
+#definition("Module, ports, and declarations")[
+  Minimal Verilog module structure:
+  - `module <name> (port_list);` begins a module; `endmodule` closes it (no semicolon).
+  - Port directions and internal nets are declared after the module header:
+    - `input`, `output`, `inout` declarations end with semicolons.
+    - `wire` for combinational nets; `reg` for variables assigned in procedural blocks.
+  - Gate/module instances end with semicolons. Instance names are optional.
+  - Comments: `//` single-line, `/* ... */` multi-line.
+]
+
+#example("Gate-level example: Simple_Circuit")[
+  ```verilog
+  // Verilog model: Simple_Circuit
+  module Simple_Circuit (A, B, C, D, E);
+    output D, E;      // outputs (semicolon)
+    input  A, B, C;   // inputs  (semicolon)
+    wire   w1;        // internal net (semicolon)
+
+    and G1 (w1, A, B);   // instance name optional
+    not G2 (E, C);       // inverter
+    or  G3 (D, w1, E);   // 2-input OR
+  endmodule              // no semicolon here
+
+  /* Notes:
+     - Port order for primitive gates is (output, inputs...)
+     - Replace primitives with module names to instantiate submodules
+  */
+  ```
+]
+
+#note("Common syntax reminders")[
+  - Every declaration/instance statement must end with `;`.
+  - Use commas to separate names in a declaration: `output D, E;`
+  - Avoid mixing `reg` and `wire` on the same identifier.
+  - Prefer named port connections for large modules: `.port(signal)`.
+]
+
+== Values in Verilog
+
+#definition("Four-state logic values")[
+  Verilog signals are four-state by default:
+  - `0`: logic zero, false
+  - `1`: logic one, true
+  - `X`: unknown (could be 0, 1, Z, or in transition). Useful for don't-cares, uninitialized regs, and catching contention in simulation.
+  - `Z`: high-impedance (floating). Common on tri-state buses and bidirectional pins.
+]
+
+#figure(
+  table(
+    columns: (0.6fr, 3.4fr),
+    align: left,
+    stroke: none,
+    table.header[*Value*][*Meaning*],
+    [`0`], [logic zero, false],
+    [`1`], [logic one, true],
+    [`X`], [unknown; may be 0, 1, Z, or in transition],
+    [`Z`], [high-impedance; floating node used for tri-state/bidirectional pins],
+  ),
+  caption: [Verilog four-state logic values],
+) <verilog-values>
+
+== Number representation in Verilog
+
+#definition("Sized literals: <size>'<base><digits>")[
+  - `<size>`: number of bits in the literal (e.g., `8`, `16`).
+  - `<base>`: `b` binary, `d` decimal, `o` octal, `h` hex.
+  - `<digits>`: the value; underscores are allowed for readability (e.g., `8'b1010_1101`).
+  - Digits may include `x` and `z` to encode unknowns/high-Z: `4'b1xz0`.
+]
+
+#example("Literal examples")[
+  ```verilog
+  4'b0000   // 4-bit binary 0000
+  4'b0      // also 4-bit 0000
+  2'b11     // two-bit value (decimal 3)
+  16'hABBA  // hexadecimal number
+  ```
+]
+
+== Data types and vectors
+
+#definition("Nets vs variables")[
+  - `wire`: physical connection; driven by continuous assignments or outputs of instances.
+  - `reg`: holds a value assigned in procedural blocks (`always`, `initial`). Not necessarily a latch/flip-flop; storage only if the procedure implies it.
+  - `integer`, `time`: 32-bit signed and simulation time types (for testbenches).
+]
+
+#definition("Vectors, indexing, concatenation")[
+  - Vectors: `wire [MSB:LSB] a;` (e.g., `wire [7:0] a;`).
+  - Bit-select: `a[i]`; part-select: `a[MSB:LSB]`.
+  - Concatenation: `{a, b, 2'b11}`; replication: `{4{1'b0}}`.
+]
+
+#example("Vector examples")[
+  ```verilog
+  wire  [7:0] data;
+  reg   [3:0] nibble;
+  assign data = {nibble, 4'b0000};
+  wire  last_bit = data[0];
+  wire  upper    = data[7:4];
+  ```
+]
+
+== Operators and comparisons
+
+#figure(
+  table(
+    columns: (1.2fr, 2.8fr, 2.2fr),
+    align: left,
+    stroke: none,
+    table.header[*Kind*][*Operators*][*Example*],
+    [Bitwise], [`~ & | ^ ~^ ^~`], [`a & b`, `~a`],
+    [Logical], [`! && ||`], [`a && b`],
+    [Reduction], [`& | ^ ~& ~| ^~ ~^`], [`&vec`],
+    [Shift], [`<< >>`], [`a << 1`],
+    [Relational], [`== != > < >= <=`], [`a == b`],
+    [Case equality], [`=== !==`], [`a === 1'bx`],
+    [Arithmetic], [`+ - * / %`], [`a + b`],
+  ),
+  caption: [Common Verilog operators. Use parentheses to avoid precedence pitfalls. Case equality (`===`, `!==`) treats X/Z as distinct.],
+) <verilog-ops>
+
+== Continuous vs procedural assignments
+
+#definition("Assignment styles")[
+  - Continuous: `assign y = a & b;` (drives a net continuously).
+  - Procedural: inside `always`/`initial`. Produces combinational or sequential hardware depending on style.
+]
+
+#example("Combinational vs sequential")[
+  ```verilog
+  // Combinational: all RHS read, LHS written for every path
+  always @(*) begin
+    y = (a & b) | c;   // blocking OK in combinational
+  end
+
+  // Sequential (flop with async active-low reset)
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) q <= 1'b0;     // non-blocking
+    else        q <= d;
+  end
+  ```
+]
+
+== Blocking vs non-blocking
+
+#note("Guidelines")[
+  - Use blocking `=` in combinational `always @(*)` blocks.
+  - Use non-blocking `<=` in clocked `always @(posedge ...)` blocks.
+  - Mixing in the same always block can cause race-like behavior in simulation.
+]
+
+#example("Pitfall and fix")[
+  ```verilog
+  // Pitfall (uses blocking in sequential logic)
+  always @(posedge clk) begin
+    a = b;
+    b = a;  // b gets old a? No, both become old b in sim
+  end
+
+  // Correct
+  always @(posedge clk) begin
+    a <= b;
+    b <= a;
+  end
+  ```
+]
+
+== Parameters and module parameterization
+
+#example("Parameters and named port/param")[
+  ```verilog
+  module adder #(parameter WIDTH = 8) (
+    input  [WIDTH-1:0] a, b,
+    output [WIDTH:0]   sum
+  );
+    assign sum = a + b;
+  endmodule
+
+  // Instantiation with named parameter and ports
+  adder #(.WIDTH(16)) u_add (
+    .a(a16), .b(b16), .sum(sum16)
+  );
+  ```
+]
+
+== Generate constructs (arrays of hardware)
+
+#example("Generate for-loop")[
+  ```verilog
+  module and_array #(parameter N = 8) (
+    input  [N-1:0] a, b,
+    output [N-1:0] y
+  );
+    genvar i;
+    generate
+      for (i = 0; i < N; i = i + 1) begin : gen
+        assign y[i] = a[i] & b[i];
+      end
+    endgenerate
+  endmodule
+  ```
+]
+
+== Combinational and sequential templates
+
+#example("Always block templates")[
+  ```verilog
+  // Combinational template (avoids latches)
+  always @(*) begin
+    // default assignments
+    y = '0;
+    // logic
+    y = (a & b) | c;
+  end
+
+  // Sequential template with sync reset
+  always @(posedge clk) begin
+    if (rst) q <= '0; else q <= d;
+  end
+  ```
+]
+
 == Modern Technology: MOS and CMOS
 
 #definition("MOSFET Technology")[
