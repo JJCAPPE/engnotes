@@ -5,12 +5,13 @@
 // Page setup: 1-inch margins, 12pt font
 #set page(
   paper: "us-letter",
-  margin: 1in,
+  margin: 0.7in,
+  numbering: "1",
 )
 
 #set text(
   font: "New Computer Modern", // Professional serif font
-  size: 12pt,
+  size: 11pt,
   lang: "en",
 )
 
@@ -79,263 +80,85 @@ Similarly to the adder-subtractor, the ALU is implemented with a hierarchy of mo
 
 The half adder is the fundamental building block, implemented using structural Verilog with gate-level primitives.
 
-```verilog
-module half_adder(
-    input wire a,
-    input wire b,
-    output wire sum,
-    output wire carry
-    );
-    xor G1(sum, a, b);
-    and G2(carry, a, b);
-endmodule
-```
+(See @mod:half_adder for code listing.)
 
 === Full Adder Module
 
 The full adder is constructed by instantiating two half adders and combining their outputs, and is the building block of the adder-subtractor.
 
-```verilog
-module full_adder(
-  input  wire a,
-  input  wire b,
-  input  wire cin,
-  output wire sum,
-  output wire cout
-);
-  wire s1, c1, c2;
-  half_adder ha0(.a(a),  .b(b),   .sum(s1),  .carry(c1));
-  half_adder ha1(.a(s1), .b(cin), .sum(sum), .carry(c2));
-  or G3(cout, c1, c2);
-endmodule
-```
+(See @mod:full_adder for code listing.)
 
 === 4-bit Adder Module
 
 The 4-bit adder is implemented using an instantiation of four full adders in a ripple-carry configuration. Notice that we expose the third carry-out of the full adders to detect overflow further on in the adder-subtractor.
-```verilog
-module adder4(
-  input  wire [3:0] A,
-  input  wire [3:0] B,
-  input  wire       cin,
-  output wire [3:0] S,
-  // For overflow detection
-  output wire        C3,
-  output wire C4
-);
-  wire c1, c2, c3;
-  full_adder fa0(.a(A[0]), .b(B[0]), .cin(cin), .sum(S[0]), .cout(c1));
-  full_adder fa1(.a(A[1]), .b(B[1]), .cin(c1),  .sum(S[1]), .cout(c2));
-  full_adder fa2(.a(A[2]), .b(B[2]), .cin(c2),  .sum(S[2]), .cout(c3));
-  // Expose C4
-  full_adder fa3(.a(A[3]), .b(B[3]), .cin(c3),  .sum(S[3]), .cout(C4));
-  // Expose C3
-  assign C3 = c3;
-endmodule
-```
+
+(See @mod:adder4 for code listing.)
 
 === 4-bit Adder-Subtractor Module
 
 The adder-subtractor instantiates the previously defined 4-bit adder module, and adds additional logic to handle the subtraction operation and overflow detection. We XOR the each bit of the second operand with the subtraction control signal to conditionally invert the second operand for the subtraction operation, and feed the carry-in of the first full adder with the subtraction control signal to complete the 2's complement arithmetic. We also detect overflow by checking if the carry-in of the most significant full adder is different from the carry-out of the most significant full adder, which was previously exposed in the adder module.
 
-```verilog
-module addsub4(
-    input wire  [3:0] A,
-    input wire  [3:0] B,
-    input wire        m,
-    output wire [3:0] S,
-    output wire       cout,
-    output wire       vout
-    );
-  wire [3:0] Bx;
-  xor x0(Bx[0], B[0], m);
-  xor x1(Bx[1], B[1], m);
-  xor x2(Bx[2], B[2], m);
-  xor x3(Bx[3], B[3], m);
-  wire C3, C4;
-  // cin = m accounts for 2s comp +1
-  adder4 add4(.A(A), .B(Bx), .cin(m), .S(S), .C3(C3), .C4(C4));
-  assign cout = C4;
-  xor overf(vout, C3, C4);
-endmodule
-```
+(See @mod:addsub4 for code listing.)
 
-=== ArithmeticSubmodules of the ALU Module
+=== Arithmetic submodules of the ALU Module
 
 The 4 arithmetic submodules are the addition, multiplication, concatenation and left shift. Each of these submodules are implemented using behavioral verilog, which is a higher level of abstraction than structural verilog, and therfore allows for better readability and lower possibilities of errors.
 
-```verilog
-module add(input wire [3:0] A, B, output wire [7:0] Y);
-
-    assign Y = {4'b0000, A} + {4'b0000, B};
-
-endmodule
-module mult(input wire [3:0] A, B, output wire [7:0] Y);
-
-    assign Y = A * B;
-
-endmodule
-module concat(input wire [3:0] A, B, output wire [7:0] Y);
-
-    assign Y = {A,B};
-
-endmodule
-module shift(input wire [3:0] A, B, output wire [7:0] Y);
-
-    assign Y = (B > 7) ? 8'd0 : ({4'b0000, A} << B);
-
-endmodule
-```
+(See @mod:alu_parts for code listing.)
 
 === Multiplexer Module
 
 The multiplexer selects the output of the desired arithmetic submodule based on the 2-bit control signal, as per the lab instructions. The 4 input signals as well as the output are 8-bit signals, making this a 4:1 8-bit multiplexer.
 
-```verilog
-module mux(input wire [7:0] ADD, MULT, CONCAT, SHIFT, input wire [1:0] S, output reg [7:0] Y);
-    always @* begin
-        case (S)
-            2'b00: Y = CONCAT;
-            2'b01: Y = ADD;
-            2'b10: Y = SHIFT;
-            2'b11: Y = MULT;
-            default Y = 8'd0;
-        endcase
-    end
-endmodule
-```
+(See @mod:alu_parts for code listing.)
+
 === ALU Module
 
 Since most of the modules are already implemented, all that is left is to wire the arithmetic submodules to the multiplexer and the multiplexer to the output.
 
-```verilog
-module alu(
-    input wire  [3:0] A,
-    input wire  [3:0] B,
-    input wire  [1:0] S,
-    output wire [7:0] Y
-    );
-
-    wire [7:0] ADD, MULT, CONCAT, SHIFT;
-
-    concat c0(.A(A), .B(B), .Y(CONCAT));
-    add    a0(.A(A), .B(B), .Y(ADD)   );
-    mult   m0(.A(A), .B(B), .Y(MULT)  );
-    shift  s0(.A(A), .B(B), .Y(SHIFT) );
-
-    mux    muxY(.ADD(ADD), .MULT(MULT), .CONCAT(CONCAT), .SHIFT(SHIFT), .S(S), .Y(Y));
-endmodule
-```
+(See @mod:alu for code listing.)
 
 == Simulation and Testing
 
-Comprehensive testbenches were developed for each module to ensure functionality before integration. Each testbench was developed to test all possible input combinations for the module, and to verify the functionality of the module matcheds the expected behavior. For conciseness purposes, only the testbenches for the adder-subtractor and the ALU are included here.
+Comprehensive testbenches were developed for each module to ensure functionality before integration. Each testbench was developed to test all possible input combinations for the module, and to verify the functionality of the module matcheds the expected behavior. For conciseness purposes, only the testbenches for the adder-subtractor and the ALU are included here. For all testbenches, see @app:testbenches.
 
 === Adder-Subtractor Testbench
 
 The testbench for the adder-subtractor checks functionality for all 512 possible combinations of the 3 input signals (A, B, and m) against outputs S, cout and vout on an instantiation of the addsub4 module. We compute the expected outputs using behavioral verilog, using ripple carry logic in order to be able to check C3 and C4, and consequently check the overflow signal. After the loop the passed and failed tests are reported.
 
-(See Appendix A for the complete testbench)
+(See @app:addsub4, for the complete testbench.)
 
 
-// (Code listing moved to Appendix A)
 === ALU Testbench
 
 The testbench for the ALU checks functionality for all 1024 possible combinations of the 3 input signals (S, A, and B) against the 8-bit output Y on an instantiation of the alu module. We compute the expected output using behavioral verilog reference functions for each operation—concatenation, zero-extended addition, bounded left shift, and 4x4 multiply—selected via a case on S. The testbench includes a few directed smoke tests, then exhaustively iterates inputs, guards against X/Z on inputs and output, and compares Y to the reference using case-inequality to catch X/Z mismatches. After the loop the passed and failed tests are reported.
 
-(See Appendix A for the complete testbench)
-
-// (Code listing moved to Appendix A)
+(See @app:alu, for the complete testbench.)
 
 = Observation
 
-Present your results with supporting evidence. Include screenshots, timing diagrams, waveforms, and schematics.
-
 == Simulation Results
 
-Document waveform observations from simulation.
+See all waveforms in @app:waveforms.
 
-*To include a figure:*
-```typ
-#figure(
-  image("simulation_waveform.png", width: 90%),
-  caption: [Simulation waveform showing counter operation with reset and enable signals]
-)
-```
+=== Adder-Subtractor Waveform
+The adder-subtractor waveform shows the full 512 value sweep with a clear transition from addition to subtraction when `m` toggles. The ripple behavior is visible across the sum bits as carries propagate, and the overflow indicator `vout` asserts exactly when the carry into and out of the MSB differ, matching `C3_exp ^ C4_exp`. Throughout the sweep, the module outputs `S` and `cout` align with `S_exp` and `C4_exp`, and `errors` remains zero, showing passed results for both add and subtract.
 
-*Describe what the waveforms show:*
-- Signal transitions
-- Timing relationships
-- Functional verification points
+#figure(image("sources/waveforms/tb_addsub4.png" , width: 80%))
 
-== Synthesis Results
+=== ALU Waveform
+The ALU waveform breaks into clear bands by `S`: 00 concat `{A,B}`, 01 add, 10 left shift, 11 multiply. In the concat band, `Y` forms a stair-step pattern as `A`/`B` count because the bits are just packed together. In the add band, `Y` is the sum of `A+B` with added zeros to the left, so it ramps smoothly and never truncates (we have 8 bits). In the shift band, `Y = A << B` with zeros shifted in; when `B > 7` the output clamps to `00` as intended. In the multiply band, the 8-bit product tracks the reference (like `F*F = E1`) and you can see denser toggling from the larger range. We sample after a short settle, so no X/Z show up on `Y`. Across all 1024 cases, `Y` matches the reference and `errors` stays 0.
 
-Report resource utilization and synthesis statistics.
+#figure(image("sources/waveforms/tb_alu.png", width: 80%))
 
-*Example table:*
-#figure(
-  table(
-    columns: 3,
-    stroke: 0.5pt,
-    align: (left, right, right),
-    [*Resource*], [*Utilization*], [*Percentage*],
-    [LUTs], [25], [0.12%],
-    [FFs], [16], [0.03%],
-    [Block RAM], [0], [0.00%],
-    [DSPs], [0], [0.00%],
-  ),
-  caption: [Resource utilization on Artix-7 XC7A35T],
-)
-
-*Note any warnings or optimization results.*
-
-== Timing Analysis
-
-Present timing analysis results.
-
-*Include:*
-- Maximum achievable frequency
-- Setup/hold time analysis
-- Critical path identification
-- Any timing violations and resolutions
-
-*Example:*
-_Timing analysis shows the design meets timing at 100 MHz with a slack of 3.2 ns. No setup or hold violations were detected._
 
 == RTL Schematic
 
-Show the RTL schematic generated by Vivado.
+=== Adder-Subtractor RTL Schematic
 
-```typ
-#figure(
-  image("rtl_schematic.png", width: 95%),
-  caption: [RTL schematic showing the synthesized design hierarchy]
-)
-```
 
-== Hardware Testing (if applicable)
+=== ALU RTL Schematic
 
-Document physical FPGA testing results.
-
-*Include:*
-- Board setup and configuration
-- Test procedure
-- Observed behavior
-- Photos/screenshots if helpful
-
-*Example:*
-_The design was successfully programmed onto the Basys3 board. The counter increments on each clock pulse when the enable switch is high, and resets to 0 when the reset button is pressed._
-
-```typ
-#figure(
-  image("hardware_demo.jpg", width: 70%),
-  caption: [Basys3 FPGA board running the counter implementation]
-)
-```
-
-// ============================================
-// 4. CONCLUSION
-// ============================================
 = Conclusion
 
 Summarize findings and reflect on the laboratory experience.
@@ -379,241 +202,79 @@ Suggest potential enhancements or alternative approaches.
 - Add seven-segment display output
 - Explore power optimization techniques
 
-// ============================================
-// TIPS FOR SUCCESS
-// ============================================
 #pagebreak()
-
-#align(center)[
-  #text(14pt, weight: "bold")[Tips for a Successful Lab Report]
-]
-
-#v(1em)
-
-*1. Observation Section - Including Images:*
-
-To include images in your report, save them in the same directory as your report.typ file and use:
-
-```typ
-#figure(
-  image("your_image.png", width: 90%),
-  caption: [Your descriptive caption here]
-)
-```
-
-*2. Common Image Types to Include:*
-- Simulation waveforms (from Vivado Simulator)
-- RTL schematics (from Vivado)
-- Timing reports (screenshot from Vivado)
-- Utilization reports (screenshot from Vivado)
-- Photos of hardware setup (from your phone/camera)
-
-*3. Recommended Workflow:*
-
-+ Write your Verilog code in Vivado
-+ Run simulations and take waveform screenshots
-+ Synthesize and capture resource utilization
-+ Run implementation and capture timing results
-+ Export RTL schematic as PNG/PDF
-+ Test on hardware and take photos/videos
-+ Fill in this template with your findings
-+ Add all images to the report
-+ Compile to PDF: `typst compile report.typ`
-+ Review PDF to ensure it's under 5 pages
-
-*4. Page Management:*
-
-If your report exceeds 5 pages:
-- Make images slightly smaller (adjust width percentages)
-- Be more concise in descriptions
-- Remove redundant information
-- Use tables efficiently
-- Consider combining related figures
-
-*5. Compiling to PDF:*
-
-From terminal in the lab1 directory:
-```bash
-typst compile report.typ
-```
-
-This creates `report.pdf` ready for BlackBoard submission.
-
-// ============================================
-// DELETE EVERYTHING ABOVE THIS LINE
-// START YOUR ACTUAL REPORT HERE
-// ============================================
-
-#v(2em)
-#align(center)[
-  #line(length: 30%, stroke: 0.5pt)
-
-  *Delete all instruction pages and keep report under 5 pages*
-]
 
 // ============================================
 // APPENDIX A - TESTBENCH LISTINGS
 // ============================================
-= Appendix A: Testbench Listings
+= Appendix <app:appendix>
 
-== Adder-Subtractor Testbench (`tb_addsub4.v`)
+== Module Listings <app:modules>
 
-```verilog
-`timescale 1ns / 1ps
-`default_nettype none
-//////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
-// Create Date: 10/03/2025 01:27:34 PM
-// Design Name:
-// Module Name: tb_addsub4
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
-//////////////////////////////////////////////////////////////////////////////////
+=== Half Adder (`half-adder.v`) <mod:half_adder>
 
-module tb_addsub4;
-  reg  [3:0] A, B;
-  reg        m;
-  wire [3:0] S;
-  wire       cout, vout;
-  reg  [3:0] S_exp;
-  reg        C3_exp, C4_exp, V_exp;
+#raw(read("sources/modules/half-adder.v"), lang: "verilog", block: true)
 
-  addsub4 add4(.A(A), .B(B), .m(m), .S(S), .cout(cout), .vout(vout));
+=== Full Adder (`full-adder.v`) <mod:full_adder>
 
-  task calc_expected;
-    reg [3:0] Bx;
-    reg c1, c2;
-    begin
-      Bx = B ^ {4{m}};
-      {c1, S_exp[0]} = A[0] + Bx[0] + m;
-      {c2, S_exp[1]} = A[1] + Bx[1] + c1;
-      {C3_exp, S_exp[2]} = A[2] + Bx[2] + c2;
-      {C4_exp, S_exp[3]} = A[3] + Bx[3] + C3_exp;
-      V_exp = C3_exp ^ C4_exp; //overflow
-    end
-  endtask
+#raw(read("sources/modules/full-adder.v"), lang: "verilog", block: true)
 
-  integer k, errors;
-  initial begin
-    errors = 0;
-    {m, A, B} = 9'b0;
+=== 4-bit Adder (`adder4.v`) <mod:adder4>
 
-    for (k = 0; k < 512; k = k + 1) begin
-      {m, A, B} = k[8:0];
-      #1;
-      calc_expected();
+#raw(read("sources/modules/adder4.v"), lang: "verilog", block: true)
 
-      if (S !== S_exp || cout !== C4_exp || vout !== V_exp) begin
-        errors = errors + 1;
-        $display("MISMATCH k=%0d  m=%b A=%b B=%b | DUT S=%b cout=%b vout=%b  EXP S=%b C4=%b V=%b",
-                  k, m, A, B, S, cout, vout, S_exp, C4_exp, V_exp);
-        //Stop on error
-        $stop;
-      end
-      #9;
-    end
+=== 4-bit Adder-Subtractor (`addsub4.v`) <mod:addsub4>
 
-    if (errors == 0) $display("ADDSUB4: all 512 passed.");
-    else             $display("ADDSUB4 FAIL: %0d errors.", errors);
-    $finish;
-  end
-endmodule
-```
+#raw(read("sources/modules/addsub4.v"), lang: "verilog", block: true)
 
-== ALU Testbench (`tb_alu.v`)
+=== ALU Submodules (`alu.v`) <mod:alu_parts>
 
-```verilog
-`timescale 1ns/1ps
-`default_nettype none
-//////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
-// Create Date: 10/03/2025 02:44:51 PM
-// Design Name:
-// Module Name: tb_alu
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
-//////////////////////////////////////////////////////////////////////////////////
+#raw(read("sources/modules/alu.v"), lang: "verilog", block: true)
 
-module tb_alu;
-  reg  [3:0] A, B;
-  reg  [1:0] S;
-  wire [7:0] Y;
+=== Top-level ALU (`alu.v`) <mod:alu>
 
-  alu dut(.A(A), .B(B), .S(S), .Y(Y));
+#raw(read("sources/modules/alu.v"), lang: "verilog", block: true)
 
-  function [7:0] f_add(input [3:0] a, b); f_add = {4'b0,a} + {4'b0,b}; endfunction
-  function [7:0] f_mul(input [3:0] a, b); f_mul = a * b;               endfunction
-  function [7:0] f_cat(input [3:0] a, b); f_cat = {a,b};               endfunction
-  function [7:0] f_shf(input [3:0] a, b); f_shf = (b>7) ? 8'd0 : ({4'b0,a} << b); endfunction
+== Testbench Listings <app:testbenches>
 
-  integer k, errors;
-  reg [7:0] Y_exp;
+=== Half Adder Module (`tb_half_adder.v`) <app:half_adder>
 
-  function has_xz8(input [7:0] v); has_xz8 = (^v === 1'bx); endfunction
-  function has_xz4(input [3:0] v); has_xz4 = (^v === 1'bx); endfunction
-  function has_xz2(input [1:0] v); has_xz2 = (^v === 1'bx); endfunction
+#raw(read("sources/simulation/tb_half_adder.v"), lang: "verilog", block: true)
 
-  initial begin
-    errors = 0;
+=== Full Adder Module (`tb_full_adder.v`) <app:full_adder>
 
-    A=4'hF; B=4'hF; S=2'b01; #1 $display("ADD FF+FF -> Y=%h (expect 1E)", Y);
-    A=4'h8; B=4'h8; S=2'b10; #1 $display("SHF A=8,B=8 -> Y=%h (expect 00)", Y);
-    A=4'hF; B=4'hF; S=2'b11; #1 $display("MUL F*F -> Y=%h (expect E1)", Y);
+#raw(read("sources/simulation/tb_full_adder.v"), lang: "verilog", block: true)
 
-    for (k = 0; k < 1024; k = k + 1) begin
-      {S, A, B} = k[9:0];
+=== 4-bit Adder Module (`tb_4adder.v`) <app:adder4>
 
-      #1;
-      if (has_xz2(S) || has_xz4(A) || has_xz4(B)) begin
-        $fatal(1, "X/Z on inputs at k=%0d S=%b A=%b B=%b", k, S, A, B);
-      end
+#raw(read("sources/simulation/tb_4adder.v"), lang: "verilog", block: true)
 
-      case (S)
-        2'b00: Y_exp = f_cat(A,B);
-        2'b01: Y_exp = f_add(A,B);
-        2'b10: Y_exp = f_shf(A,B);
-        2'b11: Y_exp = f_mul(A,B);
-      endcase
+=== 4-bit Adder-Subtractor Testbench (`tb_addsub4.v`) <app:addsub4>
 
-      if (Y !== Y_exp) begin
-        errors = errors + 1;
-        $display("MISMATCH k=%0d  S=%b A=%h B=%h | DUT Y=%h  EXP Y=%h",
-                 k, S, A, B, Y, Y_exp);
-      end
+#raw(read("sources/simulation/tb_addsub4.v"), lang: "verilog", block: true)
 
-      if (has_xz8(Y)) begin
-        errors = errors + 1;
-        $fatal(1, "Output X/Z at k=%0d  S=%b A=%h B=%h  Y=%h", k, S, A, B, Y);
-      end
+=== ALU Testbench (`tb_alu.v`) <app:alu>
 
-      #9;
-    end
+#raw(read("sources/simulation/tb_alu.v"), lang: "verilog", block: true)
 
-    if (errors==0) $display("PASS: all 1024 ALU vectors matched.");
-    else           $display("FAIL: %0d mismatches.", errors);
-    $finish;
-  end
-endmodule
-```
+== Simulation Waveforms <app:waveforms>
+
+=== Half-Adder Waveform <app:half_adder_waveform>
+
+#figure(image("sources/waveforms/tb_half_adder.png"))
+
+=== Full-Adder Waveform <app:full_adder_waveform>
+
+#figure(image("sources/waveforms/tb_full_adder.png"))
+
+=== 4-bit Adder Waveform <app:adder4_waveform>
+
+#figure(image("sources/waveforms/tb_4adder.png"))
+
+=== 4-bit Adder-Subtractor Waveform <app:addsub4_waveform>
+
+#figure(image("sources/waveforms/tb_addsub4.png"))
+
+=== ALU Waveform <app:alu_waveform>
+
+#figure(image("sources/waveforms/tb_alu.png"))
