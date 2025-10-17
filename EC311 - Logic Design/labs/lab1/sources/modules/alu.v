@@ -1,16 +1,16 @@
 `timescale 1ns / 1ps    
 `default_nettype none
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 01:46:06 PM
-// Design Name: 
+// Design Name: ALU submodules and ALU module
 // Module Name: alu
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Project Name: 4-bit ALU module
+// Target Devices: None
+// Tool Versions: Vivado 2024.1
+// Description: ALU submodules and ALU module
 // 
 // Dependencies: 
 // 

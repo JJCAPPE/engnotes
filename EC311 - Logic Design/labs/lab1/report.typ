@@ -30,7 +30,7 @@
   #v(0.5em)
   #text(18pt, weight: "bold")[EC311 - Logic Design Lab]
   #v(0.3em)
-  #text(16pt, weight: "bold")[Lab 1: Design 4-bit binar Adder-Subtractor and ALU]
+  #text(16pt, weight: "bold")[Lab 1: Design 4-bit binary Adder-Subtractor and ALU]
 
   #grid(
     columns: auto,
@@ -38,7 +38,6 @@
     text(12pt)[*Student Name:* Giacomo Cappelletto],
     text(12pt)[*Student ID:* U91023753],
     text(12pt)[*Date:* #datetime.today().display("[month repr:long] [day], [year]")],
-    text(12pt)[*Section:* A2],
   )
   #v(0.8em)
 ]
@@ -79,43 +78,36 @@ Similarly to the adder-subtractor, the ALU is implemented with a hierarchy of mo
 === Half Adder Module
 
 The half adder is the fundamental building block, implemented using structural Verilog with gate-level primitives.
-
 (See @mod:half_adder for code listing.)
 
 === Full Adder Module
 
 The full adder is constructed by instantiating two half adders and combining their outputs, and is the building block of the adder-subtractor.
-
 (See @mod:full_adder for code listing.)
 
 === 4-bit Adder Module
 
 The 4-bit adder is implemented using an instantiation of four full adders in a ripple-carry configuration. Notice that we expose the third carry-out of the full adders to detect overflow further on in the adder-subtractor.
-
 (See @mod:adder4 for code listing.)
 
 === 4-bit Adder-Subtractor Module
 
 The adder-subtractor instantiates the previously defined 4-bit adder module, and adds additional logic to handle the subtraction operation and overflow detection. We XOR the each bit of the second operand with the subtraction control signal to conditionally invert the second operand for the subtraction operation, and feed the carry-in of the first full adder with the subtraction control signal to complete the 2's complement arithmetic. We also detect overflow by checking if the carry-in of the most significant full adder is different from the carry-out of the most significant full adder, which was previously exposed in the adder module.
-
 (See @mod:addsub4 for code listing.)
 
 === Arithmetic submodules of the ALU Module
 
 The 4 arithmetic submodules are the addition, multiplication, concatenation and left shift. Each of these submodules are implemented using behavioral verilog, which is a higher level of abstraction than structural verilog, and therfore allows for better readability and lower possibilities of errors.
-
 (See @mod:alu_parts for code listing.)
 
 === Multiplexer Module
 
 The multiplexer selects the output of the desired arithmetic submodule based on the 2-bit control signal, as per the lab instructions. The 4 input signals as well as the output are 8-bit signals, making this a 4:1 8-bit multiplexer.
-
 (See @mod:alu_parts for code listing.)
 
 === ALU Module
 
 Since most of the modules are already implemented, all that is left is to wire the arithmetic submodules to the multiplexer and the multiplexer to the output.
-
 (See @mod:alu for code listing.)
 
 == Simulation and Testing
@@ -125,14 +117,12 @@ Comprehensive testbenches were developed for each module to ensure functionality
 === Adder-Subtractor Testbench
 
 The testbench for the adder-subtractor checks functionality for all 512 possible combinations of the 3 input signals (A, B, and m) against outputs S, cout and vout on an instantiation of the addsub4 module. We compute the expected outputs using behavioral verilog, using ripple carry logic in order to be able to check C3 and C4, and consequently check the overflow signal. After the loop the passed and failed tests are reported.
-
 (See @app:addsub4, for the complete testbench.)
 
 
 === ALU Testbench
 
 The testbench for the ALU checks functionality for all 1024 possible combinations of the 3 input signals (S, A, and B) against the 8-bit output Y on an instantiation of the alu module. We compute the expected output using behavioral verilog reference functions for each operation—concatenation, zero-extended addition, bounded left shift, and 4x4 multiply—selected via a case on S. The testbench includes a few directed smoke tests, then exhaustively iterates inputs, guards against X/Z on inputs and output, and compares Y to the reference using case-inequality to catch X/Z mismatches. After the loop the passed and failed tests are reported.
-
 (See @app:alu, for the complete testbench.)
 
 = Observation
@@ -144,20 +134,27 @@ See all waveforms in @app:waveforms.
 === Adder-Subtractor Waveform
 The adder-subtractor waveform shows the full 512 value sweep with a clear transition from addition to subtraction when `m` toggles. The ripple behavior is visible across the sum bits as carries propagate, and the overflow indicator `vout` asserts exactly when the carry into and out of the MSB differ, matching `C3_exp ^ C4_exp`. Throughout the sweep, the module outputs `S` and `cout` align with `S_exp` and `C4_exp`, and `errors` remains zero, showing passed results for both add and subtract.
 
-#figure(image("sources/waveforms/tb_addsub4.png" , width: 80%))
+#figure(image("sources/waveforms/tb_addsub4.png" , width: 100%))
 
 === ALU Waveform
 The ALU waveform breaks into clear bands by `S`: 00 concat `{A,B}`, 01 add, 10 left shift, 11 multiply. In the concat band, `Y` forms a stair-step pattern as `A`/`B` count because the bits are just packed together. In the add band, `Y` is the sum of `A+B` with added zeros to the left, so it ramps smoothly and never truncates (we have 8 bits). In the shift band, `Y = A << B` with zeros shifted in; when `B > 7` the output clamps to `00` as intended. In the multiply band, the 8-bit product tracks the reference (like `F*F = E1`) and you can see denser toggling from the larger range. We sample after a short settle, so no X/Z show up on `Y`. Across all 1024 cases, `Y` matches the reference and `errors` stays 0.
 
-#figure(image("sources/waveforms/tb_alu.png", width: 80%))
+#figure(image("sources/waveforms/tb_alu.png", width: 100%))
 
 
 == RTL Schematic
 
 === Adder-Subtractor RTL Schematic
 
+#figure(image("sources/schematics/addsub4_expanded_schematic.png", width: 100%))
+
+In the RTL schematic of the addsub4 module, the subtraction arithmetic implementation is now visible, and it is possible then to confirm that its implementation is equivalent to the one proposed in the lab instructions. Observe that `m` is used both to flip the bits of the `B` input, and to feed the carry-in of the first full adder in order to complete the 2's complement arithmetic process. At the output of the 4-bit RCA we can see the exposed `C3` and `C4` signals, which are used to detect overflow and compute `vout`.
 
 === ALU RTL Schematic
+
+#figure(image("sources/schematics/alu_schematic.png", width: 100%))
+
+In the RTL schematic of the alu module, it is possible to observe the combinational implementation of the 4 arithmetic submodules, which were coded in behavioural verilog and therefore the gate-level primitives were implemented by the synthesizer. The 4:1 8-bit multiplexer is also visible, and it is used to select the output of the desired arithmetic submodule based on the 2-bit control signal. 
 
 = Conclusion
 
@@ -165,42 +162,11 @@ Summarize findings and reflect on the laboratory experience.
 
 == Summary of Results
 
-Briefly restate accomplishments and whether objectives were met.
-
-*Example:*
-_This laboratory successfully demonstrated the design, simulation, synthesis, and implementation of a 4-bit synchronous counter using Verilog HDL and Vivado. All functional requirements were verified through simulation and hardware testing._
+This lab was succesful in completing the task to design both a 4-bit adder-subtractor and a 4-bit ALU, and to test them using testbenches. The simulation results confirmed the correct functionality of all modules and submodules, and the RTL schematics confirmed the correct implementation of the adder-subtractor and the ALU.
 
 == Challenges and Solutions
 
-Discuss difficulties encountered and their resolutions.
-
-*Example issues:*
-- Initial synthesis warnings due to incomplete sensitivity lists → resolved by using `always @(posedge clk)`
-- Timing violations at 150 MHz → added pipeline stage to reduce critical path
-- Simulation mismatch → fixed improper reset logic
-
-== Learning Outcomes
-
-Reflect on what was learned from this lab.
-
-*Consider:*
-- Conceptual understanding gained
-- Tool proficiency developed
-- Design techniques learned
-- Debugging skills improved
-
-*Example:*
-_This lab reinforced understanding of synchronous sequential logic design and provided hands-on experience with the complete FPGA development workflow from RTL to bitstream._
-
-== Future Improvements
-
-Suggest potential enhancements or alternative approaches.
-
-*Example:*
-- Add a configurable counting direction (up/down counter)
-- Implement variable count step size
-- Add seven-segment display output
-- Explore power optimization techniques
+The biggest challenge found in this lab was the implementation of the adder-subtractor, due to the fact that the last two carry-outs of the full adders were not exposed in the adder module initially, which first lead me to computing `C3` by creating separate logic from the inputs for this. I later realised that this was inefficient from a point of view of gate count, and so I exposed the third carry-out of the full adders in the adder module and used it to compute `C3` and `C4` in the adder-subtractor module. In hindsight, this does slightly reduce the abstraction level of the 4-bit adder module, but I believe it was a worthwhile trade-off in order to reduce the number of gates used in the adder-subtractor module as well as it's complexity.
 
 #pagebreak()
 

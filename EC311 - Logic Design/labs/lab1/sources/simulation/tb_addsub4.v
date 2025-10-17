@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 `default_nettype none
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 01:27:34 PM
-// Design Name: 
+// Design Name: 4-bit Adder-Subtractor testbench
 // Module Name: tb_addsub4
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Project Name: 4-bit Adder-Subtractor module
+// Target Devices: None
+// Tool Versions: Vivado 2024.1
+// Description: Testbench for the 4-bit adder-subtractor module
 // 
-// Dependencies: 
+// Dependencies: addsub4.v, adder4.v, half_adder.v, full_adder.v
 // 
 // Revision:
 // Revision 0.01 - File Created

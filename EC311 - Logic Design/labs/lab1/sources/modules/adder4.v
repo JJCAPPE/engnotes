@@ -1,18 +1,17 @@
 `default_nettype none
 `timescale 1ns/1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 11:52:46 AM
-// Design Name: 
+// Design Name: 4-bit Adder
 // Module Name: adder4
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
+// Project Name: 4-bit Adder-Subtractor module
+// Target Devices: None
+// Tool Versions: Vivado 2024.1
+// Description: 4-bit Adder module
+// Dependencies: full_adder.v, half_adder.v
 // 
 // Revision:
 // Revision 0.01 - File Created

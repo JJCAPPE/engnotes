@@ -1,19 +1,17 @@
 `timescale 1ns/1ps
 `default_nettype none
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 02:44:51 PM
-// Design Name: 
+// Design Name: 4-bit ALU testbench
 // Module Name: tb_alu
-// Project Name: 
+// Project Name: 4-bit ALU module
 // Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
+// Tool Versions: Vivado 2024.1
+// Description: Testbench for the 4-bit ALU module
+// Dependencies: alu.v, alu_parts.v, adder4.v, full_adder.v, half_adder.v
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:

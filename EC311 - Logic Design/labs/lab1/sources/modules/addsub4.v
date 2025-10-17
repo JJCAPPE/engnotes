@@ -2,19 +2,18 @@
 `default_nettype none
 
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 11:52:46 AM
-// Design Name: 
+// Design Name: 4-bit Adder-Subtractor
 // Module Name: addsub4
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Project Name: 4-bit Adder-Subtractor module
+// Target Devices: None
+// Tool Versions: Vivado 2024.1
+// Description: 4-bit Adder-Subtractor module
 // 
-// Dependencies: 
-// 
+// Dependencies:  adder4.v, half_adder.v, full_adder.v
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:

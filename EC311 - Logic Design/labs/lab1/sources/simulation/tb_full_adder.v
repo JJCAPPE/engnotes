@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 `default_nettype none
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
 // 
 // Create Date: 10/03/2025 12:16:59 PM
-// Design Name: 
+// Design Name: Full Adder testbench
 // Module Name: tb_full_adder
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Project Name: 4-bit Adder-Subtractor module
+// Target Devices: None
+// Tool Versions: Vivado 2024.1
+// Description: Testbench for the Full Adder module
 // 
-// Dependencies: 
+// Dependencies: full_adder.v, half_adder.v
 // 
 // Revision:
 // Revision 0.01 - File Created
