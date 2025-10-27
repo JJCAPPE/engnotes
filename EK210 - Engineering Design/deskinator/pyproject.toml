@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deskinator"
+version = "0.1.0"
+description = "Desk-cleaning robot SLAM and coverage controller"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.13",
+  "networkx>=3.2",
+  "smbus2>=0.4",
+  "RPi.GPIO; platform_system=='Linux'",
+]
+
+[tool.setuptools]
+packages = ["deskinator"]
