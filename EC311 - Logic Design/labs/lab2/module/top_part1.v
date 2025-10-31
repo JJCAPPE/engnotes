@@ -1,9 +1,11 @@
 module top_part1 (
     input  wire       clk_100mhz,
-    input  wire       reset_n,     // active-low
-    input  wire       btn_inc_raw, // physical button
+    input  wire       btn_rst_raw, // active-high reset button (BTNC)
+    input  wire       btn_inc_raw, // increment button (BTND)
     output wire [7:0] led          // LEDs on the board
 );
+    // Convert active-high reset button to active-low internal reset
+    wire reset_n = ~btn_rst_raw;
     // Sync button to the clock as a metastability filter
     wire btn_sync;
     sync_2ff u_sync (
