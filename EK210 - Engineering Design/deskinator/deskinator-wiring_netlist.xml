@@ -1,119 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Fritzing (https://fritzing.org/) -->
-<netlist date="Sat Oct 25 18:10:22 2025" sketch="deskinator-wiring.fzz">
+<netlist date="Thu Oct 30 13:00:48 2025" sketch="deskinator-wiring.fzz">
  <net>
-  <connector id="connector39" name="SDA/MISO/TX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
-  <connector id="connector21" name="SDA/MISO/TX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
-  <connector id="connector27" name="SDA/MISO/TX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
-  <connector id="connector9" name="GPIO15">
+  <connector id="connector31" name="GPIO12">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+  <connector id="connector0" name="G">
+   <part id="334840" label="Q2" title="MOSFET-NCHANNEL"/>
   </connector>
  </net>
  <net>
-  <connector id="C17" name="C17">
-   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
-  </connector>
-  <connector id="A17" name="A17">
-   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
-  </connector>
-  <connector id="E17" name="E17">
-   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
-  </connector>
-  <connector id="B17" name="B17">
-   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
-  </connector>
-  <connector id="D17" name="D17">
-   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
-  </connector>
-  <connector id="connector0" name="GND">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
-  </connector>
-  <connector id="connector6" name="GND">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
-  </connector>
-  <connector id="X54" name="X54">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="connector33" name="GND">
+  <connector id="connector29" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
-  <connector id="X59" name="X59">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X45" name="X45">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X47" name="X47">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X34" name="X34">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X38" name="X38">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X32" name="X32">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X40" name="X40">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X46" name="X46">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X60" name="X60">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X51" name="X51">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X44" name="X44">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X36" name="X36">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X52" name="X52">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X58" name="X58">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X48" name="X48">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X56" name="X56">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X57" name="X57">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X33" name="X33">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X50" name="X50">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X39" name="X39">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X35" name="X35">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X42" name="X42">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X41" name="X41">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X53" name="X53">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="connector13" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
@@ -127,10 +25,10 @@
   <connector id="connector19" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
-  <connector id="connector29" name="GND">
+  <connector id="connector45" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
-  <connector id="connector45" name="GND">
+  <connector id="connector33" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
   <connector id="connector38" name="GND">
@@ -139,32 +37,23 @@
   <connector id="connector8" name="GND">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
-  <connector id="connector37" name="GND">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  <connector id="connector2" name="S">
+   <part id="334840" label="Q2" title="MOSFET-NCHANNEL"/>
   </connector>
-  <connector id="connector19" name="GND">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  <connector id="A17" name="A17">
+   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
-  <connector id="connector25" name="GND">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  <connector id="E17" name="E17">
+   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
-  <connector id="connector1" name="-">
-   <part id="69480" label="Lipo" title="4S Li-ion/LiPo 14.8 V XT60"/>
+  <connector id="B17" name="B17">
+   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
-  <connector id="connector6" name="GND">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+  <connector id="C17" name="C17">
+   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
-  <connector id="connector1" name="pin 2">
-   <part id="70690" label="Vacuum-DC" title="DC Vacuum Fan 12V"/>
-  </connector>
-  <connector id="connector0" name="GND">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
-  </connector>
-  <connector id="connector1" name="IN-">
-   <part id="76790" label="XL4015-5.1V" title="DC_DC_XL4015"/>
-  </connector>
-  <connector id="connector0" name="E">
-   <part id="139720" label="NPN-Trans" title="NPN-Transistor"/>
+  <connector id="D17" name="D17">
+   <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
   <connector id="E16" name="E16">
    <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
@@ -181,14 +70,11 @@
   <connector id="D16" name="D16">
    <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
+  <connector id="connector2" name="S">
+   <part id="314960" label="Q1" title="MOSFET-NCHANNEL"/>
+  </connector>
   <connector id="W2" name="W2">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="connector0" name="pin1">
-   <part id="297320" label="Buzzer" title="Piezo Speaker"/>
-  </connector>
-  <connector id="connector3" name="OUT-">
-   <part id="76790" label="XL4015-5.1V" title="DC_DC_XL4015"/>
   </connector>
   <connector id="W20" name="W20">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
@@ -283,6 +169,9 @@
   <connector id="connector29" name="GND">
    <part id="135800" label="Wave-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
   </connector>
+  <connector id="connector37" name="GND">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
   <connector id="B14" name="B14">
    <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
@@ -301,9 +190,108 @@
   <connector id="connector17" name="GND">
    <part id="135800" label="Wave-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
   </connector>
+  <connector id="connector19" name="GND">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+  <connector id="connector25" name="GND">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+  <connector id="connector3" name="OUT-">
+   <part id="76790" label="XL4015-5.1V" title="DC_DC_XL4015"/>
+  </connector>
   <connector id="connector17" name="GND">
    <part id="93690" label="EDGE-MUX" title="Adafruit TCA9548A"/>
   </connector>
+  <connector id="connector0" name="GND">
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
+  </connector>
+  <connector id="X57" name="X57">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="connector6" name="GND">
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
+  </connector>
+  <connector id="X59" name="X59">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X45" name="X45">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X47" name="X47">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X34" name="X34">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X38" name="X38">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X32" name="X32">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X40" name="X40">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X46" name="X46">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X60" name="X60">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X54" name="X54">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X51" name="X51">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X44" name="X44">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X36" name="X36">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X52" name="X52">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X58" name="X58">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X48" name="X48">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X56" name="X56">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X33" name="X33">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X50" name="X50">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X39" name="X39">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X35" name="X35">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X42" name="X42">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X41" name="X41">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="X53" name="X53">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="connector0" name="GND">
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
+  </connector>
+  <connector id="connector6" name="GND">
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
+  </connector>
+  <connector id="connector1" name="-">
+   <part id="69480" label="Lipo" title="4S Li-ion/LiPo 14.8 V XT60"/>
+  </connector>
   <connector id="connector29" name="GND">
    <part id="97200" label="Edge-Prox-1" title="Adafruit APDS9960 Proximity Sensor"/>
   </connector>
@@ -316,64 +304,56 @@
   <connector id="connector29" name="GND">
    <part id="65770" label="Edge-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
   </connector>
-  <connector id="connector11" name="GND">
-   <part id="97200" label="Edge-Prox-1" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector17" name="GND">
-   <part id="97200" label="Edge-Prox-1" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector11" name="GND">
-   <part id="97870" label="Edge-Prox-3" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector17" name="GND">
-   <part id="97870" label="Edge-Prox-3" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector11" name="GND">
-   <part id="97500" label="Edge-Prox-2" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector17" name="GND">
-   <part id="97500" label="Edge-Prox-2" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector11" name="GND">
-   <part id="65770" label="Edge-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
-  <connector id="connector17" name="GND">
-   <part id="65770" label="Edge-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector7" name="GPIO14">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
-  <connector id="connector38" name="SCL/SCK/RX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
-  <connector id="connector22" name="SCL/SCK/RX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
-  <connector id="connector28" name="SCL/SCK/RX">
-   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector15" name="GPIO23">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
-  <connector id="connector8" name="Dir">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector2" name="OUT+">
+  <connector id="connector1" name="IN-">
    <part id="76790" label="XL4015-5.1V" title="DC_DC_XL4015"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part id="322310" label="10kΩ-Res" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector11" name="GND">
+   <part id="97200" label="Edge-Prox-1" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector17" name="GND">
+   <part id="97200" label="Edge-Prox-1" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector11" name="GND">
+   <part id="97870" label="Edge-Prox-3" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector17" name="GND">
+   <part id="97870" label="Edge-Prox-3" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector11" name="GND">
+   <part id="97500" label="Edge-Prox-2" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector17" name="GND">
+   <part id="97500" label="Edge-Prox-2" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector11" name="GND">
+   <part id="65770" label="Edge-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+  <connector id="connector17" name="GND">
+   <part id="65770" label="Edge-Prox-0" title="Adafruit APDS9960 Proximity Sensor"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part id="297320" label="Buzzer" title="Piezo Speaker"/>
+  </connector>
+  <connector id="connector1" name="D">
+   <part id="334840" label="Q2" title="MOSFET-NCHANNEL"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="5V">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part id="297320" label="Buzzer" title="Piezo Speaker"/>
   </connector>
   <connector id="connector1" name="5V">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
-  <connector id="connector3" name="5V">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
-  <connector id="X28" name="X28">
+  <connector id="X1" name="X1">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="X27" name="X27">
@@ -386,9 +366,6 @@
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="X10" name="X10">
-   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
-  </connector>
-  <connector id="X1" name="X1">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="X25" name="X25">
@@ -442,11 +419,50 @@
   <connector id="X20" name="X20">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
+  <connector id="X28" name="X28">
+   <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
   <connector id="X3" name="X3">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="X14" name="X14">
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
+  </connector>
+  <connector id="connector2" name="OUT+">
+   <part id="76790" label="XL4015-5.1V" title="DC_DC_XL4015"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="GPIO27">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+  <connector id="connector15" name="EN">
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
+  </connector>
+  <connector id="connector15" name="EN">
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
+  </connector>
+  <connector id="connector35" name="GPIO16">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="G">
+   <part id="314960" label="Q1" title="MOSFET-NCHANNEL"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part id="322310" label="10kΩ-Res" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part id="312920" label="100Ω-Res" title="10kΩ Resistor"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="GPIO5">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part id="312920" label="100Ω-Res" title="10kΩ Resistor"/>
   </connector>
  </net>
  <net>
@@ -565,35 +581,19 @@
    <part id="86700" label="Breadboard4" title="Mini Breadboard"/>
   </connector>
   <connector id="connector1" name="VIO">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
   <connector id="connector35" name="VCC">
    <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
   </connector>
   <connector id="connector1" name="VIO">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
   <connector id="connector20" name="VCC">
    <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
   </connector>
   <connector id="connector26" name="VCC">
    <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector1" name="Pin 1">
-   <part id="224440" label="10k-Res" title="10kΩ Resistor"/>
-  </connector>
-  <connector id="connector17" name="GPIO24">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector0" name="Pin 0">
-   <part id="224440" label="10k-Res" title="10kΩ Resistor"/>
-  </connector>
-  <connector id="connector1" name="B">
-   <part id="139720" label="NPN-Trans" title="NPN-Transistor"/>
   </connector>
  </net>
  <net>
@@ -676,10 +676,7 @@
    <part id="76200" label="Breadboard3" title="Generic Bajillion Hole Breadboard"/>
   </connector>
   <connector id="connector7" name="VM">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
-  </connector>
-  <connector id="connector7" name="VM">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
   <connector id="connector0" name="+">
    <part id="69480" label="Lipo" title="4S Li-ion/LiPo 14.8 V XT60"/>
@@ -687,13 +684,11 @@
   <connector id="connector0" name="pin 1">
    <part id="70690" label="Vacuum-DC" title="DC Vacuum Fan 12V"/>
   </connector>
- </net>
- <net>
-  <connector id="connector2" name="C">
-   <part id="139720" label="NPN-Trans" title="NPN-Transistor"/>
+  <connector id="connector7" name="VM">
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
-  <connector id="connector1" name="pin2">
-   <part id="297320" label="Buzzer" title="Piezo Speaker"/>
+  <connector id="connector0" name="cathode">
+   <part id="367780" label="D1" title="Rectifier Diode"/>
   </connector>
  </net>
  <net>
@@ -853,14 +848,31 @@
   </connector>
  </net>
  <net>
-  <connector id="connector35" name="GPIO16">
+  <connector id="connector9" name="GPIO15">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
-  <connector id="connector15" name="EN">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+  <connector id="connector39" name="SDA/MISO/TX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
   </connector>
-  <connector id="connector15" name="EN">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+  <connector id="connector21" name="SDA/MISO/TX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+  <connector id="connector27" name="SDA/MISO/TX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector7" name="GPIO14">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
+  </connector>
+  <connector id="connector38" name="SCL/SCK/RX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+  <connector id="connector22" name="SCL/SCK/RX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
+  </connector>
+  <connector id="connector28" name="SCL/SCK/RX">
+   <part id="58310" label="IMU" title="Adafruit BNO085 9-DOF Orientation IMU Fusion"/>
   </connector>
  </net>
  <net>
@@ -868,7 +880,7 @@
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
   <connector id="connector8" name="Dir">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -876,7 +888,15 @@
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
   <connector id="connector9" name="Step">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector8" name="Dir">
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
+  </connector>
+  <connector id="connector15" name="GPIO23">
+   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
  </net>
  <net>
@@ -884,7 +904,18 @@
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
   <connector id="connector9" name="Step">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="pin 2">
+   <part id="70690" label="Vacuum-DC" title="DC Vacuum Fan 12V"/>
+  </connector>
+  <connector id="connector1" name="anode">
+   <part id="367780" label="D1" title="Rectifier Diode"/>
+  </connector>
+  <connector id="connector1" name="D">
+   <part id="314960" label="Q1" title="MOSFET-NCHANNEL"/>
   </connector>
  </net>
  <net>
@@ -892,7 +923,7 @@
    <part id="65350" label="NEMA17-2" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector5" name="M2B">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -900,7 +931,7 @@
    <part id="65350" label="NEMA17-2" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector4" name="M2A">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -908,7 +939,7 @@
    <part id="65350" label="NEMA17-2" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector3" name="M1A">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -916,7 +947,7 @@
    <part id="65350" label="NEMA17-2" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector2" name="M1B">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -924,7 +955,7 @@
    <part id="65320" label="NEMA17-1" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector5" name="M2B">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -932,7 +963,7 @@
    <part id="65320" label="NEMA17-1" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector4" name="M2A">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -940,7 +971,7 @@
    <part id="65320" label="NEMA17-1" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector3" name="M1A">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -948,7 +979,7 @@
    <part id="65320" label="NEMA17-1" title="Stepper Motor - Bipolar"/>
   </connector>
   <connector id="connector2" name="M1B">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
@@ -1097,11 +1128,6 @@
   </connector>
  </net>
  <net>
-  <connector id="connector31" name="GPIO12">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
- </net>
- <net>
   <connector id="connector32" name="GPIO13">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
@@ -1122,12 +1148,12 @@
   </connector>
  </net>
  <net>
-  <connector id="connector40" name="TR01_TAP">
+  <connector id="connector17" name="GPIO24">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
  </net>
  <net>
-  <connector id="connector28" name="GPIO5">
+  <connector id="connector40" name="TR01_TAP">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
  </net>
@@ -1143,11 +1169,6 @@
  </net>
  <net>
   <connector id="connector21" name="GPIO25">
-   <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
-  </connector>
- </net>
- <net>
-  <connector id="connector12" name="GPIO27">
    <part id="65670" label="RBPi" title="Raspberry Pi 4B"/>
   </connector>
  </net>
@@ -1173,72 +1194,72 @@
  </net>
  <net>
   <connector id="connector10" name="PDN">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector16" name="INDEX">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector17" name="DIAG">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector12" name="SPRD">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector11" name="UART">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector13" name="MS1">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector14" name="MS2">
-   <part id="77590" label="Driver-2" title="TMC2209"/>
+   <part id="77590" label="Driver-Right" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector10" name="PDN">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector16" name="INDEX">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector17" name="DIAG">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector12" name="SPRD">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector11" name="UART">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector13" name="MS1">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>
   <connector id="connector14" name="MS2">
-   <part id="65730" label="Driver-1" title="TMC2209"/>
+   <part id="65730" label="Driver-Left" title="TMC2209"/>
   </connector>
  </net>
  <net>

@@ -13,12 +13,21 @@ module top_part1 (
         .q_sync  (btn_sync)
     );
 
-    // Debounce and edge-detect to get a one-cycle increment pulse
-    wire inc_pulse;
-    debouncer_with_edge #(.COUNT_MAX(2_000_000)) u_db_edge (
+    // Debounce the synchronized button
+    wire btn_debounced;
+    debouncer #(.COUNT_MAX(2_000_000)) u_db (
         .clk       (clk_100mhz),
         .reset_n   (reset_n),
         .noisy_in  (btn_sync),
+        .clean_out (btn_debounced)
+    );
+
+    // Detect rising edge to produce a one-cycle increment pulse
+    wire inc_pulse;
+    edge_detect u_edge (
+        .clk       (clk_100mhz),
+        .reset_n   (reset_n),
+        .level_in  (btn_debounced),
         .pulse_out (inc_pulse)
     );
 
