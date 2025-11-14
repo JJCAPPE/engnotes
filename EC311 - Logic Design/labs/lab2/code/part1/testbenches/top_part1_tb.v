@@ -1,4 +1,24 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: Boston University
+// Engineer: Giacomo Cappelletto
+// 
+// Create Date: 10/31/2025 01:27:32 PM
+// Design Name: Counter Testbench
+// Module Name: top_part1_tb
+// Project Name: Counter Lab 1
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: top_part1.v
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 
 module top_part1_tb;
     localparam CLK_PERIOD_NS = 10; // 100 MHz
@@ -15,7 +35,6 @@ module top_part1_tb;
         .led        (led)
     );
 
-    // Speed up debounce during simulation (COUNT_MAX defaults to 2_000_000)
     defparam dut.u_db.COUNT_MAX = 4;
 
     always #(CLK_PERIOD_NS/2) clk_100mhz = ~clk_100mhz;
@@ -49,4 +68,3 @@ module top_part1_tb;
         $finish;
     end
 endmodule
-
