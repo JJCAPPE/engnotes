@@ -26,7 +26,8 @@ module top_part2 (
     input  wire       reset_n,         // Active-low global reset
     input  wire       increment,       // Increment button input
     input  wire       mode_select,      // Mode select switch (0=manual/button, 1=auto/1Hz)
-    output wire [3:0] digit_select,    // 4-bit digit select (AN signals, active-low)
+    output wire [3:0] digit_select,    // 4-bit digit select (AN[3:0] signals, active-low)
+    output wire [3:0] digit_select_off, // AN[7:4] - keep second display off
     output wire [6:0] seven            // 7-bit seven segment output (CA-CG, active-low)
 );
     // Clock divider outputs
@@ -110,6 +111,9 @@ module top_part2 (
         .hex_digit (segment_data),
         .seven     (seven)
     );
+    
+    // Keep second display (AN[7:4]) always off by driving them high (inactive)
+    assign digit_select_off = 4'b1111;
     
 endmodule
 

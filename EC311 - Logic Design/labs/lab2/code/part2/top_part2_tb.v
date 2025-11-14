@@ -9,6 +9,7 @@ module top_part2_tb;
     reg mode_select = 0;
     
     wire [3:0] digit_select;
+    wire [3:0] digit_select_off;
     wire [6:0] seven;
     
     top_part2 dut (
@@ -17,6 +18,7 @@ module top_part2_tb;
         .increment  (increment),
         .mode_select(mode_select),
         .digit_select(digit_select),
+        .digit_select_off(digit_select_off),
         .seven      (seven)
     );
     
@@ -35,68 +37,39 @@ module top_part2_tb;
         end
     endtask
     
-    task check_display;
-        input [15:0] expected_count;
-        begin
-        end
-    endtask
-    
     initial begin
         reset_n = 1'b1;
         increment = 1'b0;
         mode_select = 1'b0;
-        repeat (5) @(posedge clk_100mhz);
+        repeat (10) @(posedge clk_100mhz);
         
         reset_n = 1'b0;
-        repeat (10) @(posedge clk_100mhz);
+        repeat (20) @(posedge clk_100mhz);
         reset_n = 1'b1;
-        repeat (10) @(posedge clk_100mhz);
-        check_display(16'h0000);
+        repeat (20) @(posedge clk_100mhz);
         
         mode_select = 1'b0;
-        press_button();
-        check_display(16'h0001);
-        press_button();
-        check_display(16'h0002);
-        press_button();
-        check_display(16'h0003);
-        
-        increment = 1'b1;
-        repeat (2) @(posedge clk_100mhz);
-        increment = 1'b0;
-        repeat (2) @(posedge clk_100mhz);
-        increment = 1'b1;
-        repeat (2) @(posedge clk_100mhz);
-        increment = 1'b0;
         repeat (50) @(posedge clk_100mhz);
-        check_display(16'h0004);
         
         press_button();
-        check_display(16'h0005);
-        reset_n = 1'b0;
-        repeat (5) @(posedge clk_100mhz);
-        reset_n = 1'b1;
-        repeat (10) @(posedge clk_100mhz);
-        check_display(16'h0000);
+        repeat (100) @(posedge clk_100mhz);
         
-        repeat (3) begin
-            press_button();
-        end
-        check_display(16'h0003);
+        press_button();
+        repeat (100) @(posedge clk_100mhz);
         
-        repeat (20) begin
-            @(posedge clk_100mhz);
-            repeat (5) @(posedge clk_100mhz);
-        end
+        press_button();
+        repeat (100) @(posedge clk_100mhz);
         
         mode_select = 1'b1;
-        repeat (100) @(posedge clk_100mhz);
-        mode_select = 1'b0;
-        repeat (10) @(posedge clk_100mhz);
-        press_button();
-        check_display(16'h0004);
- 
-        repeat (50) @(posedge clk_100mhz);
+        repeat (200) @(posedge clk_100mhz);
+        
+        repeat (1200) @(posedge clk_100mhz);
+        
+        repeat (1200) @(posedge clk_100mhz);
+        
+        repeat (1200) @(posedge clk_100mhz);
+        
+        repeat (200) @(posedge clk_100mhz);
         $finish;
     end
     

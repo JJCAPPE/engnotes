@@ -6,7 +6,7 @@
 // Create Date: 10/31/2025 11:55:26 AM
 // Design Name: Debouncer
 // Module Name: debouncer
-// Project Name: Counter Lab 2.2
+// Project Name: Counter Lab 2.2    
 // Target Devices: NEXYS A7
 // Tool Versions: 
 // Description: Debouncer for Counter Lab 2.2
