@@ -1340,3 +1340,5 @@ To understand why we need both NMOS and PMOS, consider the resistor abstraction:
 
 The CMOS approach solves all these problems by using the PMOS as an "active pull-up" device that strongly drives the output HIGH while consuming no static power.
 
+
+https://agile.bu.edu/gitlab/ec311/labs/project/whack-a-moleg6/-/tree/master?ref_type=heads
