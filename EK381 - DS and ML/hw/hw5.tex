@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+% convenience macro
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\vect}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\title{HW5}
+\author{Giacomo Cappelletto}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{5}
+\subsection*{5.1}
+\subsubsection*{a}
+
+
+$ \mathbb{E}[X] = 1/(\lambda) = 20$
+
+$ \therefore X \sim Exponential(1/20) $
+
+$ \mathbb{P}[X \leq 1] = F_X(1) = 1 - e^{- (1/20) \cdot 1} = 1 - e^{-1/20} $
+
+
+\subsubsection*{b}
+
+$ \mathbb{P}[X \geq 5 ] = 1 - \mathbb{P}[X \leq 5] = 1 - (1 - e^{- (1/20) \cdot 5}) = e^{-1/4} $
+
+
+
+
+\end{document}
