@@ -22,6 +22,8 @@
 
 \section*{5}
 \subsection*{5.1}
+Solved on paper with calculator, desmos for integrals and exam 2 equation sheet, then typed up in latex.
+\subsection*{5.2}
 \subsubsection*{a}
 
 
@@ -84,7 +86,7 @@ Since $Y$ defines a new R.V. where we start from year 10
 
 \[ \mathbb{X \leq 11 | X \geq 10} = \mathbb{Y \leq 1} = F_Y(1) = 1 - e^{-1/20} \]
 
-\subsection*{5.2}
+\subsection*{5.3}
 
 \subsubsection*{a}
 
@@ -201,7 +203,7 @@ For $b$: $P[X \geq b] = P\!\left[Z \geq \frac{b+1}{2}\right] \leq 0.2$.
 From tables, $P[Z \geq z] = 0.2 \Rightarrow z \approx 0.84$.
 \[ \frac{b+1}{2} = 0.84 \implies b = 2(0.84) - 1 = 0.68 \]
 
-\subsection*{5.3}
+\subsection*{5.4}
 
 \subsubsection*{a}
 
@@ -267,7 +269,7 @@ $P_{X|Y}(x \mid y) = P_{X,Y}(x,y) / P_Y(y)$
 
 There is at least one cell that is zero where the entire row or column is not zero, so the variables are not independent.
 
-\subsection*{5.4}
+\subsection*{5.5}
 
 \subsubsection*{a}
 
@@ -329,7 +331,51 @@ Using $P_{X,Y}(x,y) = P_X(x)\,P_{Y|X}(y \mid x)$:
 \[ P[X=0|Y \in A] = 1 - P[X=1|Y \in A] = 1 - 27/32 = 5/32 \]
 
 
-\subsection*{5.5}
+\subsection*{5.6}
 
+\subsubsection*{a}
+
+\[ \iint_{0}^{2} \iint_{-1}^{1} c x^2 y \, dx \, dy = 1 \]
+
+\[ c = \frac{3}{4}\]
+
+\subsubsection*{b}
+
+\[ P[X \leq 1, Y \leq 1] = \iint_{-1}^{0} \iint_{0}^{1} \frac{3}{4} x^2 y \, dx \, dy = \frac{1}{8}\]
+
+\subsubsection*{c}
+
+\[ P[Y \leq X] = \iint_{0}^{1} \iint_{0}^{x} \frac{3}{4} x^2 y \, dy \, dx = \frac{3}{40}\]
+
+\subsubsection*{d}
+
+\[ 
+     P[(X,Y) \in B] = 1 - \iint_{1/2}^{2} \iint_{1/2}^{1} \frac{3}{4} x^2 y \, dx \, dy = \frac{151}{256} 
+\]
+
+\subsubsection*{e}
+
+\[
+	f_X(x) = \int_0^2 \frac{3}{4} x^2 y \, dy = \left.\frac{3}{8} x^2 y^2 \right|_0^2 =
+	\begin{cases} \dfrac{3}{2} x^2 & -1 \leq x \leq 1 \\ 0 & \text{otherwise} \end{cases}
+\]
+
+\[
+	f_Y(y) = \int_{-1}^1 \frac{3}{4} x^2 y \, dx = \left.\frac{1}{4} x^3 y \right|_{-1}^1 =
+	\begin{cases} \dfrac{1}{2} y & 0 \leq y \leq 2 \\ 0 & \text{otherwise} \end{cases}
+\]
+
+\subsubsection*{f}
+
+$f_{XY}(x,y) = \frac{3}{4}x^2 y = \frac{3}{2}x^2 \cdot \frac{1}{2}y = f_X(x)\,f_Y(y)$, so $X$ and $Y$ are independent.
+
+\subsubsection*{g}
+
+Since $X \perp Y$:
+\[
+	f_{X|Y}(x \mid y) = f_X(x) = \begin{cases} \dfrac{3}{2} x^2 & -1 \leq x \leq 1 \\ 0 & \text{otherwise} \end{cases}
+	\qquad
+	f_{Y|X}(y \mid x) = f_Y(y) = \begin{cases} \dfrac{1}{2} y & 0 \leq y \leq 2 \\ 0 & \text{otherwise} \end{cases}
+\]
 
 \end{document}
