@@ -1,0 +1,74 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+
+\title{PY 211 Lab 3 --- Hooke's law analysis (equations)}
+\author{}
+\date{}
+
+\begin{document}
+
+\section*{Physical model}
+$$
+  F = k\,\Delta x
+$$
+$$
+  mg = k\,\Delta x
+  \quad\Rightarrow\quad
+  \Delta x = \frac{g}{k}\,m
+$$
+
+So the graph of $\Delta x$ vs.\ $m$ should be linear with slope $B = g/k$, hence
+$$
+  k = \frac{g}{B}
+$$
+
+\section*{Weighted least-squares coefficients}
+Intercept and slope:
+\begin{align}
+  A &= \frac{\bigl(\sum_i w_i x_i^2\bigr)\bigl(\sum_i w_i y_i\bigr) - \bigl(\sum_i w_i x_i\bigr)\bigl(\sum_i w_i x_i y_i\bigr)}{\bigl(\sum_i w_i\bigr)\bigl(\sum_i w_i x_i^2\bigr) - \bigl(\sum_i w_i x_i\bigr)^2} \\
+  B &= \frac{\bigl(\sum_i w_i\bigr)\bigl(\sum_i w_i x_i y_i\bigr) - \bigl(\sum_i w_i x_i\bigr)\bigl(\sum_i w_i y_i\bigr)}{\bigl(\sum_i w_i\bigr)\bigl(\sum_i w_i x_i^2\bigr) - \bigl(\sum_i w_i x_i\bigr)^2}
+\end{align}
+
+\section*{Uncertainties on $A$ and $B$}
+\begin{align}
+  \delta_A &= \sqrt{\frac{\sum_i w_i x_i^2}{\bigl(\sum_i w_i\bigr)\bigl(\sum_i w_i x_i^2\bigr) - \bigl(\sum_i w_i x_i\bigr)^2}} \\
+  \delta_B &= \sqrt{\frac{\sum_i w_i}{\bigl(\sum_i w_i\bigr)\bigl(\sum_i w_i x_i^2\bigr) - \bigl(\sum_i w_i x_i\bigr)^2}}
+\end{align}
+
+\section*{From slope to $k$ and $\delta k$ (error propagation)}
+$$
+  k = \frac{g}{B}
+  \qquad\Rightarrow\qquad
+  \delta k = \left|\frac{\mathrm{d}k}{\mathrm{d}B}\right|\delta_B = \frac{g}{B^2}\,\delta_B
+$$
+
+Weighted chi-squared:
+\begin{equation}
+  \chi^2 = \sum_i w_i\,\bigl(y_i - A - Bx_i\bigr)^2
+\end{equation}
+
+\section*{Numerical results (weighted least-squares fit)}
+Fit model: spring extension vs.\ mass,
+$$
+  \Delta x = A + B m,
+  \qquad m\ \text{in kg},\quad \Delta x\ \text{in m}.
+$$
+From the regression (with $g = 9.80665\ \mathrm{m\,s^{-2}}$):
+\begin{align*}
+  A &= (-0.00106633 \pm 0.000662925)\ \mathrm{m}, \\
+  B &= (0.406136 \pm 0.0064389)\ \mathrm{m\,kg^{-1}}.
+\end{align*}
+Since $B = g/k$,
+$$
+  k = \frac{g}{B} = (24.146 \pm 0.38282)\ \mathrm{N\,m^{-1}}
+  \qquad\text{(form } k_{\mathrm{best}} \pm \delta k\text{)}.
+$$
+
+
+
+\end{document}

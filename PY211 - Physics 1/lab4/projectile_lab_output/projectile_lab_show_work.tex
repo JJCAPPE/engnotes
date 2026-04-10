@@ -1,0 +1,293 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\setlength{\parindent}{0pt}
+\setlength{\arraycolsep}{4pt}
+\allowdisplaybreaks
+\begin{document}
+\scriptsize
+\[
+\textbf{Projectile Motion Lab Calculations}
+\]
+\[
+\begin{array}{cccccccc}
+\toprule
+\theta(^\circ) & h(\mathrm{m}) & \overline{R}_{\mathrm{meas}}(\mathrm{m}) & \delta \overline{R}(\mathrm{m}) & v_0(\mathrm{m/s}) & \delta v_0(\mathrm{m/s}) & n & s_R(\mathrm{m})\\
+\midrule
+0 & 1.015 & 1.816 & 0.0102956 & 3.99211 & 0.0246765 & 5 & 0.0230217 \\
+\bottomrule
+\end{array}
+\]
+\[
+\overline{R}_0 = \frac{1}{5}\left(1.84 + 1.83 + 1.81 + 1.78 + 1.82\right) = 1.816\ \mathrm{m}
+\]
+\[
+s_{R,0} = \sqrt{\frac{1}{4}\left((1.84 - 1.816)^2 + (1.83 - 1.816)^2 + (1.81 - 1.816)^2 + (1.78 - 1.816)^2 + (1.82 - 1.816)^2\right)} = 0.0230217\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.0102956\ \mathrm{m}
+\]
+\[
+v_0 = \overline{R}_0\sqrt{\frac{g}{2h}}
+\]
+\[
+v_0 = (1.816)\sqrt{\frac{9.81}{2(1.015)}} = 3.99211\ \mathrm{m/s}
+\]
+\[
+\delta v_0 = v_0\sqrt{\left(\frac{\delta \overline{R}_0}{\overline{R}_0}\right)^2 + \frac{1}{4}\left(\frac{\delta h}{h}\right)^2}
+\]
+\[
+\delta v_0 = (3.99211)\sqrt{\left(\frac{0.0102956}{1.816}\right)^2 + \frac{1}{4}\left(\frac{0.005}{1.015}\right)^2} = 0.0246765\ \mathrm{m/s}
+\]
+\[
+\begin{array}{cccccccccc}
+\toprule
+\theta_{\mathrm{in}}(^\circ) & \theta_{\mathrm{h}}(^\circ) & h(\mathrm{m}) & \overline{R}_{\mathrm{meas}}(\mathrm{m}) & \delta \overline{R}(\mathrm{m}) & R_{\mathrm{calc}}(\mathrm{m}) & \delta R_{\mathrm{calc}}(\mathrm{m}) & \Delta(\mathrm{m}) & z & n\\
+\midrule
+10 & 80 & 1.035 & 2.01 & 0.00288675 & 0.700408 & 0.0347103 & 1.30959 & 37.5994 & 3 \\
+15 & 75 & 1.04 & 2.06833 & 0.00440959 & 1.03168 & 0.0337276 & 1.03665 & 30.4766 & 3 \\
+20 & 70 & 1.05 & 2.19 & 0.00763763 & 1.34169 & 0.0324531 & 0.848309 & 25.4444 & 3 \\
+25 & 65 & 1.07 & 2.28833 & 0.00927961 & 1.62629 & 0.0309948 & 0.662039 & 20.4623 & 3 \\
+30 & 60 & 1.08 & 2.33 & 0.0057735 & 1.87483 & 0.0293388 & 0.455174 & 15.2224 & 3 \\
+35 & 55 & 1.09 & 2.34333 & 0.00666667 & 2.08532 & 0.0276523 & 0.258016 & 9.07084 & 3 \\
+\bottomrule
+\end{array}
+\]
+\[
+\theta_{\mathrm{h}} = 90^{\circ} - \theta_{\mathrm{in}}
+\]
+\[
+\textbf{Trial 1}
+\]
+\[
+\theta_{\mathrm{h},1} = 90^\circ - 10^\circ = 80^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},1} = \frac{1}{3}\left(2.015 + 2.005 + 2.01\right) = 2.01\ \mathrm{m}
+\]
+\[
+s_{R,1} = \sqrt{\frac{1}{2}\left((2.015 - 2.01)^2 + (2.005 - 2.01)^2 + (2.01 - 2.01)^2\right)} = 0.005\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.00288675\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},1} = \frac{(3.99211)^2\cos(80^\circ)}{9.81}\left(\sin(80^\circ) + \sqrt{\sin^2(80^\circ) + \frac{2(9.81)(1.035)}{(3.99211)^2}}\right) = 0.700408\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.290789\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.115919\ ,\quad \frac{\partial R}{\partial \theta} = -3.89102\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},1} = \sqrt{(0.290789\cdot 0.0246765)^2 + (0.115919\cdot 0.005)^2 + (-3.89102\cdot 0.00872665)^2} = 0.0347103\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},1} - R_{\mathrm{calc},1} = 2.01 - 0.700408 = 1.30959\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.00288675)^2 + (0.0347103)^2} = 0.0348301\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{1.30959}{0.0348301} = 37.5994
+\]
+\[
+\textbf{Trial 2}
+\]
+\[
+\theta_{\mathrm{h},2} = 90^\circ - 15^\circ = 75^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},2} = \frac{1}{3}\left(2.07 + 2.06 + 2.075\right) = 2.06833\ \mathrm{m}
+\]
+\[
+s_{R,2} = \sqrt{\frac{1}{2}\left((2.07 - 2.06833)^2 + (2.06 - 2.06833)^2 + (2.075 - 2.06833)^2\right)} = 0.00763763\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.00440959\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},2} = \frac{(3.99211)^2\cos(75^\circ)}{9.81}\left(\sin(75^\circ) + \sqrt{\sin^2(75^\circ) + \frac{2(9.81)(1.04)}{(3.99211)^2}}\right) = 1.03168\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.426219\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.173968\ ,\quad \frac{\partial R}{\partial \theta} = -3.67082\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},2} = \sqrt{(0.426219\cdot 0.0246765)^2 + (0.173968\cdot 0.005)^2 + (-3.67082\cdot 0.00872665)^2} = 0.0337276\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},2} - R_{\mathrm{calc},2} = 2.06833 - 1.03168 = 1.03665\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.00440959)^2 + (0.0337276)^2} = 0.0340146\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{1.03665}{0.0340146} = 30.4766
+\]
+\[
+\textbf{Trial 3}
+\]
+\[
+\theta_{\mathrm{h},3} = 90^\circ - 20^\circ = 70^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},3} = \frac{1}{3}\left(2.18 + 2.205 + 2.185\right) = 2.19\ \mathrm{m}
+\]
+\[
+s_{R,3} = \sqrt{\frac{1}{2}\left((2.18 - 2.19)^2 + (2.205 - 2.19)^2 + (2.185 - 2.19)^2\right)} = 0.0132288\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.00763763\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},3} = \frac{(3.99211)^2\cos(70^\circ)}{9.81}\left(\sin(70^\circ) + \sqrt{\sin^2(70^\circ) + \frac{2(9.81)(1.05)}{(3.99211)^2}}\right) = 1.34169\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.550197\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.231875\ ,\quad \frac{\partial R}{\partial \theta} = -3.37516\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},3} = \sqrt{(0.550197\cdot 0.0246765)^2 + (0.231875\cdot 0.005)^2 + (-3.37516\cdot 0.00872665)^2} = 0.0324531\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},3} - R_{\mathrm{calc},3} = 2.19 - 1.34169 = 0.848309\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.00763763)^2 + (0.0324531)^2} = 0.0333398\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{0.848309}{0.0333398} = 25.4444
+\]
+\[
+\textbf{Trial 4}
+\]
+\[
+\theta_{\mathrm{h},4} = 90^\circ - 25^\circ = 65^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},4} = \frac{1}{3}\left(2.295 + 2.27 + 2.3\right) = 2.28833\ \mathrm{m}
+\]
+\[
+s_{R,4} = \sqrt{\frac{1}{2}\left((2.295 - 2.28833)^2 + (2.27 - 2.28833)^2 + (2.3 - 2.28833)^2\right)} = 0.0160728\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.00927961\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},4} = \frac{(3.99211)^2\cos(65^\circ)}{9.81}\left(\sin(65^\circ) + \sqrt{\sin^2(65^\circ) + \frac{2(9.81)(1.07)}{(3.99211)^2}}\right) = 1.62629\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.659842\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.288985\ ,\quad \frac{\partial R}{\partial \theta} = -3.01762\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},4} = \sqrt{(0.659842\cdot 0.0246765)^2 + (0.288985\cdot 0.005)^2 + (-3.01762\cdot 0.00872665)^2} = 0.0309948\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},4} - R_{\mathrm{calc},4} = 2.28833 - 1.62629 = 0.662039\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.00927961)^2 + (0.0309948)^2} = 0.0323541\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{0.662039}{0.0323541} = 20.4623
+\]
+\[
+\textbf{Trial 5}
+\]
+\[
+\theta_{\mathrm{h},5} = 90^\circ - 30^\circ = 60^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},5} = \frac{1}{3}\left(2.34 + 2.32 + 2.33\right) = 2.33\ \mathrm{m}
+\]
+\[
+s_{R,5} = \sqrt{\frac{1}{2}\left((2.34 - 2.33)^2 + (2.32 - 2.33)^2 + (2.33 - 2.33)^2\right)} = 0.01\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.0057735\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},5} = \frac{(3.99211)^2\cos(60^\circ)}{9.81}\left(\sin(60^\circ) + \sqrt{\sin^2(60^\circ) + \frac{2(9.81)(1.08)}{(3.99211)^2}}\right) = 1.87483\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.751666\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.346722\ ,\quad \frac{\partial R}{\partial \theta} = -2.59725\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},5} = \sqrt{(0.751666\cdot 0.0246765)^2 + (0.346722\cdot 0.005)^2 + (-2.59725\cdot 0.00872665)^2} = 0.0293388\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},5} - R_{\mathrm{calc},5} = 2.33 - 1.87483 = 0.455174\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.0057735)^2 + (0.0293388)^2} = 0.0299015\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{0.455174}{0.0299015} = 15.2224
+\]
+\[
+\textbf{Trial 6}
+\]
+\[
+\theta_{\mathrm{h},6} = 90^\circ - 35^\circ = 55^\circ
+\]
+\[
+\overline{R}_{\mathrm{meas},6} = \frac{1}{3}\left(2.35 + 2.33 + 2.35\right) = 2.34333\ \mathrm{m}
+\]
+\[
+s_{R,6} = \sqrt{\frac{1}{2}\left((2.35 - 2.34333)^2 + (2.33 - 2.34333)^2 + (2.35 - 2.34333)^2\right)} = 0.011547\ \mathrm{m}
+\]
+\[
+\delta \overline{R} = \dfrac{s_R}{\sqrt{n}} = 0.00666667\ \mathrm{m}
+\]
+\[
+R_{\mathrm{calc}} = \frac{v_0^2\cos\theta}{g}\left(\sin\theta + \sqrt{\sin^2\theta + \frac{2gh}{v_0^2}}\right)
+\]
+\[
+R_{\mathrm{calc},6} = \frac{(3.99211)^2\cos(55^\circ)}{9.81}\left(\sin(55^\circ) + \sqrt{\sin^2(55^\circ) + \frac{2(9.81)(1.09)}{(3.99211)^2}}\right) = 2.08532\ \mathrm{m}
+\]
+\[
+\delta R_{\mathrm{calc}} = \sqrt{\left(\frac{\partial R}{\partial v_0}\delta v_0\right)^2 + \left(\frac{\partial R}{\partial h}\delta h\right)^2 + \left(\frac{\partial R}{\partial \theta}\delta \theta\right)^2}
+\]
+\[
+\frac{\partial R}{\partial v_0} = 0.823953\ \frac{\mathrm{m}}{\mathrm{m/s}},\quad \frac{\partial R}{\partial h} = 0.404277\ ,\quad \frac{\partial R}{\partial \theta} = -2.1351\ \frac{\mathrm{m}}{\mathrm{rad}}
+\]
+\[
+\delta R_{\mathrm{calc},6} = \sqrt{(0.823953\cdot 0.0246765)^2 + (0.404277\cdot 0.005)^2 + (-2.1351\cdot 0.00872665)^2} = 0.0276523\ \mathrm{m}
+\]
+\[
+\Delta_i = \overline{R}_{\mathrm{meas},6} - R_{\mathrm{calc},6} = 2.34333 - 2.08532 = 0.258016\ \mathrm{m}
+\]
+\[
+\delta \Delta_i = \sqrt{(0.00666667)^2 + (0.0276523)^2} = 0.0284446\ \mathrm{m}
+\]
+\[
+z_i = \frac{\Delta_i}{\delta \Delta_i} = \frac{0.258016}{0.0284446} = 9.07084
+\]
+\end{document}

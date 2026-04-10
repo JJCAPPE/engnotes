@@ -1,0 +1,197 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\vect}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\E}[1]{\mathbb{E}\!\left[#1\right]}
+\newcommand{\Var}[1]{\mathrm{Var}\!\left[#1\right]}
+\newcommand{\Cov}[2]{\mathrm{Cov}\!\left[#1,#2\right]}
+
+\title{HW9}
+\author{Giacomo Cappelletto}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{9}
+
+\subsection*{9.1}
+Solved on paper using notes and the textbook, then typed up in \LaTeX.
+
+\subsection*{9.2}
+
+\subsubsection*{a}
+Normalize each column of the joint PMF:
+\[
+\begin{array}{cc|ccc}
+ & & \multicolumn{3}{c}{y} \\
+P_{X|Y}(x|y) & & 0 & 1 & 2 \\ \hline
+ & -1 & 1/2 & 1/2 & 0 \\
+x & 0  & 0   & 1/2 & 1 \\
+ & 1  & 1/2 & 0   & 0
+\end{array}
+\]
+
+\subsubsection*{b}
+\[
+\hat{x}_\text{MMSE}(y) = \E{X \mid Y = y} =
+\begin{cases}
+0    & y = 0, 2 \\
+-1/2 & y = 1
+\end{cases}
+\]
+
+\subsubsection*{c}
+\begin{align*}
+\E{(X - \hat{x}_\text{MMSE}(Y))^2 \mid Y=0} &= 1,\quad
+\E{(X - \hat{x}_\text{MMSE}(Y))^2 \mid Y=1} = 1/4,\quad
+\E{(X - \hat{x}_\text{MMSE}(Y))^2 \mid Y=2} = 0\\
+P_Y(y) &=
+\begin{cases}
+1/4 & y = 0,2 \\
+1/2 & y = 1
+\end{cases}
+\end{align*}
+\[
+\text{MSE} = 1 \cdot \frac{1}{4} + \frac{1}{4} \cdot \frac{1}{2} + 0 \cdot \frac{1}{4} = \frac{3}{8}
+\]
+
+\subsubsection*{d}
+\[
+\E{X} = -1\cdot\frac{3}{8} + 0\cdot\frac{1}{2} + 1\cdot\frac{1}{8} = -\frac{1}{4},\qquad
+\E{Y} = 0\cdot\frac{1}{4} + 1\cdot\frac{1}{2} + 2\cdot\frac{1}{4} = 1,\qquad
+\E{XY} = -1\cdot\frac{1}{4} + 0 = -\frac{1}{4}
+\]
+\[
+\Cov{X}{Y} = \E{XY} - \E{X}\E{Y} = -\frac{1}{4} - \left(-\frac{1}{4}\right)(1) = 0
+\]
+
+\subsubsection*{e}
+\[
+\hat{x}_\text{LLSE}(y) = \E{X} + \frac{\Cov{X}{Y}}{\Var{Y}}(y - \E{Y})
+= -\frac{1}{4} + \frac{0}{\Var{Y}}(y-1) = -\frac{1}{4}
+\]
+
+\subsubsection*{f}
+\[
+\E{X^2} = (-1)^2\cdot\frac{3}{8} + 0 + 1^2\cdot\frac{1}{8} = \frac{1}{2},\qquad
+\Var{X} = \frac{1}{2} - \left(-\frac{1}{4}\right)^2 = \frac{7}{16}
+\]
+\[
+\text{MSE} = \Var{X} - \frac{(\Cov{X}{Y})^2}{\Var{Y}} = \frac{7}{16} - 0 = \frac{7}{16}
+\]
+
+\subsection*{9.3}
+
+\subsubsection*{a}
+\[
+\E{Y} = \E{X} + \E{Z} = 3 + 0 = 3
+\]
+\[
+\Var{Y} = \Var{X} + \Var{Z} = 4 + 2 = 6
+\]
+\[
+\Cov{X}{Y} = \Cov{X}{X+Z} = \Var{X} + \Cov{X}{Z} = 4
+\]
+
+\subsubsection*{b}
+\[
+\hat{x}_\text{LLSE}(y) = \E{X} + \frac{\Cov{X}{Y}}{\Var{Y}}(y - \E{Y})
+= 3 + \frac{4}{6}(y-3) = \frac{2}{3}y + 1
+\implies a = \frac{2}{3},\; b = 1
+\]
+
+\subsubsection*{c}
+\[
+\text{MSE}_\text{LLSE} = \Var{X} - \frac{(\Cov{X}{Y})^2}{\Var{Y}} = 4 - \frac{16}{6} = \frac{4}{3}
+\]
+
+\subsubsection*{d}
+Using independence ($\Cov{Y_1}{Y_2} = \Cov{X_1}{Y_2} = \Cov{X_2}{Y_1} = 0$), and from part (a) $\Var{Y_1}=6$, $\Cov{X_1}{Y_1}=4$:
+\[
+\Var{Y_2} = 4\Var{X_2} + \Var{Z_2} = 16 + 2 = 18,\qquad
+\Cov{X_2}{Y_2} = 2\Var{X_2} = 8
+\]
+\[
+\Sigma_Y = \mat{6 & 0 \\ 0 & 18},\qquad
+\Sigma_{X,Y} = \mat{4 & 0 \\ 0 & 8}
+\]
+
+\subsubsection*{e}
+\[
+\hat{\mathbf{x}}_\text{LLSE}(\mathbf{y}) = \mathbf{0} + \Sigma_{X,Y}\,\Sigma_Y^{-1}\,\mathbf{y}
+\]
+\[
+\mat{a_{11} & a_{12} \\ a_{21} & a_{22}}
+= \mat{4 & 0 \\ 0 & 8}\mat{6 & 0 \\ 0 & 18}^{-1}
+= \mat{2/3 & 0 \\ 0 & 4/9},\qquad
+b_1 = 0,\; b_2 = 0
+\]
+
+\subsection*{9.4}
+
+\subsubsection*{a}
+\[
+R_{X,Y} = \{(x,y) : x \geq 0,\; 1 \leq y \leq 5\}
+\]
+
+\subsubsection*{b}
+Since $X \mid Y=y \sim \mathrm{Exponential}(2/y)$ and $\E{Z}=1/\lambda$ for $Z\sim\mathrm{Exp}(\lambda)$:
+\[
+\hat{x}_\text{MMSE}(y) = \E{X \mid Y=y} = \frac{1}{2/y} = \frac{y}{2}
+\]
+
+\subsubsection*{c}
+\[
+\E{Y} = \frac{1+5}{2} = 3,\qquad
+\E{X} = \E{\E{X\mid Y}} = \E{\frac{Y}{2}} = \frac{\E{Y}}{2} = \frac{3}{2}
+\]
+
+\subsubsection*{d}
+Since $\hat{x}_\text{MMSE}(y) = y/2$ is already linear in $y$:
+\[
+\hat{x}_\text{LLSE}(y) = \frac{y}{2}
+\]
+
+\subsection*{9.5}
+
+\subsubsection*{a}
+$\text{MSE}_i = \Var{X}(1 - \rho_{X,Y_i}^2)$, so pick the $Y_i$ with largest $\rho_{X,Y_i}^2$:
+\[
+\rho_{X,Y_1}^2 = 0.16,\quad \rho_{X,Y_2}^2 = 0.49,\quad \rho_{X,Y_3}^2 = 0.64 \implies \text{choose } Y_3
+\]
+\[
+\hat{x}_\text{LLSE}(y_3) = \E{X} + \rho_{X,Y_3}\frac{\sigma_X}{\sigma_{Y_3}}(y_3 - \E{Y_3})
+= (-0.8)\frac{\sqrt{4}}{\sqrt{1}}\,y_3 = -1.6\,y_3
+\]
+\[
+\text{MSE}_3 = \Var{X}(1 - \rho_{X,Y_3}^2) = 4(1 - 0.64) = 1.44
+\]
+
+\subsubsection*{b}
+\[
+\E{X} = 0,\qquad
+\E{\mathbf{Y}} = \vect{0\\0\\0}
+\]
+\[
+\Sigma_{X,Y} = \begin{bmatrix} \rho_{X,Y_1}\sigma_X\sigma_{Y_1} & \rho_{X,Y_2}\sigma_X\sigma_{Y_2} & \rho_{X,Y_3}\sigma_X\sigma_{Y_3} \end{bmatrix}
+= \begin{bmatrix} 0.8 & 1.4 & -1.6 \end{bmatrix}
+\]
+\[
+\Sigma_Y =
+\mat{
+\Var{Y_1} & \rho_{Y_1,Y_2}\sigma_{Y_1}\sigma_{Y_2} & \rho_{Y_1,Y_3}\sigma_{Y_1}\sigma_{Y_3} \\
+\rho_{Y_1,Y_2}\sigma_{Y_1}\sigma_{Y_2} & \Var{Y_2} & \rho_{Y_2,Y_3}\sigma_{Y_2}\sigma_{Y_3} \\
+\rho_{Y_1,Y_3}\sigma_{Y_1}\sigma_{Y_3} & \rho_{Y_2,Y_3}\sigma_{Y_2}\sigma_{Y_3} & \Var{Y_3}
+}
+=
+\mat{1 & 0.5 & -0.3 \\ 0.5 & 1 & -0.6 \\ -0.3 & -0.6 & 1}
+\]
+
+\end{document}
